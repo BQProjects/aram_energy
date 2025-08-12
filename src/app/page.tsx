@@ -2,6 +2,11 @@
 import Header from "./components/header";
 import CalculationTarif from "./components/calculationTarif";
 import Footer from "./components/footer";
+import AboutSection from "./section/aboutSection";
+import OurMission from "./section/ourMission";
+import WideRange from "./section/wideRange";
+import WideRangeScroll from "./section/WideRangeScroll";
+import GetAquote from "./section/getAquote";
 
 export default function Home() {
   return (
@@ -50,6 +55,11 @@ export default function Home() {
           <CalculationTarif />
         </div>
       </div>
+      <AboutSection />
+      <OurMission />
+      <WideRange />
+      <WideRangeScroll />
+      <GetAquote />
       <Footer />
     </div>
   );
