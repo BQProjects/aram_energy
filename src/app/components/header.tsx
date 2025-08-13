@@ -68,7 +68,6 @@ export default function Header() {
           style={{
             width: 127,
             height: 48,
-            borderRadius: 11,
             background: "rgba(0,0,0,0.11)",
             overflow: "hidden",
             fontFamily: "Poppins-Regular",
@@ -77,7 +76,7 @@ export default function Header() {
           }}
         >
           <button
-            className="flex items-center justify-between w-full h-full px-4 py-2 rounded-[11px] focus:outline-none"
+            className="flex items-center justify-between w-full h-full px-4 py-2 focus:outline-none"
             style={{
               background: "rgba(0,0,0,0.11)",
               color: "#fff",

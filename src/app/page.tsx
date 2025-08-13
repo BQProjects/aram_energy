@@ -7,6 +7,12 @@ import OurMission from "./section/ourMission";
 import WideRange from "./section/wideRange";
 import WideRangeScroll from "./section/WideRangeScroll";
 import GetAquote from "./section/getAquote";
+import HowItWorkSection from "./section/howItWork";
+import WhatisSub from "./section/whatisSub";
+import OurService from "./section/ourService";
+import OurPartner from "./section/ourPartner";
+import GetInTouch from "./section/getInTouch";
+import VideoSection from "./section/video";
 
 export default function Home() {
   return (
@@ -18,9 +24,8 @@ export default function Home() {
         <Header />
         <div className="flex-1 flex flex-col justify-start items-center pt-2">
           <h2
-            className="text-center font-normal text-white"
+            className="text-center font-normal text-white font-quando"
             style={{
-              fontFamily: "Quandro",
               fontSize: 50,
               fontWeight: 500,
             }}
@@ -28,10 +33,9 @@ export default function Home() {
             Welcome
           </h2>
           <h1
-            className="text-center font-normal"
+            className="text-center font-normal font-quando"
             style={{
               color: "#FF9641",
-              fontFamily: "Quandro",
               fontSize: 50,
               fontWeight: 500,
             }}
@@ -60,6 +64,13 @@ export default function Home() {
       <WideRange />
       <WideRangeScroll />
       <GetAquote />
+      <HowItWorkSection />
+      <VideoSection />
+      <WhatisSub />
+      <OurService />
+      <OurPartner />
+      <GetInTouch />
+      {/* Footer */}
       <Footer />
     </div>
   );

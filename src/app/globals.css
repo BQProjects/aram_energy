@@ -10,6 +10,16 @@
   --color-foreground: var(--foreground);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
+  /* Tailwind v4 font variables for custom fonts */
+  --font-quando: 'Quando', serif;
+  --font-inter: 'Inter', sans-serif;
+  --font-poppins-light: 'Poppins-Light', sans-serif;
+  --font-poppins-regular: 'Poppins-Regular', sans-serif;
+  --font-poppins-medium: 'Poppins-Medium', sans-serif;
+  --font-inria-serif-regular: 'InriaSerif-Regular', serif;
+  --font-inria-serif-bold: 'InriaSerif-Bold', serif;
+  --font-ibm-plex-sans: 'IBMPlexSans', sans-serif;
+  --font-source-serif: 'Source-Serif', serif;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,6 +40,12 @@
   font-family: 'Inter';
   src: url('../../public/font/Inter-VariableFont_opszwght.ttf') format('truetype');
   font-weight: 400;
+  font-style: normal;
+}
+@font-face {
+  font-family: 'Poppins-Light';
+  src: url('../../public/font/Poppins-Light.ttf') format('truetype');
+  font-weight: 300;
   font-style: normal;
 }
 
@@ -55,14 +71,28 @@
 }
 
 @font-face {
+  font-family: 'Source-Serif';
+  src: url('../../public/font/SourceSerif4-VariableFont_opszwght.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'IBMPlexSans';
+  src: url('../../public/font/IBMPlexSans-VariableFont_wdthwght.ttf') format('truetype');
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'InriaSerif-Bold';
   src: url('../../public/font/InriaSerif-Bold.ttf') format('truetype');
-  font-weight: 700;
+  font-weight: 400;
   font-style: normal;
 }
 
 body {
   background: var(--background);
   color: var(--foreground);
-  font-family: 'Quando','Inter', 'Poppins-Regular', 'Poppins-Medium', 'InriaSerif-Regular', 'InriaSerif-Bold', Arial, Helvetica, sans-serif;
+  font-family: 'Quando','Inter', 'Poppins-Light','Poppins-Regular', 'Poppins-Medium', 'InriaSerif-Regular', 'InriaSerif-Bold','IBMPlexSans','Source-Serif', Arial, Helvetica, sans-serif;
 }

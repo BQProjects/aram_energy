@@ -32,7 +32,7 @@ export default function AboutSection() {
         {/* Image on left */}
         <div className="flex items-center justify-center mb-8 lg:mb-0 lg:mr-12">
           <Image
-            src="/aboutImage.png"
+            src="/aboutimage.png"
             alt="About Section Image"
             width={735}
             height={458}

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const features = [
   {
@@ -22,13 +22,42 @@ const features = [
 
 export default function WideRangeScroll() {
   const [current, setCurrent] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const [direction, setDirection] = useState<"left" | "right">("right");
+
+  // Auto-scroll every 4 seconds
+  useEffect(() => {
+    const interval = setInterval(() => {
+      if (!animating) {
+        setDirection("right");
+        setAnimating(true);
+        setTimeout(() => {
+          setCurrent((prev) => (prev === features.length - 1 ? 0 : prev + 1));
+          setAnimating(false);
+        }, 500); // match animation duration
+      }
+    }, 4000);
+    return () => clearInterval(interval);
+  }, [animating]);
 
   const prevSlide = () => {
-    setCurrent((prev) => (prev === 0 ? features.length - 1 : prev - 1));
+    if (animating) return;
+    setDirection("left");
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrent((prev) => (prev === 0 ? features.length - 1 : prev - 1));
+      setAnimating(false);
+    }, 350);
   };
 
   const nextSlide = () => {
-    setCurrent((prev) => (prev === features.length - 1 ? 0 : prev + 1));
+    if (animating) return;
+    setDirection("right");
+    setAnimating(true);
+    setTimeout(() => {
+      setCurrent((prev) => (prev === features.length - 1 ? 0 : prev + 1));
+      setAnimating(false);
+    }, 350);
   };
 
   return (
@@ -48,29 +77,41 @@ export default function WideRangeScroll() {
           />
         </button>
 
-        {/* Text Content */}
-        <div className="text-left px-6">
-          <h2
-            style={{
-              fontFamily: "InriaSerif-Bold",
-              fontSize: "48px",
-              fontWeight: 700,
-              color: "#FF9641",
-              marginBottom: "1rem",
-            }}
+        {/* Text Content with animation */}
+        <div className="text-left px-6 min-h-[180px] overflow-x-hidden">
+          <div
+            className={`transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] transform
+              ${
+                animating
+                  ? direction === "right"
+                    ? "translate-x-full opacity-0"
+                    : "-translate-x-full opacity-0"
+                  : "translate-x-0 opacity-100"
+              }
+            `}
+            key={current}
           >
-            {features[current].heading}
-          </h2>
-          <p
-            style={{
-              fontFamily: "Poppins-Regular",
-              fontSize: "32px",
-              color: "#fff",
-            }}
-          >
-            {features[current].desc}
-          </p>
-
+            <h2
+              style={{
+                fontFamily: "InriaSerif-Bold",
+                fontSize: "48px",
+                fontWeight: 700,
+                color: "#FF9641",
+                marginBottom: "1rem",
+              }}
+            >
+              {features[current].heading}
+            </h2>
+            <p
+              style={{
+                fontFamily: "Poppins-Regular",
+                fontSize: "32px",
+                color: "#fff",
+              }}
+            >
+              {features[current].desc}
+            </p>
+          </div>
           {/* Dots */}
           <div className="flex justify-center mt-6 gap-2">
             {features.map((_, idx) => (
