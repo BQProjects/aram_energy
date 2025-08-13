@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function Footer() {
+  const { t } = useLanguage();
+
   return (
     <footer className="w-full bg-black text-white py-6 sm:py-8 px-4 sm:px-6 md:px-8">
       <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10 font-poppins-regular text-sm sm:text-base font-normal">
@@ -145,25 +148,25 @@ export default function Footer() {
               href="#"
               className="hover:underline transition-colors duration-200 text-sm sm:text-base hover:text-[#FF9641] font-poppins-regular"
             >
-              Datenschutzerklärung
+              {t('footer.privacy')}
             </a>
             <a
               href="#"
               className="hover:underline transition-colors duration-200 text-sm sm:text-base hover:text-[#FF9641] font-poppins-regular"
             >
-              Barrierefreiheitserklärung
+              {t('footer.accessibility')}
             </a>
             <a
               href="#"
               className="hover:underline transition-colors duration-200 text-sm sm:text-base hover:text-[#FF9641] font-poppins-regular"
             >
-              Allgemeine Geschäftsbedingungen
+              {t('footer.terms')}
             </a>
             <a
               href="#"
               className="hover:underline transition-colors duration-200 text-sm sm:text-base hover:text-[#FF9641] font-poppins-regular"
             >
-              Rückerstattungsrichtlinie
+              {t('footer.refund')}
             </a>
           </div>
         </div>

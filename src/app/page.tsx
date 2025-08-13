@@ -13,8 +13,11 @@ import OurService from "./section/ourService";
 import OurPartner from "./section/ourPartner";
 import GetInTouch from "./section/getInTouch";
 import VideoSection from "./section/video";
+import { useLanguage } from "./contexts/LanguageContext";
 
 export default function Home() {
+  const { t } = useLanguage();
+
   return (
     <div>
       <div
@@ -23,16 +26,19 @@ export default function Home() {
       >
         <Header />
         <div className="flex-1 flex flex-col justify-start items-center pt-4 sm:pt-6 md:pt-8 lg:pt-2 px-4 sm:px-6 md:px-8">
-          <h2 className="text-center font-normal text-white font-quando text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium leading-tight px-2">
+          <h2 className="text-center mt-24 font-normal text-[#E5E7EB] font-quando text-2xl sm:text-3xl md:text-6xl lg:text-6xl font-medium leading-tight px-2">
             Welcome
           </h2>
-          <h1 className="text-center font-normal font-quando text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-medium leading-tight text-[#FF9641] mt-2 sm:mt-3 md:mt-4 px-2">
-            Aram Energy Solution
+          <h1 className="text-center font-normal font-quando text-2xl sm:text-3xl md:text-6xl lg:text-6xl font-medium leading-tight text-[#FF9641] mt-2 sm:mt-3 md:mt-4 px-2">
+            {t("hero.title")}
           </h1>
-          <button className="mt-4 sm:mt-5 md:mt-6 lg:mt-5 flex items-center justify-center rounded-[11px] w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-48 h-12 sm:h-14 md:h-16 lg:h-16 bg-white text-[#FF9641] font-inter text-base sm:text-lg font-medium hover:bg-gray-50 transition-colors duration-200 px-6 py-3 shadow-lg">
-            Learn more
+          <button className="mt-4 sm:mt-5 md:mt-6 lg:mt-16 flex items-center justify-center w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-48 h-12 sm:h-14 md:h-16 lg:h-16 bg-white text-[#FF9641] font-inter text-base sm:text-lg font-medium hover:bg-gray-50 transition-colors duration-200 px-6 py-3 shadow-lg">
+            {t("hero.learnMore")}
           </button>
-          <div className="w-full max-w-4xl mt-4 sm:mt-6 md:mt-8">
+          <h1 className="text-center font-normal font-poppins-regular text-2xl sm:text-2xl md:text-2xl lg:text-3xl font-medium leading-tight text-[#F9FAFB] mt-2 sm:mt-3 md:mt-4 px-2">
+            Discover our energy consulting services
+          </h1>
+          <div className="w-full max-w-5xl mt-4 sm:mt-6 md:mt-8">
             <CalculationTarif />
           </div>
         </div>

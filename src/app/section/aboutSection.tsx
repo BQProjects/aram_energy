@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function AboutSection() {
+  const { t } = useLanguage();
+
   return (
     <section
       id="about"
@@ -9,7 +12,7 @@ export default function AboutSection() {
       {/* Top 25% black section */}
       <div className="w-full flex items-center bg-black h-24 sm:h-32 md:h-40 lg:h-48 xl:h-52 min-h-[120px] sm:min-h-[150px] md:min-h-[180px]">
         <span className="ml-3 sm:ml-4 md:ml-6 lg:ml-8 text-[#FF9641] font-quando text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-wide px-2">
-          About Aram Energy Solution
+          {t('about.title')}
         </span>
       </div>
       {/* Bottom white section */}
@@ -40,10 +43,9 @@ export default function AboutSection() {
             <div className="flex-1 min-w-0">
               <span className="font-poppins-regular text-sm sm:text-base md:text-lg font-medium text-[#171717] leading-relaxed">
                 <span className="text-lg sm:text-xl md:text-2xl font-bold block font-inria-serif-bold mb-1 sm:mb-2">
-                  Affordable rates for everyone
+                  {t('about.affordableRates')}
                 </span>
-                Attractive electricity and gas prices for businesses and private
-                customers.
+                {t('about.affordableRatesDesc')}
               </span>
             </div>
           </div>
@@ -61,9 +63,9 @@ export default function AboutSection() {
             <div className="flex-1 min-w-0">
               <span className="font-poppins-regular text-sm sm:text-base md:text-lg font-medium text-[#171717] leading-relaxed">
                 <span className="text-lg sm:text-xl md:text-2xl font-bold block font-inria-serif-bold mb-1 sm:mb-2">
-                  Permanent contact person
+                  {t('about.contactPerson')}
                 </span>
-                Personal support without constant changes.
+                {t('about.contactPersonDesc')}
               </span>
             </div>
           </div>
@@ -81,9 +83,9 @@ export default function AboutSection() {
             <div className="flex-1 min-w-0">
               <span className="font-poppins-regular text-sm sm:text-base md:text-lg font-medium text-[#171717] leading-relaxed">
                 <span className="text-lg sm:text-xl md:text-2xl font-bold block font-inria-serif-bold mb-1 sm:mb-2">
-                  Reliable partner
+                  {t('about.reliablePartner')}
                 </span>
-                Together with Energie Service Pool GmbH.
+                {t('about.reliablePartnerDesc')}
               </span>
             </div>
           </div>

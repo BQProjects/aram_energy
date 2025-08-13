@@ -1,6 +1,9 @@
 import Image from "next/image";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function GetAquote() {
+  const { t } = useLanguage();
+
   return (
     <>
       <section className="relative w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center">
@@ -21,13 +24,10 @@ export default function GetAquote() {
           <div className="w-full md:w-[60%] flex items-center min-h-[280px] sm:min-h-[320px]">
             <div className="w-full px-6 sm:px-8 md:px-10 py-8 sm:py-10 md:py-12 bg-black/80 rounded-3xl shadow-2xl mx-4 md:mx-0">
               <h2 className="font-inter text-2xl sm:text-3xl md:text-4xl font-bold text-[#FF9641] mb-4 sm:mb-6 text-left">
-                How can I get a quote?
+                {t('getQuote.title')}
               </h2>
               <p className="font-poppins text-base sm:text-lg font-normal text-white text-left leading-relaxed">
-                You have an electricity bill, which you send to us digitally via
-                WhatsApp or email. We&apos;ll explain everything to you and send
-                you an offer immediately. If you accept it, we&apos;ll take care
-                of the switching process for you.
+                {t('getQuote.description')}
               </p>
             </div>
           </div>
@@ -38,24 +38,20 @@ export default function GetAquote() {
         <div className="w-full max-w-6xl mx-auto text-justify px-4 sm:px-6">
           <h2 className="font-source-serif text-2xl sm:text-3xl md:text-4xl text-[#FF9641] text-left mb-3 sm:mb-4">
             <span className="font-bold">
-              Customers refer customers &nbsp;– Join in. It&apos;s worth it!
+              {t('getQuote.referral.title')}
             </span>
             <br />
             <span className="font-semibold">
-              Recommend Aram Energy Solution
+              {t('getQuote.referral.subtitle')}
             </span>
-            &nbsp;and benefit:
           </h2>
           <p className="font-ibm-plex-sans text-lg sm:text-xl md:text-2xl text-gray-700 text-left mb-0 leading-relaxed">
-            We&apos;d like to thank you for your loyalty – and at the same time
-            give even more people the opportunity to benefit from our affordable
-            electricity and gas offers. That&apos;s why we&apos;ve launched our
-            referral program.
+            {t('getQuote.referral.description')}
           </p>
         </div>
       </section>
-      {/* World image section with centered transparent container - No overlap */}
-      <section className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[800px] flex items-start justify-center mt-0 mb-44 sm:mb-20 md:mb-24 lg:mb-32 xl:mb-40">
+      {/* World image section with centered transparent container - Centered on image */}
+      <section className="relative w-full h-[300px] sm:h-[400px] md:h-[500px] lg:h-[600px] xl:h-[800px] flex items-center justify-center mt-0 mb-16 sm:mb-20 md:mb-24 lg:mb-32 xl:mb-40">
         {/* Background world image */}
         <div className="absolute inset-0 w-full h-full -z-10">
           <Image
@@ -85,7 +81,7 @@ export default function GetAquote() {
               {/* Bottom center text */}
               <div className="flex flex-1 items-end justify-center">
                 <span className="text-center pb-2 sm:pb-3 md:pb-4 lg:pb-6 xl:pb-8 2xl:pb-14 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-inria-serif-regular font-normal leading-tight">
-                  Recommend us to friends, acquaintances or business partners.
+                  {t('getQuote.step1')}
                 </span>
               </div>
             </div>
@@ -104,8 +100,7 @@ export default function GetAquote() {
               </span>
               <div className="flex flex-1 items-end justify-center">
                 <span className="text-center pb-2 sm:pb-3 md:pb-4 lg:pb-6 xl:pb-8 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-inria-serif-regular font-normal leading-tight">
-                  The new customer concludes a contract based on your
-                  recommendation.
+                  {t('getQuote.step2')}
                 </span>
               </div>
             </div>
@@ -124,7 +119,7 @@ export default function GetAquote() {
               </span>
               <div className="flex flex-1 items-end justify-center">
                 <span className="text-center pb-2 sm:pb-3 md:pb-4 lg:pb-6 xl:pb-8 2xl:pb-12 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-inria-serif-regular font-normal leading-tight">
-                  You will receive a 40€ bonus
+                  {t('getQuote.step3')}
                 </span>
               </div>
             </div>

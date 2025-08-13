@@ -1,24 +1,25 @@
 import React from "react";
 import Image from "next/image";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function HowItWorkSection() {
+  const { t } = useLanguage();
+
   return (
     <div className="bg-cover bg-center min-h-screen p-0 m-0 w-full" style={{ backgroundImage: "url('/howItWork.png')" }}>
       <div className="max-w-6xl mx-auto pt-12 sm:pt-16 md:pt-20 lg:pt-[60px] px-4 sm:px-6 md:px-8 lg:px-24 flex flex-col items-center sm:items-start">
         {/* Top Left Texts */}
         <div className="text-[#FF9641] font-poppins-medium text-lg sm:text-xl md:text-2xl font-normal mb-3 text-center sm:text-left">
-          Interested in photovoltaic systems?
+          {t('howItWorks.interested')}
         </div>
         <div className="text-white font-inria-serif-regular text-2xl sm:text-3xl md:text-4xl font-normal mb-4 sm:mb-5 text-center sm:text-left">
-          Use solar energy now and save in the long term!
+          {t('howItWorks.solarEnergy')}
         </div>
         <div className="text-white font-inria-serif-regular text-base sm:text-lg md:text-xl font-normal mb-6 sm:mb-7 leading-relaxed max-w-4xl text-center sm:text-left">
-          Are you considering a solar system for your home or business? Then
-          you&apos;ve come to the right place. We&apos;ll be happy to receive
-          your inquiry and forward it to one of our experienced partners.
+          {t('howItWorks.description')}
         </div>
         <div className="text-[#FF9641] font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center sm:text-left">
-          How it works:
+          {t('howItWorks.title')}:
         </div>
 
         {/* SVG Row - Centered column on mobile, row on larger screens */}
@@ -33,7 +34,7 @@ export default function HowItWorkSection() {
               priority
             />
             <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
-              You register your interest with us.
+              {t('howItWorks.step1')}
             </span>
           </div>
           <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
@@ -46,8 +47,7 @@ export default function HowItWorkSection() {
               priority
             />
             <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
-              A certified solar expert will contact you and come to your home
-              for a personal consultation.
+              {t('howItWorks.step2')}
             </span>
           </div>
           <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
@@ -60,8 +60,7 @@ export default function HowItWorkSection() {
               priority
             />
             <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
-              Together we will determine which solution best suits your roof,
-              your consumption and your budget.
+              {t('howItWorks.step3')}
             </span>
           </div>
           <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
@@ -74,8 +73,7 @@ export default function HowItWorkSection() {
               priority
             />
             <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
-              You will receive a tailor-made offer – transparent and
-              non-binding.
+              {t('howItWorks.step4')}
             </span>
           </div>
         </div>
@@ -83,8 +81,7 @@ export default function HowItWorkSection() {
       {/* Bottom Centered Text */}
       <div className="w-full text-center mt-8 sm:mt-10 md:mt-12 lg:mt-10 mb-8 sm:mb-10 md:mb-12 lg:mb-10 pb-16 sm:pb-20 md:pb-24 lg:pb-20">
         <span className="text-[#E7EBF3] font-inria-serif-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl inline-block max-w-4xl px-4">
-          Express your interest now without obligation and secure a
-          consultation!
+          {t('howItWorks.cta')}
         </span>
       </div>
     </div>

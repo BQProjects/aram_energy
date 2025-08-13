@@ -1,17 +1,19 @@
 import Image from "next/image";
 import { useState } from "react";
+import { useLanguage } from "../contexts/LanguageContext";
 
 export default function CalculationTarif() {
+  const { t } = useLanguage();
   const [selected, setSelected] = useState("electricity");
   const [customerType, setCustomerType] = useState("private");
 
   return (
-    <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col items-center justify-start w-full max-w-[1076px] pb-6 sm:pb-8 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 bg-black/50 text-white font-poppins text-sm sm:text-base font-normal rounded-xl">
+    <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col items-center justify-start w-full max-w-[1076px] pb-6 sm:pb-8 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 bg-black/50 text-white font-poppins text-sm sm:text-base font-normal">
       {/* Top selection box */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mt-6 sm:mt-8 w-full max-w-[740px] h-auto sm:h-16 bg-[#EEEEEE2B] p-2 sm:p-3 rounded-lg gap-2 sm:gap-0">
+      <div className="flex flex-col sm:flex-row items-center justify-between mt-6 sm:mt-8 w-full max-w-[800px] h-12 sm:h-16 bg-[#EEEEEE2B] p-2 sm:p-3 gap-2 sm:gap-0">
         {/* Electricity Button */}
         <button
-          className={`flex items-center justify-center w-full sm:w-[360px] h-12 font-inter text-sm sm:text-base font-normal transition-colors duration-300 ease-in-out rounded-md px-3 sm:px-4 ${
+          className={`flex items-center justify-center w-full sm:w-[400px] h-11 font-inter text-sm sm:text-base font-normal transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
             selected === "electricity"
               ? "bg-[#FF9641] text-white"
               : "bg-transparent text-white hover:bg-white/10"
@@ -25,12 +27,12 @@ export default function CalculationTarif() {
             height={16}
             className="mr-2 w-3 h-4 sm:w-3 sm:h-4"
           />
-          Electricity
+          {t('calculation.electricity')}
         </button>
 
         {/* Gas Button */}
         <button
-          className={`flex items-center justify-center w-full sm:w-[346px] h-12 font-inter text-sm sm:text-base font-normal transition-colors duration-300 ease-in-out rounded-md px-3 sm:px-4 ${
+          className={`flex items-center justify-center w-full sm:w-[400px] h-11 font-inter text-sm sm:text-base font-normal transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
             selected === "gas"
               ? "bg-[#FF9641] text-white"
               : "bg-transparent text-white hover:bg-white/10"
@@ -44,7 +46,7 @@ export default function CalculationTarif() {
             height={16}
             className="mr-2 w-3 h-4 sm:w-3 sm:h-4"
           />
-          Gas
+          {t('calculation.gas')}
         </button>
       </div>
 
@@ -52,7 +54,7 @@ export default function CalculationTarif() {
       <div className="flex items-center gap-2 mt-4 sm:mt-5">
         <Image src="/infoI.svg" alt="Info Icon" width={12} height={16} className="w-3 h-4 sm:w-3 sm:h-4" />
         <span className="font-poppins text-sm sm:text-base font-normal">
-          Customer type
+          {t('calculation.customerType')}
         </span>
       </div>
 
@@ -61,7 +63,7 @@ export default function CalculationTarif() {
         <div className="flex items-center">
           <Image src="/person.svg" alt="Person" width={12} height={16} className="w-3 h-4 sm:w-3 sm:h-4" />
           <span className="ml-1 font-poppins text-xs sm:text-sm font-normal text-white">
-            Private
+            {t('calculation.private')}
           </span>
         </div>
 
@@ -82,14 +84,14 @@ export default function CalculationTarif() {
         <div className="flex items-center">
           <Image src="/company.svg" alt="Company" width={12} height={16} className="w-3 h-4 sm:w-3 sm:h-4" />
           <span className="ml-1 font-poppins text-xs sm:text-sm font-normal text-white">
-            Company
+            {t('calculation.company')}
           </span>
         </div>
       </div>
 
       {/* Annual consumption text */}
       <span className="mt-3 sm:mt-4 font-poppins text-sm sm:text-base font-normal text-center px-2">
-        Annual consumption in kWh
+        {t('calculation.consumption')}
       </span>
 
       {/* Form grid */}
@@ -100,13 +102,13 @@ export default function CalculationTarif() {
             htmlFor="postalCode"
             className="text-xs sm:text-sm font-normal text-white mb-1 sm:mb-2"
           >
-            Postal code
+            {t('calculation.zipCode')}
           </label>
           <div className="relative">
             <input
               id="postalCode"
               type="text"
-              placeholder="Enter postal code"
+              placeholder={t('calculation.zipCodePlaceholder')}
               className="w-full h-[45px] sm:h-[50px] rounded-lg border border-[#E0E0E0] bg-white px-3 sm:px-4 pr-8 sm:pr-10 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
             />
             <Image
@@ -125,12 +127,12 @@ export default function CalculationTarif() {
             htmlFor="annualConsumption"
             className="text-xs sm:text-sm font-normal text-white mb-1 sm:mb-2"
           >
-            Annual consumption in kWh
+            {t('calculation.consumption')}
           </label>
           <input
             id="annualConsumption"
             type="text"
-            placeholder="Enter annual consumption"
+            placeholder={t('calculation.consumptionPlaceholder')}
             className="w-full h-[45px] sm:h-[50px] rounded-lg border border-[#E0E0E0] bg-white px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
@@ -141,12 +143,12 @@ export default function CalculationTarif() {
             htmlFor="tariffKey"
             className="text-xs sm:text-sm font-normal text-white mb-1 sm:mb-2"
           >
-            Tariff key
+            {t('calculation.tariffKey')}
           </label>
           <input
             id="tariffKey"
             type="text"
-            placeholder="Enter tariff key"
+            placeholder={t('calculation.tariffKeyPlaceholder')}
             className="w-full h-[45px] sm:h-[50px] rounded-lg border border-[#E0E0E0] bg-white px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
@@ -157,12 +159,12 @@ export default function CalculationTarif() {
             htmlFor="transactionKey"
             className="text-xs sm:text-sm font-normal text-white mb-1 sm:mb-2"
           >
-            Transaction key
+            {t('calculation.transactionKey')}
           </label>
           <input
             id="transactionKey"
             type="text"
-            placeholder="Enter transaction key"
+            placeholder={t('calculation.transactionKeyPlaceholder')}
             className="w-full h-[45px] sm:h-[50px] rounded-lg border border-[#E0E0E0] bg-white px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
@@ -170,7 +172,7 @@ export default function CalculationTarif() {
         {/* Calculate button */}
         <div className="col-span-1 sm:col-span-2 flex justify-center mt-6 sm:mt-8">
           <button className="w-full sm:w-[300px] h-[45px] sm:h-[50px] bg-[#FF9641] text-white rounded-lg font-poppins font-medium text-sm sm:text-base hover:bg-[#e88537] transition-colors duration-200 shadow-lg">
-            Calculate Tariff
+            {t('calculation.calculate')}
           </button>
         </div>
       </div>
@@ -185,7 +187,7 @@ export default function CalculationTarif() {
           className="mr-2 w-3 h-3 sm:w-3.5 sm:h-3.5"
         />
         <span className="font-poppins text-xs sm:text-sm font-normal text-white">
-          Do you need help calculating your consumption?
+          {t('calculation.helpText')}
         </span>
       </div>
     </div>
