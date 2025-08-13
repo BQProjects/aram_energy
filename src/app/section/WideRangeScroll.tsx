@@ -61,12 +61,12 @@ export default function WideRangeScroll() {
   };
 
   return (
-    <section className="w-full flex items-center justify-center py-16 bg-[#0C0C0C]">
+    <section className="w-full flex items-center justify-center py-8 sm:py-12 md:py-16 bg-[#0C0C0C]">
       <div className="w-full max-w-6xl mx-auto relative flex items-center justify-center">
         {/* Left Arrow */}
         <button
           onClick={prevSlide}
-          className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
+          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 hover:opacity-80 transition-opacity"
           aria-label="Previous"
         >
           <Image
@@ -74,11 +74,12 @@ export default function WideRangeScroll() {
             alt="Scroll Left"
             width={22}
             height={15}
+            className="w-5 h-4 sm:w-6 sm:h-5 md:w-[22px] md:h-[15px]"
           />
         </button>
 
         {/* Text Content with animation */}
-        <div className="text-left px-6 min-h-[180px] overflow-x-hidden">
+        <div className="text-left px-4 sm:px-6 min-h-[120px] sm:min-h-[150px] md:min-h-[180px] overflow-x-hidden">
           <div
             className={`transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] transform
               ${
@@ -91,33 +92,19 @@ export default function WideRangeScroll() {
             `}
             key={current}
           >
-            <h2
-              style={{
-                fontFamily: "InriaSerif-Bold",
-                fontSize: "48px",
-                fontWeight: 700,
-                color: "#FF9641",
-                marginBottom: "1rem",
-              }}
-            >
+            <h2 className="font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#FF9641] mb-4">
               {features[current].heading}
             </h2>
-            <p
-              style={{
-                fontFamily: "Poppins-Regular",
-                fontSize: "32px",
-                color: "#fff",
-              }}
-            >
+            <p className="font-poppins-regular text-lg sm:text-xl md:text-2xl lg:text-3xl text-white">
               {features[current].desc}
             </p>
           </div>
           {/* Dots */}
-          <div className="flex justify-center mt-6 gap-2">
+          <div className="flex justify-center mt-4 sm:mt-6 gap-2">
             {features.map((_, idx) => (
               <span
                 key={idx}
-                className={`w-3 h-3 rounded-full transition-all ${
+                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
                   idx === current ? "bg-gray-300" : "bg-gray-600"
                 }`}
               ></span>
@@ -128,14 +115,15 @@ export default function WideRangeScroll() {
         {/* Right Arrow */}
         <button
           onClick={nextSlide}
-          className="absolute right-4 top-1/2 -translate-y-1/2 z-10"
+          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 hover:opacity-80 transition-opacity"
           aria-label="Next"
         >
           <Image
             src="/rightScroll.svg"
             alt="Scroll Right"
             width={22}
-            height={4150}
+            height={15}
+            className="w-5 h-4 sm:w-6 sm:h-5 md:w-[22px] md:h-[15px]"
           />
         </button>
       </div>

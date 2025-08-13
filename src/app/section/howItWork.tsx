@@ -3,207 +3,77 @@ import Image from "next/image";
 
 export default function HowItWorkSection() {
   return (
-    <div
-      style={{
-        backgroundImage: "url('/howitwork.png')",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        minHeight: "100vh",
-        padding: "0",
-        margin: "0",
-        width: "100vw",
-      }}
-    >
-      <div
-        style={{
-          maxWidth: 1200,
-          margin: "0 auto",
-          padding: "60px 24px 0 24px",
-          display: "flex",
-          flexDirection: "column",
-          alignItems: "flex-start",
-        }}
-      >
+    <div className="bg-cover bg-center min-h-screen p-0 m-0 w-full" style={{ backgroundImage: "url('/howItWork.png')" }}>
+      <div className="max-w-6xl mx-auto pt-12 sm:pt-16 md:pt-20 lg:pt-[60px] px-4 sm:px-6 md:px-8 lg:px-24 flex flex-col items-center sm:items-start">
         {/* Top Left Texts */}
-        <div
-          style={{
-            color: "#FF9641",
-            fontFamily: "Poppins-Medium",
-            fontSize: 22,
-            fontWeight: 400,
-            marginBottom: 12,
-          }}
-        >
+        <div className="text-[#FF9641] font-poppins-medium text-lg sm:text-xl md:text-2xl font-normal mb-3 text-center sm:text-left">
           Interested in photovoltaic systems?
         </div>
-        <div
-          style={{
-            color: "#FFF",
-            fontFamily: "InriaSerif-Regular",
-            fontSize: 32,
-            fontWeight: 400,
-            marginBottom: 18,
-          }}
-        >
+        <div className="text-white font-inria-serif-regular text-2xl sm:text-3xl md:text-4xl font-normal mb-4 sm:mb-5 text-center sm:text-left">
           Use solar energy now and save in the long term!
         </div>
-        <div
-          style={{
-            color: "#FFF",
-            fontFamily: "InriaSerif-Regular",
-            fontSize: 20,
-            fontWeight: 400,
-            marginBottom: 28,
-            lineHeight: 1.5,
-          }}
-        >
+        <div className="text-white font-inria-serif-regular text-base sm:text-lg md:text-xl font-normal mb-6 sm:mb-7 leading-relaxed max-w-4xl text-center sm:text-left">
           Are you considering a solar system for your home or business? Then
           you&apos;ve come to the right place. We&apos;ll be happy to receive
           your inquiry and forward it to one of our experienced partners.
         </div>
-        <div
-          style={{
-            color: "#FF9641",
-            fontFamily: "InriaSerif-Bold",
-            fontSize: 32,
-            fontWeight: 700,
-            marginBottom: 32,
-          }}
-        >
+        <div className="text-[#FF9641] font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl font-bold mb-6 sm:mb-8 text-center sm:text-left">
           How it works:
         </div>
 
-        {/* SVG Row */}
-        <div
-          style={{
-            display: "flex",
-            flexDirection: "row",
-            marginBottom: 60,
-            width: "100%",
-            flexWrap: "nowrap",
-            justifyContent: "space-evenly",
-            alignItems: "flex-start",
-          }}
-        >
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              flex: 1,
-            }}
-          >
+        {/* SVG Row - Centered column on mobile, row on larger screens */}
+        <div className="flex flex-col sm:flex-row mb-12 sm:mb-16 md:mb-20 lg:mb-[60px] w-full justify-center sm:justify-evenly items-center sm:items-start gap-8 sm:gap-6 md:gap-8">
+          <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
             <Image
               src="/GetInstantOffer.svg"
               alt="Step 1"
               width={100}
               height={100}
-              style={{ maxWidth: "100%", height: "auto" }}
+              className="w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
               priority
             />
-            <span
-              style={{
-                color: "#E5E7EB",
-                fontFamily: "Poppins-Light",
-                fontSize: 14,
-                marginTop: 8,
-                textAlign: "center",
-                maxWidth: 320,
-                display: "block",
-              }}
-            >
+            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
               You register your interest with us.
             </span>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              flex: 1,
-            }}
-          >
+          <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
             <Image
               src="/GetInstantOffer-1.svg"
               alt="Step 2"
               width={100}
               height={100}
-              style={{ maxWidth: "100%", height: "auto" }}
+              className="w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
               priority
             />
-            <span
-              style={{
-                color: "#E5E7EB",
-                fontFamily: "Poppins-Light",
-                fontSize: 14,
-                marginTop: 8,
-                textAlign: "center",
-                maxWidth: 320,
-                display: "block",
-              }}
-            >
+            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
               A certified solar expert will contact you and come to your home
               for a personal consultation.
             </span>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              flex: 1,
-            }}
-          >
+          <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
             <Image
               src="/GetInstantOffer-2.svg"
               alt="Step 3"
               width={100}
               height={100}
-              style={{ maxWidth: "100%", height: "auto" }}
+              className="w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
               priority
             />
-            <span
-              style={{
-                color: "#E5E7EB",
-                fontFamily: "Poppins-Light",
-                fontSize: 14,
-                marginTop: 8,
-                textAlign: "center",
-                maxWidth: 320,
-                display: "block",
-              }}
-            >
+            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
               Together we will determine which solution best suits your roof,
               your consumption and your budget.
             </span>
           </div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              alignItems: "center",
-              flex: 1,
-            }}
-          >
+          <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
             <Image
               src="/GetInstantOffer-3.svg"
               alt="Step 4"
               width={100}
               height={100}
-              style={{ maxWidth: "100%", height: "auto" }}
+              className="w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
               priority
             />
-            <span
-              style={{
-                color: "#E5E7EB",
-                fontFamily: "Poppins-Light",
-                fontSize: 14,
-                marginTop: 8,
-                textAlign: "center",
-                maxWidth: 320,
-                display: "block",
-              }}
-            >
+            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
               You will receive a tailor-made offer – transparent and
               non-binding.
             </span>
@@ -211,23 +81,8 @@ export default function HowItWorkSection() {
         </div>
       </div>
       {/* Bottom Centered Text */}
-      <div
-        style={{
-          width: "100%",
-          textAlign: "center",
-          marginTop: 40,
-          marginBottom: 40,
-          paddingBottom: 80,
-        }}
-      >
-        <span
-          style={{
-            color: "#E7EBF3",
-            fontFamily: "InriaSerif-Bold",
-            fontSize: 32,
-            display: "inline-block",
-          }}
-        >
+      <div className="w-full text-center mt-8 sm:mt-10 md:mt-12 lg:mt-10 mb-8 sm:mb-10 md:mb-12 lg:mb-10 pb-16 sm:pb-20 md:pb-24 lg:pb-20">
+        <span className="text-[#E7EBF3] font-inria-serif-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl inline-block max-w-4xl px-4">
           Express your interest now without obligation and secure a
           consultation!
         </span>

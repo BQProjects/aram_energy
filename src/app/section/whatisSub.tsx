@@ -2,61 +2,31 @@ import Image from "next/image";
 
 export default function WhatisSub() {
   return (
-    <section className="w-full min-h-screen bg-white flex flex-col items-center py-16">
-      <div className="w-full max-w-6xl flex flex-col gap-8">
+    <section className="w-full min-h-screen bg-white flex flex-col items-center py-8 sm:py-12 md:py-16">
+      <div className="w-full max-w-6xl flex flex-col gap-6 sm:gap-8 px-4 sm:px-6">
         {/* Top row: left heading, right button */}
-        <div className="flex flex-row w-full items-start justify-between mb-8">
-          <div className="flex flex-col items-start" style={{ minWidth: 340 }}>
-            <div
-              style={{
-                color: "#FF9641",
-                fontFamily: "Poppins-Regular",
-                fontSize: 22,
-                fontWeight: 700,
-                marginBottom: 12,
-              }}
-            >
+        <div className="flex flex-col sm:flex-row w-full items-start justify-between mb-6 sm:mb-8 gap-4 sm:gap-0">
+          <div className="flex flex-col items-start min-w-[280px] sm:min-w-[340px]">
+            <div className="text-[#FF9641] font-poppins-regular text-lg sm:text-xl md:text-2xl font-bold mb-3">
               Submetering
             </div>
-            <div
-              style={{
-                color: "#111",
-                fontFamily: "InriaSerif-Bold",
-                fontSize: 32,
-                marginBottom: 0,
-              }}
-            >
+            <div className="text-[#111] font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl mb-0">
               What is submetering?
             </div>
           </div>
-          <button
-            className="flex items-center justify-between"
-            style={{
-              width: 280,
-              height: 60,
-              background: "#FF9641",
-              color: "#fff",
-              fontFamily: "Poppins, sans-serif",
-              fontSize: 20,
-              fontWeight: 600,
-              border: "none",
-              outline: "none",
-              cursor: "pointer",
-              paddingLeft: 32,
-              paddingRight: 24,
-            }}
-          >
-            <span style={{ textAlign: "left", flex: 1 }}>Click to start</span>
+          <button className="flex items-center justify-between w-full sm:w-64 md:w-80 lg:w-[280px] h-12 sm:h-14 md:h-[60px] bg-[#FF9641] text-white font-poppins text-lg sm:text-xl font-semibold border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 rounded-lg hover:bg-[#e88537] transition-colors duration-200">
+            <span className="text-left flex-1">Click to start</span>
             <Image
               src="/whiteRightArrow.svg"
               alt="Right Arrow"
               width={28}
               height={28}
+              className="w-6 h-6 sm:w-7 sm:h-7"
             />
           </button>
         </div>
         {/* Cards row: centered below button */}
-        <div className="w-full flex flex-row gap-6 justify-center mb-8">
+        <div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center mb-6 sm:mb-8">
           {[
             {
               svg: "/sub1.svg",
@@ -76,38 +46,15 @@ export default function WhatisSub() {
           ].map((card, i) => (
             <div
               key={i}
-              className="rounded-2xl flex flex-col justify-between items-start px-6 py-6"
-              style={{
-                background: "#000",
-                width: 380,
-                height: 200,
-                minWidth: 220,
-                boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
-              }}
+              className="rounded-2xl flex flex-col justify-between items-start px-4 sm:px-6 py-4 sm:py-6 bg-black w-full sm:w-80 md:w-96 lg:w-[380px] h-[180px] sm:h-[200px] min-w-[220px] shadow-lg"
             >
               <div className="flex flex-row items-center gap-3 mb-2">
-                <Image src={card.svg} alt={card.title} width={48} height={48} />
-                <span
-                  style={{
-                    color: "#fff",
-                    fontFamily: "InriaSerif-Regular",
-                    fontSize: 16,
-                    fontWeight: 500,
-                    textAlign: "left",
-                  }}
-                >
+                <Image src={card.svg} alt={card.title} width={48} height={48} className="w-10 h-10 sm:w-12 sm:h-12" />
+                <span className="text-white font-inria-serif-regular text-sm sm:text-base font-medium text-left">
                   {card.title}
                 </span>
               </div>
-              <p
-                style={{
-                  color: "#D1D5DB",
-                  fontFamily: "InriaSerif-Regular",
-                  fontSize: 16,
-                  fontWeight: 400,
-                  textAlign: "justify",
-                }}
-              >
+              <p className="text-gray-300 font-inria-serif-regular text-sm sm:text-base font-normal text-justify">
                 {card.para}
               </p>
             </div>
@@ -115,28 +62,11 @@ export default function WhatisSub() {
         </div>
       </div>
       {/* Info text below cards */}
-      <div className="w-full max-w-6xl flex flex-col items-start mt-12">
-        <div
-          style={{
-            color: "#FF9641",
-            fontFamily: "Poppins-Medium",
-            fontSize: 22,
-            fontWeight: 700,
-            marginBottom: 8,
-          }}
-        >
+      <div className="w-full max-w-6xl flex flex-col items-start mt-8 sm:mt-12 px-4 sm:px-6">
+        <div className="text-[#FF9641] font-poppins-medium text-lg sm:text-xl md:text-2xl font-bold mb-2 sm:mb-3">
           Who can use this?
         </div>
-        <div
-          style={{
-            color: "#111827",
-            fontFamily: "InriaSerif-Bold",
-            fontSize: 22,
-            fontWeight: 700,
-            textAlign: "left",
-            maxWidth: 900,
-          }}
-        >
+        <div className="text-gray-900 font-inria-serif-bold text-lg sm:text-xl md:text-2xl font-bold text-left max-w-[900px]">
           Property managers, homeowners, housing associations and other relevant
           contacts are potential customers.
         </div>

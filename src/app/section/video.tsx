@@ -1,16 +1,7 @@
 export default function VideoSection() {
   return (
-    <div
-      style={{
-        width: "100vw",
-        height: "100vh",
-        background: "#000",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      <div style={{ position: "relative", width: "100%", height: "100%" }}>
+    <div className="w-full h-screen bg-black flex items-center justify-center">
+      <div className="relative w-full h-full">
         <iframe
           src="https://www.youtube-nocookie.com/embed/fgyTPneuhdc?si=rCStQqbW8Hm-q1o7"
           title="YouTube video player"
@@ -18,13 +9,7 @@ export default function VideoSection() {
           allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
           referrerPolicy="strict-origin-when-cross-origin"
           allowFullScreen
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            width: "100%",
-            height: "100%",
-          }}
+          className="absolute top-0 left-0 w-full h-full"
         />
       </div>
     </div>

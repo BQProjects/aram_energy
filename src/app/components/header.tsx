@@ -12,42 +12,55 @@ const navLinks = [
 ];
 
 const flagIcons: Record<"en" | "de", string> = {
-  en: "/engFlag.png", // Place your UK flag image in public/uk-flag.png
-  de: "/engFlag.png", // Place your German flag image in public/de-flag.png
+  en: "/engFlag.png",
+  de: "/deFlag.svg",
+};
+
+const languages = {
+  en: { name: "English", flag: "/engFlag.png" },
+  de: { name: "Deutsch", flag: "/deFlag.svg" },
 };
 
 export default function Header() {
   const [lang, setLang] = useState<"en" | "de">("en");
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
+
+  const toggleMobileMenu = () => {
+    setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const toggleLanguageDropdown = () => {
+    setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
+  };
+
+  const handleLanguageChange = (newLang: "en" | "de") => {
+    setLang(newLang);
+    setIsLanguageDropdownOpen(false);
+  };
+
   return (
-    <header className="w-full flex items-center px-8 py-3 bg-transparent relative z-10">
+    <header className="w-full flex items-center px-4 sm:px-6 md:px-8 py-3 bg-transparent relative z-10">
+      {/* Logo */}
       <div className="flex items-center">
         <Image
-          src="/mainLogo.png"
+          src="/AramLogo.svg"
           alt="Aram Energy Solution Logo"
           width={168}
           height={98}
+          className="w-28 h-16 sm:w-32 sm:h-20 md:w-[168px] md:h-[98px]"
         />
       </div>
-      <nav
-        className="flex items-center gap-3 flex-1 justify-end"
-        style={{
-          fontFamily: "Poppins-Regular",
-          fontSize: 16,
-          fontWeight: 400,
-        }}
-      >
-        <ul className="flex gap-8 list-none m-0 p-0 mr-10">
+
+      {/* Desktop Navigation */}
+      <nav className="hidden lg:flex items-center gap-2 sm:gap-3 flex-1 justify-end">
+        <ul className="flex gap-6 xl:gap-8 list-none m-0 p-0 mr-6 xl:mr-10">
           {navLinks.map((link) => (
             <li key={link.name} className="flex items-center">
               <Link
                 href={link.href}
                 scroll={true}
-                className="text-gray-100 px-2 py-1 rounded transition-colors duration-200 hover:text-orange-400 flex items-center"
-                style={{
-                  fontFamily: "Poppins-Regular",
-                  fontSize: 16,
-                  fontWeight: 400,
-                }}
+                className="text-gray-100 px-2 py-1 rounded transition-colors duration-200 hover:text-orange-400 flex items-center font-poppins-regular text-base font-normal"
               >
                 {link.name}
                 {link.name === "Services" && (
@@ -56,53 +69,29 @@ export default function Header() {
                     alt="Circle Down Icon"
                     width={18}
                     height={18}
-                    style={{ marginLeft: 6 }}
+                    className="ml-1.5"
                   />
                 )}
               </Link>
             </li>
           ))}
         </ul>
-        <div
-          className="ml-3 flex items-center justify-center relative"
-          style={{
-            width: 127,
-            height: 48,
-            background: "rgba(0,0,0,0.11)",
-            overflow: "hidden",
-            fontFamily: "Poppins-Regular",
-            fontSize: 16,
-            fontWeight: 400,
-          }}
-        >
+
+        {/* Language Selector */}
+        <div className="ml-2 sm:ml-3 flex items-center justify-center relative">
           <button
-            className="flex items-center justify-between w-full h-full px-4 py-2 focus:outline-none"
-            style={{
-              background: "rgba(0,0,0,0.11)",
-              color: "#fff",
-              fontFamily: "Poppins-Regular",
-              fontSize: 16,
-              fontWeight: 400,
-            }}
-            type="button"
-            onClick={() => {}}
+            className="flex items-center justify-center w-24 sm:w-32 h-12 bg-black/10 hover:bg-black/20 transition-colors duration-200 rounded-lg"
+            onClick={toggleLanguageDropdown}
           >
             <Image
               src={flagIcons[lang]}
-              alt={lang === "en" ? "EN" : "DE"}
+              alt={languages[lang].name}
               width={29}
               height={29}
-              style={{ borderRadius: "50%", marginRight: 8 }}
+              className="rounded-full mr-2"
             />
-            <span
-              className="mx-2 text-white"
-              style={{
-                fontFamily: "Poppins-Regular",
-                fontSize: 16,
-                fontWeight: 400,
-              }}
-            >
-              {lang === "en" ? "EN" : "DE"}
+            <span className="mx-1 sm:mx-2 text-white font-poppins-regular text-base font-normal">
+              {languages[lang].name === "English" ? "EN" : "DE"}
             </span>
             <svg
               width="8.5"
@@ -110,7 +99,7 @@ export default function Header() {
               viewBox="0 0 8.5 8.5"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
-              style={{ marginLeft: 8 }}
+              className={`ml-2 transition-transform duration-200 ${isLanguageDropdownOpen ? 'rotate-180' : ''}`}
             >
               <path
                 d="M1 3L4.25 6.5L7.5 3"
@@ -121,37 +110,157 @@ export default function Header() {
               />
             </svg>
           </button>
-          <select
-            className="absolute text-white bg-black top-0 left-0 w-[127px] h-[48px] text-center cursor-pointer opacity-0"
-            value={lang}
-            onChange={(e) => setLang(e.target.value as "en" | "de")}
-            style={{
-              borderRadius: 11,
-              fontFamily: "Poppins-Regular",
-              fontSize: 16,
-              fontWeight: 400,
-            }}
-          >
-            <option value="en">EN</option>
-            <option value="de">DE</option>
-          </select>
+
+          {/* Language Dropdown */}
+          {isLanguageDropdownOpen && (
+            <div className="absolute top-full mt-2 right-0 bg-black/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700 min-w-[140px] z-50">
+              {Object.entries(languages).map(([code, langData]) => (
+                <button
+                  key={code}
+                  className={`w-full flex items-center gap-3 px-4 py-3 text-left hover:bg-white/10 transition-colors duration-200 ${
+                    lang === code ? 'bg-white/20' : ''
+                  }`}
+                  onClick={() => handleLanguageChange(code as "en" | "de")}
+                >
+                  <Image
+                    src={langData.flag}
+                    alt={langData.name}
+                    width={24}
+                    height={24}
+                    className="rounded-full"
+                  />
+                  <span className="text-white font-poppins-regular text-sm">
+                    {langData.name === "English" ? "EN" : "DE"}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
         </div>
-        <button
-          className="flex items-center justify-center bg-brand-orange font-medium"
-          style={{
-            width: 233,
-            height: 64,
-            background: "#FF9641",
-            color: "#fff",
-            fontFamily: "Poppins-Medium",
-            fontSize: 16,
-            fontWeight: 400,
-            marginLeft: 15,
-          }}
-        >
+
+        {/* Get Quote Button */}
+        <button className="flex items-center justify-center bg-[#FF9641] text-white font-poppins-medium text-base font-normal ml-3 sm:ml-4 w-32 sm:w-40 md:w-56 h-12 md:h-16 hover:bg-[#e88537] transition-colors duration-200 rounded-lg">
           Get a quote
         </button>
       </nav>
+
+      {/* Mobile Navigation */}
+      <div className="lg:hidden flex items-center gap-3">
+        {/* Language Selector for Mobile */}
+        <div className="relative">
+          <button
+            className="flex items-center justify-center w-20 h-10 bg-black/10 hover:bg-black/20 transition-colors duration-200 rounded-lg"
+            onClick={toggleLanguageDropdown}
+          >
+            <Image
+              src={flagIcons[lang]}
+              alt={languages[lang].name}
+              width={24}
+              height={24}
+              className="rounded-full mr-1"
+            />
+            <span className="text-white font-poppins-regular text-sm">
+              {languages[lang].name === "English" ? "EN" : "DE"}
+            </span>
+          </button>
+
+          {/* Mobile Language Dropdown */}
+          {isLanguageDropdownOpen && (
+            <div className="absolute top-full mt-2 right-0 bg-black/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700 min-w-[120px] z-50">
+              {Object.entries(languages).map(([code, langData]) => (
+                <button
+                  key={code}
+                  className={`w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-white/10 transition-colors duration-200 ${
+                    lang === code ? 'bg-white/20' : ''
+                  }`}
+                  onClick={() => handleLanguageChange(code as "en" | "de")}
+                >
+                  <Image
+                    src={langData.flag}
+                    alt={langData.name}
+                    width={20}
+                    height={20}
+                    className="rounded-full"
+                  />
+                  <span className="text-white font-poppins-regular text-sm">
+                    {langData.name === "English" ? "EN" : "DE"}
+                  </span>
+                </button>
+              ))}
+            </div>
+          )}
+        </div>
+
+        {/* Mobile Menu Toggle */}
+        <button
+          className="flex flex-col justify-center items-center w-10 h-10 bg-black/10 hover:bg-black/20 transition-colors duration-200 rounded-lg"
+          onClick={toggleMobileMenu}
+        >
+          <span className={`block w-5 h-0.5 bg-white transition-all duration-300 ${isMobileMenuOpen ? 'rotate-45 translate-y-1.5' : ''}`}></span>
+          <span className={`block w-5 h-0.5 bg-white transition-all duration-300 mt-1 ${isMobileMenuOpen ? 'opacity-0' : ''}`}></span>
+          <span className={`block w-5 h-0.5 bg-white transition-all duration-300 mt-1 ${isMobileMenuOpen ? '-rotate-45 -translate-y-1.5' : ''}`}></span>
+        </button>
+      </div>
+
+      {/* Mobile Menu Overlay */}
+      {isMobileMenuOpen && (
+        <div className="lg:hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-40">
+          <div className="absolute top-0 right-0 w-80 h-full bg-black/95 p-6 transform transition-transform duration-300">
+            {/* Close Button */}
+            <button
+              className="absolute top-6 right-6 text-white hover:text-gray-300 transition-colors duration-200"
+              onClick={toggleMobileMenu}
+            >
+              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+              </svg>
+            </button>
+
+            {/* Mobile Navigation Links */}
+            <div className="mt-16">
+              <ul className="space-y-6">
+                {navLinks.map((link) => (
+                  <li key={link.name}>
+                    <Link
+                      href={link.href}
+                      scroll={true}
+                      className="text-white text-xl font-poppins-regular hover:text-[#FF9641] transition-colors duration-200 flex items-center"
+                      onClick={toggleMobileMenu}
+                    >
+                      {link.name}
+                      {link.name === "Services" && (
+                        <Image
+                          src="/circleDown.svg"
+                          alt="Circle Down Icon"
+                          width={18}
+                          height={18}
+                          className="ml-2"
+                        />
+                      )}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+
+              {/* Mobile Get Quote Button */}
+              <button className="w-full mt-8 bg-[#FF9641] text-white font-poppins-medium text-lg py-4 rounded-lg hover:bg-[#e88537] transition-colors duration-200">
+                Get a quote
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Click outside to close dropdowns */}
+      {(isLanguageDropdownOpen || isMobileMenuOpen) && (
+        <div 
+          className="fixed inset-0 z-30" 
+          onClick={() => {
+            setIsLanguageDropdownOpen(false);
+            setIsMobileMenuOpen(false);
+          }}
+        />
+      )}
     </header>
   );
 }

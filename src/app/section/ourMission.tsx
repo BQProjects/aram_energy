@@ -23,27 +23,15 @@ export default function OurMission() {
   return (
     <section className="w-full flex flex-col lg:flex-row items-stretch justify-center">
       {/* Left: black background, heading, features, button */}
-      <div
-        className="flex flex-col justify-between bg-black py-12 px-6 lg:px-12 w-full lg:w-1/2 min-h-[600px] ml-10"
-        style={{ minWidth: 400 }}
-      >
+      <div className="flex flex-col justify-between bg-black py-8 sm:py-10 md:py-12 px-4 sm:px-6 lg:px-12 w-full lg:w-1/2 min-h-[500px] sm:min-h-[600px] ml-0 sm:ml-4 md:ml-10 min-w-[320px] sm:min-w-[400px]">
         <div>
-          <h2
-            style={{
-              fontFamily: "InriaSerif-Bold",
-              fontSize: 36,
-              fontWeight: 700,
-              color: "#fff",
-              marginBottom: 32,
-            }}
-          >
+          <h2 className="font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 sm:mb-8">
             Our Mission
           </h2>
-          <div className="flex flex-col gap-8">
+          <div className="flex flex-col gap-6 sm:gap-8">
             {features.map((f, i) => (
-              <div key={f.title} className="flex items-start gap-5">
-                <div
-                >
+              <div key={f.title} className="flex items-start gap-4 sm:gap-5">
+                <div>
                   <Image
                     src="/orangeTick.svg"
                     alt="Tick Icon"
@@ -52,25 +40,10 @@ export default function OurMission() {
                   />
                 </div>
                 <div>
-                  <div
-                    style={{
-                      fontFamily: "InriaSerif-Bold",
-                      fontSize: 18,
-                      fontWeight: 700,
-                      color: "#fff",
-                      marginBottom: 4,
-                    }}
-                  >
+                  <div className="font-inria-serif-bold text-base sm:text-lg font-bold text-white mb-1">
                     {f.title}
                   </div>
-                  <div
-                    style={{
-                      fontFamily: "Poppins, sans-serif",
-                      fontSize: 16,
-                      fontWeight: 400,
-                      color: "#9CA3AF",
-                    }}
-                  >
+                  <div className="font-poppins text-sm sm:text-base font-normal text-gray-400">
                     {f.desc}
                   </div>
                 </div>
@@ -79,25 +52,9 @@ export default function OurMission() {
           </div>
         </div>
         {/* Button at bottom */}
-        <div className="mt-12 flex items-center">
-          <button
-            className="flex items-center justify-between"
-            style={{
-              width: 380,
-              height: 64,
-              background: "#fff",
-              fontFamily: "Inter",
-              fontWeight: 500,
-              fontSize: 18,
-              color: "#FF9641",
-              border: "none",
-              outline: "none",
-              cursor: "pointer",
-              paddingLeft: 24,
-              paddingRight: 24,
-            }}
-          >
-            <span style={{ fontWeight: 600 }}>Get a quote</span>
+        <div className="mt-8 sm:mt-12 flex items-center">
+          <button className="flex items-center justify-between w-full sm:w-80 md:w-96 h-14 md:h-16 bg-white font-inter font-medium text-base md:text-lg text-[#FF9641] border-none outline-none cursor-pointer px-4 sm:px-6 rounded-lg hover:bg-gray-50 transition-colors duration-200">
+            <span className="font-semibold">Get a quote</span>
             <span className="flex items-center gap-2">
               <Image
                 src="/rightarrow.svg"
@@ -110,13 +67,13 @@ export default function OurMission() {
         </div>
       </div>
       {/* Right: image */}
-      <div className="flex items-center justify-center bg-black w-full lg:w-1/2 py-12 px-6 lg:px-12">
+      <div className="flex items-center justify-center bg-black w-full lg:w-1/2 py-8 sm:py-10 md:py-12 px-4 sm:px-6 lg:px-12">
         <Image
           src="/ourMission.png"
           alt="Mission Section Image"
           width={697}
           height={533}
-          style={{ borderRadius: 16, objectFit: "cover" }}
+          className="w-full max-w-sm sm:max-w-md md:max-w-lg lg:max-w-none lg:w-[697px] h-auto rounded-2xl object-cover"
         />
       </div>
     </section>

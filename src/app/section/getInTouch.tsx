@@ -2,18 +2,15 @@ import Image from "next/image";
 
 export default function GetInTouch() {
   return (
-    <div className="bg-black flex justify-center items-center min-h-screen p-4 pb-28">
+    <div className="bg-black flex justify-center items-center min-h-screen p-4 pb-16 sm:pb-20 md:pb-28">
       <div className="flex flex-col md:flex-row gap-6 w-full max-w-[896px]">
         {/* Left: Contact Card */}
-        <div className="bg-[#0F0F0F] text-white rounded-xl p-8 flex flex-col md:w-1/2">
-          <h2
-            className="mb-8 text-2xl font-semibold"
-            style={{ fontFamily: "InriaSerif-Bold" }}
-          >
+        <div className="bg-[#0F0F0F] text-white rounded-xl p-6 sm:p-8 flex flex-col md:w-1/2">
+          <h2 className="mb-6 sm:mb-8 text-xl sm:text-2xl font-semibold font-inria-serif-bold">
             Contact Information
           </h2>
 
-          <div className="space-y-6">
+          <div className="space-y-4 sm:space-y-6">
             {[
               {
                 icon: "/orangePhone.svg",
@@ -26,7 +23,7 @@ export default function GetInTouch() {
                 content: (
                   <a
                     href="mailto:support@aram-energy-solution.com"
-                    className="underline"
+                    className="underline hover:text-[#FF9641] transition-colors duration-200"
                   >
                     support@aram-energy-solution.com
                   </a>
@@ -48,18 +45,19 @@ export default function GetInTouch() {
                 ),
               },
             ].map((item, idx) => (
-              <div key={idx} className="flex items-start gap-4">
+              <div key={idx} className="flex items-start gap-3 sm:gap-4">
                 <Image
                   src={item.icon}
                   alt={item.title}
                   width={40}
                   height={40}
+                  className="w-8 h-8 sm:w-10 sm:h-10 flex-shrink-0"
                 />
                 <div>
-                  <p className="font-inter text-lg text-[#F9FAFB]">
+                  <p className="font-inter text-base sm:text-lg text-[#F9FAFB] font-medium">
                     {item.title}
                   </p>
-                  <div className="font-inter text-base text-[#F9FAFB]">
+                  <div className="font-inter text-sm sm:text-base text-[#F9FAFB]">
                     {item.content}
                   </div>
                 </div>
@@ -67,9 +65,9 @@ export default function GetInTouch() {
             ))}
           </div>
 
-          <div className="mt-8">
+          <div className="mt-6 sm:mt-8">
             <hr className="border-[#374151] mb-4" />
-            <p className="font-inter text-lg text-[#F9FAFB] mb-4">Follow Us</p>
+            <p className="font-inter text-base sm:text-lg text-[#F9FAFB] mb-4">Follow Us</p>
             <div className="flex gap-3">
               {[
                 "/orangeFacebook.svg",
@@ -77,8 +75,8 @@ export default function GetInTouch() {
                 "/orangeLinkedIn.svg",
                 "/orangeInsta.svg",
               ].map((icon, idx) => (
-                <a key={idx} href="#">
-                  <Image src={icon} alt="Social" width={40} height={40} />
+                <a key={idx} href="#" className="hover:opacity-80 transition-opacity duration-200">
+                  <Image src={icon} alt="Social" width={40} height={40} className="w-8 h-8 sm:w-10 sm:h-10" />
                 </a>
               ))}
             </div>
@@ -86,15 +84,12 @@ export default function GetInTouch() {
         </div>
 
         {/* Right: Form Card */}
-        <div className="bg-white rounded-xl p-8 md:w-1/2">
-          <h2
-            className="mb-6 text-2xl"
-            style={{ fontFamily: "InriaSerif-Bold", color: "#2C2C2C" }}
-          >
+        <div className="bg-white rounded-xl p-6 sm:p-8 md:w-1/2">
+          <h2 className="mb-4 sm:mb-6 text-xl sm:text-2xl font-inria-serif-bold text-[#2C2C2C]">
             Send Us a Message
           </h2>
 
-          <form className="space-y-5">
+          <form className="space-y-4 sm:space-y-5">
             <div className="flex flex-col md:flex-row gap-4">
               {[
                 {
@@ -119,7 +114,7 @@ export default function GetInTouch() {
                     id={field.id}
                     type="text"
                     placeholder={field.placeholder}
-                    className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter text-base"
+                    className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
                   />
                 </div>
               ))}
@@ -136,7 +131,7 @@ export default function GetInTouch() {
                 id="email"
                 type="email"
                 placeholder="Enter your email address"
-                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter text-base"
+                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
               />
             </div>
 
@@ -151,7 +146,7 @@ export default function GetInTouch() {
                 id="phone"
                 type="tel"
                 placeholder="Enter your phone number"
-                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter text-base"
+                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
               />
             </div>
 
@@ -164,7 +159,7 @@ export default function GetInTouch() {
               </label>
               <select
                 id="service"
-                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[#ADAEBC] font-inter text-base"
+                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[#ADAEBC] font-inter text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
               >
                 <option>Select a service</option>
                 <option>Service 1</option>
@@ -182,11 +177,11 @@ export default function GetInTouch() {
               <textarea
                 id="message"
                 placeholder="Tell us your energy needs..."
-                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 h-28 bg-[#F9FAFB] placeholder-[#ADAEBC] font-inter text-base"
+                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 h-24 sm:h-28 bg-[#F9FAFB] placeholder-[#ADAEBC] font-inter text-sm sm:text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent resize-none"
               ></textarea>
             </div>
 
-            <label className="flex items-start gap-2 text-sm text-[#6C757D]">
+            <label className="flex items-start gap-2 text-xs sm:text-sm text-[#6C757D]">
               <input type="checkbox" className="mt-1" />I agree to receive
               communications from PowerGrid and understand that I can
               unsubscribe at any time.
@@ -194,9 +189,9 @@ export default function GetInTouch() {
 
             <button
               type="submit"
-              className="bg-[#FF9641] w-full text-white px-6 py-3 rounded-xl flex items-center justify-center gap-2"
+              className="bg-[#FF9641] w-full text-white px-4 sm:px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-inter font-medium hover:bg-[#e88537] transition-colors duration-200"
             >
-              <Image src="/sendSvg.svg" alt="Send" width={16} height={16} />
+              <Image src="/sendSvg.svg" alt="Send" width={16} height={16} className="w-4 h-4 sm:w-4 sm:h-4" />
               Send Message
             </button>
           </form>
