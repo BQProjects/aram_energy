@@ -35,8 +35,9 @@ export default function Home() {
           <button className="mt-4 sm:mt-5 md:mt-6 lg:mt-16 flex items-center justify-center w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-48 h-12 sm:h-14 md:h-16 lg:h-16 bg-white text-[#FF9641] font-inter text-base sm:text-lg font-medium hover:bg-gray-50 transition-colors duration-200 px-6 py-3 shadow-lg">
             {t("hero.learnMore")}
           </button>
-          <h1 className="text-center font-normal font-poppins-regular text-2xl sm:text-2xl md:text-2xl lg:text-3xl font-medium leading-tight text-[#F9FAFB] mt-2 sm:mt-3 md:mt-4 px-2">
-            Discover our energy consulting services
+          <h1 className="text-center font-poppins-regular text-2xl sm:text-2xl md:text-2xl lg:text-2xl font-normal leading-normal text-[#F9FAFB] mt-2 sm:mt-3 md:mt-12 px-2">
+            
+          {t("hero.description")}
           </h1>
           <div className="w-full max-w-5xl mt-4 sm:mt-6 md:mt-8">
             <CalculationTarif />

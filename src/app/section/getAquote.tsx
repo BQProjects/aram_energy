@@ -21,8 +21,8 @@ export default function GetAquote() {
           {/* Left empty space (40%) */}
           <div className="w-[40%] hidden md:block" />
           {/* Right content box (60%) */}
-          <div className="w-full md:w-[60%] flex items-center min-h-[280px] sm:min-h-[320px]">
-            <div className="w-full px-6 sm:px-8 md:px-10 py-8 sm:py-10 md:py-12 bg-black/80 rounded-3xl shadow-2xl mx-4 md:mx-0">
+          <div className="w-full md:w-[60%] flex items-center min-h-[280px] sm:min-h-[320px] mr-1">
+            <div className="w-full px-6 sm:px-8 md:px-10 py-8 sm:py-10 md:py-12 bg-black/80 shadow-2xl mx-4 md:mx-0">
               <h2 className="font-inter text-2xl sm:text-3xl md:text-4xl font-bold text-[#FF9641] mb-4 sm:mb-6 text-left">
                 {t('getQuote.title')}
               </h2>

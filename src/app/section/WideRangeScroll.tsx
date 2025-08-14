@@ -1,26 +1,28 @@
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useLanguage } from "../contexts/LanguageContext";
 
-const features = [
+const featureKeys = [
   {
-    heading: "Wide range conditions for all",
-    desc: "through intelligent bundling",
+    heading: "wideRange.feature1.heading",
+    desc: "wideRange.feature1.desc",
   },
   {
-    heading: "Reliable energy suppliers",
-    desc: "e.g. Stadtwerke Duisburg AG",
+    heading: "wideRange.feature2.heading",
+    desc: "wideRange.feature2.desc",
   },
   {
-    heading: "Personal support",
-    desc: "fixed contact person instead of hotline",
+    heading: "wideRange.feature3.heading",
+    desc: "wideRange.feature3.desc",
   },
   {
-    heading: "All-round service",
-    desc: "We take care of the change of provider and all formalities",
+    heading: "wideRange.feature4.heading",
+    desc: "wideRange.feature4.desc",
   },
 ];
 
 export default function WideRangeScroll() {
+  const { t } = useLanguage();
   const [current, setCurrent] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [direction, setDirection] = useState<"left" | "right">("right");
@@ -32,11 +34,13 @@ export default function WideRangeScroll() {
         setDirection("right");
         setAnimating(true);
         setTimeout(() => {
-          setCurrent((prev) => (prev === features.length - 1 ? 0 : prev + 1));
+          setCurrent((prev) =>
+            prev === featureKeys.length - 1 ? 0 : prev + 1
+          );
           setAnimating(false);
-        }, 500); // match animation duration
+        }, 600); // match animation duration
       }
-    }, 4000);
+    }, 6000);
     return () => clearInterval(interval);
   }, [animating]);
 
@@ -45,9 +49,9 @@ export default function WideRangeScroll() {
     setDirection("left");
     setAnimating(true);
     setTimeout(() => {
-      setCurrent((prev) => (prev === 0 ? features.length - 1 : prev - 1));
+      setCurrent((prev) => (prev === 0 ? featureKeys.length - 1 : prev - 1));
       setAnimating(false);
-    }, 350);
+    }, 600);
   };
 
   const nextSlide = () => {
@@ -55,9 +59,9 @@ export default function WideRangeScroll() {
     setDirection("right");
     setAnimating(true);
     setTimeout(() => {
-      setCurrent((prev) => (prev === features.length - 1 ? 0 : prev + 1));
+      setCurrent((prev) => (prev === featureKeys.length - 1 ? 0 : prev + 1));
       setAnimating(false);
-    }, 350);
+    }, 600);
   };
 
   return (
@@ -93,15 +97,15 @@ export default function WideRangeScroll() {
             key={current}
           >
             <h2 className="font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#FF9641] mb-4">
-              {features[current].heading}
+              {t(featureKeys[current].heading)}
             </h2>
             <p className="font-poppins-regular text-lg sm:text-xl md:text-2xl lg:text-3xl text-white">
-              {features[current].desc}
+              {t(featureKeys[current].desc)}
             </p>
           </div>
           {/* Dots */}
           <div className="flex justify-center mt-4 sm:mt-6 gap-2">
-            {features.map((_, idx) => (
+            {featureKeys.map((_, idx) => (
               <span
                 key={idx}
                 className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${

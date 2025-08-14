@@ -5,21 +5,20 @@ export default function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="w-full bg-black text-white py-6 sm:py-8 px-4 sm:px-6 md:px-8">
+    <footer className="w-full bg-black text-white py-6 sm:py-8 px-4 sm:px-6 md:px-8 h-60">
       <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10 font-poppins-regular text-sm sm:text-base font-normal">
-        {/* Logo - Centered on mobile */}
-        <div className="w-full flex justify-center md:justify-start">
-          <Image
-            src="/AramLogo.svg"
-            alt="Aram Energy Solution Logo"
-            width={170}
-            height={100}
-            className="w-40 h-24 sm:w-48 sm:h-28 md:w-[170px] md:h-[100px]"
-          />
-        </div>
-
         {/* Content sections - Stacked on mobile, side by side on desktop */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 md:gap-10">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-8">
+          {/* Logo - Centered on mobile */}
+          <div className="w-full flex justify-center md:justify-start">
+            <Image
+              src="/AramLogo.svg"
+              alt="Aram Energy Solution Logo"
+              width={170}
+              height={100}
+              className="w-40 h-24 sm:w-48 sm:h-28 md:w-[170px] md:h-[100px]"
+            />
+          </div>
           {/* Contact Section */}
           <div className="flex flex-col items-center md:items-start gap-3 text-center md:text-left">
             <span className="font-medium text-lg sm:text-xl font-poppins-regular">
@@ -148,25 +147,25 @@ export default function Footer() {
               href="#"
               className="hover:underline transition-colors duration-200 text-sm sm:text-base hover:text-[#FF9641] font-poppins-regular"
             >
-              {t('footer.privacy')}
+              {t("footer.privacy")}
             </a>
             <a
               href="#"
               className="hover:underline transition-colors duration-200 text-sm sm:text-base hover:text-[#FF9641] font-poppins-regular"
             >
-              {t('footer.accessibility')}
+              {t("footer.accessibility")}
             </a>
             <a
               href="#"
               className="hover:underline transition-colors duration-200 text-sm sm:text-base hover:text-[#FF9641] font-poppins-regular"
             >
-              {t('footer.terms')}
+              {t("footer.terms")}
             </a>
             <a
               href="#"
               className="hover:underline transition-colors duration-200 text-sm sm:text-base hover:text-[#FF9641] font-poppins-regular"
             >
-              {t('footer.refund')}
+              {t("footer.refund")}
             </a>
           </div>
         </div>

@@ -55,7 +55,7 @@ export default function Header() {
 
       {/* Desktop Navigation */}
       <nav className="hidden lg:flex items-center flex-1 justify-center relative">
-        <ul className="flex gap-6 xl:gap-6 list-none m-0 p-0 absolute left-0 right-1/6 mx-auto w-fit">
+        <ul className="flex gap-6 xl:gap-5 list-none m-0 p-0 absolute left-0 right-1/6 mx-auto w-fit">
           {navLinks.map((link) => (
             <li key={link.nameKey} className="flex items-center">
               <Link
@@ -78,7 +78,7 @@ export default function Header() {
           ))}
         </ul>
         {/* Right side: Language Selector and Get Quote Button */}
-        <div className="hidden lg:flex items-center gap-3 absolute right-0">
+        <div className="hidden lg:flex items-center gap-10 absolute right-0">
           {/* Language Selector */}
           <div className="flex items-center justify-center relative">
             <button
@@ -143,7 +143,7 @@ export default function Header() {
           </div>
 
           {/* Get Quote Button */}
-          <button className="flex items-center justify-center mr-6 bg-[#FF9641] text-white font-poppins-medium text-base font-normal w-28 sm:w-36 md:w-52 h-11 md:h-15 hover:bg-[#e88537] transition-colors duration-200">
+          <button className="flex items-center justify-center bg-[#FF9641] text-white font-poppins-medium text-base font-normal w-28 sm:w-36 md:w-56 h-11 md:h-14 hover:bg-[#e88537] transition-colors duration-200">
             {t("header.getQuote")}
           </button>
         </div>

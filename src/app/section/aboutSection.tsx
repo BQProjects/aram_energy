@@ -12,7 +12,7 @@ export default function AboutSection() {
       {/* Top 25% black section */}
       <div className="w-full flex items-center bg-black h-24 sm:h-32 md:h-40 lg:h-48 xl:h-52 min-h-[120px] sm:min-h-[150px] md:min-h-[180px]">
         <span className="ml-3 sm:ml-4 md:ml-6 lg:ml-8 text-[#FF9641] font-quando text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-wide px-2">
-          {t('about.title')}
+          {t("about.title")}
         </span>
       </div>
       {/* Bottom white section */}
@@ -31,7 +31,7 @@ export default function AboutSection() {
         <div className="flex flex-col gap-6 sm:gap-8 lg:gap-10 max-w-xl w-full px-2 sm:px-4">
           {/* 1st para */}
           <div className="flex items-start gap-3 sm:gap-4 md:gap-6">
-            <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-[85px] lg:h-16 rounded-full bg-[#F2F2F2] flex-shrink-0 mt-1">
+            <div className="flex items-center justify-center w-12 h-12 sm:w-16 sm:h-16 md:w-16 md:h-16 rounded-full bg-[#F2F2F2] flex-shrink-0 mt-1">
               <Image
                 src="/ribbon.svg"
                 alt="Ribbon Icon"
@@ -43,9 +43,9 @@ export default function AboutSection() {
             <div className="flex-1 min-w-0">
               <span className="font-poppins-regular text-sm sm:text-base md:text-lg font-medium text-[#171717] leading-relaxed">
                 <span className="text-lg sm:text-xl md:text-2xl font-bold block font-inria-serif-bold mb-1 sm:mb-2">
-                  {t('about.affordableRates')}
+                  {t("about.affordableRates")}
                 </span>
-                {t('about.affordableRatesDesc')}
+                {t("about.affordableRatesDesc")}
               </span>
             </div>
           </div>
@@ -63,9 +63,9 @@ export default function AboutSection() {
             <div className="flex-1 min-w-0">
               <span className="font-poppins-regular text-sm sm:text-base md:text-lg font-medium text-[#171717] leading-relaxed">
                 <span className="text-lg sm:text-xl md:text-2xl font-bold block font-inria-serif-bold mb-1 sm:mb-2">
-                  {t('about.contactPerson')}
+                  {t("about.contactPerson")}
                 </span>
-                {t('about.contactPersonDesc')}
+                {t("about.contactPersonDesc")}
               </span>
             </div>
           </div>
@@ -83,9 +83,9 @@ export default function AboutSection() {
             <div className="flex-1 min-w-0">
               <span className="font-poppins-regular text-sm sm:text-base md:text-lg font-medium text-[#171717] leading-relaxed">
                 <span className="text-lg sm:text-xl md:text-2xl font-bold block font-inria-serif-bold mb-1 sm:mb-2">
-                  {t('about.reliablePartner')}
+                  {t("about.reliablePartner")}
                 </span>
-                {t('about.reliablePartnerDesc')}
+                {t("about.reliablePartnerDesc")}
               </span>
             </div>
           </div>

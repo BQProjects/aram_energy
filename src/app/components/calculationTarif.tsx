@@ -13,7 +13,7 @@ export default function CalculationTarif() {
       <div className="flex flex-col sm:flex-row items-center justify-between mt-6 sm:mt-8 w-full max-w-[800px] h-12 sm:h-16 bg-[#EEEEEE2B] p-2 sm:p-3 gap-2 sm:gap-0">
         {/* Electricity Button */}
         <button
-          className={`flex items-center justify-center w-full sm:w-[400px] h-11 font-inter text-sm sm:text-base font-normal transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
+          className={`flex items-center justify-center w-full sm:w-[400px] h-11 font-inter text-sm sm:text-base font-medium transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
             selected === "electricity"
               ? "bg-[#FF9641] text-white"
               : "bg-transparent text-white hover:bg-white/10"
@@ -27,12 +27,12 @@ export default function CalculationTarif() {
             height={16}
             className="mr-2 w-3 h-4 sm:w-3 sm:h-4"
           />
-          {t('calculation.electricity')}
+          {t("calculation.electricity")}
         </button>
 
         {/* Gas Button */}
         <button
-          className={`flex items-center justify-center w-full sm:w-[400px] h-11 font-inter text-sm sm:text-base font-normal transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
+          className={`flex items-center justify-center w-full sm:w-[400px] h-11 font-inter text-sm sm:text-base font-medium transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
             selected === "gas"
               ? "bg-[#FF9641] text-white"
               : "bg-transparent text-white hover:bg-white/10"
@@ -46,52 +46,72 @@ export default function CalculationTarif() {
             height={16}
             className="mr-2 w-3 h-4 sm:w-3 sm:h-4"
           />
-          {t('calculation.gas')}
+          {t("calculation.gas")}
         </button>
       </div>
 
       {/* Customer type */}
-      <div className="flex items-center gap-2 mt-4 sm:mt-5">
-        <Image src="/infoI.svg" alt="Info Icon" width={12} height={16} className="w-3 h-4 sm:w-3 sm:h-4" />
-        <span className="font-poppins text-sm sm:text-base font-normal">
-          {t('calculation.customerType')}
+      <div className="flex items-center gap-2 mt-4 sm:mt-8">
+        <Image
+          src="/infoI.svg"
+          alt="Info Icon"
+          width={12}
+          height={16}
+          className="w-3 h-4 sm:w-3 sm:h-4"
+        />
+        <span className="font-poppins text-sm sm:text-base font-medium">
+          {t("calculation.customerType")}
         </span>
       </div>
 
       {/* Private / Company Switch */}
       <div className="ml-2 sm:ml-4 md:ml-6 flex items-center gap-3 sm:gap-4 md:gap-8 mt-3 sm:mt-4">
         <div className="flex items-center">
-          <Image src="/person.svg" alt="Person" width={12} height={16} className="w-3 h-4 sm:w-3 sm:h-4" />
-          <span className="ml-1 font-poppins text-xs sm:text-sm font-normal text-white">
-            {t('calculation.private')}
+          <Image
+            src="/person.svg"
+            alt="Person"
+            width={12}
+            height={16}
+            className="w-3 h-4 sm:w-3 sm:h-4"
+          />
+          <span className="ml-1 font-poppins text-xs sm:text-sm font-medium text-white">
+            {t("calculation.private")}
           </span>
         </div>
 
         <div
-          className="flex items-center justify-center w-[45px] sm:w-[55px] h-[20px] sm:h-[25px] bg-[#FF9641] rounded-full shadow cursor-pointer relative"
+          className="flex items-center justify-center w-[45px] sm:w-[60px] h-[20px] sm:h-[25px] bg-[#FF9641] rounded-full shadow cursor-pointer relative"
           onClick={() =>
             setCustomerType(customerType === "private" ? "company" : "private")
           }
         >
           <div
             className={`w-[17px] sm:w-[21px] h-[17px] sm:h-[21px] bg-white rounded-full shadow absolute top-[1.5px] sm:top-[2px] transition-all duration-300 ease-in-out ${
-              customerType === "private" ? "left-[1.5px] sm:left-[2px]" : "left-[26px] sm:left-[32px]"
+              customerType === "private"
+                ? "left-[1.5px] sm:left-[2px]"
+                : "left-[26px] sm:left-[32px]"
             }`}
             style={{ boxShadow: "0 2px 8px 0 rgba(0,0,0,0.10)" }}
           ></div>
         </div>
 
         <div className="flex items-center">
-          <Image src="/company.svg" alt="Company" width={12} height={16} className="w-3 h-4 sm:w-3 sm:h-4" />
-          <span className="ml-1 font-poppins text-xs sm:text-sm font-normal text-white">
-            {t('calculation.company')}
+          <Image
+            src="/company.svg"
+            alt="Company"
+            width={12}
+            height={16}
+            className="w-3 h-4 sm:w-3 sm:h-4"
+          />
+          <span className="ml-1 font-poppins text-xs sm:text-sm font-medium text-white">
+            {t("calculation.company")}
           </span>
         </div>
       </div>
 
       {/* Annual consumption text */}
-      <span className="mt-3 sm:mt-4 font-poppins text-sm sm:text-base font-normal text-center px-2">
-        {t('calculation.consumption')}
+      <span className="mt-3 sm:mt-4 font-poppins-medium text-sm sm:text-base text-[#E5E7EB] text-center px-2">
+        {t("calculation.consumption")}
       </span>
 
       {/* Form grid */}
@@ -100,16 +120,16 @@ export default function CalculationTarif() {
         <div className="flex flex-col w-full max-w-[380px]">
           <label
             htmlFor="postalCode"
-            className="text-xs sm:text-sm font-normal text-white mb-1 sm:mb-2"
+            className="text-xs sm:text-sm font-normal font-poppins-medium text-[#F9FAFB] mb-1 sm:mb-2"
           >
-            {t('calculation.zipCode')}
+            {t("calculation.zipCode")}
           </label>
           <div className="relative">
             <input
               id="postalCode"
               type="text"
-              placeholder={t('calculation.zipCodePlaceholder')}
-              className="w-full h-[45px] sm:h-[50px] rounded-lg border border-[#E0E0E0] bg-white px-3 sm:px-4 pr-8 sm:pr-10 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+              placeholder={t("calculation.zipCodePlaceholder")}
+              className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 pr-8 sm:pr-10 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
             />
             <Image
               src="/location.svg"
@@ -125,15 +145,15 @@ export default function CalculationTarif() {
         <div className="flex flex-col w-full max-w-[380px]">
           <label
             htmlFor="annualConsumption"
-            className="text-xs sm:text-sm font-normal text-white mb-1 sm:mb-2"
+            className="text-xs sm:text-sm font-normal font-poppins-medium text-[#F9FAFB] mb-1 sm:mb-2"
           >
-            {t('calculation.consumption')}
+            {t("calculation.consumption")}
           </label>
           <input
             id="annualConsumption"
             type="text"
-            placeholder={t('calculation.consumptionPlaceholder')}
-            className="w-full h-[45px] sm:h-[50px] rounded-lg border border-[#E0E0E0] bg-white px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+            placeholder={t("calculation.consumptionPlaceholder")}
+            className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
 
@@ -141,15 +161,15 @@ export default function CalculationTarif() {
         <div className="flex flex-col w-full max-w-[380px]">
           <label
             htmlFor="tariffKey"
-            className="text-xs sm:text-sm font-normal text-white mb-1 sm:mb-2"
+            className="text-xs sm:text-sm font-normal font-poppins-medium text-[#F9FAFB] mb-1 sm:mb-2"
           >
-            {t('calculation.tariffKey')}
+            {t("calculation.tariffKey")}
           </label>
           <input
             id="tariffKey"
             type="text"
-            placeholder={t('calculation.tariffKeyPlaceholder')}
-            className="w-full h-[45px] sm:h-[50px] rounded-lg border border-[#E0E0E0] bg-white px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+            placeholder={t("calculation.tariffKeyPlaceholder")}
+            className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
 
@@ -157,28 +177,28 @@ export default function CalculationTarif() {
         <div className="flex flex-col w-full max-w-[380px]">
           <label
             htmlFor="transactionKey"
-            className="text-xs sm:text-sm font-normal text-white mb-1 sm:mb-2"
+            className="text-xs sm:text-sm font-normal font-poppins-medium text-[#F9FAFB] mb-1 sm:mb-2"
           >
-            {t('calculation.transactionKey')}
+            {t("calculation.transactionKey")}
           </label>
           <input
             id="transactionKey"
             type="text"
-            placeholder={t('calculation.transactionKeyPlaceholder')}
-            className="w-full h-[45px] sm:h-[50px] rounded-lg border border-[#E0E0E0] bg-white px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+            placeholder={t("calculation.transactionKeyPlaceholder")}
+            className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
 
         {/* Calculate button */}
         <div className="col-span-1 sm:col-span-2 flex justify-center mt-6 sm:mt-8">
-          <button className="w-full sm:w-[300px] h-[45px] sm:h-[50px] bg-[#FF9641] text-white rounded-lg font-poppins font-medium text-sm sm:text-base hover:bg-[#e88537] transition-colors duration-200 shadow-lg">
-            {t('calculation.calculate')}
+          <button className="w-full sm:w-[300px] h-[45px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-medium text-sm sm:text-base hover:bg-[#e88537] transition-colors duration-200 shadow-lg">
+            {t("calculation.calculate")}
           </button>
         </div>
       </div>
 
       {/* Help text */}
-      <div className="flex items-center mt-3 sm:mt-4 px-2">
+      <div className="flex items-center mt-3 sm:mt-8 px-2">
         <Image
           src="/question.svg"
           alt="Help"
@@ -186,8 +206,8 @@ export default function CalculationTarif() {
           height={14}
           className="mr-2 w-3 h-3 sm:w-3.5 sm:h-3.5"
         />
-        <span className="font-poppins text-xs sm:text-sm font-normal text-white">
-          {t('calculation.helpText')}
+        <span className="font-poppins text-xs sm:text-sm font-poppins-regular text-[#E5E7EB]">
+          {t("calculation.helpText")}
         </span>
       </div>
     </div>

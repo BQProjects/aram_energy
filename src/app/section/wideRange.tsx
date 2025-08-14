@@ -25,7 +25,7 @@ export default function WideRange() {
         <div className="font-poppins-regular text-lg sm:text-xl md:text-2xl font-normal text-white mb-4 sm:mb-6">
           {t('wideRange.subtitle')}
         </div>
-        <button className="flex items-center justify-between w-full sm:w-80 md:w-96 lg:w-[470px] h-12 sm:h-14 md:h-[55px] bg-[#FF9641] font-inter font-medium text-sm sm:text-base text-white border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 mb-6 sm:mb-8 rounded-lg hover:bg-[#e88537] transition-colors duration-200">
+        <button className="flex items-center justify-between w-full sm:w-80 md:w-96 lg:w-[500px] h-12 sm:h-14 md:h-[55px] bg-[#FF9641] font-inter font-medium text-sm sm:text-base text-white border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 mb-6 sm:mb-8 hover:bg-[#e88537] transition-colors duration-200">
           <span className="text-left">
             {t('wideRange.cta')}
           </span>
@@ -37,7 +37,7 @@ export default function WideRange() {
             className="w-6 h-6 sm:w-8 sm:h-8 md:w-8 md:h-8"
           />
         </button>
-        <div className="font-poppins-regular text-base sm:text-lg md:text-xl font-normal text-white text-justify max-w-4xl">
+        <div className="font-poppins-regular text-base sm:text-lg md:text-xl font-normal text-white text-justify max-w-6xl">
           {t('wideRange.description')}
         </div>
       </div>
