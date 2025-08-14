@@ -182,7 +182,7 @@ export default function Addressdetails() {
           >
             <div className="w-full grid grid-cols-2 gap-x-4 gap-y-6 items-center">
               {/* Postal Code */}
-              <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                 Postal Code *
               </label>
               <input
@@ -194,7 +194,7 @@ export default function Addressdetails() {
               />
 
               {/* Location */}
-              <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                 Location *
               </label>
               <input
@@ -206,7 +206,7 @@ export default function Addressdetails() {
               />
 
               {/* Street */}
-              <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                 Street *
               </label>
               <input
@@ -218,7 +218,7 @@ export default function Addressdetails() {
               />
 
               {/* House Number and Suffix side by side */}
-              <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                 House Number * / House Number Suffix
               </label>
               <div className="flex gap-4 col-span-1">
@@ -239,11 +239,11 @@ export default function Addressdetails() {
               </div>
 
               {/* Move-in Status */}
-              <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                 Move-in Status
               </label>
               <div className="flex gap-4 flex-col">
-                <label className="flex items-center gap-2 text-[#abafb1] font-poppins text-base cursor-pointer w-full">
+                <label className="flex items-center gap-2 text-[#abafb1] font-poppins-regular text-sm cursor-pointer w-full">
                   <input
                     type="radio"
                     name="moveInStatus"
@@ -253,7 +253,7 @@ export default function Addressdetails() {
                   />
                   I have just moved in or I am about to move in (move in)
                 </label>
-                <label className="flex items-center gap-2 text-[#abafb1] font-poppins text-base cursor-pointer w-full">
+                <label className="flex items-center gap-2 text-[#abafb1] font-poppins-regular text-sm cursor-pointer w-full">
                   <input
                     type="radio"
                     name="moveInStatus"
@@ -266,7 +266,7 @@ export default function Addressdetails() {
               </div>
 
               {/* Desired Start of Delivery */}
-              <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                 Desired Start of Delivery
               </label>
               <input
@@ -277,7 +277,7 @@ export default function Addressdetails() {
               />
 
               {/* Previous Supplier */}
-              <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                 Previous Supplier
               </label>
               <input
@@ -289,7 +289,7 @@ export default function Addressdetails() {
               />
 
               {/* Previous Customer No. */}
-              <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                 Previous Customer No.
               </label>
               <input
@@ -301,7 +301,7 @@ export default function Addressdetails() {
               />
 
               {/* Meter No. */}
-              <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                 Meter No.
               </label>
               <input
@@ -312,7 +312,7 @@ export default function Addressdetails() {
                 onChange={(e) => setMeterNo(e.target.value)}
               />
 
-              <div className="w-full col-span-2 text-[#abafb1] font-poppins-regular text-base">
+              <div className="w-full col-span-2 text-[#abafb1] font-poppins-regular text-sm">
                 Would you like to switch suppliers more quickly? Then please
                 provide us with your store location number. This will allow us
                 to start supplying you more quickly.
@@ -321,7 +321,7 @@ export default function Addressdetails() {
               <div></div>
 
               {/* Meter Location No. */}
-              <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                 Meter Location No.
               </label>
               <input
@@ -341,7 +341,7 @@ export default function Addressdetails() {
                   <div></div>
                   <div></div>
 
-                  <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+                  <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                     Billing House Number * / Suffix
                   </label>
                   <div className="flex gap-4 col-span-1">
@@ -363,7 +363,7 @@ export default function Addressdetails() {
                     />
                   </div>
 
-                  <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+                  <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                     Billing Street *
                   </label>
                   <input
@@ -374,7 +374,7 @@ export default function Addressdetails() {
                     onChange={(e) => setBillingStreet(e.target.value)}
                   />
 
-                  <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+                  <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                     Billing City *
                   </label>
                   <input
@@ -385,7 +385,7 @@ export default function Addressdetails() {
                     onChange={(e) => setBillingCity(e.target.value)}
                   />
 
-                  <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+                  <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                     Billing Postal Code *
                   </label>
                   <input
@@ -396,7 +396,7 @@ export default function Addressdetails() {
                     onChange={(e) => setBillingPostal(e.target.value)}
                   />
 
-                  <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+                  <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
                     Billing Country *
                   </label>
                   <input
@@ -415,12 +415,17 @@ export default function Addressdetails() {
                 {error && (
                   <span className="text-red-400 text-xs mb-2">{error}</span>
                 )}
-                <button
-                  type="submit"
-                  className="mt-4 bg-[#FF9641] hover:bg-[#e88537] font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
-                >
-                  Continue
-                </button>
+                <div className="flex flex-col items-end justify-end w-full col-span-1">
+                  {error && (
+                    <span className="text-red-400 text-xs mb-2">{error}</span>
+                  )}
+                  <button
+                    type="submit"
+                    className="mt-4 w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
+                  >
+                    Next
+                  </button>
+                </div>
               </div>
             </div>
           </form>

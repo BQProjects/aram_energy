@@ -37,48 +37,48 @@ const SepaCard: React.FC = () => {
       {/* Content */}
       <div className="pl-6 pr-4 py-6 flex flex-col justify-between h-full gap-0">
         <div>
-          <div className="text-[#33475b] font-poppins text-sm font-light leading-6 mb-1">
+          <div className="text-[#33475b] font-poppins-light text-lg font-light leading-6 mb-1">
             Delivery point information:
           </div>
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-1 mt-4">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-1 mt-4">
             Postal code: {personal.postalCode || "-"}
           </div>
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-2">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
             Location: {personal.location || "-"}
           </div>
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-1 mt-4">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-1 mt-4">
             Street: {personal.street || "-"}
           </div>
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-2">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
             House number */ House number suffix: {personal.houseNumber || "-"} /{" "}
             {personal.houseNumberSuffix || "-"}
           </div>
           <div className="w-full h-0.5 bg-green-500 mb-3" />
-          <div className="text-[#33475b] font-poppins text-sm font-light leading-6 mb-1">
+          <div className="text-[#33475b] font-poppins-light text-lg font-light leading-6 mb-1">
             Further information
           </div>
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-1 mt-4">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-1 mt-4">
             Desired start of delivery: {personal.desiredStart || "-"}
           </div>
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-2">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
             Previous supplier: {personal.previousSupplier || "-"}
           </div>
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-1 mt-4">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-1 mt-4">
             Previous customer No: {personal.previousCustomerNo || "-"}
           </div>
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-2">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
             Meter No: {personal.meterNo || "-"}
           </div>
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-2">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
             Meter location No: {personal.meterLocationNo || "-"}
           </div>
           <div className="w-full h-0.5 bg-green-500 mb-3" />
-          <div className="text-[#33475b] font-poppins text-sm font-light leading-6 mb-1">
+          <div className="text-[#33475b] font-poppins-light text-lg font-light leading-6 mb-1">
             Advertising business partner:
-            <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-4">
+            <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-4">
               Aram Energy Solution
             </div>
-            <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-2">
+            <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
               Energie Service Pool GmbH
             </div>
           </div>

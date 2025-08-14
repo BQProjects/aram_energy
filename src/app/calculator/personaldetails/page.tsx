@@ -99,11 +99,11 @@ export default function PersonalDetailsPage() {
           {/* Two-card grid: align labels and inputs by row */}
           <div className="w-full grid grid-cols-2 gap-x-4 gap-y-6 items-center">
             {/* Salutation */}
-            <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
               Salutation *
             </label>
             <select
-              className="w-full max-w-[340px] h-[52px] border border-[#cfd3d4] font-poppins-regular px-4 py-3 bg-black text-[#abafb1] focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+              className="w-full max-w-[340px] h-[52px] border border-[#cfd3d4] text-lg font-poppins-regular px-4 py-3 bg-black text-[#abafb1] focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
               style={{
                 WebkitAppearance: "none",
                 MozAppearance: "none",
@@ -120,12 +120,12 @@ export default function PersonalDetailsPage() {
             </select>
 
             {/* Name */}
-            <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
               Name *
             </label>
             <input
               type="text"
-              className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
               placeholder="Enter your name"
               value={name}
               onChange={(e) => setName(e.target.value)}
@@ -142,11 +142,11 @@ export default function PersonalDetailsPage() {
             />
 
             {/* Billing address */}
-            <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-start pt-2">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-start pt-2">
               Billing address
             </label>
             <div className="flex flex-col gap-2 max-w-[340px] col-span-1">
-              <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] font-poppins text-base cursor-pointer">
+              <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] text-base cursor-pointer">
                 <input
                   type="radio"
                   name="billing"
@@ -158,7 +158,7 @@ export default function PersonalDetailsPage() {
                   The billing address corresponds to the delivery address
                 </span>
               </label>
-              <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] font-poppins text-base cursor-pointer">
+              <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] text-base cursor-pointer">
                 <input
                   type="radio"
                   name="billing"
@@ -173,13 +173,13 @@ export default function PersonalDetailsPage() {
             </div>
 
             {/* Birth date with calendar icon */}
-            <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
               Birth date *
             </label>
             <div className="relative max-w-[340px] col-span-1">
               <input
                 type="date"
-                className="w-full h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-[#ABAFB1] focus:outline-none focus:border-[#FF9641] transition-colors pr-12"
+                className="w-full h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-[#ABAFB1] focus:outline-none focus:border-[#FF9641] transition-colors pr-12"
                 style={{
                   WebkitAppearance: "none",
                   MozAppearance: "none",
@@ -211,31 +211,31 @@ export default function PersonalDetailsPage() {
             </div>
 
             {/* Email */}
-            <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
               E-mail address *
             </label>
             <input
               type="email"
-              className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
               placeholder="Enter your email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
 
             {/* Repeat Email */}
-            <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
               Repeat email address *
             </label>
             <input
               type="email"
-              className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
               placeholder="Repeat your email"
               value={repeatEmail}
               onChange={(e) => setRepeatEmail(e.target.value)}
             />
 
             {/* Phone */}
-            <label className="text-[#abafb1] font-poppins-regular text-lg text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
               Telephone number *
             </label>
             <div className="max-w-[340px] col-span-1">
@@ -243,7 +243,7 @@ export default function PersonalDetailsPage() {
                 country={"de"}
                 value={phone}
                 onChange={setPhone}
-                inputClass="!w-full !bg-transparent font-poppins-regular !text-white !px-4 !py-3 !pl-14 focus:!border-[#FF9641] !transition-all !h-[52px]"
+                inputClass="!w-full !bg-transparent text-lg font-poppins-regular !text-[#FF9641] !px-4 !py-3 !pl-14 focus:!border-[#FF9641] !transition-all !h-[52px]"
                 buttonClass="!bg-black !flex !items-center !justify-center transition-colors !h-[52px]"
                 dropdownClass="!bg-black !text-white !rounded-lg !mt-2 !shadow-lg !z-50"
                 containerClass="!w-full flex"
@@ -263,9 +263,9 @@ export default function PersonalDetailsPage() {
               )}
               <button
                 type="submit"
-                className="mt-4 bg-[#FF9641] hover:bg-[#e88537] font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
+                className="mt-4 w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
               >
-                Continue
+                Next
               </button>
             </div>
           </div>

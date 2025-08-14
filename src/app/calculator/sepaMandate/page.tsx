@@ -24,7 +24,7 @@ export default function SepaMandatePage() {
   return (
     <div className="min-h-screen flex flex-col bg-black">
       <Header />
-      <main className="flex-1 flex flex-col items-center w-full">
+      <main className="flex-1 flex flex-col items-center w-full mb-32">
         <div className="w-full flex justify-center pb-10">
           <Stepper currentStep={5} />
         </div>
@@ -36,7 +36,7 @@ export default function SepaMandatePage() {
             {/* SEPA title */}
             <div className="flex flex-col flex-shrink-0 items-start gap-3 pt-4 pb-2 px-6 w-[650px] h-[3.625rem] border-2 border-[#cfd3d4] bg-white/[.74]">
               <div className="flex items-center gap-4 self-stretch h-[2.5625rem]">
-                <div className="input_content-1 flex flex-col justify-between items-start self-stretch text-black font-inter leading-[normal]">
+                <div className="input_content-1 flex flex-col justify-between items-start self-stretch text-black font-inter text-base leading-[normal]">
                   SEPA mandate
                 </div>
               </div>
@@ -70,7 +70,7 @@ export default function SepaMandatePage() {
               />
             </div>
             {/* Info text */}
-            <div className="w-[650px] text-[#abafb1] text-justify font-poppins-regular text-lg leading-relaxed">
+            <div className="w-[650px] text-[#abafb1] text-justify font-poppins-regular text-xl leading-relaxed">
               You can find the IBAN on your bank card, among other places. It
               consists of the country code DE, a two-digit individual security
               number from your bank, and a further 18 digits.
@@ -93,26 +93,28 @@ export default function SepaMandatePage() {
               />
               <label
                 htmlFor="confirmationEmail"
-                className="text-[#abafb1] font-['Poppins'] text-lg capitalize select-none"
+                className="text-[#abafb1] font-poppins-regular text-xl capitalize select-none"
               >
                 Receive confirmation email
               </label>
             </div>
             {/* Payment terms + submit */}
             <div className="flex items-center justify-between gap-8 mt-4 w-[650px]">
-              <div className="underline text-[#abafb1] font-['Poppins'] text-sm">
+              <div className="underline text-[#abafb1] font-poppins-regular text-xl">
                 Our payment terms
                 <br />
-                montalich von konto abgebucht
+                <div className="underline text-[#abafb1] font-poppins-regular text-xs">
+                  montalich von konto abgebucht
+                </div>
               </div>
               <button
                 type="submit"
                 disabled={!allValid}
-                className={`flex justify-center items-center gap-2.5 w-[12.25rem] h-14 rounded shadow transition-colors font-['Inter'] text-lg font-medium
+                className={`flex justify-center items-center gap-2.5 w-[12.25rem] h-14 rounded shadow transition-colors font-inter text-lg font-medium
                   ${
                     allValid
                       ? "bg-[#ff9641] text-white hover:bg-[#e88537] cursor-pointer"
-                      : "bg-[#F9FAFB] text-[#ff9641] cursor-not-allowed"
+                      : "bg-[#cfd3d4] text-[#ff9641] cursor-not-allowed"
                   }`}
               >
                 Submit

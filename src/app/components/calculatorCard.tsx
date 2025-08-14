@@ -19,39 +19,39 @@ const CalculatorCard: React.FC<CalculatorCardProps> = ({
     {/* Content */}
     <div className="pl-6 pr-4 py-6 flex flex-col justify-between h-full gap-0">
       <div>
-        <div className="text-[#33475b] font-poppins text-sm font-light leading-6 mb-1">
+        <div className="text-[#33475b] font-poppins-light text-lg font-light leading-6 mb-1">
           Delivery point information:
         </div>
-        <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-1 mt-4">
+        <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-1 mt-4">
           Postal code: {postalCode}
         </div>
-        <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-2">
+        <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
           Location: {location}
         </div>
         <div className="w-full h-0.5 bg-green-500 mb-3" />
-        <div className="text-[#33475b] font-poppins text-sm font-light leading-6 mb-1 mt-4">
+        <div className="text-[#33475b] font-poppins-light text-lg font-light leading-6 mb-1 mt-4">
           Tariff information
         </div>
-        <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-1 mt-4">
+        <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-1 mt-4">
           Division: {division}
         </div>
-        <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-2">
+        <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
           Customer category: {customerCategory}
         </div>
         <div className="w-full h-0.5 bg-green-500 mb-3" />
-        <div className="text-[#33475b] font-poppins text-sm font-light leading-6 mb-1 mt-4">
+        <div className="text-[#33475b] font-poppins-light text-lg font-light leading-6 mb-1 mt-4">
           Further information
         </div>
-        <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-4">
+        <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-4">
           Transaction key: 77509
         </div>
         <div className="w-full h-0.5 bg-green-500 mb-3" />
-        <div className="text-[#33475b] font-poppins text-sm font-light leading-6 mb-1">
+        <div className="text-[#33475b] font-poppins-light text-lg font-light leading-6 mb-1">
           Advertising business partner:
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-4">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-4">
             Aram Energy Solution
           </div>
-          <div className="text-[#33475b] font-poppins text-sm font-semibold leading-6 mb-3 mt-2">
+          <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
             Energie Service Pool GmbH
           </div>
         </div>
