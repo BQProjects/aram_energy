@@ -1,12 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
+
+import { useRouter } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Stepper from "../../components/Stepper";
 import AddressCard from "@/app/components/AddressCard";
 
 export default function Addressdetails() {
-    // Personal details state
+  const router = useRouter();
+  // Personal details state
   const [phone, setPhone] = useState("");
   const [salutation, setSalutation] = useState("");
   const [name, setName] = useState("");
@@ -39,7 +42,7 @@ export default function Addressdetails() {
     try {
       const saved = localStorage.getItem("personalDetails");
       if (saved) {
-          const data = JSON.parse(saved);
+        const data = JSON.parse(saved);
         if (data.phone) setPhone(data.phone);
         if (data.salutation) setSalutation(data.salutation);
         if (data.name) setName(data.name);
@@ -98,7 +101,32 @@ export default function Addressdetails() {
     try {
       localStorage.setItem("personalDetails", JSON.stringify(data));
     } catch {}
-  }, [billing, billingStreet, billingHouseNumber, billingHouseNumberSuffix, billingCity, billingPostal, billingCountry, postalCode, location, street, houseNumber, houseNumberSuffix, desiredStart, previousSupplier, previousCustomerNo, meterNo, meterLocationNo, moveInStatus, phone, salutation, name, surname, birthDate, email]);
+  }, [
+    billing,
+    billingStreet,
+    billingHouseNumber,
+    billingHouseNumberSuffix,
+    billingCity,
+    billingPostal,
+    billingCountry,
+    postalCode,
+    location,
+    street,
+    houseNumber,
+    houseNumberSuffix,
+    desiredStart,
+    previousSupplier,
+    previousCustomerNo,
+    meterNo,
+    meterLocationNo,
+    moveInStatus,
+    phone,
+    salutation,
+    name,
+    surname,
+    birthDate,
+    email,
+  ]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -134,7 +162,7 @@ export default function Addressdetails() {
       return;
     }
     setError("");
-    // ...submit logic here...
+    router.push("/calculator/sepaMandate");
   };
 
   return (
