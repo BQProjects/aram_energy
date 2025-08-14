@@ -251,7 +251,7 @@ export default function Addressdetails() {
                     checked={moveInStatus === "already_live"}
                     onChange={() => setMoveInStatus("already_live")}
                   />
-                  I have just moved in or I am about to move in (move in)
+                  I am currently living here (already live)
                 </label>
                 <label className="flex items-center gap-2 text-[#abafb1] font-poppins-regular text-sm cursor-pointer w-full">
                   <input

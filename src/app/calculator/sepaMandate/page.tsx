@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from "react";
 import Header from "../../components/header";
@@ -9,16 +10,49 @@ export default function SepaMandatePage() {
   const [iban, setIban] = useState("");
   const [accountHolder, setAccountHolder] = useState("");
   const [confirmEmail, setConfirmEmail] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
   const allValid = iban.trim() && accountHolder.trim() && confirmEmail;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!allValid) return;
-    localStorage.setItem(
-      "sepaForm",
-      JSON.stringify({ iban, accountHolder, confirmEmail })
-    );
-    // ...submit logic (e.g., send to backend) can go here...
+    setSubmitting(true);
+    setError("");
+    // Gather all relevant data from localStorage
+    const calculationTarif = localStorage.getItem("calculationTarif");
+    const personalDetails = localStorage.getItem("personalDetails");
+    const selectedTariff = localStorage.getItem("selectedTariff");
+    const sepaForm = JSON.stringify({ iban, accountHolder, confirmEmail });
+    // Prepare payload
+    const payload = {
+      calculationTarif: calculationTarif ? JSON.parse(calculationTarif) : null,
+      personalDetails: personalDetails ? JSON.parse(personalDetails) : null,
+      selectedTariff: selectedTariff ? JSON.parse(selectedTariff) : null,
+      sepaForm: sepaForm ? JSON.parse(sepaForm) : null,
+      confirmation: "pending",
+    };
+    try {
+      const res = await fetch("/api/submitAllDetails", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload),
+      });
+      if (!res.ok) throw new Error("Submission failed");
+      // On success, clear localStorage
+      localStorage.removeItem("calculationTarif");
+      localStorage.removeItem("personalDetails");
+      localStorage.removeItem("selectedTariff");
+      localStorage.removeItem("sepaForm");
+      setIban("");
+      setAccountHolder("");
+      setConfirmEmail(false);
+      alert("Submission successful! Please check your email to confirm.");
+    } catch (err: any) {
+      setError(err.message || "Submission failed");
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
@@ -100,7 +134,7 @@ export default function SepaMandatePage() {
             </div>
             {/* Payment terms + submit */}
             <div className="flex items-center justify-between gap-8 mt-4 w-[650px]">
-              <div className="underline text-[#abafb1] font-poppins-regular text-xl">
+              <div className="underline text-[#abafb1] font-['Poppins'] text-sm">
                 Our payment terms
                 <br />
                 <div className="underline text-[#abafb1] font-poppins-regular text-xs">
@@ -109,17 +143,18 @@ export default function SepaMandatePage() {
               </div>
               <button
                 type="submit"
-                disabled={!allValid}
-                className={`flex justify-center items-center gap-2.5 w-[12.25rem] h-14 rounded shadow transition-colors font-inter text-lg font-medium
+                disabled={!allValid || submitting}
+                className={`flex justify-center items-center gap-2.5 w-[12.25rem] h-14 rounded shadow transition-colors font-['Inter'] text-lg font-medium
                   ${
                     allValid
                       ? "bg-[#ff9641] text-white hover:bg-[#e88537] cursor-pointer"
-                      : "bg-[#cfd3d4] text-[#ff9641] cursor-not-allowed"
+                      : "bg-[#F9FAFB] text-[#ff9641] cursor-not-allowed"
                   }`}
               >
-                Submit
+                {submitting ? "Submitting..." : "Submit"}
               </button>
             </div>
+            {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
           </form>
         </div>
       </main>
