@@ -36,15 +36,16 @@ export default function Home() {
             {t("hero.learnMore")}
           </button>
           <h1 className="text-center font-poppins-regular text-2xl sm:text-2xl md:text-2xl lg:text-2xl font-normal leading-normal text-[#F9FAFB] mt-2 sm:mt-3 md:mt-12 px-2">
-            
-          {t("hero.description")}
+            {t("hero.description")}
           </h1>
           <div className="w-full max-w-5xl mt-4 sm:mt-6 md:mt-8">
             <CalculationTarif />
           </div>
         </div>
       </div>
-      <AboutSection />
+      <div id="about">
+        <AboutSection />
+      </div>
       <OurMission />
       <WideRange />
       <WideRangeScroll />
@@ -52,9 +53,13 @@ export default function Home() {
       <HowItWorkSection />
       <VideoSection />
       <WhatisSub />
-      <OurService />
+      <div id="services">
+        <OurService />
+      </div>
       <OurPartner />
-      <GetInTouch />
+      <div id="contact">
+        <GetInTouch />
+      </div>
       {/* Footer */}
       <Footer />
     </div>

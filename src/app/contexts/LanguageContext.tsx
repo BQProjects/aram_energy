@@ -141,6 +141,8 @@ const translations = {
     "calculation.tariffKeyPlaceholder": "Enter tariff key",
     "calculation.transactionKeyPlaceholder": "Enter transaction key",
     "calculation.helpText": "Do you need help calculating your consumption?",
+    "calculation.validationError":
+      "Please enter both annual consumption (kWh) and postal code.",
 
     // Our Service section
     "ourService.title": "Our Services",
@@ -328,6 +330,8 @@ const translations = {
     "calculation.transactionKeyPlaceholder": "Transaktionsschlüssel eingeben",
     "calculation.helpText":
       "Brauchen Sie Hilfe bei der Berechnung Ihres Verbrauchs?",
+    "calculation.validationError":
+      "Bitte geben Sie sowohl den Jahresverbrauch (kWh) als auch die Postleitzahl ein.",
 
     // Our Service section
     "ourService.title": "Unsere Dienstleistungen",

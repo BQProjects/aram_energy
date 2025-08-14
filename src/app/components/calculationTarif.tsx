@@ -1,11 +1,78 @@
 import Image from "next/image";
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
+import { useRouter } from "next/navigation";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function CalculationTarif() {
   const { t } = useLanguage();
+  const router = useRouter();
   const [selected, setSelected] = useState("electricity");
   const [customerType, setCustomerType] = useState("private");
+  const [postalCode, setPostalCode] = useState("");
+  const [postalOptions, setPostalOptions] = useState<
+    { plz: string; city: string; district?: string }[]
+  >([]);
+  const [annualConsumption, setAnnualConsumption] = useState("");
+  const [error, setError] = useState("");
+  const [showDropdown, setShowDropdown] = useState(false);
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  // Restore from localStorage on mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem("calculationTarif");
+      if (saved) {
+        const data = JSON.parse(saved);
+        if (data.selected) setSelected(data.selected);
+        if (data.customerType) setCustomerType(data.customerType);
+        if (data.postalCode) setPostalCode(data.postalCode);
+        if (data.annualConsumption)
+          setAnnualConsumption(data.annualConsumption);
+        if (Array.isArray(data.postalOptions))
+          setPostalOptions(data.postalOptions);
+      }
+    } catch {}
+  }, []);
+
+  // Store to localStorage on change
+  useEffect(() => {
+    const data = {
+      selected,
+      customerType,
+      postalCode,
+      annualConsumption,
+      postalOptions,
+    };
+    try {
+      localStorage.setItem("calculationTarif", JSON.stringify(data));
+    } catch {}
+  }, [selected, customerType, postalCode, annualConsumption, postalOptions]);
+
+  useEffect(() => {
+    if (postalCode.length < 2) {
+      setPostalOptions([]);
+      return;
+    }
+    const fetchPostalCodes = async () => {
+      const res = await fetch(`/api/postal-codes?q=${postalCode}`);
+      const data = await res.json();
+      setPostalOptions(data);
+    };
+    fetchPostalCodes();
+  }, [postalCode]);
+
+  useEffect(() => {
+    function handleClick(e: MouseEvent) {
+      if (
+        dropdownRef.current &&
+        !dropdownRef.current.contains(e.target as Node)
+      ) {
+        setShowDropdown(false);
+      }
+    }
+    document.addEventListener("mousedown", handleClick);
+    return () => document.removeEventListener("mousedown", handleClick);
+  }, []);
 
   return (
     <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col items-center justify-start w-full max-w-[1076px] pb-6 sm:pb-8 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 bg-black/50 text-white font-poppins text-sm sm:text-base font-normal">
@@ -117,7 +184,7 @@ export default function CalculationTarif() {
       {/* Form grid */}
       <div className="mt-4 sm:mt-6 grid grid-cols-1 sm:grid-cols-2 gap-x-3 sm:gap-x-4 md:gap-x-6 lg:gap-x-8 gap-y-4 sm:gap-y-6 w-full max-w-[800px] px-2 sm:px-0">
         {/* Postal code */}
-        <div className="flex flex-col w-full max-w-[380px]">
+        <div className="flex flex-col w-full max-w-[380px] relative">
           <label
             htmlFor="postalCode"
             className="text-xs sm:text-sm font-normal font-poppins-medium text-[#F9FAFB] mb-1 sm:mb-2"
@@ -128,7 +195,13 @@ export default function CalculationTarif() {
             <input
               id="postalCode"
               type="text"
+              value={postalCode}
+              onChange={(e) => {
+                setPostalCode(e.target.value);
+                setShowDropdown(true);
+              }}
               placeholder={t("calculation.zipCodePlaceholder")}
+              autoComplete="off"
               className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 pr-8 sm:pr-10 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
             />
             <Image
@@ -138,6 +211,31 @@ export default function CalculationTarif() {
               height={16}
               className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none w-3 h-4 sm:w-3 sm:h-4"
             />
+            {showDropdown && postalOptions.length > 0 && (
+              <div
+                ref={dropdownRef}
+                className="absolute z-20 left-0 right-0 mt-1 bg-white border border-gray-200 rounded shadow-lg max-h-56 overflow-y-auto"
+              >
+                {postalOptions.map((option) => (
+                  <div
+                    key={option.plz + option.city + (option.district || "")}
+                    className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-black"
+                    onClick={() => {
+                      setPostalCode(option.plz);
+                      setShowDropdown(false);
+                    }}
+                  >
+                    <span className="font-semibold">{option.plz}</span>
+                    {option.city && <span className="ml-2">{option.city}</span>}
+                    {option.district && (
+                      <span className="ml-2 text-gray-500 text-xs">
+                        ({option.district})
+                      </span>
+                    )}
+                  </div>
+                ))}
+              </div>
+            )}
           </div>
         </div>
 
@@ -152,6 +250,8 @@ export default function CalculationTarif() {
           <input
             id="annualConsumption"
             type="text"
+            value={annualConsumption}
+            onChange={(e) => setAnnualConsumption(e.target.value)}
             placeholder={t("calculation.consumptionPlaceholder")}
             className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
@@ -168,7 +268,8 @@ export default function CalculationTarif() {
           <input
             id="tariffKey"
             type="text"
-            placeholder={t("calculation.tariffKeyPlaceholder")}
+            value="77509"
+            readOnly
             className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
@@ -190,10 +291,36 @@ export default function CalculationTarif() {
         </div>
 
         {/* Calculate button */}
-        <div className="col-span-1 sm:col-span-2 flex justify-center mt-6 sm:mt-8">
-          <button className="w-full sm:w-[300px] h-[45px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-medium text-sm sm:text-base hover:bg-[#e88537] transition-colors duration-200 shadow-lg">
+        <div className="col-span-1 sm:col-span-2 flex flex-col items-center justify-center mt-6 sm:mt-8">
+          <button
+            className="w-full sm:w-[300px] h-[45px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-medium text-sm sm:text-base hover:bg-[#e88537] transition-colors duration-200 shadow-lg"
+            onClick={() => {
+              if (!annualConsumption.trim() || !postalCode.trim()) {
+                setError(t("calculation.validationError"));
+                return;
+              }
+              setError("");
+              // Find district for the selected postal code
+              const selectedOption = postalOptions.find(
+                (opt) => opt.plz === postalCode
+              );
+              const location = selectedOption?.district || "";
+              const division =
+                selected === "electricity" ? "Electricity" : "Gas";
+              const customerCategory =
+                customerType === "private" ? "Private" : "Company";
+              const params = new URLSearchParams({
+                postalCode,
+                location,
+                division,
+                customerCategory,
+              });
+              router.push(`/calculator/selectoption?${params.toString()}`);
+            }}
+          >
             {t("calculation.calculate")}
           </button>
+          {error && <span className="text-red-400 text-xs mt-2">{error}</span>}
         </div>
       </div>
 
