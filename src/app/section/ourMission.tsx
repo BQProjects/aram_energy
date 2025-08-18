@@ -25,12 +25,11 @@ export default function OurMission() {
   ];
 
   return (
-    <section className="w-full bg-black flex flex-col lg:flex-row items-stretch justify-evenly p-8 pt-24 pb-24">
-      {/* Left: heading, features, button */}
-      {/* Left: heading, features, button */}
+    <section className="w-full bg-black flex flex-col lg:flex-row items-stretch justify-evenly p-8 pt-30 pb-20">
+
       <div
         className="flex flex-col justify-evenly 
-                bg-black  px-4 sm:px-6 lg:px-12 gap-7 
+                bg-black  px-4 sm:px-6 lg:px-16 py-6 gap-7 
                 w-full lg:w-1/2 "
       >
         <div>
@@ -62,7 +61,7 @@ export default function OurMission() {
         </div>
 
         {/* Button at bottom */}
-        <div className="mt-8 sm:mt-12 flex items-center">
+        <div className="mt-8 sm:mt-10 flex items-center">
           <button
             onClick={() => {
               window.location.hash = "#Calculate";
@@ -89,7 +88,8 @@ export default function OurMission() {
           alt="Mission Section Image"
           width={697}
           height={533}
-          className="w-full h-full rounded-2xl object-cover pr-7"
+          quality={100}
+          className="w-full h-full rounded-md object-cover pr-7"
         />
       </div>
     </section>

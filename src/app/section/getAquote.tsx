@@ -37,14 +37,14 @@ export default function GetAquote() {
       {/* New text section below image */}
       <section className="w-full flex bg-white items-start py-8 sm:py-10 md:py-12 pb-8 sm:pb-12 md:pb-16 lg:pb-20">
         <div className="w-full max-w-6xl mx-14 text-justify px-4 sm:px-6 mt-14 mb-14">
-          <h2 className="font-source-serif text-2xl sm:text-3xl md:text-4xl text-[#FF9641] text-left mb-3 sm:mb-4">
+          <h2 className="font-source-serif text-2xl sm:text-3xl md:text-3xl text-[#FF9641] text-left mb-3 sm:mb-4">
             <span className="font-bold">{t("getQuote.referral.title")}</span>
             <br />
-            <span className="font-source-serif">
+            <span className="font-source-serif md:text-2xl">
               {t("getQuote.referral.subtitle")}
             </span>
           </h2>
-          <p className="font-ibm-plex-sans text-lg sm:text-xl md:text-2xl text-gray-700 text-left mb-0 leading-relaxed">
+          <p className="font-ibm-plex-sans text-lg sm:text-xl md:text-xl text-gray-700 text-left mb-0 leading-relaxed mt-4">
             {t("getQuote.referral.description")}
           </p>
         </div>
@@ -62,7 +62,7 @@ export default function GetAquote() {
           />
         </div>
         {/* Cards half on image, half above */}
-        <div className="absolute top-0 left-2/5 -translate-x-1/2 -translate-y-3/12 w-full max-w-4xl sm:max-w-5xl px-3 sm:px-4 md:px-6 lg:px-8 z-10">
+        <div className="absolute top-0 left-2/5 -translate-x-1/2 -translate-y-5/12 w-full max-w-4xl sm:max-w-5xl px-3 sm:px-4 md:px-6 lg:px-8 z-10">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-96">
             {/* Card 1 */}
             <div className="relative bg-black rounded-xl sm:rounded-2xl h-[140px] sm:h-[160px] md:h-[180px] lg:h-[200px] xl:h-[260px] xl:w-[400px] flex flex-col justify-between p-3 sm:p-4 md:p-6 lg:p-8 shadow-lg">

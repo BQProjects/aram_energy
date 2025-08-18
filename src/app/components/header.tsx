@@ -52,7 +52,7 @@ export default function Header() {
         </div>
 
         {/* Center: Desktop Navigation */}
-        <nav className="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2">
+        <nav className="hidden lg:flex items-center justify-center ml-36">
           <ul className="flex gap-6 xl:gap-5 list-none m-0 p-0">
             {navLinks.map((link) => (
               <li key={link.nameKey} className="flex items-center">

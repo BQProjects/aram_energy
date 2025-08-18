@@ -11,25 +11,25 @@ export default function AboutSection() {
     >
       {/* Top 25% black section */}
       <div className="w-full flex items-center bg-black h-24 sm:h-32 md:h-40 lg:h-48 xl:h-52 min-h-[120px] sm:min-h-[150px] md:min-h-[180px]">
-        <span className="text-[#FF9641] ml-16 font-quando text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-wide px-2">
+        <span className="text-[#FF9641] ml-20 font-quando text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-wide px-2">
           {t("about.title")}
         </span>
       </div>
 
       {/* Bottom white section */}
-      <div className="w-full flex flex-col lg:flex-row items-center justify-center bg-white py-10 px-6 md:px-12 lg:px-20 min-h-[350px]">
+      <div className="w-full flex flex-col p-6 items-center justify-center lg:flex-row bg-white py-10 px-6 md:px-12 lg:px-20 min-h-[500px]">
         {/* Image on left */}
-        <div className="flex items-center justify-center mb-8 lg:mb-0 lg:mr-12 w-full lg:w-auto">
+        <div className="flex items-center justify-center mb-8 lg:mb-0 lg:mr-12 w-full lg:w-auto pb-10 pt-10">
           <Image
             src="/aboutimage.png"
             alt="About Section Image"
-            width={735}
+            width={715}
             height={458}
-            className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-none lg:w-[735px] h-auto rounded-2xl object-cover shadow-lg"
+            className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-none lg:w-[735px] h-auto rounded-md object-cover shadow-lg"
           />
         </div>
         {/* Right: 3 paragraphs with icon circles */}
-        <div className="flex flex-col gap-8 max-w-xl w-full px-2">
+        <div className="flex flex-col gap-8 max-w-xl w-full px-12 py-8">
           {/* 1st para */}
           <div className="flex items-start gap-6">
             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-[#F2F2F2] flex-shrink-0 mt-1">
@@ -42,7 +42,7 @@ export default function AboutSection() {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <span className="font-poppins-regular text-base md:text-lg font-medium text-[#171717] leading-relaxed">
+              <span className="font-poppins-regular text-base md:text-base font-medium text-[#171717] leading-relaxed">
                 <span className="text-xl md:text-2xl font-bold block font-inria-serif-bold mb-2">
                   {t("about.affordableRates")}
                 </span>
@@ -62,7 +62,7 @@ export default function AboutSection() {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <span className="font-poppins-regular text-base md:text-lg font-medium text-[#171717] leading-relaxed">
+              <span className="font-poppins-regular text-base md:text-base font-medium text-[#171717] leading-relaxed">
                 <span className="text-xl md:text-2xl font-bold block font-inria-serif-bold mb-2">
                   {t("about.contactPerson")}
                 </span>
@@ -82,7 +82,7 @@ export default function AboutSection() {
               />
             </div>
             <div className="flex-1 min-w-0">
-              <span className="font-poppins-regular text-base md:text-lg font-medium text-[#171717] leading-relaxed">
+              <span className="font-poppins-regular text-base md:text-base font-medium text-[#171717] leading-relaxed">
                 <span className="text-xl md:text-2xl font-bold block font-inria-serif-bold mb-2">
                   {t("about.reliablePartner")}
                 </span>

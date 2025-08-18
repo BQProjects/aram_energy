@@ -181,7 +181,7 @@ export default function CalculationTarif() {
       </div>
 
       {/* Annual consumption text */}
-      <span className="mt-3 sm:mt-4 font-inter text-sm sm:text-base text-white text-center px-2">
+      <span className="mt-3 sm:mt-4 font-inter text-sm sm:text-xs text-white text-center px-2">
         {t("calculation.consumption")}
       </span>
 
