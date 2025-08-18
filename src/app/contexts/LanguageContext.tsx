@@ -179,6 +179,9 @@ const translations = {
     "ourPartner.heading": "Our corporation partner:",
 
     // Get In Touch section
+    "getInTouch.title": "Get in Touch",
+    "getInTouch.subtitle":
+      "Ready for your energy journey? Contact us today for a free consultation.",
     "getInTouch.contactInfo": "Contact Information",
     "getInTouch.phone": "Phone",
     "getInTouch.email": "Email",
@@ -528,6 +531,8 @@ const translations = {
     "ourPartner.heading": "Unser Kooperationspartner:",
 
     // Get In Touch section
+    "getInTouch.title": "Kontaktieren Sie uns",
+    "getInTouch.subtitle": "Wir helfen Ihnen gerne weiter.",
     "getInTouch.contactInfo": "Kontaktinformationen",
     "getInTouch.phone": "Telefon",
     "getInTouch.email": "E-Mail",

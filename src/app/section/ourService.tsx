@@ -10,7 +10,7 @@ export default function OurService() {
   ];
   return (
     <section className="w-full min-h-screen bg-black flex flex-col items-center py-8 sm:py-12 md:py-16">
-      <div className="w-full max-w-7xl flex flex-col gap-6 sm:gap-8 px-4 sm:px-6">
+      <div className="w-full max-w-11/12 flex flex-col gap-6 sm:gap-8 px-4 sm:px-6">
         {/* Top left heading and button */}
         <div className="flex flex-col sm:flex-row w-full items-start justify-between mb-6 sm:mb-8 gap-4 sm:gap-0">
           <div className="flex flex-col items-start w-full max-w-[310px]">
@@ -21,23 +21,22 @@ export default function OurService() {
               onClick={() => {
                 window.location.hash = "#contact";
               }}
-              className="flex items-center justify-between w-full h-12 sm:h-14 md:h-[65px] bg-[#FF9641] text-white font-inter text-base sm:text-lg font-normal border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
+              className="flex items-center justify-center w-full h-12 sm:h-14 md:h-[65px] bg-[#FF9641] text-white font-inter text-base sm:text-lg font-normal border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
             >
-              <span className="text-left flex-1">
-                {t("ourService.arrangeCall")}
-              </span>
+              <span className="text-center">{t("ourService.arrangeCall")}</span>
               <Image
                 src="/whiteRightArrow.svg"
                 alt="Right Arrow"
                 width={28}
                 height={28}
-                className="w-6 h-6 sm:w-7 sm:h-7"
+                quality={100}
+                className="w-6 h-6 sm:w-6 sm:h-6 items-center justify-center ml-4"
               />
             </button>
           </div>
         </div>
         {/* 3 image cards row */}
-        <div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 justify-start mt-6 sm:mt-8">
+        <div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 justify-between mt-6 sm:mt-8">
           {cardLabels.map((label, i) => (
             <div
               key={i}
@@ -48,6 +47,7 @@ export default function OurService() {
                 src={`/ourService-${i + 1}.png`}
                 alt={label}
                 fill
+                quality={100}
                 className="object-cover"
               />
               {/* Text above button, left-aligned */}
@@ -67,6 +67,7 @@ export default function OurService() {
                   alt="Right Arrow"
                   width={22}
                   height={22}
+                  quality={100}
                   className="w-5 h-5 sm:w-6 sm:h-6"
                 />
               </button>

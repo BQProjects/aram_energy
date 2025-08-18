@@ -132,6 +132,7 @@ const SelectPower: React.FC<SelectPowerProps> = ({ t }) => {
             alt="Right Arrow"
             width={24}
             height={24}
+            quality={100}
           />
         </button>
       </div>

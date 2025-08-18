@@ -16,6 +16,8 @@
   --font-quando: 'Quando', serif;
   --font-inter: 'Inter', sans-serif;
   --font-inter-regular: 'Inter-Regular', sans-serif;
+  --font-inter-medium: 'Inter-Medium', sans-serif;
+  --font-inter-semibold: 'Inter-Semibold', sans-serif;
   --font-poppins-light: 'Poppins-Light', sans-serif;
   --font-poppins-regular: 'Poppins-Regular', sans-serif;
   --font-poppins-medium: 'Poppins-Medium', sans-serif;
@@ -24,6 +26,7 @@
   --font-inria-serif-bold: 'InriaSerif-Bold', serif;
   --font-ibm-plex-sans: 'IBMPlexSans', sans-serif;
   --font-source-serif: 'Source-Serif', serif;
+    --font-source-serif-4: 'Source-Serif-4', serif;
 }
 
 @media (prefers-color-scheme: dark) {

@@ -92,6 +92,7 @@ export default function CalculationTarif() {
             alt="Zap Logo"
             width={12}
             height={16}
+            quality={100}
             className="mr-2 w-3 h-4 sm:w-3 sm:h-4"
           />
           {t("calculation.electricity")}
@@ -111,6 +112,7 @@ export default function CalculationTarif() {
             alt="Gas Logo"
             width={12}
             height={16}
+            quality={100}
             className="mr-2 w-3 h-4 sm:w-3 sm:h-4"
           />
           {t("calculation.gas")}
@@ -124,6 +126,7 @@ export default function CalculationTarif() {
           alt="Info Icon"
           width={12}
           height={16}
+          quality={100}
           className="w-3 h-4 sm:w-3 sm:h-4"
         />
         <span className="font-inter text-sm sm:text-base font-regular">
@@ -139,6 +142,7 @@ export default function CalculationTarif() {
             alt="Person"
             width={12}
             height={16}
+            quality={100}
             className="w-3 h-4 sm:w-3 sm:h-4"
           />
           <span className="ml-1 font-inter text-xs sm:text-sm font-normal text-white">
@@ -172,6 +176,7 @@ export default function CalculationTarif() {
             alt="Company"
             width={12}
             height={16}
+            quality={100}
             className="w-3 h-4 sm:w-3 sm:h-4"
           />
           <span className="ml-1 font-inter text-xs sm:text-sm font-normal text-white">
@@ -213,6 +218,7 @@ export default function CalculationTarif() {
               alt="Location"
               width={12}
               height={16}
+              quality={100}
               className="absolute mr-2 right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none w-3 h-4 sm:w-3 sm:h-4"
             />
             {showDropdown && postalOptions.length > 0 && (
@@ -335,6 +341,7 @@ export default function CalculationTarif() {
           alt="Help"
           width={14}
           height={14}
+          quality={100}
           className="mr-2 w-3 h-3 sm:w-3.5 sm:h-3.5"
         />
         <span className="font-poppins text-xs sm:text-sm font-poppins-regular text-[#E5E7EB]">

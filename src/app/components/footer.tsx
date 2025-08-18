@@ -16,6 +16,7 @@ export default function Footer() {
               alt="Aram Energy Solution Logo"
               width={170}
               height={100}
+              quality={100}
               className="w-40 h-24 sm:w-48 sm:h-28 md:w-[170px] md:h-[100px]"
             />
           </div>

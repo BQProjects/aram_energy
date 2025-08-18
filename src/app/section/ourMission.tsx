@@ -26,7 +26,6 @@ export default function OurMission() {
 
   return (
     <section className="w-full bg-black flex flex-col lg:flex-row items-stretch justify-evenly p-8 pt-30 pb-20">
-
       <div
         className="flex flex-col justify-evenly 
                 bg-black  px-4 sm:px-6 lg:px-16 py-6 gap-7 
@@ -45,6 +44,7 @@ export default function OurMission() {
                     alt="Tick Icon"
                     width={24}
                     height={24}
+                    quality={100}
                   />
                 </div>
                 <div>
@@ -75,6 +75,7 @@ export default function OurMission() {
                 alt="Right Arrow"
                 width={24}
                 height={24}
+                quality={100}
               />
             </span>
           </button>

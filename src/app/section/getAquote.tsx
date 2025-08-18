@@ -38,13 +38,15 @@ export default function GetAquote() {
       <section className="w-full flex bg-white items-start py-8 sm:py-10 md:py-12 pb-8 sm:pb-12 md:pb-16 lg:pb-20">
         <div className="w-full max-w-6xl mx-14 text-justify px-4 sm:px-6 mt-14 mb-14">
           <h2 className="font-source-serif text-2xl sm:text-3xl md:text-3xl text-[#FF9641] text-left mb-3 sm:mb-4">
-            <span className="font-bold">{t("getQuote.referral.title")}</span>
+            <span className="font-semibold">
+              {t("getQuote.referral.title")}
+            </span>
             <br />
-            <span className="font-source-serif md:text-2xl">
+            <span className="font-source-serif font-normal md:text-2xl">
               {t("getQuote.referral.subtitle")}
             </span>
           </h2>
-          <p className="font-ibm-plex-sans text-lg sm:text-xl md:text-xl text-gray-700 text-left mb-0 leading-relaxed mt-4">
+          <p className="font-ibm-plex-sans font-normal text-lg sm:text-xl md:text-xl text-gray-700 text-left mb-0 leading-relaxed mt-4">
             {t("getQuote.referral.description")}
           </p>
         </div>
