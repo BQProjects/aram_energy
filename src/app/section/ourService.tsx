@@ -13,11 +13,11 @@ export default function OurService() {
       <div className="w-full max-w-7xl flex flex-col gap-6 sm:gap-8 px-4 sm:px-6">
         {/* Top left heading and button */}
         <div className="flex flex-col sm:flex-row w-full items-start justify-between mb-6 sm:mb-8 gap-4 sm:gap-0">
-          <div className="flex flex-col items-start">
+          <div className="flex flex-col items-start w-full max-w-[310px]">
             <div className="text-white font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6">
               {t("ourService.title")}
             </div>
-            <button className="flex items-center justify-between w-full sm:w-64 md:w-80 lg:w-[310px] h-12 sm:h-14 md:h-[65px] bg-[#FF9641] text-white font-inter text-base sm:text-lg font-normal border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200">
+            <button className="flex items-center justify-between w-full h-12 sm:h-14 md:h-[65px] bg-[#FF9641] text-white font-inter text-base sm:text-lg font-normal border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200">
               <span className="text-left flex-1">
                 {t("ourService.arrangeCall")}
               </span>
@@ -32,7 +32,7 @@ export default function OurService() {
           </div>
         </div>
         {/* 3 image cards row */}
-        <div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 justify-center mt-6 sm:mt-8">
+        <div className="w-full flex flex-col sm:flex-row gap-4 sm:gap-6 md:gap-8 justify-start mt-6 sm:mt-8">
           {cardLabels.map((label, i) => (
             <div
               key={i}

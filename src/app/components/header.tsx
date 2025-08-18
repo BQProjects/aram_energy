@@ -82,7 +82,7 @@ export default function Header() {
           {/* Language Selector */}
           <div className="flex items-center justify-center relative">
             <button
-              className="flex items-center justify-center w-24 sm:w-32 h-10 bg-black/10 hover:bg-black/20 transition-colors duration-200 rounded-lg"
+              className="flex items-center justify-center w-24 sm:w-28 h-10 bg-black/10 hover:bg-black/20 transition-colors duration-200 rounded-lg"
               onClick={toggleLanguageDropdown}
             >
               <Image
@@ -150,7 +150,7 @@ export default function Header() {
       </nav>
 
       {/* Mobile Navigation */}
-      <div className="lg:hidden flex items-center gap-3">
+      <div className="lg:hidden flex items-center gap-3 ml-auto">
         {/* Language Selector for Mobile */}
         <div className="relative">
           <button

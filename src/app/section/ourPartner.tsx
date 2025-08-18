@@ -9,7 +9,7 @@ export default function OurPartner() {
         <div className="text-[#FF9641] font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl font-normal mb-6 sm:mb-8 text-left">
           {t("ourPartner.heading")}
         </div>
-        <div className="w-full flex flex-col sm:flex-row justify-evenly items-center gap-6 sm:gap-8 mt-6 sm:mt-8 md:mt-10">
+        <div className="w-full flex flex-col sm:flex-row justify-around items-center gap-6 sm:gap-8 mt-6 sm:mt-8 md:mt-10">
           <Image
             src="/partner1.png"
             alt="Stadtwerke Duisburg"

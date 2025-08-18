@@ -24,12 +24,12 @@ export default function OurMission() {
   ];
 
   return (
-    <section className="w-full flex flex-col lg:flex-row items-stretch justify-center">
+    <section className="w-full bg-black flex flex-col lg:flex-row items-stretch justify-center">
       {/* Left: black background, heading, features, button */}
-      <div className="flex flex-col justify-between bg-black py-8 sm:py-10 md:py-12 px-4 sm:px-6 lg:px-12 w-full lg:w-1/2 min-h-[500px] sm:min-h-[600px] ml-0 sm:ml-4 md:ml-10 min-w-[320px] sm:min-w-[400px]">
+      <div className="flex flex-col justify-between bg-black py-8 sm:py-10 md:py-12 px-4 sm:px-6 lg:px-12 w-full lg:w-5/12 min-h-[500px] sm:min-h-[600px] ml-0 sm:ml-4 md:ml-10 min-w-[320px] sm:min-w-[400px]">
         <div>
-          <h2 className="font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl font-bold text-white mb-6 sm:mb-8">
-            {t('mission.title')}
+          <h2 className="font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl text-white mb-6 sm:mb-8">
+            {t("mission.title")}
           </h2>
           <div className="flex flex-col gap-6 sm:gap-8">
             {features.map((f, i) => (
@@ -43,7 +43,7 @@ export default function OurMission() {
                   />
                 </div>
                 <div>
-                  <div className="font-inria-serif-bold text-base sm:text-lg font-bold text-white mb-1">
+                  <div className="font-inria-serif-bold text-base sm:text-lg text-white mb-1">
                     {f.title}
                   </div>
                   <div className="font-poppins text-sm sm:text-base font-normal text-gray-400">
@@ -57,7 +57,7 @@ export default function OurMission() {
         {/* Button at bottom */}
         <div className="mt-8 sm:mt-12 flex items-center">
           <button className="flex items-center justify-between w-full sm:w-80 md:w-96 h-14 md:h-16 bg-white font-inter font-medium text-base md:text-lg text-[#FF9641] border-none outline-none cursor-pointer px-4 sm:px-6 hover:bg-gray-50 transition-colors duration-200">
-            <span className="font-semibold">{t('header.getQuote')}</span>
+            <span className="font-semibold">{t("header.getQuote")}</span>
             <span className="flex items-center gap-2">
               <Image
                 src="/rightarrow.svg"
