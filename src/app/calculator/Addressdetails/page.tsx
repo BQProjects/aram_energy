@@ -1,14 +1,15 @@
 "use client";
 import React, { useState, useEffect } from "react";
-
 import { useRouter } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Stepper from "../../components/Stepper";
 import AddressCard from "@/app/components/AddressCard";
+import { useLanguage } from "@/app/contexts/LanguageContext";
 
 export default function Addressdetails() {
   const router = useRouter();
+  const { t } = useLanguage();
   // Personal details state
   const [phone, setPhone] = useState("");
   const [salutation, setSalutation] = useState("");
@@ -132,33 +133,33 @@ export default function Addressdetails() {
     e.preventDefault();
     // Required fields
     if (!billing) {
-      setError("Please select billing type.");
+      setError(t("addressdetails.error.billingType"));
       return;
     }
     if (billing === "different") {
       if (!billingStreet || !billingCity || !billingPostal || !billingCountry) {
-        setError("Please fill in all required billing address fields.");
+        setError(t("addressdetails.error.billingFields"));
         return;
       }
     }
     if (!desiredStart) {
-      setError("Please select desired start of delivery.");
+      setError(t("addressdetails.error.desiredStart"));
       return;
     }
     if (!previousSupplier) {
-      setError("Please enter previous supplier.");
+      setError(t("addressdetails.error.previousSupplier"));
       return;
     }
     if (!previousCustomerNo) {
-      setError("Please enter previous customer number.");
+      setError(t("addressdetails.error.previousCustomerNo"));
       return;
     }
     if (!meterNo) {
-      setError("Please enter meter number.");
+      setError(t("addressdetails.error.meterNo"));
       return;
     }
     if (!moveInStatus) {
-      setError("Please select move-in status.");
+      setError(t("addressdetails.error.moveInStatus"));
       return;
     }
     setError("");
@@ -170,7 +171,7 @@ export default function Addressdetails() {
       <Header />
       <main className="flex-1 flex flex-col items-center w-full">
         <div className="w-full flex justify-center">
-          <Stepper currentStep={4} />
+          <Stepper currentStep={4} t={t} />
         </div>
         <div className="flex items-start gap-8 w-full max-w-[1146px] mx-auto mt-8">
           {/* Left: AddressCard */}
@@ -183,56 +184,56 @@ export default function Addressdetails() {
             <div className="w-full grid grid-cols-2 gap-x-4 gap-y-6 items-center">
               {/* Postal Code */}
               <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                Postal Code *
+                {t("addressdetails.postalCode")} *
               </label>
               <input
                 type="text"
                 className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                placeholder="Enter your postal code"
+                placeholder={t("addressdetails.postalCodePlaceholder")}
                 value={postalCode}
                 onChange={(e) => setPostalCode(e.target.value)}
               />
 
               {/* Location */}
               <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                Location *
+                {t("addressdetails.location")} *
               </label>
               <input
                 type="text"
                 className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                placeholder="Enter your location"
+                placeholder={t("addressdetails.locationPlaceholder")}
                 value={location}
                 onChange={(e) => setLocation(e.target.value)}
               />
 
               {/* Street */}
               <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                Street *
+                {t("addressdetails.street")} *
               </label>
               <input
                 type="text"
                 className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                placeholder="Enter your street"
+                placeholder={t("addressdetails.streetPlaceholder")}
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
               />
 
               {/* House Number and Suffix side by side */}
               <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                House Number * / House Number Suffix
+                {t("addressdetails.houseNumberAndSuffix")}
               </label>
               <div className="flex gap-4 col-span-1">
                 <input
                   type="text"
                   className="w-1/2 max-w-[160px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
-                  placeholder="Number"
+                  placeholder={t("addressdetails.houseNumberPlaceholder")}
                   value={houseNumber}
                   onChange={(e) => setHouseNumber(e.target.value)}
                 />
                 <input
                   type="text"
                   className="w-1/2 max-w-[160px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
-                  placeholder="Suffix"
+                  placeholder={t("addressdetails.houseNumberSuffixPlaceholder")}
                   value={houseNumberSuffix}
                   onChange={(e) => setHouseNumberSuffix(e.target.value)}
                 />
@@ -240,7 +241,7 @@ export default function Addressdetails() {
 
               {/* Move-in Status */}
               <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                Move-in Status
+                {t("addressdetails.moveInStatus")}
               </label>
               <div className="flex gap-4 flex-col">
                 <label className="flex items-center gap-2 text-[#abafb1] font-poppins-regular text-sm cursor-pointer w-full">
@@ -251,7 +252,7 @@ export default function Addressdetails() {
                     checked={moveInStatus === "already_live"}
                     onChange={() => setMoveInStatus("already_live")}
                   />
-                  I am currently living here (already live)
+                  {t("addressdetails.alreadyLive")}
                 </label>
                 <label className="flex items-center gap-2 text-[#abafb1] font-poppins-regular text-sm cursor-pointer w-full">
                   <input
@@ -261,13 +262,13 @@ export default function Addressdetails() {
                     checked={moveInStatus === "moving_in"}
                     onChange={() => setMoveInStatus("moving_in")}
                   />
-                  I have just moved in or I am about to move in (move in)
+                  {t("addressdetails.movingIn")}
                 </label>
               </div>
 
               {/* Desired Start of Delivery */}
               <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                Desired Start of Delivery
+                {t("addressdetails.desiredStart")}
               </label>
               <input
                 type="date"
@@ -278,56 +279,54 @@ export default function Addressdetails() {
 
               {/* Previous Supplier */}
               <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                Previous Supplier
+                {t("addressdetails.previousSupplier")}
               </label>
               <input
                 type="text"
                 className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                placeholder="Enter previous supplier"
+                placeholder={t("addressdetails.previousSupplierPlaceholder")}
                 value={previousSupplier}
                 onChange={(e) => setPreviousSupplier(e.target.value)}
               />
 
               {/* Previous Customer No. */}
               <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                Previous Customer No.
+                {t("addressdetails.previousCustomerNo")}
               </label>
               <input
                 type="text"
                 className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                placeholder="Enter previous customer number"
+                placeholder={t("addressdetails.previousCustomerNoPlaceholder")}
                 value={previousCustomerNo}
                 onChange={(e) => setPreviousCustomerNo(e.target.value)}
               />
 
               {/* Meter No. */}
               <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                Meter No.
+                {t("addressdetails.meterNo")}
               </label>
               <input
                 type="text"
                 className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                placeholder="Enter meter number"
+                placeholder={t("addressdetails.meterNoPlaceholder")}
                 value={meterNo}
                 onChange={(e) => setMeterNo(e.target.value)}
               />
 
               <div className="w-full col-span-2 text-[#abafb1] font-poppins-regular text-sm">
-                Would you like to switch suppliers more quickly? Then please
-                provide us with your store location number. This will allow us
-                to start supplying you more quickly.
+                {t("addressdetails.supplierSwitchInfo")}
               </div>
               <div></div>
               <div></div>
 
               {/* Meter Location No. */}
               <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                Meter Location No.
+                {t("addressdetails.meterLocationNo")}
               </label>
               <input
                 type="text"
                 className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                placeholder="Enter meter location number"
+                placeholder={t("addressdetails.meterLocationNoPlaceholder")}
                 value={meterLocationNo}
                 onChange={(e) => setMeterLocationNo(e.target.value)}
               />
@@ -336,26 +335,30 @@ export default function Addressdetails() {
               {billing === "different" && (
                 <>
                   <div className="w-full col-span-2 text-[#abafb1] font-poppins-medium text-4xl mt-10">
-                    Billing address
+                    {t("addressdetails.billingAddress")}
                   </div>
                   <div></div>
                   <div></div>
 
                   <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                    Billing House Number * / Suffix
+                    {t("addressdetails.billingHouseNumberAndSuffix")}
                   </label>
                   <div className="flex gap-4 col-span-1">
                     <input
                       type="text"
                       className="w-1/2 max-w-[160px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
-                      placeholder="Number"
+                      placeholder={t(
+                        "addressdetails.billingHouseNumberPlaceholder"
+                      )}
                       value={billingHouseNumber}
                       onChange={(e) => setBillingHouseNumber(e.target.value)}
                     />
                     <input
                       type="text"
                       className="w-1/2 max-w-[160px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
-                      placeholder="Suffix"
+                      placeholder={t(
+                        "addressdetails.billingHouseNumberSuffixPlaceholder"
+                      )}
                       value={billingHouseNumberSuffix}
                       onChange={(e) =>
                         setBillingHouseNumberSuffix(e.target.value)
@@ -364,45 +367,45 @@ export default function Addressdetails() {
                   </div>
 
                   <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                    Billing Street *
+                    {t("addressdetails.billingStreet")}
                   </label>
                   <input
                     type="text"
                     className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                    placeholder="Enter billing street"
+                    placeholder={t("addressdetails.billingStreetPlaceholder")}
                     value={billingStreet}
                     onChange={(e) => setBillingStreet(e.target.value)}
                   />
 
                   <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                    Billing City *
+                    {t("addressdetails.billingCity")}
                   </label>
                   <input
                     type="text"
                     className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                    placeholder="Enter billing city"
+                    placeholder={t("addressdetails.billingCityPlaceholder")}
                     value={billingCity}
                     onChange={(e) => setBillingCity(e.target.value)}
                   />
 
                   <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                    Billing Postal Code *
+                    {t("addressdetails.billingPostal")}
                   </label>
                   <input
                     type="text"
                     className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                    placeholder="Enter billing postal code"
+                    placeholder={t("addressdetails.billingPostalPlaceholder")}
                     value={billingPostal}
                     onChange={(e) => setBillingPostal(e.target.value)}
                   />
 
                   <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-                    Billing Country *
+                    {t("addressdetails.billingCountry")}
                   </label>
                   <input
                     type="text"
                     className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-                    placeholder="Enter billing country"
+                    placeholder={t("addressdetails.billingCountryPlaceholder")}
                     value={billingCountry}
                     onChange={(e) => setBillingCountry(e.target.value)}
                   />
@@ -415,17 +418,12 @@ export default function Addressdetails() {
                 {error && (
                   <span className="text-red-400 text-xs mb-2">{error}</span>
                 )}
-                <div className="flex flex-col items-end justify-end w-full col-span-1">
-                  {error && (
-                    <span className="text-red-400 text-xs mb-2">{error}</span>
-                  )}
-                  <button
-                    type="submit"
-                    className="mt-4 w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
-                  >
-                    Next
-                  </button>
-                </div>
+                <button
+                  type="submit"
+                  className="mt-4 w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
+                >
+                  {t("addressdetails.next")}
+                </button>
               </div>
             </div>
           </form>

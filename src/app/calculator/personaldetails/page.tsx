@@ -6,9 +6,11 @@ import Footer from "../../components/footer";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Stepper from "@/app/components/Stepper";
+import { useLanguage } from "@/app/contexts/LanguageContext";
 
 export default function PersonalDetailsPage() {
   const router = useRouter();
+  const { t } = useLanguage();
   const [phone, setPhone] = useState("");
   const [salutation, setSalutation] = useState("");
   const [name, setName] = useState("");
@@ -74,11 +76,11 @@ export default function PersonalDetailsPage() {
       !repeatEmail ||
       !phone
     ) {
-      setError("Please fill in all required fields.");
+      setError(t("personaldetails.error.required"));
       return;
     }
     if (email !== repeatEmail) {
-      setError("Email addresses do not match.");
+      setError(t("personaldetails.error.emailMatch"));
       return;
     }
     setError("");
@@ -90,7 +92,7 @@ export default function PersonalDetailsPage() {
       <Header />
       <main className="flex-1 flex flex-col items-end justify-center py-8">
         <div className="w-full flex justify-center pb-10">
-          <Stepper currentStep={3} />
+          <Stepper currentStep={3} t={t} />
         </div>
         <form
           className="rounded-xl shadow-lg p-8 w-full max-w-3xl flex flex-row mx-auto"
@@ -100,7 +102,7 @@ export default function PersonalDetailsPage() {
           <div className="w-full grid grid-cols-2 gap-x-4 gap-y-6 items-center">
             {/* Salutation */}
             <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-              Salutation *
+              {t("personaldetails.salutation")} *
             </label>
             <select
               className="w-full max-w-[340px] h-[52px] border border-[#cfd3d4] text-lg font-poppins-regular px-4 py-3 bg-black text-[#abafb1] focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
@@ -112,21 +114,23 @@ export default function PersonalDetailsPage() {
               value={salutation}
               onChange={(e) => setSalutation(e.target.value)}
             >
-              <option value="">Please select...</option>
-              <option value="mr">Mr</option>
-              <option value="ms">Ms</option>
-              <option value="mrs">Mrs</option>
-              <option value="dr">Dr</option>
+              <option value="">
+                {t("personaldetails.salutationPlaceholder")}
+              </option>
+              <option value="mr">{t("personaldetails.mr")}</option>
+              <option value="ms">{t("personaldetails.ms")}</option>
+              <option value="mrs">{t("personaldetails.mrs")}</option>
+              <option value="dr">{t("personaldetails.dr")}</option>
             </select>
 
             {/* Name */}
             <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-              Name *
+              {t("personaldetails.name")} *
             </label>
             <input
               type="text"
               className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-              placeholder="Enter your name"
+              placeholder={t("personaldetails.namePlaceholder")}
               value={name}
               onChange={(e) => setName(e.target.value)}
             />
@@ -136,14 +140,14 @@ export default function PersonalDetailsPage() {
             <input
               type="text"
               className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-              placeholder="Enter your surname"
+              placeholder={t("personaldetails.surnamePlaceholder")}
               value={surname}
               onChange={(e) => setSurname(e.target.value)}
             />
 
             {/* Billing address */}
             <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-start pt-2">
-              Billing address
+              {t("personaldetails.billingAddress")}
             </label>
             <div className="flex flex-col gap-2 max-w-[340px] col-span-1">
               <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] text-base cursor-pointer">
@@ -154,9 +158,7 @@ export default function PersonalDetailsPage() {
                   checked={billing === "same"}
                   onChange={() => setBilling("same")}
                 />
-                <span>
-                  The billing address corresponds to the delivery address
-                </span>
+                <span>{t("personaldetails.billingSame")}</span>
               </label>
               <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] text-base cursor-pointer">
                 <input
@@ -166,15 +168,13 @@ export default function PersonalDetailsPage() {
                   checked={billing === "different"}
                   onChange={() => setBilling("different")}
                 />
-                <span>
-                  The billing address corresponds to the delivery address
-                </span>
+                <span>{t("personaldetails.billingDifferent")}</span>
               </label>
             </div>
 
             {/* Birth date with calendar icon */}
             <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-              Birth date *
+              {t("personaldetails.birthDate")} *
             </label>
             <div className="relative max-w-[340px] col-span-1">
               <input
@@ -212,31 +212,31 @@ export default function PersonalDetailsPage() {
 
             {/* Email */}
             <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-              E-mail address *
+              {t("personaldetails.email")} *
             </label>
             <input
               type="email"
               className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-              placeholder="Enter your email"
+              placeholder={t("personaldetails.emailPlaceholder")}
               value={email}
               onChange={(e) => setEmail(e.target.value)}
             />
 
             {/* Repeat Email */}
             <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-              Repeat email address *
+              {t("personaldetails.repeatEmail")} *
             </label>
             <input
               type="email"
               className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
-              placeholder="Repeat your email"
+              placeholder={t("personaldetails.repeatEmailPlaceholder")}
               value={repeatEmail}
               onChange={(e) => setRepeatEmail(e.target.value)}
             />
 
             {/* Phone */}
             <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
-              Telephone number *
+              {t("personaldetails.phone")} *
             </label>
             <div className="max-w-[340px] col-span-1">
               <PhoneInput
@@ -265,7 +265,7 @@ export default function PersonalDetailsPage() {
                 type="submit"
                 className="mt-4 w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
               >
-                Next
+                {t("personaldetails.next")}
               </button>
             </div>
           </div>

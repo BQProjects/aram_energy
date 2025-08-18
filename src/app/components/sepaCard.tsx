@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useLanguage } from "@/app/contexts/LanguageContext";
 
 interface PersonalDetails {
   postalCode?: string;
@@ -15,6 +16,7 @@ interface PersonalDetails {
 
 const SepaCard: React.FC = () => {
   const [personal, setPersonal] = useState<PersonalDetails>({});
+  const { t } = useLanguage();
 
   useEffect(() => {
     const load = () => {
@@ -38,43 +40,46 @@ const SepaCard: React.FC = () => {
       <div className="pl-6 pr-4 py-6 flex flex-col justify-between h-full gap-0">
         <div>
           <div className="text-[#33475b] font-poppins-light text-lg font-light leading-6 mb-1">
-            Delivery point information:
+            {t("sepaCard.deliveryPointInfo")}
           </div>
           <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-1 mt-4">
-            Postal code: {personal.postalCode || "-"}
+            {t("addressdetails.postalCode")}: {personal.postalCode || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
-            Location: {personal.location || "-"}
+            {t("addressdetails.location")}: {personal.location || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-1 mt-4">
-            Street: {personal.street || "-"}
+            {t("addressdetails.street")}: {personal.street || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
-            House number */ House number suffix: {personal.houseNumber || "-"} /{" "}
-            {personal.houseNumberSuffix || "-"}
+            {t("addressdetails.houseNumberAndSuffix")}:{" "}
+            {personal.houseNumber || "-"} / {personal.houseNumberSuffix || "-"}
           </div>
           <div className="w-full h-0.5 bg-green-500 mb-3" />
           <div className="text-[#33475b] font-poppins-light text-lg font-light leading-6 mb-1">
-            Further information
+            {t("sepaCard.furtherInfo")}
           </div>
           <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-1 mt-4">
-            Desired start of delivery: {personal.desiredStart || "-"}
+            {t("addressdetails.desiredStart")}: {personal.desiredStart || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
-            Previous supplier: {personal.previousSupplier || "-"}
+            {t("addressdetails.previousSupplier")}:{" "}
+            {personal.previousSupplier || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-1 mt-4">
-            Previous customer No: {personal.previousCustomerNo || "-"}
+            {t("addressdetails.previousCustomerNo")}:{" "}
+            {personal.previousCustomerNo || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
-            Meter No: {personal.meterNo || "-"}
+            {t("addressdetails.meterNo")}: {personal.meterNo || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-2">
-            Meter location No: {personal.meterLocationNo || "-"}
+            {t("addressdetails.meterLocationNo")}:{" "}
+            {personal.meterLocationNo || "-"}
           </div>
           <div className="w-full h-0.5 bg-green-500 mb-3" />
           <div className="text-[#33475b] font-poppins-light text-lg font-light leading-6 mb-1">
-            Advertising business partner:
+            {t("addresscard.advertisingPartner")}
             <div className="text-[#33475b] font-poppins-semibold text-base font-semibold leading-6 mb-3 mt-4">
               Aram Energy Solution
             </div>

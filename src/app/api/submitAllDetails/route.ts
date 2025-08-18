@@ -13,22 +13,49 @@ function formatEmailBody({
   confirmUrl,
   declineUrl,
 }: any) {
-  return `Thank you for your submission.\n\nPlease confirm your details for submission:\n\n---\nCalculation Tarif:\n${JSON.stringify(
-    calculationTarif,
-    null,
-    2
-  )}\n\nSelected Tariff:\n${JSON.stringify(
-    selectedTariff,
-    null,
-    2
-  )}\n\nPersonal Details:\nName: ${personalDetails?.name || "-"}\nSurname: ${
-    personalDetails?.surname || "-"
-  }\nEmail: ${personalDetails?.email || "-"}\nDate of Birth: ${
-    personalDetails?.birthDate || "-"
-  }\nMobile No: ${personalDetails?.phone || "-"}\nAddress: ${
-    personalDetails?.street || "-"
-  } ${personalDetails?.houseNumber || ""} ${
-    personalDetails?.houseNumberSuffix || ""
+  // Helper to format calculationTarif
+  const calc = calculationTarif || {};
+  const calcTarifStr = `Selected: ${calc.selected || "-"}\nCustomer Type: ${
+    calc.customerType || "-"
+  }\nPostal Code: ${calc.postalCode || "-"}\nAnnual Consumption: ${
+    calc.annualConsumption || "-"
+  }\nPostal Options: ${
+    calc.postalOptions &&
+    Array.isArray(calc.postalOptions) &&
+    calc.postalOptions.length > 0
+      ? calc.postalOptions
+          .map(
+            (opt: any, i: number) =>
+              `  - PLZ: ${opt.plz || "-"},\n District: ${opt.district || "-"}`
+          )
+          .join("\n")
+      : "-"
+  }`;
+
+  // Helper to format selectedTariff
+  const sel = selectedTariff || {};
+  const selectedTariffStr = `Base Price: ${
+    sel.basePrice || "-"
+  }\nLabor Price: ${sel.laborPrice || "-"}\nType of Current: ${
+    sel.typeOfCurrent || "-"
+  }\nContract Term: ${sel.contractTerm || "-"}\nPrice Guarantee: ${
+    sel.priceGuarantee || "-"
+  }\nDown Payment: ${sel.downPayment || "-"}\nTotal: ${sel.total || "-"}`;
+
+  return `Thank you for your submission.\n\nPlease confirm your details for submission:\n\n---\nCalculation Tarif:\n${calcTarifStr}\n\nSelected Tariff:\n${selectedTariffStr}\n\nPersonal Details:\nName: ${
+    personalDetails?.name || "-"
+  }\nSurname: ${personalDetails?.surname || "-"}\nEmail: ${
+    personalDetails?.email || "-"
+  }\nDate of Birth: ${personalDetails?.birthDate || "-"}\nMobile No: ${
+    personalDetails?.phone || "-"
+  }\nAddress: ${
+    [
+      personalDetails?.street,
+      personalDetails?.houseNumber,
+      personalDetails?.houseNumberSuffix,
+    ]
+      .filter(Boolean)
+      .join(" ") || "-"
   }, ${personalDetails?.postalCode || "-"} ${
     personalDetails?.location || "-"
   }\n---\n\nTo confirm your submission, click here: ${confirmUrl}\nTo decline, click here: ${declineUrl}\n`;

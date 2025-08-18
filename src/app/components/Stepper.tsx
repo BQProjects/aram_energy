@@ -2,19 +2,20 @@ import React from "react";
 
 interface StepperProps {
   currentStep: number; // 1-based index
+  t?: (key: string) => string;
 }
 
-const steps = [
-  { label: "Calculator" },
-  { label: "Select one option" },
-  { label: "Personal details" },
-  { label: "Address details" },
-  { label: "Payment method" },
+const stepsKeys = [
+  "stepper.calculator",
+  "stepper.selectOption",
+  "stepper.personalDetails",
+  "stepper.addressDetails",
+  "stepper.paymentMethod",
 ];
 
-const Stepper: React.FC<StepperProps> = ({ currentStep }) => (
+const Stepper: React.FC<StepperProps> = ({ currentStep, t }) => (
   <div className="stepper flex items-center gap-4 pt-7 pr-7 pb-7 pl-7 w-full max-w-[1191px] mx-auto justify-center">
-    {steps.map((step, idx) => (
+    {stepsKeys.map((stepKey, idx) => (
       <React.Fragment key={idx}>
         <div className="steps flex flex-shrink-0 items-center w-[8.125rem]">
           <div
@@ -59,10 +60,10 @@ const Stepper: React.FC<StepperProps> = ({ currentStep }) => (
                 : "text-[#a0a3bd]"
             }`}
           >
-            {step.label}
+            {t ? t(stepKey) : stepKey}
           </div>
         </div>
-        {idx < steps.length - 1 && (
+        {idx < stepsKeys.length - 1 && (
           <div
             className={`flex-shrink-0 w-14 h-[0.1875rem] rounded-full ${
               idx + 1 < currentStep

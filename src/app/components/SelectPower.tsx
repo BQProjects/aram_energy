@@ -2,7 +2,11 @@ import React, { useState } from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
 
-const SelectPower = () => {
+interface SelectPowerProps {
+  t?: (key: string) => string;
+}
+
+const SelectPower: React.FC<SelectPowerProps> = ({ t }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   // You can extract any needed params here if you want to pass them forward
@@ -74,17 +78,17 @@ const SelectPower = () => {
           {/* Tariff info */}
           <div className="flex flex-col items-start gap-[17px] w-[629px]">
             <div className="text-[#ff9641] font-inria-serif-bold text-2xl font-bold leading-normal">
-              {tariff.name}
+              {t ? t(tariff.name) : tariff.name}
             </div>
             <div className="flex flex-col items-end self-stretch gap-[17px]">
               <div className="flex items-center gap-[95px]">
                 <div className="w-40 h-[8.9375rem] text-[#abafb1] text-base font-poppins-regular leading-normal">
-                  Base Price :<br />
-                  Labor Price :<br />
-                  Type Of Current :<br />
-                  Contract Term :<br />
-                  Price Guarantee :<br />
-                  Down Payment :
+                  {t ? t("tariff.basePrice") : "Base Price"} :<br />
+                  {t ? t("tariff.laborPrice") : "Labor Price"} :<br />
+                  {t ? t("tariff.typeOfCurrent") : "Type Of Current"} :<br />
+                  {t ? t("tariff.contractTerm") : "Contract Term"} :<br />
+                  {t ? t("tariff.priceGuarantee") : "Price Guarantee"} :<br />
+                  {t ? t("tariff.downPayment") : "Down Payment"} :
                 </div>
                 <div className="w-[22.75rem] h-[8.9375rem] text-white text-base text-right font-poppins-regular">
                   {tariff.basePrice}
@@ -106,7 +110,7 @@ const SelectPower = () => {
             </div>
             <div className="flex items-center gap-[63px]">
               <div className="w-[17.375rem] h-[1.4375rem] text-[#d9d9d9] font-poppins-semibold text-base leading-normal">
-                Total
+                {t ? t("tariff.total") : "Total"}
               </div>
               <div className="w-[17.375rem] h-[1.4375rem] text-white text-right font-poppins-semibold text-base leading-normal">
                 {tariff.total}
@@ -122,7 +126,7 @@ const SelectPower = () => {
           className="bg-[#FF9641] text-white font-poppins-light px-8 py-3 w-[240.41px] h-[62px] shadow hover:bg-[#e88537] transition-colors text-base font-semibold flex items-center justify-center gap-3"
           onClick={handleSelect}
         >
-          Choose Tariff
+          {t ? t("tariff.chooseTariff") : "Choose Tariff"}
           <Image
             src="/whiteRightArrow.svg"
             alt="Right Arrow"

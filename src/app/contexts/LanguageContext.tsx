@@ -144,6 +144,17 @@ const translations = {
     "calculation.validationError":
       "Please enter both annual consumption (kWh) and postal code.",
 
+    // CalculatorCard fields
+    "calculator.deliveryPointInfo": "Delivery Point Information",
+    "calculator.postalCode": "Postal Code",
+    "calculator.location": "Location",
+    "calculator.tariffInfo": "Tariff Information",
+    "calculator.division": "Division",
+    "calculator.customerCategory": "Customer Category",
+    "calculator.furtherInfo": "Further Information",
+    "calculator.transactionKey": "Transaction Key",
+    "calculator.advertisingPartner": "Advertising Partner",
+
     // Our Service section
     "ourService.title": "Our Services",
     "ourService.arrangeCall": "Arrange a call",
@@ -198,6 +209,140 @@ const translations = {
     "submetering.whoCanUse": "Who can use this?",
     "submetering.whoCanUseDesc":
       "Property managers, homeowners, housing associations and other relevant contacts are potential customers.",
+
+    // Stepper
+    "stepper.calculator": "Calculator",
+    "stepper.selectOption": "Select Option",
+    "stepper.personalDetails": "Personal Details",
+    "stepper.addressDetails": "Address Details",
+    "stepper.paymentMethod": "Payment Method",
+
+    // SelectPower
+    "selectPower.label": "Select your power consumption",
+    "selectPower.low": "Low (up to 2,000 kWh)",
+    "selectPower.medium": "Medium (2,000–5,000 kWh)",
+    "selectPower.high": "High (over 5,000 kWh)",
+
+    // Tariff fields for SelectPower
+    "tariff.basePrice": "Base Price",
+    "tariff.laborPrice": "Labor Price",
+    "tariff.typeOfCurrent": "Type Of Current",
+    "tariff.contractTerm": "Contract Term",
+    "tariff.priceGuarantee": "Price Guarantee",
+    "tariff.downPayment": "Down Payment",
+    "tariff.total": "Total",
+    "tariff.chooseTariff": "Choose Tariff",
+    // Tariff names (optional, for translation)
+    "R(H)EINPOWER Direct Electricity Tariff":
+      "R(H)EINPOWER Direct Electricity Tariff",
+    "R(H)EINPOWER MeinStrom Heat Pump 24 Tariff":
+      "R(H)EINPOWER MeinStrom Heat Pump 24 Tariff",
+
+    // PersonalDetails page
+    "personaldetails.salutation": "Salutation",
+    "personaldetails.salutationPlaceholder": "Please select...",
+    "personaldetails.mr": "Mr",
+    "personaldetails.ms": "Ms",
+    "personaldetails.mrs": "Mrs",
+    "personaldetails.dr": "Dr",
+    "personaldetails.name": "Name",
+    "personaldetails.namePlaceholder": "Enter your name",
+    "personaldetails.surname": "Surname",
+    "personaldetails.surnamePlaceholder": "Enter your surname",
+    "personaldetails.billingAddress": "Billing address",
+    "personaldetails.billingSame":
+      "The billing address corresponds to the delivery address",
+    "personaldetails.billingDifferent":
+      "The billing address is different from the delivery address",
+    "personaldetails.birthDate": "Birth date",
+    "personaldetails.email": "E-mail address",
+    "personaldetails.emailPlaceholder": "Enter your email",
+    "personaldetails.repeatEmail": "Repeat email address",
+    "personaldetails.repeatEmailPlaceholder": "Repeat your email",
+    "personaldetails.phone": "Telephone number",
+    "personaldetails.next": "Next",
+    "personaldetails.error.required": "Please fill in all required fields.",
+    "personaldetails.error.emailMatch": "Email addresses do not match.",
+
+    // AddressDetails page
+    "addressdetails.postalCode": "Postal Code",
+    "addressdetails.postalCodePlaceholder": "Enter your postal code",
+    "addressdetails.location": "Location",
+    "addressdetails.locationPlaceholder": "Enter your location",
+    "addressdetails.street": "Street",
+    "addressdetails.streetPlaceholder": "Enter your street",
+    "addressdetails.houseNumberAndSuffix":
+      "House Number * / House Number Suffix",
+    "addressdetails.houseNumberPlaceholder": "Number",
+    "addressdetails.houseNumberSuffixPlaceholder": "Suffix",
+    "addressdetails.moveInStatus": "Move-in Status",
+    "addressdetails.alreadyLive": "I am currently living here (already live)",
+    "addressdetails.movingIn":
+      "I have just moved in or I am about to move in (move in)",
+    "addressdetails.desiredStart": "Desired Start of Delivery",
+    "addressdetails.previousSupplier": "Previous Supplier",
+    "addressdetails.previousSupplierPlaceholder": "Enter previous supplier",
+    "addressdetails.previousCustomerNo": "Previous Customer No.",
+    "addressdetails.previousCustomerNoPlaceholder":
+      "Enter previous customer number",
+    "addressdetails.meterNo": "Meter No.",
+    "addressdetails.meterNoPlaceholder": "Enter meter number",
+    "addressdetails.supplierSwitchInfo":
+      "Would you like to switch suppliers more quickly? Then please provide us with your store location number. This will allow us to start supplying you more quickly.",
+    "addressdetails.meterLocationNo": "Meter Location No.",
+    "addressdetails.meterLocationNoPlaceholder": "Enter meter location number",
+    "addressdetails.billingAddress": "Billing address",
+    "addressdetails.billingHouseNumberAndSuffix":
+      "Billing House Number * / Suffix",
+    "addressdetails.billingHouseNumberPlaceholder": "Number",
+    "addressdetails.billingHouseNumberSuffixPlaceholder": "Suffix",
+    "addressdetails.billingStreet": "Billing Street *",
+    "addressdetails.billingStreetPlaceholder": "Enter billing street",
+    "addressdetails.billingCity": "Billing City *",
+    "addressdetails.billingCityPlaceholder": "Enter billing city",
+    "addressdetails.billingPostal": "Billing Postal Code *",
+    "addressdetails.billingPostalPlaceholder": "Enter billing postal code",
+    "addressdetails.billingCountry": "Billing Country *",
+    "addressdetails.billingCountryPlaceholder": "Enter billing country",
+    "addressdetails.next": "Next",
+    "addressdetails.error.billingType": "Please select billing type.",
+    "addressdetails.error.billingFields":
+      "Please fill in all required billing address fields.",
+    "addressdetails.error.desiredStart":
+      "Please select desired start of delivery.",
+    "addressdetails.error.previousSupplier": "Please enter previous supplier.",
+    "addressdetails.error.previousCustomerNo":
+      "Please enter previous customer number.",
+    "addressdetails.error.meterNo": "Please enter meter number.",
+    "addressdetails.error.moveInStatus": "Please select move-in status.",
+
+    // AddressCard
+    "addresscard.personalInfo": "Personal information:",
+    "addresscard.furtherInfo": "Further information",
+    "addresscard.advertisingPartner": "Advertising business partner:",
+
+    // SepaCard
+    "sepaCard.deliveryPointInfo": "Delivery point information:",
+    "sepaCard.furtherInfo": "Further information",
+
+    // SEPA Mandate page
+    "sepaMandate.title": "SEPA mandate",
+    "sepaMandate.iban": "IBAN",
+    "sepaMandate.ibanPlaceholder": "Enter your IBAN",
+    "sepaMandate.accountHolder": "Account holder",
+    "sepaMandate.accountHolderPlaceholder": "Enter account holder name",
+    "sepaMandate.ibanInfo":
+      "You can find the IBAN on your bank card, among other places. It consists of the country code DE, a two-digit individual security number from your bank, and a further 18 digits.",
+    "sepaMandate.sepaInfo":
+      "By entering my bank details, I authorize Stadtwerke Duisburg AG to collect payments from my account via SEPA direct debit. At the same time, I instruct my bank to honor the direct debits drawn on my account by Stadtwerke Duisburg AG.",
+    "sepaMandate.confirmEmail": "Receive confirmation email",
+    "sepaMandate.paymentTerms": "Our payment terms",
+    "sepaMandate.paymentTermsSub": "debited monthly from account",
+    "sepaMandate.submit": "Submit",
+    "sepaMandate.submitting": "Submitting...",
+    "sepaMandate.success":
+      "Submission successful! Please check your email to confirm.",
+    "sepaMandate.error.submissionFailed": "Submission failed",
   },
   de: {
     // Header
@@ -333,6 +478,17 @@ const translations = {
     "calculation.validationError":
       "Bitte geben Sie sowohl den Jahresverbrauch (kWh) als auch die Postleitzahl ein.",
 
+    // CalculatorCard fields
+    "calculator.deliveryPointInfo": "Lieferstelleninformation",
+    "calculator.postalCode": "Postleitzahl",
+    "calculator.location": "Ort",
+    "calculator.tariffInfo": "Tarifinformation",
+    "calculator.division": "Sparte",
+    "calculator.customerCategory": "Kundenkategorie",
+    "calculator.furtherInfo": "Weitere Informationen",
+    "calculator.transactionKey": "Transaktionsschlüssel",
+    "calculator.advertisingPartner": "Werbepartner",
+
     // Our Service section
     "ourService.title": "Unsere Dienstleistungen",
     "ourService.arrangeCall": "Rückruf vereinbaren",
@@ -388,6 +544,148 @@ const translations = {
     "submetering.whoCanUse": "Wer kann das nutzen?",
     "submetering.whoCanUseDesc":
       "Hausverwalter, Eigentümer, Wohnungsbaugesellschaften und andere relevante Ansprechpartner sind potenzielle Kunden.",
+
+    // Stepper
+    "stepper.calculator": "Rechner",
+    "stepper.selectOption": "Option wählen",
+    "stepper.personalDetails": "Persönliche Daten",
+    "stepper.addressDetails": "Adressdaten",
+    "stepper.paymentMethod": "Zahlungsmethode",
+
+    // SelectPower
+    "selectPower.label": "Wählen Sie Ihren Stromverbrauch",
+    "selectPower.low": "Niedrig (bis 2.000 kWh)",
+    "selectPower.medium": "Mittel (2.000–5.000 kWh)",
+    "selectPower.high": "Hoch (über 5.000 kWh)",
+
+    // Tariff fields for SelectPower
+    "tariff.basePrice": "Grundpreis",
+    "tariff.laborPrice": "Arbeitspreis",
+    "tariff.typeOfCurrent": "Stromart",
+    "tariff.contractTerm": "Vertragslaufzeit",
+    "tariff.priceGuarantee": "Preisgarantie",
+    "tariff.downPayment": "Abschlagszahlung",
+    "tariff.total": "Gesamt",
+    "tariff.chooseTariff": "Tarif wählen",
+    // Tariff names (optional, for translation)
+    "R(H)EINPOWER Direct Electricity Tariff": "R(H)EINPOWER Direktstromtarif",
+    "R(H)EINPOWER MeinStrom Heat Pump 24 Tariff":
+      "R(H)EINPOWER MeinStrom Wärmepumpen 24 Tarif",
+
+    // PersonalDetails page
+    "personaldetails.salutation": "Anrede",
+    "personaldetails.salutationPlaceholder": "Bitte auswählen...",
+    "personaldetails.mr": "Herr",
+    "personaldetails.ms": "Frau",
+    "personaldetails.mrs": "Frau (verh.)",
+    "personaldetails.dr": "Dr.",
+    "personaldetails.name": "Vorname",
+    "personaldetails.namePlaceholder": "Geben Sie Ihren Vornamen ein",
+    "personaldetails.surname": "Nachname",
+    "personaldetails.surnamePlaceholder": "Geben Sie Ihren Nachnamen ein",
+    "personaldetails.billingAddress": "Rechnungsadresse",
+    "personaldetails.billingSame":
+      "Die Rechnungsadresse entspricht der Lieferadresse",
+    "personaldetails.billingDifferent":
+      "Die Rechnungsadresse ist von der Lieferadresse abweichend",
+    "personaldetails.birthDate": "Geburtsdatum",
+    "personaldetails.email": "E-Mail-Adresse",
+    "personaldetails.emailPlaceholder": "Geben Sie Ihre E-Mail ein",
+    "personaldetails.repeatEmail": "E-Mail-Adresse wiederholen",
+    "personaldetails.repeatEmailPlaceholder": "Wiederholen Sie Ihre E-Mail",
+    "personaldetails.phone": "Telefonnummer",
+    "personaldetails.next": "Weiter",
+    "personaldetails.error.required":
+      "Bitte füllen Sie alle Pflichtfelder aus.",
+    "personaldetails.error.emailMatch":
+      "E-Mail-Adressen stimmen nicht überein.",
+
+    // AddressDetails page
+    "addressdetails.postalCode": "Postleitzahl",
+    "addressdetails.postalCodePlaceholder": "Geben Sie Ihre Postleitzahl ein",
+    "addressdetails.location": "Ort",
+    "addressdetails.locationPlaceholder": "Geben Sie Ihren Ort ein",
+    "addressdetails.street": "Straße",
+    "addressdetails.streetPlaceholder": "Geben Sie Ihre Straße ein",
+    "addressdetails.houseNumberAndSuffix": "Hausnummer * / Hausnummernzusatz",
+    "addressdetails.houseNumberPlaceholder": "Nummer",
+    "addressdetails.houseNumberSuffixPlaceholder": "Zusatz",
+    "addressdetails.moveInStatus": "Einzugsstatus",
+    "addressdetails.alreadyLive": "Ich wohne bereits hier (bereits eingezogen)",
+    "addressdetails.movingIn":
+      "Ich bin gerade eingezogen oder ziehe bald ein (Einzug)",
+    "addressdetails.desiredStart": "Gewünschter Lieferbeginn",
+    "addressdetails.previousSupplier": "Vorversorger",
+    "addressdetails.previousSupplierPlaceholder":
+      "Geben Sie den Vorversorger ein",
+    "addressdetails.previousCustomerNo": "Vor-Kundennummer",
+    "addressdetails.previousCustomerNoPlaceholder":
+      "Geben Sie die Vor-Kundennummer ein",
+    "addressdetails.meterNo": "Zählernummer",
+    "addressdetails.meterNoPlaceholder": "Geben Sie die Zählernummer ein",
+    "addressdetails.supplierSwitchInfo":
+      "Möchten Sie schneller den Anbieter wechseln? Dann geben Sie bitte Ihre Zählpunktbezeichnung an. So können wir Sie schneller beliefern.",
+    "addressdetails.meterLocationNo": "Zählpunktbezeichnung",
+    "addressdetails.meterLocationNoPlaceholder":
+      "Geben Sie die Zählpunktbezeichnung ein",
+    "addressdetails.billingAddress": "Rechnungsadresse",
+    "addressdetails.billingHouseNumberAndSuffix":
+      "Hausnummer * / Zusatz (Rechnung)",
+    "addressdetails.billingHouseNumberPlaceholder": "Nummer",
+    "addressdetails.billingHouseNumberSuffixPlaceholder": "Zusatz",
+    "addressdetails.billingStreet": "Straße (Rechnung) *",
+    "addressdetails.billingStreetPlaceholder":
+      "Geben Sie die Rechnungsstraße ein",
+    "addressdetails.billingCity": "Stadt (Rechnung) *",
+    "addressdetails.billingCityPlaceholder": "Geben Sie die Rechnungsstadt ein",
+    "addressdetails.billingPostal": "PLZ (Rechnung) *",
+    "addressdetails.billingPostalPlaceholder":
+      "Geben Sie die Rechnungs-PLZ ein",
+    "addressdetails.billingCountry": "Land (Rechnung) *",
+    "addressdetails.billingCountryPlaceholder":
+      "Geben Sie das Rechnungsland ein",
+    "addressdetails.next": "Weiter",
+    "addressdetails.error.billingType":
+      "Bitte wählen Sie den Rechnungstyp aus.",
+    "addressdetails.error.billingFields":
+      "Bitte füllen Sie alle erforderlichen Rechnungsadressfelder aus.",
+    "addressdetails.error.desiredStart":
+      "Bitte wählen Sie den gewünschten Lieferbeginn aus.",
+    "addressdetails.error.previousSupplier":
+      "Bitte geben Sie den Vorversorger ein.",
+    "addressdetails.error.previousCustomerNo":
+      "Bitte geben Sie die Vor-Kundennummer ein.",
+    "addressdetails.error.meterNo": "Bitte geben Sie die Zählernummer ein.",
+    "addressdetails.error.moveInStatus":
+      "Bitte wählen Sie den Einzugsstatus aus.",
+
+    // AddressCard
+    "addresscard.personalInfo": "Persönliche Informationen:",
+    "addresscard.furtherInfo": "Weitere Informationen",
+    "addresscard.advertisingPartner": "Werbepartner:",
+
+    // SepaCard
+    "sepaCard.deliveryPointInfo": "Lieferpunktinformationen:",
+    "sepaCard.furtherInfo": "Weitere Informationen",
+
+    // SEPA Mandate page
+    "sepaMandate.title": "SEPA-Mandat",
+    "sepaMandate.iban": "IBAN",
+    "sepaMandate.ibanPlaceholder": "Geben Sie Ihre IBAN ein",
+    "sepaMandate.accountHolder": "Kontoinhaber",
+    "sepaMandate.accountHolderPlaceholder": "Name des Kontoinhabers eingeben",
+    "sepaMandate.ibanInfo":
+      "Die IBAN finden Sie unter anderem auf Ihrer Bankkarte. Sie besteht aus dem Ländercode DE, einer zweistelligen individuellen Sicherheitsnummer Ihrer Bank und weiteren 18 Ziffern.",
+    "sepaMandate.sepaInfo":
+      "Mit der Eingabe meiner Bankdaten ermächtige ich die Stadtwerke Duisburg AG, Zahlungen von meinem Konto mittels SEPA-Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von den Stadtwerken Duisburg AG auf mein Konto gezogenen Lastschriften einzulösen.",
+    "sepaMandate.confirmEmail": "Bestätigungs-E-Mail erhalten",
+    "sepaMandate.paymentTerms": "Unsere Zahlungsbedingungen",
+    "sepaMandate.paymentTermsSub": "monatlich vom Konto abgebucht",
+    "sepaMandate.submit": "Absenden",
+    "sepaMandate.submitting": "Wird gesendet...",
+    "sepaMandate.success":
+      "Erfolgreich übermittelt! Bitte prüfen Sie Ihre E-Mails zur Bestätigung.",
+    "sepaMandate.error.submissionFailed": "Übermittlung fehlgeschlagen",
   },
 };
 

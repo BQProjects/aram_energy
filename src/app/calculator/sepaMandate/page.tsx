@@ -5,6 +5,7 @@ import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Stepper from "../../components/Stepper";
 import SepaCard from "../../components/sepaCard";
+import { useLanguage } from "@/app/contexts/LanguageContext";
 
 export default function SepaMandatePage() {
   const [iban, setIban] = useState("");
@@ -12,6 +13,7 @@ export default function SepaMandatePage() {
   const [confirmEmail, setConfirmEmail] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
+  const { t } = useLanguage();
   const allValid = iban.trim() && accountHolder.trim() && confirmEmail;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -38,7 +40,7 @@ export default function SepaMandatePage() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
-      if (!res.ok) throw new Error("Submission failed");
+      if (!res.ok) throw new Error(t("sepaMandate.error.submissionFailed"));
       // On success, clear localStorage
       localStorage.removeItem("calculationTarif");
       localStorage.removeItem("personalDetails");
@@ -47,9 +49,9 @@ export default function SepaMandatePage() {
       setIban("");
       setAccountHolder("");
       setConfirmEmail(false);
-      alert("Submission successful! Please check your email to confirm.");
+      alert(t("sepaMandate.success"));
     } catch (err: any) {
-      setError(err.message || "Submission failed");
+      setError(err.message || t("sepaMandate.error.submissionFailed"));
     } finally {
       setSubmitting(false);
     }
@@ -60,7 +62,7 @@ export default function SepaMandatePage() {
       <Header />
       <main className="flex-1 flex flex-col items-center w-full mb-32">
         <div className="w-full flex justify-center pb-10">
-          <Stepper currentStep={5} />
+          <Stepper currentStep={5} t={t} />
         </div>
         <div className="flex items-start gap-32 w-full max-w-[1146px] mx-auto mt-8">
           {/* Left: SepaCard */}
@@ -71,19 +73,19 @@ export default function SepaMandatePage() {
             <div className="flex flex-col flex-shrink-0 items-start gap-3 pt-4 pb-2 px-6 w-[650px] h-[3.625rem] border-2 border-[#cfd3d4] bg-white/[.74]">
               <div className="flex items-center gap-4 self-stretch h-[2.5625rem]">
                 <div className="input_content-1 flex flex-col justify-between items-start self-stretch text-black font-inter text-base leading-[normal]">
-                  SEPA mandate
+                  {t("sepaMandate.title")}
                 </div>
               </div>
             </div>
             {/* IBAN field */}
             <div className="flex items-center gap-6 w-[650px]">
               <label className="w-48 text-left text-[#ABAFB1] font-poppins-regular text-xl">
-                IBAN
+                {t("sepaMandate.iban")}
               </label>
               <input
                 type="text"
                 className="flex-1 border-2 border-[#cfd3d4] rounded px-4 py-3  text-white font-poppins text-lg focus:outline-none focus:border-[#FF9641]"
-                placeholder="Enter your IBAN"
+                placeholder={t("sepaMandate.ibanPlaceholder")}
                 value={iban}
                 onChange={(e) => setIban(e.target.value)}
                 required
@@ -92,12 +94,12 @@ export default function SepaMandatePage() {
             {/* Account holder field */}
             <div className="flex items-center gap-6 w-[650px]">
               <label className="w-48 text-left text-[#ABAFB1] font-poppins-regular text-xl">
-                Account holder
+                {t("sepaMandate.accountHolder")}
               </label>
               <input
                 type="text"
                 className="flex-1 border-2 border-[#cfd3d4] rounded px-4 py-3 text-white font-poppins text-lg focus:outline-none focus:border-[#FF9641]"
-                placeholder="Enter account holder name"
+                placeholder={t("sepaMandate.accountHolderPlaceholder")}
                 value={accountHolder}
                 onChange={(e) => setAccountHolder(e.target.value)}
                 required
@@ -105,15 +107,10 @@ export default function SepaMandatePage() {
             </div>
             {/* Info text */}
             <div className="w-[650px] text-[#abafb1] text-justify font-poppins-regular text-xl leading-relaxed">
-              You can find the IBAN on your bank card, among other places. It
-              consists of the country code DE, a two-digit individual security
-              number from your bank, and a further 18 digits.
+              {t("sepaMandate.ibanInfo")}
               <br />
               <br />
-              By entering my bank details, I authorize Stadtwerke Duisburg AG to
-              collect payments from my account via SEPA direct debit. At the
-              same time, I instruct my bank to honor the direct debits drawn on
-              my account by Stadtwerke Duisburg AG.
+              {t("sepaMandate.sepaInfo")}
             </div>
             {/* Confirmation email checkbox */}
             <div className="flex items-center gap-3 w-[650px]">
@@ -129,16 +126,16 @@ export default function SepaMandatePage() {
                 htmlFor="confirmationEmail"
                 className="text-[#abafb1] font-poppins-regular text-xl capitalize select-none"
               >
-                Receive confirmation email
+                {t("sepaMandate.confirmEmail")}
               </label>
             </div>
             {/* Payment terms + submit */}
             <div className="flex items-center justify-between gap-8 mt-4 w-[650px]">
               <div className="underline text-[#abafb1] font-['Poppins'] text-sm">
-                Our payment terms
+                {t("sepaMandate.paymentTerms")}
                 <br />
                 <div className="underline text-[#abafb1] font-poppins-regular text-xs">
-                  montalich von konto abgebucht
+                  {t("sepaMandate.paymentTermsSub")}
                 </div>
               </div>
               <button
@@ -151,7 +148,9 @@ export default function SepaMandatePage() {
                       : "bg-[#F9FAFB] text-[#ff9641] cursor-not-allowed"
                   }`}
               >
-                {submitting ? "Submitting..." : "Submit"}
+                {submitting
+                  ? t("sepaMandate.submitting")
+                  : t("sepaMandate.submit")}
               </button>
             </div>
             {error && <div className="text-red-500 text-sm mt-2">{error}</div>}
