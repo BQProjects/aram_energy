@@ -68,6 +68,7 @@ export default function Header() {
                       alt="Circle Down Icon"
                       width={18}
                       height={18}
+                      quality={100}
                       className="ml-1.5"
                     />
                   )}
@@ -90,6 +91,7 @@ export default function Header() {
                 alt={languages[language].name}
                 width={29}
                 height={29}
+                quality={100}
                 className="rounded-full mr-2"
               />
               <span className="mx-1 sm:mx-2 text-white font-poppins-regular text-base font-normal">
@@ -131,6 +133,7 @@ export default function Header() {
                       alt={langData.name}
                       width={24}
                       height={24}
+                      quality={100}
                       className="rounded-full"
                     />
                     <span className="text-white font-poppins-regular text-sm">
@@ -166,6 +169,7 @@ export default function Header() {
                 alt={languages[language].name}
                 width={24}
                 height={24}
+                quality={100}
                 className="rounded-full mr-1"
               />
               <span className="text-white font-poppins-regular text-sm">
@@ -188,6 +192,7 @@ export default function Header() {
                       alt={langData.name}
                       width={20}
                       height={20}
+                      quality={100}
                       className="rounded-full"
                     />
                     <span className="text-white font-poppins-regular text-sm">
@@ -265,6 +270,7 @@ export default function Header() {
                           alt="Circle Down Icon"
                           width={18}
                           height={18}
+                          quality={100}
                           className="ml-2"
                         />
                       )}

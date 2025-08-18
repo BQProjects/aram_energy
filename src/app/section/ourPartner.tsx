@@ -15,14 +15,16 @@ export default function OurPartner() {
             alt="Stadtwerke Duisburg"
             width={220}
             height={60}
-            className="w-40 h-12 sm:w-48 sm:h-14 md:w-56 md:h-16 lg:w-[220px] lg:h-[60px] object-contain"
+            quality={100}
+            className="w-40 h-12 sm:w-48 sm:h-14 md:w-56 md:h-16 lg:w-[320px] lg:h-[70px] object-contain"
           />
           <Image
             src="/partner2.png"
             alt="Plugman"
             width={120}
             height={120}
-            className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-[120px] lg:h-[120px] object-contain"
+            quality={100}
+            className="w-24 h-24 sm:w-28 sm:h-28 md:w-32 md:h-32 lg:w-[140px] lg:h-[140px] object-contain"
           />
         </div>
       </div>

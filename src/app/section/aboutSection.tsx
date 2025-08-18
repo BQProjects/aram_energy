@@ -25,6 +25,7 @@ export default function AboutSection() {
             alt="About Section Image"
             width={715}
             height={458}
+            quality={100}
             className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-none lg:w-[735px] h-auto rounded-md object-cover shadow-lg"
           />
         </div>
@@ -38,6 +39,7 @@ export default function AboutSection() {
                 alt="Ribbon Icon"
                 width={18}
                 height={24}
+                quality={100}
                 className="object-contain w-6 h-8"
               />
             </div>
@@ -58,6 +60,7 @@ export default function AboutSection() {
                 alt="Personcheck Icon"
                 width={30}
                 height={24}
+                quality={100}
                 className="object-contain w-7 h-6"
               />
             </div>
@@ -78,6 +81,7 @@ export default function AboutSection() {
                 alt="Clock Icon"
                 width={24}
                 height={24}
+                quality={100}
                 className="object-contain w-6 h-6"
               />
             </div>

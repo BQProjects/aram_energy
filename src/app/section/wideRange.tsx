@@ -38,6 +38,7 @@ export default function WideRange() {
             alt="Right Arrow"
             width={32}
             height={32}
+            quality={100}
             className="w-6 h-6 sm:w-8 sm:h-8 md:w-8 md:h-8"
           />
         </button>

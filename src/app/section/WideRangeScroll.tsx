@@ -113,6 +113,7 @@ export default function WideRangeScroll() {
             alt="Scroll Left"
             width={22}
             height={15}
+            quality={100}
             className="w-7 h-7"
           />
         </button>
@@ -128,6 +129,7 @@ export default function WideRangeScroll() {
             alt="Scroll Right"
             width={22}
             height={15}
+            quality={100}
             className="w-7 h-7"
           />
         </button>
