@@ -29,7 +29,9 @@ function getTodayISO() {
   return today.toISOString().split("T")[0];
 }
 
-export default function BookNowPage() {
+import { Suspense } from "react";
+
+function BookNowPageInner() {
   const { t } = useLanguage();
   const searchParams = useSearchParams();
   const [date, setDate] = useState(getTodayISO());
@@ -203,5 +205,13 @@ export default function BookNowPage() {
       </main>
       <Footer />
     </>
+  );
+}
+
+export default function BookNowPage() {
+  return (
+    <Suspense>
+      <BookNowPageInner />
+    </Suspense>
   );
 }
