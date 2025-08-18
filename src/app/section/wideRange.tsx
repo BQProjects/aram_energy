@@ -1,5 +1,5 @@
 import Image from "next/image";
-import WideRangeScroll from "./WideRangeScroll";
+// import WideRangeScroll from "./WideRangeScroll";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function WideRange() {
@@ -25,7 +25,9 @@ export default function WideRange() {
         <div className="font-poppins-regular text-lg sm:text-xl md:text-2xl font-normal text-white mb-4 sm:mb-6">
           {t('wideRange.subtitle')}
         </div>
-        <button className="flex items-center justify-between w-full sm:w-80 md:w-96 lg:w-[500px] h-12 sm:h-14 md:h-[55px] bg-[#FF9641] font-inter font-medium text-sm sm:text-base text-white border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 mb-6 sm:mb-8 hover:bg-[#e88537] transition-colors duration-200">
+        <button
+          onClick={() => { window.location.hash = "#contact"; }}
+          className="flex items-center justify-between w-full sm:w-80 md:w-96 lg:w-[500px] h-12 sm:h-14 md:h-[55px] bg-[#FF9641] font-inter font-medium text-sm sm:text-base text-white border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 mb-6 sm:mb-8 hover:bg-[#e88537] transition-colors duration-200">
           <span className="text-left">
             {t('wideRange.cta')}
           </span>

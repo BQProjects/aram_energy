@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from "next/image";
 import { useLanguage } from "../contexts/LanguageContext";
 
@@ -6,20 +7,20 @@ export default function OurMission() {
 
   const features = [
     {
-      title: t('mission.transparentPricing'),
-      desc: t('mission.transparentPricingDesc'),
+      title: t("mission.transparentPricing"),
+      desc: t("mission.transparentPricingDesc"),
     },
     {
-      title: t('mission.sustainableEnergy'),
-      desc: t('mission.sustainableEnergyDesc'),
+      title: t("mission.sustainableEnergy"),
+      desc: t("mission.sustainableEnergyDesc"),
     },
     {
-      title: t('mission.fastSwitching'),
-      desc: t('mission.fastSwitchingDesc'),
+      title: t("mission.fastSwitching"),
+      desc: t("mission.fastSwitchingDesc"),
     },
     {
-      title: t('mission.customerSatisfaction'),
-      desc: t('mission.customerSatisfactionDesc'),
+      title: t("mission.customerSatisfaction"),
+      desc: t("mission.customerSatisfactionDesc"),
     },
   ];
 
@@ -56,7 +57,12 @@ export default function OurMission() {
         </div>
         {/* Button at bottom */}
         <div className="mt-8 sm:mt-12 flex items-center">
-          <button className="flex items-center justify-between w-full sm:w-80 md:w-96 h-14 md:h-16 bg-white font-inter font-medium text-base md:text-lg text-[#FF9641] border-none outline-none cursor-pointer px-4 sm:px-6 hover:bg-gray-50 transition-colors duration-200">
+          <button
+            onClick={() => {
+              window.location.hash = "#Calculate";
+            }}
+            className="flex items-center justify-between w-full sm:w-80 md:w-96 h-14 md:h-16 bg-white font-inter font-medium text-base md:text-lg text-[#FF9641] border-none outline-none cursor-pointer px-4 sm:px-6 hover:bg-gray-50 transition-colors duration-200"
+          >
             <span className="font-semibold">{t("header.getQuote")}</span>
             <span className="flex items-center gap-2">
               <Image

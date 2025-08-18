@@ -27,13 +27,9 @@ export default function Header() {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [isLanguageDropdownOpen, setIsLanguageDropdownOpen] = useState(false);
 
-  const toggleMobileMenu = () => {
-    setIsMobileMenuOpen(!isMobileMenuOpen);
-  };
-
-  const toggleLanguageDropdown = () => {
+  const toggleMobileMenu = () => setIsMobileMenuOpen(!isMobileMenuOpen);
+  const toggleLanguageDropdown = () =>
     setIsLanguageDropdownOpen(!isLanguageDropdownOpen);
-  };
 
   const handleLanguageChange = (newLang: "en" | "de") => {
     setLanguage(newLang);
@@ -41,48 +37,52 @@ export default function Header() {
   };
 
   return (
-    <header className="w-full flex items-center px-4 sm:px-6 md:px-8 py-3 bg-transparent relative z-10">
-      {/* Logo */}
-      <div className="flex items-center">
-        <Image
-          src="/AramLogo.svg"
-          alt="Aram Energy Solution Logo"
-          width={188}
-          height={118}
-          className="w-28 h-16 sm:w-32 sm:h-20 md:w-[188px] md:h-[118px] pl-7"
-        />
-      </div>
+    <header className="w-full px-7 sm:px-10 md:px-16 py-3 bg-transparent relative z-10">
+      <div className="flex items-center justify-between w-full">
+        {/* Left: Logo */}
+        <div className="flex items-center">
+          <Image
+            src="/AramLogo.svg"
+            alt="Aram Energy Solution Logo"
+            width={188}
+            height={118}
+            quality={100}
+            className="w-28 h-16 sm:w-32 sm:h-20 md:w-[188px] md:h-[118px]"
+          />
+        </div>
 
-      {/* Desktop Navigation */}
-      <nav className="hidden lg:flex items-center flex-1 justify-center relative">
-        <ul className="flex gap-6 xl:gap-5 list-none m-0 p-0 absolute left-0 right-1/6 mx-auto w-fit">
-          {navLinks.map((link) => (
-            <li key={link.nameKey} className="flex items-center">
-              <Link
-                href={link.href}
-                scroll={true}
-                className="text-gray-100 px-2 py-1 rounded transition-colors duration-200 hover:text-orange-400 hover:font-semibold flex items-center font-poppins-regular text-base font-normal"
-              >
-                {t(link.nameKey)}
-                {link.nameKey === "nav.services" && (
-                  <Image
-                    src="/circleDown.svg"
-                    alt="Circle Down Icon"
-                    width={18}
-                    height={18}
-                    className="ml-1.5"
-                  />
-                )}
-              </Link>
-            </li>
-          ))}
-        </ul>
-        {/* Right side: Language Selector and Get Quote Button */}
-        <div className="hidden lg:flex items-center gap-10 absolute right-0">
+        {/* Center: Desktop Navigation */}
+        <nav className="hidden lg:flex items-center absolute left-1/2 -translate-x-1/2">
+          <ul className="flex gap-6 xl:gap-5 list-none m-0 p-0">
+            {navLinks.map((link) => (
+              <li key={link.nameKey} className="flex items-center">
+                <Link
+                  href={link.href}
+                  scroll={true}
+                  className="text-[#F9FAFB] px-2 py-1 rounded transition-colors duration-200 hover:text-orange-400 hover:font-semibold flex items-center font-poppins-regular text-sm font-regular"
+                >
+                  {t(link.nameKey)}
+                  {link.nameKey === "nav.services" && (
+                    <Image
+                      src="/circleDown.svg"
+                      alt="Circle Down Icon"
+                      width={18}
+                      height={18}
+                      className="ml-1.5"
+                    />
+                  )}
+                </Link>
+              </li>
+            ))}
+          </ul>
+        </nav>
+
+        {/* Right: Language Selector & Get Quote */}
+        <div className="hidden lg:flex items-center gap-10">
           {/* Language Selector */}
           <div className="flex items-center justify-center relative">
             <button
-              className="flex items-center justify-center w-24 sm:w-28 h-10 bg-black/10 hover:bg-black/20 transition-colors duration-200 rounded-lg"
+              className="flex items-center justify-center w-24 sm:w-28 h-10 bg-black/10 hover:bg-black/20 transition-colors duration-200"
               onClick={toggleLanguageDropdown}
             >
               <Image
@@ -143,80 +143,84 @@ export default function Header() {
           </div>
 
           {/* Get Quote Button */}
-          <button className="flex items-center justify-center bg-[#FF9641] text-white font-poppins-medium text-base font-normal w-28 sm:w-36 md:w-56 h-11 md:h-14 hover:bg-[#e88537] transition-colors duration-200">
+          <button
+            onClick={() => {
+              window.location.hash = "#Calculate";
+            }}
+            className="flex items-center justify-center bg-[#FF9641] text-white font-poppins-medium text-base font-normal w-28 sm:w-36 md:w-56 h-11 md:h-14 hover:bg-[#e88537] transition-colors duration-200"
+          >
             {t("header.getQuote")}
           </button>
         </div>
-      </nav>
 
-      {/* Mobile Navigation */}
-      <div className="lg:hidden flex items-center gap-3 ml-auto">
-        {/* Language Selector for Mobile */}
-        <div className="relative">
+        {/* Mobile Right Side */}
+        <div className="lg:hidden flex items-center gap-3 ml-auto">
+          {/* Language Selector (Mobile) */}
+          <div className="relative">
+            <button
+              className="flex items-center justify-center w-20 h-10 bg-black/10 hover:bg-black/20 transition-colors duration-200 rounded-lg"
+              onClick={toggleLanguageDropdown}
+            >
+              <Image
+                src={flagIcons[language]}
+                alt={languages[language].name}
+                width={24}
+                height={24}
+                className="rounded-full mr-1"
+              />
+              <span className="text-white font-poppins-regular text-sm">
+                {languages[language].name === "English" ? "EN" : "DE"}
+              </span>
+            </button>
+
+            {isLanguageDropdownOpen && (
+              <div className="absolute top-full mt-2 right-0 bg-black/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700 min-w-[120px] z-50">
+                {Object.entries(languages).map(([code, langData]) => (
+                  <button
+                    key={code}
+                    className={`w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-white/10 transition-colors duration-200 ${
+                      language === code ? "bg-white/20" : ""
+                    }`}
+                    onClick={() => handleLanguageChange(code as "en" | "de")}
+                  >
+                    <Image
+                      src={langData.flag}
+                      alt={langData.name}
+                      width={20}
+                      height={20}
+                      className="rounded-full"
+                    />
+                    <span className="text-white font-poppins-regular text-sm">
+                      {langData.name === "English" ? "EN" : "DE"}
+                    </span>
+                  </button>
+                ))}
+              </div>
+            )}
+          </div>
+
+          {/* Mobile Menu Toggle */}
           <button
-            className="flex items-center justify-center w-20 h-10 bg-black/10 hover:bg-black/20 transition-colors duration-200 rounded-lg"
-            onClick={toggleLanguageDropdown}
+            className="flex flex-col justify-center items-center w-10 h-10 bg-black/10 hover:bg-black/20 transition-colors duration-200 rounded-lg"
+            onClick={toggleMobileMenu}
           >
-            <Image
-              src={flagIcons[language]}
-              alt={languages[language].name}
-              width={24}
-              height={24}
-              className="rounded-full mr-1"
-            />
-            <span className="text-white font-poppins-regular text-sm">
-              {languages[language].name === "English" ? "EN" : "DE"}
-            </span>
+            <span
+              className={`block w-5 h-0.5 bg-white transition-all duration-300 ${
+                isMobileMenuOpen ? "rotate-45 translate-y-1.5" : ""
+              }`}
+            ></span>
+            <span
+              className={`block w-5 h-0.5 bg-white transition-colors duration-300 mt-1 ${
+                isMobileMenuOpen ? "opacity-0" : ""
+              }`}
+            ></span>
+            <span
+              className={`block w-5 h-0.5 bg-white transition-all duration-300 mt-1 ${
+                isMobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
+              }`}
+            ></span>
           </button>
-
-          {/* Mobile Language Dropdown */}
-          {isLanguageDropdownOpen && (
-            <div className="absolute top-full mt-2 right-0 bg-black/90 backdrop-blur-sm rounded-lg shadow-lg border border-gray-700 min-w-[120px] z-50">
-              {Object.entries(languages).map(([code, langData]) => (
-                <button
-                  key={code}
-                  className={`w-full flex items-center gap-2 px-3 py-2 text-left hover:bg-white/10 transition-colors duration-200 ${
-                    language === code ? "bg-white/20" : ""
-                  }`}
-                  onClick={() => handleLanguageChange(code as "en" | "de")}
-                >
-                  <Image
-                    src={langData.flag}
-                    alt={langData.name}
-                    width={20}
-                    height={20}
-                    className="rounded-full"
-                  />
-                  <span className="text-white font-poppins-regular text-sm">
-                    {langData.name === "English" ? "EN" : "DE"}
-                  </span>
-                </button>
-              ))}
-            </div>
-          )}
         </div>
-
-        {/* Mobile Menu Toggle */}
-        <button
-          className="flex flex-col justify-center items-center w-10 h-10 bg-black/10 hover:bg-black/20 transition-colors duration-200 rounded-lg"
-          onClick={toggleMobileMenu}
-        >
-          <span
-            className={`block w-5 h-0.5 bg-white transition-all duration-300 ${
-              isMobileMenuOpen ? "rotate-45 translate-y-1.5" : ""
-            }`}
-          ></span>
-          <span
-            className={`block w-5 h-0.5 bg-white transition-colors duration-300 mt-1 ${
-              isMobileMenuOpen ? "opacity-0" : ""
-            }`}
-          ></span>
-          <span
-            className={`block w-5 h-0.5 bg-white transition-all duration-300 mt-1 ${
-              isMobileMenuOpen ? "-rotate-45 -translate-y-1.5" : ""
-            }`}
-          ></span>
-        </button>
       </div>
 
       {/* Mobile Menu Overlay */}
@@ -270,7 +274,12 @@ export default function Header() {
               </ul>
 
               {/* Mobile Get Quote Button */}
-              <button className="w-full mt-8 bg-[#FF9641] text-white font-poppins-medium text-lg py-4 rounded-lg hover:bg-[#e88537] transition-colors duration-200">
+              <button
+                onClick={() => {
+                  window.location.hash = "#Calculate";
+                }}
+                className="w-full mt-8 bg-[#FF9641] text-white font-poppins-medium text-lg py-4 rounded-lg hover:bg-[#e88537] transition-colors duration-200"
+              >
                 {t("header.getQuote")}
               </button>
             </div>
@@ -278,7 +287,7 @@ export default function Header() {
         </div>
       )}
 
-      {/* Click outside to close dropdowns */}
+      {/* Click outside to close */}
       {(isLanguageDropdownOpen || isMobileMenuOpen) && (
         <div
           className="fixed inset-0 z-30"

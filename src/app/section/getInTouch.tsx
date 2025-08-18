@@ -1,8 +1,72 @@
 import Image from "next/image";
 import { useLanguage } from "../contexts/LanguageContext";
 
+import { useState } from "react";
+
 export default function GetInTouch() {
   const { t } = useLanguage();
+  const [form, setForm] = useState({
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    service: "",
+    message: "",
+    agree: false,
+  });
+  const [loading, setLoading] = useState(false);
+  const [success, setSuccess] = useState(false);
+  const [error, setError] = useState("");
+
+  const handleChange = (
+    e: React.ChangeEvent<
+      HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement
+    >
+  ) => {
+    const { id, value, type } = e.target;
+    let newValue: string | boolean = value;
+    if (type === "checkbox") {
+      newValue = (e.target as HTMLInputElement).checked;
+    }
+    setForm((prev) => ({
+      ...prev,
+      [id]: newValue,
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+    setSuccess(false);
+    try {
+      const res = await fetch("/api/contact-message", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const data = await res.json();
+      if (data.success) {
+        setSuccess(true);
+        setForm({
+          firstName: "",
+          lastName: "",
+          email: "",
+          phone: "",
+          service: "",
+          message: "",
+          agree: false,
+        });
+      } else {
+        setError(t("getInTouch.error"));
+      }
+    } catch {
+      setError(t("getInTouch.error"));
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const contactItems = [
     {
       icon: "/orangePhone.svg",
@@ -116,7 +180,7 @@ export default function GetInTouch() {
             {t("getInTouch.sendMessage")}
           </h2>
 
-          <form className="flex flex-col gap-5">
+          <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             <div className="flex flex-col md:flex-row gap-5">
               {formFields.map((field) => (
                 <div key={field.id} className="w-full">
@@ -131,6 +195,8 @@ export default function GetInTouch() {
                     type="text"
                     placeholder={field.placeholder}
                     className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+                    value={form[field.id as keyof typeof form] as string}
+                    onChange={handleChange}
                   />
                 </div>
               ))}
@@ -148,6 +214,8 @@ export default function GetInTouch() {
                 type="email"
                 placeholder={t("getInTouch.emailPlaceholder")}
                 className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+                value={form.email}
+                onChange={handleChange}
               />
             </div>
 
@@ -163,6 +231,8 @@ export default function GetInTouch() {
                 type="tel"
                 placeholder={t("getInTouch.phonePlaceholder")}
                 className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+                value={form.phone}
+                onChange={handleChange}
               />
             </div>
 
@@ -176,10 +246,16 @@ export default function GetInTouch() {
               <select
                 id="service"
                 className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[#ADAEBC] font-inter text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+                value={form.service}
+                onChange={handleChange}
               >
-                <option>{t("getInTouch.selectService")}</option>
-                <option>{t("getInTouch.service1")}</option>
-                <option>{t("getInTouch.service2")}</option>
+                <option value="">{t("getInTouch.selectService")}</option>
+                <option value={t("getInTouch.service1")}>
+                  {t("getInTouch.service1")}
+                </option>
+                <option value={t("getInTouch.service2")}>
+                  {t("getInTouch.service2")}
+                </option>
               </select>
             </div>
 
@@ -193,18 +269,37 @@ export default function GetInTouch() {
               <textarea
                 id="message"
                 placeholder={t("getInTouch.messagePlaceholder")}
-                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 h-28 bg-[#F9FAFB] placeholder-[#ADAEBC] font-inter text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent resize-none"
+                className="w-full border text-[#374151] border-[#ADAEBC] rounded-xl px-3 py-2 h-28 bg-[#F9FAFB] placeholder-[#ADAEBC] font-inter text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent resize-none"
+                value={form.message}
+                onChange={handleChange}
               ></textarea>
             </div>
 
             <label className="flex items-start gap-2 text-sm text-[#6C757D]">
-              <input type="checkbox" className="mt-1" />
+              <input
+                type="checkbox"
+                id="agree"
+                className="mt-1"
+                checked={form.agree}
+                onChange={handleChange}
+              />
               {t("getInTouch.agree")}
             </label>
 
+            {error && (
+              <div className="text-red-600 font-semibold text-center mb-2">
+                {error}
+              </div>
+            )}
+            {success && (
+              <div className="text-green-600 font-semibold text-center mb-2">
+                {t("getInTouch.success")}
+              </div>
+            )}
             <button
               type="submit"
               className="bg-[#FF9641] w-full text-white px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-inter font-medium text-base hover:bg-[#e88537] transition-colors duration-200"
+              disabled={loading}
             >
               <Image
                 src="/sendSvg.svg"
@@ -213,7 +308,7 @@ export default function GetInTouch() {
                 height={16}
                 className="w-4 h-4"
               />
-              {t("getInTouch.send")}
+              {loading ? t("getInTouch.sending") : t("getInTouch.send")}
             </button>
           </form>
         </div>

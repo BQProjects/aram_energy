@@ -144,7 +144,7 @@ export default function Footer() {
           {/* Legal Section */}
           <div className="flex flex-col items-center md:items-start gap-3 text-center md:text-left">
             <a
-              href="#"
+              href="/privacy-policy"
               className="hover:underline transition-colors duration-200 text-sm sm:text-base hover:text-[#FF9641] font-poppins-regular"
             >
               {t("footer.privacy")}
@@ -162,7 +162,7 @@ export default function Footer() {
               {t("footer.terms")}
             </a>
             <a
-              href="#"
+              href="/refund-policy"
               className="hover:underline transition-colors duration-200 text-sm sm:text-base hover:text-[#FF9641] font-poppins-regular"
             >
               {t("footer.refund")}

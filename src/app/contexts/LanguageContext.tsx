@@ -163,6 +163,19 @@ const translations = {
     "ourService.card3": "Online Meeting",
     "ourService.book": "Book",
 
+    // Booking page
+    "bookNow.title": "Book a Service",
+    "bookNow.subtitle": "Discover and book our available appointments now.",
+    "bookNow.date": "Date",
+    "bookNow.time": "Time",
+    "bookNow.name": "Name",
+    "bookNow.email": "Email",
+    "bookNow.phone": "Phone number",
+    "bookNow.error": "Booking failed. Please try again.",
+    "bookNow.success": "Booking successful! We have received your request.",
+    "bookNow.loading": "Booking...",
+    "bookNow.submit": "Book appointment now",
+
     // Our Partner section
     "ourPartner.heading": "Our corporation partner:",
 
@@ -192,6 +205,7 @@ const translations = {
     "getInTouch.agree":
       "I agree to receive communications from PowerGrid and understand that I can unsubscribe at any time.",
     "getInTouch.send": "Send Message",
+    "getInTouch.success": "Your message has been sent successfully!",
 
     // Submetering section (whatisSub)
     "submetering.heading": "Submetering",
@@ -497,6 +511,20 @@ const translations = {
     "ourService.card3": "Online-Meeting",
     "ourService.book": "Buchen",
 
+    // Booking page
+    "bookNow.title": "Service buchen",
+    "bookNow.subtitle":
+      "Jetzt unsere verfügbaren Termine entdecken und buchen.",
+    "bookNow.date": "Datum",
+    "bookNow.time": "Uhrzeit",
+    "bookNow.name": "Name",
+    "bookNow.email": "E-Mail",
+    "bookNow.phone": "Telefonnummer",
+    "bookNow.error": "Buchung fehlgeschlagen. Bitte versuchen Sie es erneut.",
+    "bookNow.success": "Buchung erfolgreich! Wir haben Ihre Anfrage erhalten.",
+    "bookNow.loading": "Buchen...",
+    "bookNow.submit": "Jetzt Termin buchen",
+
     // Our Partner section
     "ourPartner.heading": "Unser Kooperationspartner:",
 
@@ -527,6 +555,7 @@ const translations = {
     "getInTouch.agree":
       "Ich stimme zu, Mitteilungen von PowerGrid zu erhalten und weiß, dass ich mich jederzeit abmelden kann.",
     "getInTouch.send": "Nachricht senden",
+    "getInTouch.success": "Ihre Nachricht wurde erfolgreich gesendet.",
 
     // Submetering section (whatisSub)
     "submetering.heading": "Submetering",

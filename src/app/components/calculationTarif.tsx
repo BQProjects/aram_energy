@@ -126,7 +126,7 @@ export default function CalculationTarif() {
           height={16}
           className="w-3 h-4 sm:w-3 sm:h-4"
         />
-        <span className="font-poppins text-sm sm:text-base font-medium">
+        <span className="font-inter text-sm sm:text-base font-regular">
           {t("calculation.customerType")}
         </span>
       </div>

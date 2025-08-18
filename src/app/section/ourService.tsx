@@ -17,7 +17,12 @@ export default function OurService() {
             <div className="text-white font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6">
               {t("ourService.title")}
             </div>
-            <button className="flex items-center justify-between w-full h-12 sm:h-14 md:h-[65px] bg-[#FF9641] text-white font-inter text-base sm:text-lg font-normal border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200">
+            <button
+              onClick={() => {
+                window.location.hash = "#contact";
+              }}
+              className="flex items-center justify-between w-full h-12 sm:h-14 md:h-[65px] bg-[#FF9641] text-white font-inter text-base sm:text-lg font-normal border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
+            >
               <span className="text-left flex-1">
                 {t("ourService.arrangeCall")}
               </span>
@@ -50,7 +55,12 @@ export default function OurService() {
                 {label}
               </span>
               {/* Book button inside card, left-aligned */}
-              <button className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 flex items-center justify-between w-32 sm:w-40 md:w-48 lg:w-[200px] h-10 sm:h-12 md:h-12 bg-[#FF9641] text-white font-poppins text-sm sm:text-base md:text-lg font-semibold border-none outline-none cursor-pointer px-4 sm:px-6 md:px-6 hover:bg-[#e88537] transition-colors duration-200 shadow-lg z-10">
+              <button
+                onClick={() => {
+                  window.location.hash = "#contact";
+                }}
+                className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 flex items-center justify-between w-32 sm:w-40 md:w-48 lg:w-[200px] h-10 sm:h-12 md:h-12 bg-[#FF9641] text-white font-poppins text-sm sm:text-base md:text-lg font-semibold border-none outline-none cursor-pointer px-4 sm:px-6 md:px-6 hover:bg-[#e88537] transition-colors duration-200 shadow-lg z-10"
+              >
                 <span className="text-left flex-1">{t("ourService.book")}</span>
                 <Image
                   src="/whiteRightArrow.svg"

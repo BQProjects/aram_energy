@@ -33,7 +33,12 @@ export default function WhatisSub() {
               {t("submetering.title")}
             </div>
           </div>
-          <button className="flex items-center justify-between w-full sm:w-64 md:w-80 lg:w-[280px] h-12 sm:h-14 md:h-[60px] bg-[#FF9641] text-white font-poppins text-lg sm:text-xl font-semibold border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200">
+          <button
+            onClick={() => {
+              window.location.hash = "#Calculate";
+            }}
+            className="flex items-center justify-between w-full sm:w-64 md:w-80 lg:w-[280px] h-12 sm:h-14 md:h-[60px] bg-[#FF9641] text-white font-poppins text-lg sm:text-xl font-semibold border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
+          >
             <span className="text-left flex-1">{t("submetering.button")}</span>
             <Image
               src="/whiteRightArrow.svg"

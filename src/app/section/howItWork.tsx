@@ -30,7 +30,7 @@ export default function HowItWorkSection() {
               alt="Step 1"
               width={100}
               height={100}
-              className="w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
+              className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
               priority
             />
             <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
@@ -43,7 +43,7 @@ export default function HowItWorkSection() {
               alt="Step 2"
               width={100}
               height={100}
-              className="w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
+              className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
               priority
             />
             <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
@@ -56,7 +56,7 @@ export default function HowItWorkSection() {
               alt="Step 3"
               width={100}
               height={100}
-              className="w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
+              className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
               priority
             />
             <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
@@ -69,7 +69,7 @@ export default function HowItWorkSection() {
               alt="Step 4"
               width={100}
               height={100}
-              className="w-20 h-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
+              className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
               priority
             />
             <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
