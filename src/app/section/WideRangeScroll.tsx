@@ -65,50 +65,36 @@ export default function WideRangeScroll() {
   };
 
   return (
-    <section className="w-full flex items-center justify-center py-8 sm:py-12 md:py-16 bg-[#0C0C0C]">
-      <div className="w-full max-w-6xl mx-auto relative flex items-center justify-center">
-        {/* Left Arrow */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-2 sm:left-4 top-1/2 -translate-y-1/2 z-10 hover:opacity-80 transition-opacity"
-          aria-label="Previous"
-        >
-          <Image
-            src="/leftScroll.svg"
-            alt="Scroll Left"
-            width={22}
-            height={15}
-            className="w-5 h-4 sm:w-6 sm:h-5 md:w-[22px] md:h-[15px]"
-          />
-        </button>
-
+    <section className="w-full flex items-center justify-center py-8 sm:py-12 md:py-1 -mt-46">
+      <div className="flex flex-col items-center justify-center w-[1024px] h-[375px] bg-[#0C0C0C] rounded-xl shadow-lg relative">
         {/* Text Content with animation */}
-        <div className="text-left px-4 sm:px-6 min-h-[120px] sm:min-h-[150px] md:min-h-[180px] overflow-x-hidden">
+        <div className="flex flex-col items-center justify-evenly w-full h-full px-8">
           <div
             className={`transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] transform
-              ${
-                animating
-                  ? direction === "right"
-                    ? "translate-x-full opacity-0"
-                    : "-translate-x-full opacity-0"
-                  : "translate-x-0 opacity-100"
-              }
-            `}
+          ${
+            animating
+              ? direction === "right"
+                ? "translate-x-full opacity-0"
+                : "-translate-x-full opacity-0"
+              : "translate-x-0 opacity-100"
+          }
+        `}
             key={current}
           >
-            <h2 className="font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-bold text-[#FF9641] mb-4">
+            <h2 className="font-inria-serif-bold text-4xl md:text-5xl font-bold text-[#FF9641] mb-8 text-left">
               {t(featureKeys[current].heading)}
             </h2>
-            <p className="font-poppins-regular text-lg sm:text-xl md:text-2xl lg:text-3xl text-white">
+            <p className="font-poppins-regular text-2xl md:text-3xl text-white text-left max-w-2xl mx-auto">
               {t(featureKeys[current].desc)}
             </p>
           </div>
+
           {/* Dots */}
-          <div className="flex justify-center mt-4 sm:mt-6 gap-2">
+          <div className="flex justify-center mt-8 gap-3">
             {featureKeys.map((_, idx) => (
               <span
                 key={idx}
-                className={`w-2 h-2 sm:w-3 sm:h-3 rounded-full transition-all ${
+                className={`w-3 h-3 rounded-full transition-all ${
                   idx === current ? "bg-gray-300" : "bg-gray-600"
                 }`}
               ></span>
@@ -116,10 +102,25 @@ export default function WideRangeScroll() {
           </div>
         </div>
 
+        {/* Left Arrow */}
+        <button
+          onClick={prevSlide}
+          className="absolute left-6 bottom-6 z-10 hover:opacity-80 transition-opacity"
+          aria-label="Previous"
+        >
+          <Image
+            src="/leftScroll.svg"
+            alt="Scroll Left"
+            width={22}
+            height={15}
+            className="w-7 h-7"
+          />
+        </button>
+
         {/* Right Arrow */}
         <button
           onClick={nextSlide}
-          className="absolute right-2 sm:right-4 top-1/2 -translate-y-1/2 z-10 hover:opacity-80 transition-opacity"
+          className="absolute right-6 bottom-6 z-10 hover:opacity-80 transition-opacity"
           aria-label="Next"
         >
           <Image
@@ -127,7 +128,7 @@ export default function WideRangeScroll() {
             alt="Scroll Right"
             width={22}
             height={15}
-            className="w-5 h-4 sm:w-6 sm:h-5 md:w-[22px] md:h-[15px]"
+            className="w-7 h-7"
           />
         </button>
       </div>

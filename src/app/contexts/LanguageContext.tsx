@@ -45,18 +45,17 @@ const translations = {
 
     // Mission section
     "mission.title": "Our Mission",
-    "mission.transparentPricing": "Transparent pricing",
+    "mission.transparentPricing": "Save more by switching providers",
     "mission.transparentPricingDesc":
-      "No hidden fees. Clear, upfront costs for all customers.",
-    "mission.sustainableEnergy": "Sustainable energy",
+      "Higher consumption brings greater savings potential.",
+    "mission.sustainableEnergy": "Individual consulting for companies",
     "mission.sustainableEnergyDesc":
-      "We support green energy solutions for a better future.",
-    "mission.fastSwitching": "Fast switching",
-    "mission.fastSwitchingDesc":
-      "Quick and easy transition to our services with minimal hassle.",
-    "mission.customerSatisfaction": "Customer satisfaction",
+      "Tailor-made offers for commercial customers.",
+    "mission.fastSwitching": "Check and optimize billing",
+    "mission.fastSwitchingDesc": "We analyze your contracts holistically.",
+    "mission.customerSatisfaction": "Easy change, full support",
     "mission.customerSatisfactionDesc":
-      "Dedicated to providing excellent support and reliable service.",
+      "Non-binding advice and professional handling.",
 
     // Wide Range section
     "wideRange.title": "Bundle energy cleverly – with Aram Energy Solution",
@@ -128,16 +127,16 @@ const translations = {
     "calculation.title": "Calculate Your Tariff",
     "calculation.electricity": "Electricity",
     "calculation.gas": "Gas",
-    "calculation.consumption": "Annual Consumption (kWh)",
-    "calculation.zipCode": "ZIP Code",
-    "calculation.calculate": "Calculate",
+    "calculation.consumption": "Annual Consumption in kWh",
+    "calculation.zipCode": "Postal code",
+    "calculation.calculate": "Calculate tariff",
     "calculation.customerType": "Customer type",
     "calculation.private": "Private",
     "calculation.company": "Company",
     "calculation.tariffKey": "Tariff key",
     "calculation.transactionKey": "Transaction key",
-    "calculation.zipCodePlaceholder": "Enter postal code",
-    "calculation.consumptionPlaceholder": "Enter annual consumption",
+    "calculation.zipCodePlaceholder": "Enter your postal code",
+    "calculation.consumptionPlaceholder": "Consumption in kWh",
     "calculation.tariffKeyPlaceholder": "Enter tariff key",
     "calculation.transactionKeyPlaceholder": "Enter transaction key",
     "calculation.helpText": "Do you need help calculating your consumption?",

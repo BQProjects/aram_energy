@@ -75,12 +75,12 @@ export default function CalculationTarif() {
   }, []);
 
   return (
-    <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col items-center justify-start w-full max-w-[1076px] pb-6 sm:pb-8 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 bg-black/50 text-white font-poppins text-sm sm:text-base font-normal">
+    <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col items-center justify-start w-full max-w-[1070px] pb-6 sm:pb-8 px-3 sm:px-4 md:px-6 lg:px-8 xl:px-12 bg-black/50 text-white font-poppins text-sm sm:text-base font-normal">
       {/* Top selection box */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mt-6 sm:mt-8 w-full max-w-[800px] h-12 sm:h-16 bg-[#EEEEEE2B] p-2 sm:p-3 gap-2 sm:gap-0">
+      <div className="flex flex-col sm:flex-row items-center justify-between mt-6 sm:mt-8 w-full max-w-[800px] h-12 sm:h-16 bg-[#EEEEEE2B] p-1 gap-2 sm:gap-0">
         {/* Electricity Button */}
         <button
-          className={`flex items-center justify-center w-full sm:w-[400px] h-11 font-inter text-sm sm:text-base font-medium transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
+          className={`flex items-center justify-center w-full sm:w-[400px] h-12 font-inter text-sm sm:text-base font-medium transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
             selected === "electricity"
               ? "bg-[#FF9641] text-white"
               : "bg-transparent text-white hover:bg-white/10"
@@ -99,7 +99,7 @@ export default function CalculationTarif() {
 
         {/* Gas Button */}
         <button
-          className={`flex items-center justify-center w-full sm:w-[400px] h-11 font-inter text-sm sm:text-base font-medium transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
+          className={`flex items-center justify-center w-full sm:w-[400px] h-12 font-inter text-sm sm:text-base font-medium transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
             selected === "gas"
               ? "bg-[#FF9641] text-white"
               : "bg-transparent text-white hover:bg-white/10"
@@ -141,25 +141,29 @@ export default function CalculationTarif() {
             height={16}
             className="w-3 h-4 sm:w-3 sm:h-4"
           />
-          <span className="ml-1 font-poppins text-xs sm:text-sm font-medium text-white">
+          <span className="ml-1 font-inter text-xs sm:text-sm font-normal text-white">
             {t("calculation.private")}
           </span>
         </div>
 
         <div
-          className="flex items-center justify-center w-[45px] sm:w-[60px] h-[20px] sm:h-[25px] bg-[#FF9641] rounded-full shadow cursor-pointer relative"
+          className="flex items-center w-[50px] sm:w-[65px] h-[25px] sm:h-[30px] rounded-full cursor-pointer transition-colors duration-300 bg-[#FF9641]"
           onClick={() =>
             setCustomerType(customerType === "private" ? "company" : "private")
           }
         >
-          <div
-            className={`w-[17px] sm:w-[21px] h-[17px] sm:h-[21px] bg-white rounded-full shadow absolute top-[1.5px] sm:top-[2px] transition-all duration-300 ease-in-out ${
-              customerType === "private"
-                ? "left-[1.5px] sm:left-[2px]"
-                : "left-[26px] sm:left-[32px]"
-            }`}
-            style={{ boxShadow: "0 2px 8px 0 rgba(0,0,0,0.10)" }}
-          ></div>
+          <div className="relative w-full h-full px-1 flex items-center">
+            <div
+              className={`absolute left-1 top-1 w-[18px] sm:w-[22px] h-[18px] sm:h-[22px] bg-white rounded-full shadow transition-transform duration-300 ease-in-out`}
+              style={{
+                transform:
+                  customerType === "private"
+                    ? "translateX(0)"
+                    : "translateX(34px)", // adjust px based on container width
+                boxShadow: "0 2px 8px 0 rgba(0,0,0,0.10)",
+              }}
+            ></div>
+          </div>
         </div>
 
         <div className="flex items-center">
@@ -170,14 +174,14 @@ export default function CalculationTarif() {
             height={16}
             className="w-3 h-4 sm:w-3 sm:h-4"
           />
-          <span className="ml-1 font-poppins text-xs sm:text-sm font-medium text-white">
+          <span className="ml-1 font-inter text-xs sm:text-sm font-normal text-white">
             {t("calculation.company")}
           </span>
         </div>
       </div>
 
       {/* Annual consumption text */}
-      <span className="mt-3 sm:mt-4 font-poppins-medium text-sm sm:text-base text-[#E5E7EB] text-center px-2">
+      <span className="mt-3 sm:mt-4 font-inter text-sm sm:text-base text-white text-center px-2">
         {t("calculation.consumption")}
       </span>
 
@@ -202,14 +206,14 @@ export default function CalculationTarif() {
               }}
               placeholder={t("calculation.zipCodePlaceholder")}
               autoComplete="off"
-              className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 pr-8 sm:pr-10 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+              className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-inter-regular font-inter-regular px-3 sm:px-4 pr-8 sm:pr-10 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
             />
             <Image
               src="/location.svg"
               alt="Location"
               width={12}
               height={16}
-              className="absolute right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none w-3 h-4 sm:w-3 sm:h-4"
+              className="absolute mr-2 right-2 sm:right-3 top-1/2 -translate-y-1/2 pointer-events-none w-3 h-4 sm:w-3 sm:h-4"
             />
             {showDropdown && postalOptions.length > 0 && (
               <div
@@ -253,7 +257,7 @@ export default function CalculationTarif() {
             value={annualConsumption}
             onChange={(e) => setAnnualConsumption(e.target.value)}
             placeholder={t("calculation.consumptionPlaceholder")}
-            className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+            className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-inter-regular font-inter-regular px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
 
@@ -270,7 +274,7 @@ export default function CalculationTarif() {
             type="text"
             value="77509"
             readOnly
-            className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+            className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-inter-regular font-inter-regular px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
 
@@ -286,12 +290,12 @@ export default function CalculationTarif() {
             id="transactionKey"
             type="text"
             placeholder={t("calculation.transactionKeyPlaceholder")}
-            className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+            className="w-full h-[45px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-inter-regular font-inter-regular px-3 sm:px-4 text-[#171717] text-xs sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
 
         {/* Calculate button */}
-        <div className="col-span-1 sm:col-span-2 flex flex-col items-center justify-center mt-6 sm:mt-8">
+        <div className="col-span-1 sm:col-span-2 flex flex-col items-center justify-center ">
           <button
             className="w-full sm:w-[300px] h-[45px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-medium text-sm sm:text-base hover:bg-[#e88537] transition-colors duration-200 shadow-lg"
             onClick={() => {
