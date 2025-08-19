@@ -111,13 +111,24 @@ export default function WideRangeScroll() {
             {/* Dots */}
             <div className="flex justify-center gap-3 flex-1">
               {featureKeys.map((_, idx) => (
-                <span
+                <button
                   key={idx}
-                  className={`w-3 h-3 rounded-full transition-all ${
-                    idx === current ? "bg-gray-300" : "bg-gray-600"
-                  }`}
-                ></span>
-              ))}
+                  className={`transition-all duration-300 rounded-full focus:outline-none
+                    ${idx === current ? "w-4 h-4 bg-gray-300" : "w-3 h-3 bg-gray-600"}
+                  `}
+                  aria-label={`Go to slide ${idx + 1}`}
+                  onClick={() => {
+                    if (animating || idx === current) return;
+                    setDirection(idx > current ? "right" : "left");
+                    setAnimating(true);
+                    setTimeout(() => {
+                      setCurrent(idx);
+                      setAnimating(false);
+                    }, 600);
+                  }}
+                  type="button"
+                ></button>
+                ))}
             </div>
             {/* Right Arrow */}
             <button
