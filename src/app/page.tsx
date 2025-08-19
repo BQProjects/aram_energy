@@ -5,7 +5,7 @@ import Footer from "./components/footer";
 import AboutSection from "./section/aboutSection";
 import OurMission from "./section/ourMission";
 import WideRange from "./section/wideRange";
-import WideRangeScroll from "./section/WideRangeScroll";
+// import WideRangeScroll from "./section/WideRangeScroll";
 import GetAquote from "./section/getAquote";
 import HowItWorkSection from "./section/howItWork";
 import WhatisSub from "./section/whatisSub";
@@ -65,7 +65,7 @@ export default function Home() {
       </div>
       <OurMission />
       <WideRange />
-      <WideRangeScroll />
+      {/* <WideRangeScroll /> */}
       <GetAquote />
       <HowItWorkSection />
       <VideoSection />
