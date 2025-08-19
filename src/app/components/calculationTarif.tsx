@@ -137,7 +137,7 @@ export default function CalculationTarif() {
       </div>
 
       {/* Private / Company Switch */}
-      <div className="ml-0 sm:ml-4 md:ml-6 flex items-center gap-4 sm:gap-4 md:gap-8 mt-3 sm:mt-4 w-full justify-center sm:justify-start">
+      <div className="ml-0 sm:ml-4 md:ml-6 flex items-center gap-4 sm:gap-4 md:gap-8 mt-3 sm:mt-4 w-full justify-center">
         <div className="flex items-center">
           <Image
             src="/person.svg"

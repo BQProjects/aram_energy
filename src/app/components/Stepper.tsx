@@ -52,7 +52,7 @@ const Stepper: React.FC<StepperProps> = ({ currentStep, t }) => (
             )}
           </div>
           <div
-            className={`ml-2 font-poppins-medium text-sm font-medium leading-[115%] ${
+            className={`ml-2 font-poppins-light text-sm leading-[115%] ${
               idx + 1 === currentStep
                 ? "text-[#ff9641]"
                 : idx + 1 < currentStep

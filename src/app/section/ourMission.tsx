@@ -65,7 +65,7 @@ export default function OurMission() {
             onClick={() => {
               window.location.hash = "#Calculate";
             }}
-            className="flex items-center justify-between w-full sm:w-80 md:w-96 h-14 md:h-16 bg-white font-inter font-medium text-base md:text-lg text-[#FF9641] border-none outline-none cursor-pointer px-4 sm:px-6 hover:bg-gray-50 transition-colors duration-200"
+            className="flex items-center justify-between w-full sm:w-80 md:w-96 h-14 md:h-16 bg-white font-inter font-medium text-base md:text-lg text-[#FF9641] border-none outline-none cursor-pointer px-4 sm:px-6 hover:bg-gray-50 transition-transform duration-300 group-hover:translate-x-1"
           >
             <span className="font-inter-regular">{t("header.getQuote")}</span>
             <span className="flex items-center gap-2">

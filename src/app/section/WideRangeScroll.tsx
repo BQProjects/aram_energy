@@ -89,50 +89,51 @@ export default function WideRangeScroll() {
             </p>
           </div>
 
-          {/* Dots */}
-          <div className="flex justify-center mt-8 gap-3">
-            {featureKeys.map((_, idx) => (
-              <span
-                key={idx}
-                className={`w-3 h-3 rounded-full transition-all ${
-                  idx === current ? "bg-gray-300" : "bg-gray-600"
-                }`}
-              ></span>
-            ))}
+          {/* Controls Row: Left Arrow, Dots, Right Arrow */}
+          <div className="flex items-center justify-center gap-8 absolute left-0 right-0 bottom-6 z-10">
+            {/* Left Arrow */}
+            <button
+              onClick={prevSlide}
+              className="flex hover:opacity-80 transition-opacity"
+              aria-label="Previous"
+            >
+              <Image
+                src="/leftScroll.svg"
+                alt="Scroll Left"
+                width={22}
+                height={15}
+                quality={100}
+                className="w-7 h-7"
+              />
+            </button>
+            {/* Dots */}
+            <div className="flex justify-center gap-3">
+              {featureKeys.map((_, idx) => (
+                <span
+                  key={idx}
+                  className={`w-3 h-3 rounded-full transition-all ${
+                    idx === current ? "bg-gray-300" : "bg-gray-600"
+                  }`}
+                ></span>
+              ))}
+            </div>
+            {/* Right Arrow */}
+            <button
+              onClick={nextSlide}
+              className="flex hover:opacity-80 transition-opacity"
+              aria-label="Next"
+            >
+              <Image
+                src="/rightScroll.svg"
+                alt="Scroll Right"
+                width={22}
+                height={15}
+                quality={100}
+                className="w-7 h-7"
+              />
+            </button>
           </div>
         </div>
-
-        {/* Left Arrow */}
-        <button
-          onClick={prevSlide}
-          className="absolute left-6 bottom-6 z-10 hover:opacity-80 transition-opacity"
-          aria-label="Previous"
-        >
-          <Image
-            src="/leftScroll.svg"
-            alt="Scroll Left"
-            width={22}
-            height={15}
-            quality={100}
-            className="w-7 h-7"
-          />
-        </button>
-
-        {/* Right Arrow */}
-        <button
-          onClick={nextSlide}
-          className="absolute right-6 bottom-6 z-10 hover:opacity-80 transition-opacity"
-          aria-label="Next"
-        >
-          <Image
-            src="/rightScroll.svg"
-            alt="Scroll Right"
-            width={22}
-            height={15}
-            quality={100}
-            className="w-7 h-7"
-          />
-        </button>
       </div>
     </section>
   );
