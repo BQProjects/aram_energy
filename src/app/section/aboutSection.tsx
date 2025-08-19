@@ -1,5 +1,6 @@
 import Image from "next/image";
 import { useLanguage } from "../contexts/LanguageContext";
+import React from "react";
 
 export default function AboutSection() {
   const { t } = useLanguage();
@@ -26,13 +27,13 @@ export default function AboutSection() {
             width={715}
             height={458}
             quality={100}
-            className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-none lg:w-[700px] h-auto rounded-md object-cover shadow-lg"
+            className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-none lg:w-[660px] h-auto rounded-md object-cover shadow-lg"
           />
         </div>
         {/* Right: 3 paragraphs with icon circles */}
-        <div className="flex flex-col gap-12 max-w-xl w-full py-8">
+        <div className="flex flex-col gap-12 max-w-xl w-full py-8 pl-24">
           {/* 1st para */}
-          <div className="flex items-start gap-6">
+          <div className="flex items-start gap-4">
             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-[#F2F2F2] flex-shrink-0 mt-1">
               <Image
                 src="/ribbon.svg"
@@ -40,22 +41,31 @@ export default function AboutSection() {
                 width={18}
                 height={24}
                 quality={100}
-                className="object-contain w-5 h-7"
+                className="object-contain w-4 h-6"
               />
             </div>
-            <div className="flex-1 min-w-0">
-              <span className="font-inria-serif-bold text-base md:text-base text-[#171717] leading-relaxed">
-                <span className="text-xl md:text-2xl font-bold block font-inria-serif-bold mb-2">
+            <div className="flex-1 min-w-0 ">
+              <span className="font-inria-serif-bold text-base md:text-sm text-[#171717] leading-relaxed">
+                <span className="text-xl md:text-xl block font-quando">
                   {t("about.affordableRates")}
                 </span>
-                <span className="font-poppins-regular">
-                  {t("about.affordableRatesDesc")}
+                <span className="font-poppins-light">
+                  {t("about.affordableRatesDesc")
+                    .split("\n")
+                    .map((line, idx) => (
+                      <React.Fragment key={idx}>
+                        {line}
+                        {idx <
+                          t("about.affordableRatesDesc").split("\n").length -
+                            1 && <br />}
+                      </React.Fragment>
+                    ))}
                 </span>
               </span>
             </div>
           </div>
           {/* 2nd para */}
-          <div className="flex items-start gap-6">
+          <div className="flex items-start gap-4">
             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-[#F2F2F2] flex-shrink-0 mt-1">
               <Image
                 src="/personcheck.svg"
@@ -63,22 +73,31 @@ export default function AboutSection() {
                 width={30}
                 height={24}
                 quality={100}
-                className="object-contain w-6 h-5"
+                className="object-contain w-5 h-4"
               />
             </div>
-            <div className="flex-1 min-w-0">
-              <span className="font-inria-serif-boldtext-base md:text-base text-[#171717] leading-relaxed">
-                <span className="text-xl md:text-2xl font-bold block font-inria-serif-bold mb-2">
+            <div className="flex-1 min-w-0 ">
+              <span className="font-inria-serif-bold text-base md:text-sm text-[#171717] leading-relaxed">
+                <span className="text-xl md:text-xl block font-quando">
                   {t("about.contactPerson")}
                 </span>
-                <span className="font-poppins-regular">
-                  {t("about.contactPersonDesc")}
+                <span className="font-poppins-light">
+                  {t("about.contactPersonDesc")
+                    .split("\n")
+                    .map((line, idx) => (
+                      <React.Fragment key={idx}>
+                        {line}
+                        {idx <
+                          t("about.contactPersonDesc").split("\n").length -
+                            1 && <br />}
+                      </React.Fragment>
+                    ))}
                 </span>
               </span>
             </div>
           </div>
           {/* 3rd para */}
-          <div className="flex items-start gap-6">
+          <div className="flex items-start gap-4">
             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-[#F2F2F2] flex-shrink-0 mt-1">
               <Image
                 src="/clock.svg"
@@ -86,16 +105,25 @@ export default function AboutSection() {
                 width={24}
                 height={24}
                 quality={100}
-                className="object-contain w-5 h-5"
+                className="object-contain w-4 h-4"
               />
             </div>
-            <div className="flex-1 min-w-0">
-              <span className="font-inria-serif-bold text-base md:text-base text-[#171717] leading-relaxed">
-                <span className="text-xl md:text-2xl font-bold block font-inria-serif-bold mb-2">
+            <div className="flex-1 min-w-0 ">
+              <span className="font-inria-serif-bold text-base md:text-sm text-[#171717] leading-relaxed">
+                <span className="text-xl md:text-xl block font-quando">
                   {t("about.reliablePartner")}
                 </span>
-                <span className="font-poppins-regular">
-                  {t("about.reliablePartnerDesc")}
+                <span className="font-poppins-light">
+                  {t("about.reliablePartnerDesc")
+                    .split("\n")
+                    .map((line, idx) => (
+                      <React.Fragment key={idx}>
+                        {line}
+                        {idx <
+                          t("about.reliablePartnerDesc").split("\n").length -
+                            1 && <br />}
+                      </React.Fragment>
+                    ))}
                 </span>
               </span>
             </div>

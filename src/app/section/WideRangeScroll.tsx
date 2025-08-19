@@ -65,10 +65,10 @@ export default function WideRangeScroll() {
   };
 
   return (
-    <section className="w-full flex items-center justify-center py-8 sm:py-12 md:py-1 -mt-46">
-      <div className="flex flex-col items-center justify-center w-[1024px] h-[375px] bg-[#0C0C0C] rounded-xl shadow-lg relative">
+    <section className="w-full flex items-center justify-center py-8 sm:py-12 md:py-1">
+      <div className="flex flex-col items-center justify-center w-[1024px] h-[375px] bg-[#0C0C0C] shadow-lg relative">
         {/* Text Content with animation */}
-        <div className="flex flex-col items-center justify-evenly w-full h-full px-8">
+        <div className="flex flex-col justify-evenly w-full h-full px-0">
           <div
             className={`transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] transform
           ${
@@ -81,20 +81,22 @@ export default function WideRangeScroll() {
         `}
             key={current}
           >
-            <h2 className="font-inria-serif-bold text-4xl md:text-5xl font-bold text-[#FF9641] mb-8 text-left">
-              {t(featureKeys[current].heading)}
-            </h2>
-            <p className="font-poppins-regular text-2xl md:text-3xl text-white text-left max-w-2xl mx-auto">
-              {t(featureKeys[current].desc)}
-            </p>
+            <div className="pl-10">
+              <h2 className="font-quando text-4xl md:text-4xl font-bold text-[#FF9641] mb-8 text-left">
+                {t(featureKeys[current].heading)}
+              </h2>
+              <p className="font-poppins-light text-2xl md:text-2xl text-white text-left ">
+                {t(featureKeys[current].desc)}
+              </p>
+            </div>
           </div>
 
           {/* Controls Row: Left Arrow, Dots, Right Arrow */}
-          <div className="flex items-center justify-center gap-8 absolute left-0 right-0 bottom-6 z-10">
+          <div className="flex items-center w-full px-8 gap-0 justify-between left-0 right-0 bottom-6 z-10">
             {/* Left Arrow */}
             <button
               onClick={prevSlide}
-              className="flex hover:opacity-80 transition-opacity"
+              className="flex hover:opacity-80 transition-opacity justify-start"
               aria-label="Previous"
             >
               <Image
@@ -107,7 +109,7 @@ export default function WideRangeScroll() {
               />
             </button>
             {/* Dots */}
-            <div className="flex justify-center gap-3">
+            <div className="flex justify-center gap-3 flex-1">
               {featureKeys.map((_, idx) => (
                 <span
                   key={idx}
@@ -120,7 +122,7 @@ export default function WideRangeScroll() {
             {/* Right Arrow */}
             <button
               onClick={nextSlide}
-              className="flex hover:opacity-80 transition-opacity"
+              className="flex hover:opacity-80 transition-opacity justify-end"
               aria-label="Next"
             >
               <Image

@@ -14,18 +14,25 @@ import OurPartner from "./section/ourPartner";
 import GetInTouch from "./section/getInTouch";
 import VideoSection from "./section/video";
 import { useLanguage } from "./contexts/LanguageContext";
+import Image from "next/image";
 
 export default function Home() {
   const { t } = useLanguage();
 
   return (
     <div>
-      <div
-        className="min-h-screen w-full flex flex-col bg-cover bg-no-repeat bg-center"
-        style={{
-          backgroundImage: "url(/homebg.png)",
-        }}
-      >
+      <div className="relative min-h-screen w-full flex flex-col">
+        {/* High-quality background image */}
+        <div className="absolute inset-0 -z-10">
+          <Image
+            src="/homebg.png"
+            alt="Home Background"
+            width={1920}
+            height={1080}
+            quality={100}
+            className="object-contain w-full"
+          />
+        </div>
         <Header />
         <div className="flex-1 flex flex-col justify-start items-center pt-4 sm:pt-6 md:pt-8 lg:pt-2 px-4 sm:px-6 md:px-8">
           <h2 className="text-center mt-24 text-[#E5E7EB] font-quando text-2xl sm:text-3xl md:text-6xl lg:text-6xl font-medium leading-tight px-2">
@@ -38,14 +45,17 @@ export default function Home() {
             onClick={() => {
               window.location.hash = "#about";
             }}
-            className="mt-4 sm:mt-5 md:mt-6 lg:mt-16 flex items-center justify-center w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-48 h-12 sm:h-14 md:h-16 lg:h-16 bg-white text-[#FF9641] font-inter text-base sm:text-lg font-medium hover:bg-gray-100 hover:font-light px-6 py-3 shadow-lg transition-transform duration-300 group-hover:translate-x-1"
+            className="mt-4 sm:mt-5 md:mt-6 lg:mt-10 flex items-center justify-center w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-50 h-12 sm:h-14 md:h-16 lg:h-14 bg-white text-[#FF9641] font-poppins-light text-base sm:text-lg  px-6 py-3 shadow-lg relative overflow-hidden group transition-colors duration-300"
           >
-            {t("hero.learnMore")}
+            <span className="relative z-10 duration-300 group-hover:text-white transition-transform group-hover:translate-x-1">
+              {t("hero.learnMore")}
+            </span>
+            <span className="absolute left-0 top-0 w-full h-full bg-[#FF9641] -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
           </button>
-          <h1 className="text-center font-poppins-regular text-2xl sm:text-2xl md:text-2xl lg:text-2xl font-normal leading-normal text-[#F9FAFB] mt-2 sm:mt-3 md:mt-12 px-2">
+          <h1 className="text-center font-poppins-light text-2xl sm:text-2xl md:text-2xl lg:text-xl text-[#F9FAFB] mt-2 sm:mt-3 md:mt-10 px-2">
             {t("hero.description")}
           </h1>
-          <div id="Calculate" className="w-full max-w-5xl mt-4 sm:mt-6 md:mt-8">
+          <div id="Calculate" className="w-full max-w-5xl mt-4 sm:mt-6 md:mt-2">
             <CalculationTarif />
           </div>
         </div>

@@ -14,14 +14,14 @@ export default function OurService() {
         {/* Top left heading and button */}
         <div className="flex flex-col sm:flex-row w-full items-start justify-between mb-6 sm:mb-8 gap-4 sm:gap-0">
           <div className="flex flex-col items-start w-full max-w-[310px]">
-            <div className="text-white font-inria-serif-bold text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6">
+            <div className="text-white font-quando text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-8">
               {t("ourService.title")}
             </div>
             <button
               onClick={() => {
                 window.location.hash = "#contact";
               }}
-              className="flex items-center justify-center w-full h-12 sm:h-14 md:h-[65px] bg-[#FF9641] text-[#E5E7EB] font-inter-medium text-base sm:text-lg  border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
+              className="flex items-center justify-center w-full h-12 sm:h-14 md:h-[55px] bg-[#FF9641] text-[#E5E7EB] font-poppins-light text-base sm:text-lg  border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
             >
               <span className="text-center">{t("ourService.arrangeCall")}</span>
               <Image
@@ -51,7 +51,7 @@ export default function OurService() {
                 className="object-cover"
               />
               {/* Text above button, left-aligned */}
-              <span className="absolute left-4 sm:left-6 md:left-8 bottom-16 sm:bottom-20 md:bottom-24 text-white font-inria-serif-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-left z-10 tracking-wide">
+              <span className="absolute left-4 sm:left-6 md:left-8 bottom-16 sm:bottom-20 md:bottom-24 text-white font-quando text-xl sm:text-xl md:text-2xl lg:text-3xl text-left z-10 tracking-wide">
                 {label}
               </span>
               {/* Book button inside card, left-aligned */}
@@ -59,7 +59,7 @@ export default function OurService() {
                 onClick={() => {
                   window.location.hash = "#contact";
                 }}
-                className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 flex items-center justify-between w-32 sm:w-40 md:w-48 lg:w-[200px] h-10 sm:h-12 md:h-12 bg-[#FF9641] text-[#E5E7EB] font-inter-medium text-sm sm:text-base md:text-lg border-none outline-none cursor-pointer px-4 sm:px-6 md:px-6 hover:bg-[#e88537] transition-colors duration-200 shadow-lg z-10"
+                className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 flex items-center justify-between w-32 sm:w-40 md:w-48 lg:w-[200px] h-10 sm:h-12 md:h-10 bg-[#FF9641] text-white font-poppins-light text-sm sm:text-base md:text-lg border-none outline-none cursor-pointer px-4 sm:px-6 md:px-6 hover:bg-[#e88537] transition-colors duration-200 shadow-lg z-10"
               >
                 <span className="text-left flex-1">{t("ourService.book")}</span>
                 <Image
@@ -68,7 +68,7 @@ export default function OurService() {
                   width={22}
                   height={22}
                   quality={100}
-                  className="w-5 h-5 sm:w-6 sm:h-6"
+                  className="w-5 h-5 sm:w-5 sm:h-5"
                 />
               </button>
             </div>

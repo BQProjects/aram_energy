@@ -24,12 +24,12 @@ export default function WhatisSub() {
     <section className="w-full min-h-screen bg-white flex flex-col items-center py-8 sm:py-12 md:py-28">
       <div className="w-full max-w-11/12 flex flex-col">
         {/* Top row: left heading, right button */}
-        <div className="flex flex-col sm:flex-row w-full items-start justify-between mb-6 sm:mb-8 gap-4 sm:gap-0 px-3">
+        <div className="flex flex-col sm:flex-row w-full items-start justify-between mb-6 sm:mb-8 gap-4 sm:gap-0 px-4">
           <div className="flex flex-col items-start min-w-[280px] sm:min-w-[340px]">
-            <div className="text-[#FF9641] font-poppins-regular text-lg sm:text-2xl md:text-xl mb-3">
+            <div className="text-[#FF9641] font-quando text-lg sm:text-2xl md:text-xl mb-3">
               {t("submetering.heading")}
             </div>
-            <div className="text-[#111827] font-inria-serif-bold text-2xl sm:text-3xl md:text-3xl mb-0">
+            <div className="text-[#111827] font-poppins-light text-2xl sm:text-3xl md:text-3xl mb-0">
               {t("submetering.title")}
             </div>
           </div>
@@ -37,7 +37,7 @@ export default function WhatisSub() {
             onClick={() => {
               window.location.hash = "#Calculate";
             }}
-            className="flex items-center justify-between w-full sm:w-64 md:w-80 lg:w-[280px] h-12 sm:h-14 md:h-[60px] bg-[#FF9641] text-[#E5E7EB] font-inter-regular text-lg sm:text-xl border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
+            className="flex items-center justify-between w-full sm:w-64 md:w-80 lg:w-[280px] h-12 sm:h-14 md:h-[60px] bg-[#FF9641] text-white font-poppins-light text-lg sm:text-xl border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
           >
             <span className="text-left flex-1">{t("submetering.button")}</span>
             <Image
@@ -46,7 +46,7 @@ export default function WhatisSub() {
               width={18}
               height={18}
               quality={100}
-              className="w-6 h-6 sm:w-7 sm:h-7"
+              className="w-6 h-6 sm:w-6 sm:h-6"
             />
           </button>
         </div>
@@ -66,11 +66,11 @@ export default function WhatisSub() {
                   quality={100}
                   className="w-10 h-10 sm:w-12 sm:h-12"
                 />
-                <span className="text-[#FFFFFF] font-inter-semibold text-sm sm:text-base text-left">
+                <span className="text-[#FFFFFF] font-quando text-sm sm:text-sm text-left">
                   {card.title}
                 </span>
               </div>
-              <p className="text-[#D1D5DB] pt-4 font-inter-regular text-sm sm:text-base text-justify flex flex-1 items-baseline justify-center">
+              <p className="text-[#D1D5DB] pt-4 font-poppins-light text-sm sm:text-sm text-justify flex flex-1 items-baseline justify-center">
                 {card.para}
               </p>
             </div>
@@ -78,11 +78,11 @@ export default function WhatisSub() {
         </div>
       </div>
       {/* Info text below cards */}
-      <div className=" w-11/12 flex flex-col items-start mt-8 sm:mt-12 px-4 sm:px-3">
-        <div className="text-[#FF9641] font-poppins-regular text-lg sm:text-2xl md:text-xl mb-3">
+      <div className=" w-11/12 flex flex-col items-start mt-8 sm:mt-12 px-4 sm:px-4">
+        <div className="text-[#FF9641] font-quando text-lg sm:text-2xl md:text-xl mb-3">
           {t("submetering.whoCanUse")}
         </div>
-        <div className="text-[#111827] font-inria-serif-bold text-2xl sm:text-3xl md:text-3xl mb-0">
+        <div className="text-[#111827] font-poppins-light text-2xl sm:text-3xl md:text-3xl mb-0">
           {t("submetering.whoCanUseDesc")}
         </div>
       </div>
