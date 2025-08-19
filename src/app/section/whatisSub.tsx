@@ -35,7 +35,7 @@ export default function WhatisSub() {
           </div>
           <button
             onClick={() => {
-              window.location.hash = "/#Calculate";
+              window.location.hash = "#Calculate";
             }}
             className="flex items-center justify-between w-full sm:w-64 md:w-80 lg:w-[280px] h-12 sm:h-14 md:h-[60px] bg-[#FF9641] text-[#E5E7EB] font-inter-regular text-lg sm:text-xl border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
           >
@@ -66,11 +66,11 @@ export default function WhatisSub() {
                   quality={100}
                   className="w-10 h-10 sm:w-12 sm:h-12"
                 />
-                <span className="text-[#E5E7EB] font-inter text-sm sm:text-base font-semibold text-left">
+                <span className="text-[#FFFFFF] font-inter-semibold text-sm sm:text-base text-left">
                   {card.title}
                 </span>
               </div>
-              <p className="text-[#D1D5DB] font-inter-regular text-sm sm:text-base text-justify">
+              <p className="text-[#D1D5DB] pt-4 font-inter-regular text-sm sm:text-base text-justify flex flex-1 items-baseline justify-center">
                 {card.para}
               </p>
             </div>
