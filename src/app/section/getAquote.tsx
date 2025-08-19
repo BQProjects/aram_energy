@@ -23,11 +23,11 @@ export default function GetAquote() {
           <div className="w-[40%] hidden md:block" />
           {/* Right content box (60%) */}
           <div className="w-full md:w-[60%] flex items-center min-h-[280px] sm:min-h-[320px] mr-1">
-            <div className="w-full px-6 sm:px-8 md:px-10 py-8 sm:py-10 md:py-12 bg-black/50 shadow-2xl mx-4 md:mx-0">
-              <h2 className="font-inter-regular text-2xl sm:text-3xl md:text-4xl text-[#FF9641] mb-4 sm:mb-6 text-left">
+            <div className="w-full px-6 sm:px-8 md:px-10 py-8 sm:py-10 md:py-12 bg-black/70 shadow-2xl mx-4 md:mx-0">
+              <h2 className="font-quando text-2xl sm:text-3xl md:text-4xl text-[#FF9641] mb-4 sm:mb-6 text-left">
                 {t("getQuote.title")}
               </h2>
-              <p className="font-poppins-regular text-base sm:text-lg  text-white text-left leading-relaxed">
+              <p className="font-poppins-light text-base sm:text-lg text-white text-left leading-relaxed">
                 {t("getQuote.description")}
               </p>
             </div>
@@ -37,16 +37,16 @@ export default function GetAquote() {
       {/* New text section below image */}
       <section className="w-full flex bg-white items-start py-8 sm:py-10 md:py-12 pb-8 sm:pb-12 md:pb-16 lg:pb-20">
         <div className="w-full max-w-6xl mx-14 text-justify px-4 sm:px-6 mt-14 mb-14">
-          <h2 className="font-source-serif text-2xl sm:text-3xl md:text-3xl text-[#FF9641] text-left mb-3 sm:mb-4">
+          <h2 className="font-quando text-2xl sm:text-3xl md:text-3xl text-[#FF9641] text-left mb-3 sm:mb-4">
             <span className="font-semibold">
               {t("getQuote.referral.title")}
             </span>
             <br />
-            <span className="font-source-serif font-normal md:text-2xl">
+            <span className="font-quando font-normal md:text-2xl">
               {t("getQuote.referral.subtitle")}
             </span>
           </h2>
-          <p className="font-ibm-plex-sans font-normal text-lg sm:text-xl md:text-xl text-gray-700 text-left mb-0 leading-relaxed mt-4">
+          <p className="font-poppins-light text-lg sm:text-xl md:text-xl text-gray-700 text-left mb-0 leading-relaxed mt-4">
             {t("getQuote.referral.description")}
           </p>
         </div>
@@ -78,12 +78,12 @@ export default function GetAquote() {
                 className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-[60px] xl:h-[60px]"
               />
               {/* Top right number */}
-              <span className="absolute top-1 sm:top-2 md:top-3 lg:top-4 right-1 sm:right-2 md:right-3 lg:right-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[80px] text-[#EBEEF7] font-normal font-inria-serif-regular leading-none">
+              <span className="absolute top-1 sm:top-2 md:top-3 lg:top-4 right-1 sm:right-2 md:right-3 lg:right-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[80px] text-[#EBEEF7] font-quando leading-none">
                 01
               </span>
               {/* Bottom center text */}
               <div className="flex flex-1 items-baseline justify-center">
-                <span className="text-center mt-5 pb-2 sm:pb-3 md:pb-4 lg:pb-6 xl:pb-8 2xl:pb-14 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-inria-serif-regular font-normal leading-tight">
+                <span className="text-center mt-5 pb-2 sm:pb-3 md:pb-4 lg:pb-6 xl:pb-8 2xl:pb-14 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-lg font-poppins-light leading-tight">
                   {t("getQuote.step1")}
                 </span>
               </div>
@@ -99,11 +99,11 @@ export default function GetAquote() {
                 quality={100}
                 className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-[60px] xl:h-[60px]"
               />
-              <span className="absolute top-1 sm:top-2 md:top-3 lg:top-4 right-1 sm:right-2 md:right-3 lg:right-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[80px] text-[#EBEEF7] font-normal font-inria-serif-regular leading-none">
+              <span className="absolute top-1 sm:top-2 md:top-3 lg:top-4 right-1 sm:right-2 md:right-3 lg:right-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[80px] text-[#EBEEF7] font-quando leading-none">
                 02
               </span>
               <div className="flex flex-1 items-baseline justify-center">
-                <span className="text-center mt-5 pb-2 sm:pb-3 md:pb-4 lg:pb-6 xl:pb-8 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-inria-serif-regular font-normal leading-tight">
+                <span className="text-center mt-5 pb-2 sm:pb-3 md:pb-4 lg:pb-6 xl:pb-8 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-lg font-poppins-light leading-tight">
                   {t("getQuote.step2")}
                 </span>
               </div>
@@ -119,11 +119,11 @@ export default function GetAquote() {
                 quality={100}
                 className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-12 lg:h-12 xl:w-[60px] xl:h-[60px]"
               />
-              <span className="absolute top-1 sm:top-2 md:top-3 lg:top-4 right-1 sm:right-2 md:right-3 lg:right-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[80px] text-[#EBEEF7] font-normal font-inria-serif-regular leading-none">
+              <span className="absolute top-1 sm:top-2 md:top-3 lg:top-4 right-1 sm:right-2 md:right-3 lg:right-4 text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl 2xl:text-[80px] text-[#EBEEF7] font-quando leading-none">
                 03
               </span>
               <div className="flex flex-1 items-baseline justify-center">
-                <span className="text-center mt-5 pb-2 sm:pb-3 md:pb-4 lg:pb-6 xl:pb-8 2xl:pb-12 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-xl font-inria-serif-regular font-normal leading-tight">
+                <span className="text-center mt-5 pb-2 sm:pb-3 md:pb-4 lg:pb-6 xl:pb-8 2xl:pb-12 text-white text-xs sm:text-sm md:text-base lg:text-lg xl:text-lg font-poppins-light leading-tight">
                   {t("getQuote.step3")}
                 </span>
               </div>

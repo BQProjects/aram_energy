@@ -34,11 +34,11 @@ const translations = {
     "about.title": "About Aram Energy Solution",
     "about.affordableRates": "Affordable rates for everyone",
     "about.affordableRatesDesc":
-      "Attractive electricity and gas prices for businesses and private customers.",
+      "Attractive electricity and gas prices for \n businesses and private customers.",
     "about.contactPerson": "Permanent contact person",
-    "about.contactPersonDesc": "Personal support without constant changes.",
+    "about.contactPersonDesc": "Personal support without constant \n changes.",
     "about.reliablePartner": "Reliable partner",
-    "about.reliablePartnerDesc": "Together with Energie Service Pool GmbH.",
+    "about.reliablePartnerDesc": "Together with Energie Service Pool \n GmbH.",
     "about.mission": "Our Mission",
     "about.vision": "Our Vision",
     "about.values": "Our Values",
@@ -63,7 +63,7 @@ const translations = {
       "Energy that suits you – for businesses and private households",
     "wideRange.cta": "Contact us now and secure a framework agreement!",
     "wideRange.description":
-      "As an independent energy optimizer based in Paderborn, we offer attractive electricity and gas contracts – regardless of whether you are billed according to the RLM or SLP. Whether you are a small business, medium-sized company, or private household – Aram Energy Solution offers customized electricity and gas contracts at consistently favorable terms.",
+      "As an independent energy optimizer based in Paderborn, we offer attractive electricity and gas contracts – regardless of whether you are billed according to the RLM (Rural Land Use Plan) or SLP (Sustainable Land Use Plan). Whether you are a small business, medium-sized company, or private household – Aram Energy Solution offers customized electricity and gas contracts at consistently favorable terms. We pool the demand of many customers to achieve better prices together – without any hidden costs or bait offers.",
 
     // Wide Range features (for WideRangeScroll)
     "wideRange.feature1.heading": "Wide range conditions for all",

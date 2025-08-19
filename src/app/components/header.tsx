@@ -166,12 +166,12 @@ export default function Header() {
             onClick={() => {
               window.location.hash = "#Calculate";
             }}
-            className="flex items-center justify-center bg-[#FF9641] text-white font-poppins-light text-base w-28 sm:w-36 md:w-50 h-11 md:h-14 relative overflow-hidden group"
+            className="flex items-center justify-center bg-[#FF9641] text-white font-poppins-light text-base w-28 sm:w-36 md:w-50 h-11 md:h-14 relative overflow-hidden group transition-colors duration-300"
           >
-            <span className="relative z-10 transition-transform duration-300 group-hover:translate-x-1">
+            <span className="relative z-10 duration-300 group-hover:text-[#FF9641] transition-transform group-hover:translate-x-1">
               {t("header.getQuote")}
             </span>
-            <span className="absolute left-0 top-0 w-full h-full bg-[#e88537] -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
+            <span className="absolute left-0 top-0 w-full h-full bg-white -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
           </button>
         </div>
 

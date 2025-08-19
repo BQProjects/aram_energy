@@ -77,10 +77,10 @@ export default function CalculationTarif() {
   return (
     <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col items-center justify-start w-full max-w-[1070px] pb-8 sm:pb-10 px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 bg-black/50 text-white font-poppins text-sm sm:text-base font-normal">
       {/* Top selection box */}
-      <div className="flex flex-col sm:flex-row items-center justify-between mt-6 sm:mt-8 w-full max-w-[800px] h-auto sm:h-16 bg-[#EEEEEE2B] p-1 gap-3 sm:gap-0 rounded-lg">
+      <div className="flex flex-col sm:flex-row items-center justify-center mt-6 sm:mt-8 w-full max-w-[800px] h-auto bg-[#EEEEEE2B] p-2 gap-2">
         {/* Electricity Button */}
         <button
-          className={`flex items-center justify-center w-full h-12 font-inter text-base font-medium transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
+          className={`flex items-center justify-center w-full h-12 sm:h-12 min-h-[48px] min-w-[120px] font-poppins-regular text-base  transition-colors duration-300 ease-in-out px-4 ${
             selected === "electricity"
               ? "bg-[#FF9641] text-white"
               : "bg-transparent text-white hover:bg-white/10"
@@ -101,7 +101,7 @@ export default function CalculationTarif() {
 
         {/* Gas Button */}
         <button
-          className={`flex items-center justify-center w-full h-12 font-inter text-base font-medium transition-colors duration-300 ease-in-out px-3 sm:px-4 ${
+          className={`flex items-center justify-center w-full h-12 sm:h-12 min-h-[48px] min-w-[120px] font-poppins-regular text-base transition-colors duration-300 ease-in-out px-4 ${
             selected === "gas"
               ? "bg-[#FF9641] text-white"
               : "bg-transparent text-white hover:bg-white/10"
@@ -131,7 +131,7 @@ export default function CalculationTarif() {
           quality={100}
           className="w-3 h-4 sm:w-3 sm:h-4"
         />
-        <span className="font-inter text-sm sm:text-base font-regular">
+        <span className="font-poppins-light text-sm sm:text-base">
           {t("calculation.customerType")}
         </span>
       </div>
@@ -147,7 +147,7 @@ export default function CalculationTarif() {
             quality={100}
             className="w-3 h-4 sm:w-3 sm:h-4"
           />
-          <span className="ml-1 font-inter text-xs sm:text-sm font-normal text-white">
+          <span className="ml-1 font-poppins-light text-xs sm:text-sm text-white">
             {t("calculation.private")}
           </span>
         </div>
@@ -181,14 +181,14 @@ export default function CalculationTarif() {
             quality={100}
             className="w-3 h-4 sm:w-3 sm:h-4"
           />
-          <span className="ml-1 font-inter text-xs sm:text-sm font-normal text-white">
+          <span className="ml-1 font-poppins-light text-xs sm:text-sm text-white">
             {t("calculation.company")}
           </span>
         </div>
       </div>
 
       {/* Annual consumption text */}
-      <span className="mt-4 sm:mt-4 font-inter text-base sm:text-xs text-white text-center px-2">
+      <span className="mt-4 sm:mt-4 font-poppins-light text-base sm:text-sm text-white text-center px-2">
         {t("calculation.consumption")}
       </span>
 
@@ -198,7 +198,7 @@ export default function CalculationTarif() {
         <div className="flex flex-col w-full max-w-full sm:max-w-[380px] relative">
           <label
             htmlFor="postalCode"
-            className="text-xs sm:text-sm font-normal font-poppins-medium text-[#F9FAFB] mb-1 sm:mb-2"
+            className="text-xs sm:text-sm font-poppins-light text-[#F9FAFB] mb-1 sm:mb-2"
           >
             {t("calculation.zipCode")}
           </label>
@@ -213,7 +213,7 @@ export default function CalculationTarif() {
               }}
               placeholder={t("calculation.zipCodePlaceholder")}
               autoComplete="off"
-              className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-inter-regular font-inter-regular px-3 sm:px-4 pr-8 sm:pr-10 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+              className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 pr-8 sm:pr-10 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
             />
             <Image
               src="/location.svg"
@@ -255,7 +255,7 @@ export default function CalculationTarif() {
         <div className="flex flex-col w-full max-w-full sm:max-w-[380px]">
           <label
             htmlFor="annualConsumption"
-            className="text-xs sm:text-sm font-normal font-poppins-medium text-[#F9FAFB] mb-1 sm:mb-2"
+            className="text-xs sm:text-sm font-poppins-light text-[#F9FAFB] mb-1 sm:mb-2"
           >
             {t("calculation.consumption")}
           </label>
@@ -265,7 +265,7 @@ export default function CalculationTarif() {
             value={annualConsumption}
             onChange={(e) => setAnnualConsumption(e.target.value)}
             placeholder={t("calculation.consumptionPlaceholder")}
-            className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-inter-regular font-inter-regular px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+            className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
 
@@ -273,7 +273,7 @@ export default function CalculationTarif() {
         <div className="flex flex-col w-full max-w-full sm:max-w-[380px]">
           <label
             htmlFor="tariffKey"
-            className="text-xs sm:text-sm font-normal font-poppins-medium text-[#F9FAFB] mb-1 sm:mb-2"
+            className="text-xs sm:text-sm font-poppins-light text-[#F9FAFB] mb-1 sm:mb-2"
           >
             {t("calculation.tariffKey")}
           </label>
@@ -282,7 +282,7 @@ export default function CalculationTarif() {
             type="text"
             value="77509"
             readOnly
-            className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-inter-regular font-inter-regular px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+            className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
 
@@ -290,7 +290,7 @@ export default function CalculationTarif() {
         <div className="flex flex-col w-full max-w-full sm:max-w-[380px]">
           <label
             htmlFor="transactionKey"
-            className="text-xs sm:text-sm font-normal font-poppins-medium text-[#F9FAFB] mb-1 sm:mb-2"
+            className="text-xs sm:text-sm font-poppins-light text-[#F9FAFB] mb-1 sm:mb-2"
           >
             {t("calculation.transactionKey")}
           </label>
@@ -298,14 +298,14 @@ export default function CalculationTarif() {
             id="transactionKey"
             type="text"
             placeholder={t("calculation.transactionKeyPlaceholder")}
-            className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-inter-regular font-inter-regular px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+            className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
 
         {/* Calculate button */}
         <div className="col-span-1 sm:col-span-2 flex flex-col items-center justify-center w-full ">
           <button
-            className="w-full h-[48px] sm:w-[300px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-medium text-base hover:bg-[#e88537] transition-colors duration-200 shadow-lg rounded-lg"
+            className="w-full h-[48px] sm:w-[300px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-light text-base hover:bg-[#e88537] transition-colors duration-200 shadow-lg"
             onClick={() => {
               if (!annualConsumption.trim() || !postalCode.trim()) {
                 setError(t("calculation.validationError"));
@@ -346,7 +346,7 @@ export default function CalculationTarif() {
           quality={100}
           className="mr-2 w-3 h-3 sm:w-3.5 sm:h-3.5"
         />
-        <span className="font-poppins text-xs sm:text-sm font-poppins-regular text-[#E5E7EB]">
+        <span className="font-poppins text-xs sm:text-sm font-poppins-light text-[#E5E7EB]">
           {t("calculation.helpText")}
         </span>
       </div>

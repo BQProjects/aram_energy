@@ -117,10 +117,10 @@ export default function GetInTouch() {
     <div className="bg-black flex flex-col justify-center items-center min-h-screen p-6 sm:p-10 md:p-16 pb-16 sm:pb-20 md:pb-28">
       {/* Frame106-style heading OUTSIDE the cards */}
       <div className="flex flex-col justify-center items-start mb-10 w-full max-w-[896px]">
-        <div className="font-inria-serif-regular text-[#ff9641] text-4xl leading-10 mb-2">
+        <div className="font-quando text-[#ff9641] text-4xl leading-10 mb-2">
           {t("getInTouch.title") || "Get in touch"}
         </div>
-        <div className="w-full text-white font-inria-serif-regular text-xl leading-7 max-w-[647px] mt-5">
+        <div className="w-full text-white font-poppins-light text-xl leading-7 max-w-[647px] mt-5">
           {t("getInTouch.subtitle") ||
             "Ready for your energy journey? Contact us today for a free consultation."}
         </div>
@@ -129,7 +129,7 @@ export default function GetInTouch() {
       <div className="flex flex-col md:flex-row gap-4 w-full max-w-[896px] mt-10">
         {/* Left: Contact Card */}
         <div className="bg-[#0F0F0F] text-white rounded-xl p-8 flex flex-col md:w-1/2">
-          <h2 className="mb-8 text-2xl font-semibold font-inria-serif-bold">
+          <h2 className="mb-8 text-2xl font-quando">
             {t("getInTouch.contactInfo")}
           </h2>
 
@@ -145,10 +145,10 @@ export default function GetInTouch() {
                   className="w-10 h-10 flex-shrink-0"
                 />
                 <div>
-                  <p className="font-inter-semibold text-sm text-[#F9FAFB]">
+                  <p className="font-poppins-light text-sm text-[#F9FAFB]">
                     {item.title}
                   </p>
-                  <div className="font-inter-regular text-sm text-[#F9FAFB]">
+                  <div className="font-poppins-light text-sm text-[#F9FAFB]">
                     {item.content}
                   </div>
                 </div>
@@ -189,7 +189,7 @@ export default function GetInTouch() {
 
         {/* Right: Form Card */}
         <div className="bg-white rounded-xl p-8 md:w-1/2">
-          <h2 className="mb-6 text-2xl font-inria-serif-bold text-[#2C2C2C]">
+          <h2 className="mb-6 text-2xl font-quando text-[#2C2C2C]">
             {t("getInTouch.sendMessage")}
           </h2>
 
@@ -199,7 +199,7 @@ export default function GetInTouch() {
                 <div key={field.id} className="w-full">
                   <label
                     htmlFor={field.id}
-                    className="block font-inter-medium text-sm text-[#374151] mb-1"
+                    className="block font-poppins-light text-base text-[#374151] mb-1"
                   >
                     {field.label}
                   </label>
@@ -207,7 +207,7 @@ export default function GetInTouch() {
                     id={field.id}
                     type="text"
                     placeholder={field.placeholder}
-                    className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter-regular text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+                    className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-poppins-light text-base focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
                     value={form[field.id as keyof typeof form] as string}
                     onChange={handleChange}
                   />
@@ -218,7 +218,7 @@ export default function GetInTouch() {
             <div>
               <label
                 htmlFor="email"
-                className="block font-inter-medium text-sm text-[#374151] mb-1"
+                className="block font-poppins-light text-base text-[#374151] mb-1"
               >
                 {t("getInTouch.emailAddress")}
               </label>
@@ -226,7 +226,7 @@ export default function GetInTouch() {
                 id="email"
                 type="email"
                 placeholder={t("getInTouch.emailPlaceholder")}
-                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter-regular text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-poppins-light text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
                 value={form.email}
                 onChange={handleChange}
               />
@@ -235,7 +235,7 @@ export default function GetInTouch() {
             <div>
               <label
                 htmlFor="phone"
-                className="block font-inter-medium text-sm text-[#374151] mb-1"
+                className="block font-poppins-light text-base text-[#374151] mb-1"
               >
                 {t("getInTouch.phoneNumber")}
               </label>
@@ -243,7 +243,7 @@ export default function GetInTouch() {
                 id="phone"
                 type="tel"
                 placeholder={t("getInTouch.phonePlaceholder")}
-                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-inter-regular text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-poppins-light text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
                 value={form.phone}
                 onChange={handleChange}
               />
@@ -252,13 +252,13 @@ export default function GetInTouch() {
             <div>
               <label
                 htmlFor="service"
-                className="block font-inter-medium text-sm text-[#374151] mb-1"
+                className="block font-poppins-light text-base text-[#374151] mb-1"
               >
                 {t("getInTouch.serviceType")}
               </label>
               <select
                 id="service"
-                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[#ADAEBC] font-inter-regular text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+                className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-[#ADAEBC] font-poppins-light text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
                 value={form.service}
                 onChange={handleChange}
               >
@@ -275,14 +275,14 @@ export default function GetInTouch() {
             <div>
               <label
                 htmlFor="message"
-                className="block font-inter-medium text-sm text-[#374151] mb-1"
+                className="block font-poppins-light text-base text-[#374151] mb-1"
               >
                 {t("getInTouch.message")}
               </label>
               <textarea
                 id="message"
                 placeholder={t("getInTouch.messagePlaceholder")}
-                className="w-full border text-[#374151] border-[#ADAEBC] rounded-xl px-3 py-2 h-28 bg-[#F9FAFB] placeholder-[#ADAEBC] font-inter-regular text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent resize-none"
+                className="w-full border text-[#374151] border-[#ADAEBC] rounded-xl px-3 py-2 h-28 bg-[#F9FAFB] placeholder-[#ADAEBC] font-poppins-light text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent resize-none"
                 value={form.message}
                 onChange={handleChange}
               ></textarea>
@@ -296,7 +296,7 @@ export default function GetInTouch() {
                 checked={form.agree}
                 onChange={handleChange}
               />
-              <span className="font-inter-medium">{t("getInTouch.agree")}</span>
+              <span className="font-poppins-light">{t("getInTouch.agree")}</span>
             </label>
 
             {error && (
@@ -311,7 +311,7 @@ export default function GetInTouch() {
             )}
             <button
               type="submit"
-              className="bg-[#FF9641] w-full text-white px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-inter font-medium text-base hover:bg-[#e88537] transition-colors duration-200"
+              className="bg-[#FF9641] w-full text-white px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-poppins-regular text-base hover:bg-[#e88537] transition-colors duration-200"
               disabled={loading}
             >
               <Image
