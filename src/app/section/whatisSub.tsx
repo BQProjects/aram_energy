@@ -26,10 +26,10 @@ export default function WhatisSub() {
         {/* Top row: left heading, right button */}
         <div className="flex flex-col sm:flex-row w-full items-start justify-between mb-6 sm:mb-8 gap-4 sm:gap-0 px-4">
           <div className="flex flex-col items-start min-w-[280px] sm:min-w-[340px]">
-            <div className="text-[#FF9641] font-quando text-lg sm:text-2xl md:text-xl mb-3">
+            <div className="text-[#FF9641] font-poppins-light text-lg sm:text-2xl md:text-xl mb-3">
               {t("submetering.heading")}
             </div>
-            <div className="text-[#111827] font-poppins-light text-2xl sm:text-3xl md:text-3xl mb-0">
+            <div className="text-[#111827] font-quando text-2xl sm:text-3xl md:text-3xl mb-0">
               {t("submetering.title")}
             </div>
           </div>
@@ -55,7 +55,7 @@ export default function WhatisSub() {
           {cards.map((card, i) => (
             <div
               key={i}
-              className="rounded-2xl flex flex-col justify-between items-start px-4 sm:px-6 py-4 sm:py-6 bg-black w-full sm:w-80 md:w-96 lg:w-[380px] h-[180px] sm:h-[200px] min-w-[400px] shadow-lg"
+              className="rounded flex flex-col justify-between items-start px-4 sm:px-6 py-4 sm:py-6 bg-black w-full sm:w-80 md:w-96 lg:w-[380px] h-[180px] sm:h-[200px] min-w-[400px] shadow-lg"
             >
               <div className="flex flex-row items-center gap-3 mb-2">
                 <Image
@@ -79,10 +79,10 @@ export default function WhatisSub() {
       </div>
       {/* Info text below cards */}
       <div className=" w-11/12 flex flex-col items-start mt-8 sm:mt-12 px-4 sm:px-4">
-        <div className="text-[#FF9641] font-quando text-lg sm:text-2xl md:text-xl mb-3">
+        <div className="text-[#FF9641] font-poppins-light text-lg sm:text-2xl md:text-xl mb-3">
           {t("submetering.whoCanUse")}
         </div>
-        <div className="text-[#111827] font-poppins-light text-2xl sm:text-3xl md:text-3xl mb-0">
+        <div className="text-[#111827] font-quando text-2xl sm:text-3xl md:text-3xl mb-0">
           {t("submetering.whoCanUseDesc")}
         </div>
       </div>

@@ -40,7 +40,7 @@ export default function OurService() {
           {cardLabels.map((label, i) => (
             <div
               key={i}
-              className="relative rounded-2xl overflow-hidden flex flex-col items-start w-full sm:w-80 md:w-96 lg:w-[377px] h-[300px] sm:h-[400px] md:h-[511px] bg-gray-800 shadow-lg"
+              className="relative rounded-2xl overflow-hidden flex flex-col items-start w-full sm:w-80 md:w-96 lg:w-[370px] h-[300px] sm:h-[400px] md:h-[511px] bg-gray-800 shadow-lg"
             >
               {/* Card image */}
               <Image
@@ -59,17 +59,20 @@ export default function OurService() {
                 onClick={() => {
                   window.location.hash = "#contact";
                 }}
-                className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 flex items-center justify-between w-32 sm:w-40 md:w-48 lg:w-[200px] h-10 sm:h-12 md:h-10 bg-[#FF9641] text-white font-poppins-light text-sm sm:text-base md:text-lg border-none outline-none cursor-pointer px-4 sm:px-6 md:px-6 hover:bg-[#e88537] transition-colors duration-200 shadow-lg z-10"
+                className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 flex items-center justify-between w-32 sm:w-40 md:w-48 lg:w-[200px] h-10 sm:h-12 md:h-13 bg-[#FF9641] text-white font-poppins-light text-sm sm:text-base md:text-lg border-none outline-none cursor-pointer px-4 sm:px-6 md:px-6 shadow-lg z-10 overflow-hidden group transition-colors duration-300"
               >
-                <span className="text-left flex-1">{t("ourService.book")}</span>
+                <span className="text-left flex-1 relative z-10 duration-300 group-hover:text-[#FF9641] transition-transform group-hover:translate-x-1">
+                  {t("ourService.book")}
+                </span>
                 <Image
                   src="/whiteRightArrow.svg"
                   alt="Right Arrow"
                   width={22}
                   height={22}
                   quality={100}
-                  className="w-5 h-5 sm:w-5 sm:h-5"
+                  className="w-5 h-5 sm:w-5 sm:h-5 relative z-10 duration-300 transition-transform group-hover:translate-x-1"
                 />
+                <span className="absolute left-0 top-0 w-full h-full bg-white -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
               </button>
             </div>
           ))}
