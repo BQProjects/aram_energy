@@ -26,11 +26,7 @@ export default function OurMission() {
 
   return (
     <section className="w-full bg-black flex flex-col lg:flex-row items-stretch justify-evenly p-8 pt-30 pb-20">
-      <div
-        className="flex flex-col justify-evenly 
-                bg-black  px-4 sm:px-6 lg:px-16 py-6 gap-7 
-                w-full lg:w-1/2 "
-      >
+      <div className="flex flex-col justify-evenly bg-black  px-4 sm:px-6 lg:px-16 py-6 gap-7 w-full lg:w-1/2 ">
         <div>
           <h2 className="font-inria-serif-bold text-2xl sm:text-3xl md:text-3xl text-white mb-6 sm:mb-8">
             {t("mission.title")}
@@ -48,10 +44,10 @@ export default function OurMission() {
                   />
                 </div>
                 <div>
-                  <div className="font-inria-serif-bold text-base sm:text-base text-white mb-1">
+                  <div className="font-inria-serif-bold text-base sm:text-base text-[#F9FAFB] mb-1">
                     {f.title}
                   </div>
-                  <div className="font-poppins text-sm sm:text-sm font-normal text-gray-400">
+                  <div className="font-poppins-regular text-sm sm:text-sm text-[#9CA3AF]">
                     {f.desc}
                   </div>
                 </div>
