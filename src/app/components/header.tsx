@@ -42,12 +42,11 @@ export default function Header() {
         {/* Left: Logo */}
         <div className="flex items-center">
           <Image
-            src="/AramLogo.svg"
+            src="/AramLogo1.svg"
             alt="Aram Energy Solution Logo"
             width={188}
             height={118}
-            quality={100}
-            className="w-28 h-16 sm:w-32 sm:h-20 md:w-[188px] md:h-[118px]"
+            className="w-28 h-16 sm:w-32 sm:h-20 md:w-[122px] md:h-[115px]"
           />
         </div>
 

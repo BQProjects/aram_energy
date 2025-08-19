@@ -18,10 +18,10 @@ export default function HowItWorkSection() {
         <div className="text-[#E5E7EB] font-inria-serif-bold text-2xl sm:text-xl md:text-3xl mb-6 sm:mb-5 text-center sm:text-left">
           {t("howItWorks.solarEnergy")}
         </div>
-        <div className="text-[#E5E7EB] font-inria-serif-regular text-base sm:text-lg md:text-lg mb-6 sm:mb-7 leading-relaxed max-w-4xl text-center sm:text-left">
+        <div className="text-[#E5E7EB] font-inria-serif-regular text-base sm:text-lg md:text-lg mb-6 sm:mb-7 leading-relaxed max-w-4xl text-justify sm:text-left">
           {t("howItWorks.description")}
         </div>
-        <div className="text-[#FF9641] font-inria-serif-bold text-2xl sm:text-3xl md:text-2xl mb-6 sm:mb-8 text-center sm:text-left">
+        <div className="text-[#FF9641] font-inria-serif-bold text-2xl sm:text-3xl md:text-2xl mb-6 sm:mb-8 text-left sm:text-left">
           {t("howItWorks.title")}:
         </div>
 

@@ -10,8 +10,8 @@ export default function AboutSection() {
       className="w-full flex flex-col items-center justify-center"
     >
       {/* Top 25% black section */}
-      <div className="w-full flex items-center bg-black h-24 sm:h-32 md:h-40 lg:h-48 xl:h-52 min-h-[120px] sm:min-h-[150px] md:min-h-[180px]">
-        <span className="text-[#FF9641] ml-20 font-quando text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-wide px-2">
+      <div className="w-full flex items-center justify-center md:justify-start bg-black h-24 sm:h-32 md:h-40 lg:h-48 xl:h-52 min-h-[120px] sm:min-h-[150px] md:min-h-[180px]">
+        <span className="text-[#FF9641] ml-0 md:ml-20 font-quando text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-wide px-2 text-center md:text-left w-full md:w-auto">
           {t("about.title")}
         </span>
       </div>
@@ -71,9 +71,9 @@ export default function AboutSection() {
                 <span className="text-xl md:text-2xl font-bold block font-inria-serif-bold mb-2">
                   {t("about.contactPerson")}
                 </span>
-               <span className="font-poppins-regular">
-                 {t("about.contactPersonDesc")}
-               </span>
+                <span className="font-poppins-regular">
+                  {t("about.contactPersonDesc")}
+                </span>
               </span>
             </div>
           </div>

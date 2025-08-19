@@ -64,7 +64,7 @@ export default function GetAquote() {
           />
         </div>
         {/* Cards half on image, half above */}
-        <div className="absolute top-0 left-2/5 -translate-x-1/2 -translate-y-5/12 w-full max-w-4xl sm:max-w-5xl px-3 sm:px-4 md:px-6 lg:px-8 z-10">
+        <div className="absolute top-0 left-2/5 -translate-x-1/2 -translate-y-5/12 w-full max-w-4xl sm:max-w-5xl px-3 sm:px-4 md:px-6 lg:px-8 z-10 hidden sm:block">
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-96">
             {/* Card 1 */}
             <div className="relative bg-black rounded-xl sm:rounded-2xl h-[140px] sm:h-[160px] md:h-[180px] lg:h-[200px] xl:h-[260px] xl:w-[400px] flex flex-col justify-between p-3 sm:p-4 md:p-6 lg:p-8 shadow-lg">
