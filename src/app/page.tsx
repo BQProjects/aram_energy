@@ -23,7 +23,7 @@ export default function Home() {
       <div
         className="min-h-screen w-full flex flex-col bg-cover bg-no-repeat bg-center"
         style={{
-          backgroundImage: "url(/homebg.png)"
+          backgroundImage: "url(/homebg.png)",
         }}
       >
         <Header />
@@ -34,7 +34,12 @@ export default function Home() {
           <h1 className="text-center font-quando text-2xl sm:text-3xl md:text-6xl lg:text-6xl font-medium leading-tight text-[#FF9641] mt-2 sm:mt-3 md:mt-4 px-2">
             {t("hero.title")}
           </h1>
-          <button className="mt-4 sm:mt-5 md:mt-6 lg:mt-16 flex items-center justify-center w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-48 h-12 sm:h-14 md:h-16 lg:h-16 bg-white text-[#FF9641] font-inter text-base sm:text-lg font-medium hover:bg-gray-50 transition-colors duration-200 px-6 py-3 shadow-lg">
+          <button
+            onClick={() => {
+              window.location.hash = "#about";
+            }}
+            className="mt-4 sm:mt-5 md:mt-6 lg:mt-16 flex items-center justify-center w-full max-w-xs sm:max-w-sm md:max-w-md lg:w-48 h-12 sm:h-14 md:h-16 lg:h-16 bg-white text-[#FF9641] font-inter text-base sm:text-lg font-medium hover:bg-gray-100 hover:font-light px-6 py-3 shadow-lg transition-transform duration-300 group-hover:translate-x-1"
+          >
             {t("hero.learnMore")}
           </button>
           <h1 className="text-center font-poppins-regular text-2xl sm:text-2xl md:text-2xl lg:text-2xl font-normal leading-normal text-[#F9FAFB] mt-2 sm:mt-3 md:mt-12 px-2">

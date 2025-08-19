@@ -10,8 +10,8 @@ export default function AboutSection() {
       className="w-full flex flex-col items-center justify-center"
     >
       {/* Top 25% black section */}
-      <div className="w-full flex items-center bg-black h-24 sm:h-32 md:h-40 lg:h-48 xl:h-52 min-h-[120px] sm:min-h-[150px] md:min-h-[180px]">
-        <span className="text-[#FF9641] ml-20 font-quando text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-wide px-2">
+      <div className="w-full flex items-center justify-center md:justify-start bg-black h-24 sm:h-32 md:h-40 lg:h-48 xl:h-52 min-h-[120px] sm:min-h-[150px] md:min-h-[180px]">
+        <span className="text-[#FF9641] ml-0 md:ml-20 font-quando text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal tracking-wide px-2 text-center md:text-left w-full md:w-auto">
           {t("about.title")}
         </span>
       </div>
@@ -26,11 +26,11 @@ export default function AboutSection() {
             width={715}
             height={458}
             quality={100}
-            className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-none lg:w-[735px] h-auto rounded-md object-cover shadow-lg"
+            className="w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-none lg:w-[700px] h-auto rounded-md object-cover shadow-lg"
           />
         </div>
         {/* Right: 3 paragraphs with icon circles */}
-        <div className="flex flex-col gap-8 max-w-xl w-full px-12 py-8">
+        <div className="flex flex-col gap-12 max-w-xl w-full py-8">
           {/* 1st para */}
           <div className="flex items-start gap-6">
             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-[#F2F2F2] flex-shrink-0 mt-1">
@@ -40,15 +40,17 @@ export default function AboutSection() {
                 width={18}
                 height={24}
                 quality={100}
-                className="object-contain w-6 h-8"
+                className="object-contain w-5 h-7"
               />
             </div>
             <div className="flex-1 min-w-0">
-              <span className="font-poppins-regular text-base md:text-base font-medium text-[#171717] leading-relaxed">
+              <span className="font-inria-serif-bold text-base md:text-base text-[#171717] leading-relaxed">
                 <span className="text-xl md:text-2xl font-bold block font-inria-serif-bold mb-2">
                   {t("about.affordableRates")}
                 </span>
-                {t("about.affordableRatesDesc")}
+                <span className="font-poppins-regular">
+                  {t("about.affordableRatesDesc")}
+                </span>
               </span>
             </div>
           </div>
@@ -61,15 +63,17 @@ export default function AboutSection() {
                 width={30}
                 height={24}
                 quality={100}
-                className="object-contain w-7 h-6"
+                className="object-contain w-6 h-5"
               />
             </div>
             <div className="flex-1 min-w-0">
-              <span className="font-poppins-regular text-base md:text-base font-medium text-[#171717] leading-relaxed">
+              <span className="font-inria-serif-boldtext-base md:text-base text-[#171717] leading-relaxed">
                 <span className="text-xl md:text-2xl font-bold block font-inria-serif-bold mb-2">
                   {t("about.contactPerson")}
                 </span>
-                {t("about.contactPersonDesc")}
+                <span className="font-poppins-regular">
+                  {t("about.contactPersonDesc")}
+                </span>
               </span>
             </div>
           </div>
@@ -82,15 +86,17 @@ export default function AboutSection() {
                 width={24}
                 height={24}
                 quality={100}
-                className="object-contain w-6 h-6"
+                className="object-contain w-5 h-5"
               />
             </div>
             <div className="flex-1 min-w-0">
-              <span className="font-poppins-regular text-base md:text-base font-medium text-[#171717] leading-relaxed">
+              <span className="font-inria-serif-bold text-base md:text-base text-[#171717] leading-relaxed">
                 <span className="text-xl md:text-2xl font-bold block font-inria-serif-bold mb-2">
                   {t("about.reliablePartner")}
                 </span>
-                {t("about.reliablePartnerDesc")}
+                <span className="font-poppins-regular">
+                  {t("about.reliablePartnerDesc")}
+                </span>
               </span>
             </div>
           </div>

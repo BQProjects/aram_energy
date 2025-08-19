@@ -6,7 +6,7 @@ export default function WideRange() {
   const { t } = useLanguage();
 
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-end">
+    <section className="relative w-full min-h-screen flex flex-col justify-center md:justify-end">
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
         <Image
@@ -48,5 +48,4 @@ export default function WideRange() {
       </div>
     </section>
   );
-
 }

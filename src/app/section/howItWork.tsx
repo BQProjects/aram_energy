@@ -18,10 +18,10 @@ export default function HowItWorkSection() {
         <div className="text-[#E5E7EB] font-inria-serif-bold text-2xl sm:text-xl md:text-3xl mb-6 sm:mb-5 text-center sm:text-left">
           {t("howItWorks.solarEnergy")}
         </div>
-        <div className="text-[#E5E7EB] font-inria-serif-regular text-base sm:text-lg md:text-lg mb-6 sm:mb-7 leading-relaxed max-w-4xl text-center sm:text-left">
+        <div className="text-[#E5E7EB] font-inria-serif-regular text-base sm:text-lg md:text-lg mb-6 sm:mb-7 leading-relaxed max-w-4xl text-justify sm:text-left">
           {t("howItWorks.description")}
         </div>
-        <div className="text-[#FF9641] font-inria-serif-bold text-2xl sm:text-3xl md:text-2xl mb-6 sm:mb-8 text-center sm:text-left">
+        <div className="text-[#FF9641] font-inria-serif-bold text-2xl sm:text-3xl md:text-2xl mb-6 sm:mb-8 text-left sm:text-left">
           {t("howItWorks.title")}:
         </div>
 
@@ -87,7 +87,7 @@ export default function HowItWorkSection() {
       </div>
       {/* Bottom Centered Text */}
       <div className="w-full text-center mt-8 sm:mt-10 md:mt-12 lg:mt-10 mb-8 sm:mb-10 md:mb-12 lg:mb-10 pb-16 sm:pb-20 md:pb-24 lg:pb-20">
-        <span className="text-[#E7EBF3] font-inria-serif-bold text-xl sm:text-1xl md:text-2xl lg:text-2xl max-w-4xl px-4">
+        <span className="text-[#E7EBF3] font-inria-serif-bold text-xl sm:text-1xl md:text-2xl lg:text-3xl max-w-4xl px-4">
           {t("howItWorks.cta")}
         </span>
       </div>

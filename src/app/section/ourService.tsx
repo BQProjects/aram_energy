@@ -21,7 +21,7 @@ export default function OurService() {
               onClick={() => {
                 window.location.hash = "#contact";
               }}
-              className="flex items-center justify-center w-full h-12 sm:h-14 md:h-[65px] bg-[#FF9641] text-white font-inter text-base sm:text-lg font-normal border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
+              className="flex items-center justify-center w-full h-12 sm:h-14 md:h-[65px] bg-[#FF9641] text-[#E5E7EB] font-inter-medium text-base sm:text-lg  border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
             >
               <span className="text-center">{t("ourService.arrangeCall")}</span>
               <Image
@@ -51,7 +51,7 @@ export default function OurService() {
                 className="object-cover"
               />
               {/* Text above button, left-aligned */}
-              <span className="absolute left-4 sm:left-6 md:left-8 bottom-16 sm:bottom-20 md:bottom-24 text-white font-inria-serif-regular text-xl sm:text-2xl md:text-3xl lg:text-4xl font-normal text-left z-10 tracking-wide">
+              <span className="absolute left-4 sm:left-6 md:left-8 bottom-16 sm:bottom-20 md:bottom-24 text-white font-inria-serif-bold text-xl sm:text-2xl md:text-3xl lg:text-4xl text-left z-10 tracking-wide">
                 {label}
               </span>
               {/* Book button inside card, left-aligned */}
@@ -59,7 +59,7 @@ export default function OurService() {
                 onClick={() => {
                   window.location.hash = "#contact";
                 }}
-                className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 flex items-center justify-between w-32 sm:w-40 md:w-48 lg:w-[200px] h-10 sm:h-12 md:h-12 bg-[#FF9641] text-white font-poppins text-sm sm:text-base md:text-lg font-semibold border-none outline-none cursor-pointer px-4 sm:px-6 md:px-6 hover:bg-[#e88537] transition-colors duration-200 shadow-lg z-10"
+                className="absolute bottom-4 sm:bottom-6 md:bottom-8 left-4 sm:left-6 md:left-8 flex items-center justify-between w-32 sm:w-40 md:w-48 lg:w-[200px] h-10 sm:h-12 md:h-12 bg-[#FF9641] text-[#E5E7EB] font-inter-medium text-sm sm:text-base md:text-lg border-none outline-none cursor-pointer px-4 sm:px-6 md:px-6 hover:bg-[#e88537] transition-colors duration-200 shadow-lg z-10"
               >
                 <span className="text-left flex-1">{t("ourService.book")}</span>
                 <Image
