@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState } from "react";
+import { useRouter } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Stepper from "../../components/Stepper";
@@ -14,6 +15,7 @@ export default function SepaMandatePage() {
   const [submitting, setSubmitting] = useState(false);
   const [error, setError] = useState("");
   const { t } = useLanguage();
+  const router = useRouter();
   const allValid = iban.trim() && accountHolder.trim() && confirmEmail;
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -21,35 +23,58 @@ export default function SepaMandatePage() {
     if (!allValid) return;
     setSubmitting(true);
     setError("");
+
     // Gather all relevant data from localStorage
     const calculationTarif = localStorage.getItem("calculationTarif");
     const personalDetails = localStorage.getItem("personalDetails");
     const selectedTariff = localStorage.getItem("selectedTariff");
     const sepaForm = JSON.stringify({ iban, accountHolder, confirmEmail });
-    // Prepare payload
+
+    // Prepare payload for temporary storage and email
     const payload = {
       calculationTarif: calculationTarif ? JSON.parse(calculationTarif) : null,
       personalDetails: personalDetails ? JSON.parse(personalDetails) : null,
       selectedTariff: selectedTariff ? JSON.parse(selectedTariff) : null,
       sepaForm: sepaForm ? JSON.parse(sepaForm) : null,
-      confirmation: "pending",
+      status: "pending_confirmation",
+      timestamp: new Date().toISOString(),
     };
+
     try {
-      const res = await fetch("/api/submitAllDetails", {
+      const res = await fetch("/api/send-confirmation-link", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
+
       if (!res.ok) throw new Error(t("sepaMandate.error.submissionFailed"));
-      // On success, clear localStorage
-      localStorage.removeItem("calculationTarif");
-      localStorage.removeItem("personalDetails");
-      localStorage.removeItem("selectedTariff");
-      localStorage.removeItem("sepaForm");
-      setIban("");
-      setAccountHolder("");
-      setConfirmEmail(false);
-      alert(t("sepaMandate.success"));
+
+      const data = await res.json();
+
+      if (data.success) {
+        // Clear localStorage only on successful submission
+        localStorage.removeItem("calculationTarif");
+        localStorage.removeItem("personalDetails");
+        localStorage.removeItem("selectedTariff");
+        localStorage.removeItem("sepaForm");
+
+        // Clear form
+        setIban("");
+        setAccountHolder("");
+        setConfirmEmail(false);
+
+        // Show success message
+        alert(t("sepaMandate.success"));
+
+        // Redirect to confirmation page with the ObjectId
+        if (data.id) {
+          router.push(`/confirm?id=${data.id}`);
+        }
+      } else {
+        throw new Error(
+          data.message || t("sepaMandate.error.submissionFailed")
+        );
+      }
     } catch (err: any) {
       setError(err.message || t("sepaMandate.error.submissionFailed"));
     } finally {
