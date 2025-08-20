@@ -5,6 +5,7 @@ import { useSearchParams } from "next/navigation";
 import Header from "../components/header";
 import Footer from "../components/footer";
 import Link from "next/link";
+import { useLanguage } from "../contexts/LanguageContext";
 
 interface ConfirmationData {
   calculationTarif: any;
@@ -17,6 +18,7 @@ interface ConfirmationData {
 function ConfirmContent() {
   const searchParams = useSearchParams();
   const id = searchParams.get("id");
+  const { t } = useLanguage();
 
   const [loading, setLoading] = useState(true);
   const [data, setData] = useState<ConfirmationData | null>(null);
@@ -81,7 +83,7 @@ function ConfirmContent() {
   if (loading) {
     return (
       <main className="flex-1 flex items-center justify-center">
-        <div className="text-white text-xl">Loading...</div>
+        <div className="text-white text-xl">{t("confirm.loading")}</div>
       </main>
     );
   }
@@ -90,13 +92,15 @@ function ConfirmContent() {
     return (
       <main className="flex-1 flex items-center justify-center">
         <div className="text-center max-w-md mx-auto px-4">
-          <h1 className="text-2xl font-bold text-red-500 mb-4">Error</h1>
+          <h1 className="text-2xl font-bold text-red-500 mb-4">
+            {t("confirm.error.title")}
+          </h1>
           <p className="text-white mb-6">{error}</p>
           <Link
             href="/"
             className="bg-[#FF9641] text-white px-6 py-3 rounded hover:bg-[#e88537] transition-colors"
           >
-            Return to Home
+            {t("confirm.returnHome")}
           </Link>
         </div>
       </main>
@@ -123,17 +127,14 @@ function ConfirmContent() {
             </svg>
           </div>
           <h1 className="text-2xl font-bold text-green-500 mb-4">
-            Application Confirmed!
+            {t("confirm.confirmed.title")}
           </h1>
-          <p className="text-white mb-6">
-            Thank you for confirming your energy contract application. We will
-            process your request and contact you soon.
-          </p>
+          <p className="text-white mb-6">{t("confirm.confirmed.message")}</p>
           <Link
             href="/"
             className="bg-[#FF9641] text-white px-6 py-3 rounded hover:bg-[#e88537] transition-colors"
           >
-            Return to Home
+            {t("confirm.returnHome")}
           </Link>
         </div>
       </main>
@@ -145,7 +146,7 @@ function ConfirmContent() {
       <div className="w-10/12 mx-auto px-4">
         <div className=" rounded-lg shadow-lg p-8">
           <h1 className="text-[#FF9641] mb-6 text-center text-xl font-quando">
-            Confirm Your Energy Contract Application
+            {t("confirm.title")}
           </h1>
 
           {data && (
@@ -155,30 +156,36 @@ function ConfirmContent() {
                 {/* Calculation Tariff Details */}
                 <div className="border border-[#FF9641] rounded-lg p-6 bg-black">
                   <h3 className="text-[#FF9641] mb-4 border-b border-gray-600 pb-2 text-base font-quando">
-                    🏢 Calculation Tariff
+                    🏢 {t("confirm.calculationTariff")}
                   </h3>
                   <div className="space-y-2 text-sm font-poppins-light">
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Selected:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.selected")}:
+                      </strong>{" "}
                       {data.calculationTarif?.selected || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Customer Type:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.customerType")}:
+                      </strong>{" "}
                       {data.calculationTarif?.customerType || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Postal Code:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.postalCode")}:
+                      </strong>{" "}
                       {data.calculationTarif?.postalCode || "-"}
                     </div>
                     <div className="text-white">
                       <strong className="text-[#FF9641]">
-                        Annual Consumption:
+                        {t("confirm.annualConsumption")}:
                       </strong>{" "}
                       {data.calculationTarif?.annualConsumption || "-"}
                     </div>
                     <div className="text-white">
                       <strong className="text-[#FF9641]">
-                        Postal Options:
+                        {t("confirm.postalOptions")}:
                       </strong>
                       {data.calculationTarif?.postalOptions &&
                       Array.isArray(data.calculationTarif.postalOptions) &&
@@ -203,39 +210,49 @@ function ConfirmContent() {
                 {/* Selected Tariff Details */}
                 <div className="border border-[#FF9641] rounded-lg p-6 bg-black">
                   <h3 className="text-[#FF9641] mb-4 border-b border-gray-600 pb-2 text-base font-quando">
-                    💰 Selected Tariff
+                    💰 {t("confirm.selectedTariff")}
                   </h3>
                   <div className="space-y-2 text-sm font-poppins-light">
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Base Price:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.basePrice")}:
+                      </strong>{" "}
                       {data.selectedTariff?.basePrice || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Labor Price:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.laborPrice")}:
+                      </strong>{" "}
                       {data.selectedTariff?.laborPrice || "-"}
                     </div>
                     <div className="text-white">
                       <strong className="text-[#FF9641]">
-                        Type of Current:
+                        {t("confirm.typeOfCurrent")}:
                       </strong>{" "}
                       {data.selectedTariff?.typeOfCurrent || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Contract Term:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.contractTerm")}:
+                      </strong>{" "}
                       {data.selectedTariff?.contractTerm || "-"}
                     </div>
                     <div className="text-white">
                       <strong className="text-[#FF9641]">
-                        Price Guarantee:
+                        {t("confirm.priceGuarantee")}:
                       </strong>{" "}
                       {data.selectedTariff?.priceGuarantee || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Down Payment:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.downPayment")}:
+                      </strong>{" "}
                       {data.selectedTariff?.downPayment || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Total:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.total")}:
+                      </strong>{" "}
                       {data.selectedTariff?.total || "-"}
                     </div>
                   </div>
@@ -244,31 +261,43 @@ function ConfirmContent() {
                 {/* Personal Details */}
                 <div className="border border-[#FF9641] rounded-lg p-6 bg-black">
                   <h3 className="text-[#FF9641] mb-4 border-b border-gray-600 pb-2 text-base font-quando">
-                    👤 Personal Details
+                    👤 {t("confirm.personalDetails")}
                   </h3>
                   <div className="space-y-2 text-sm font-poppins-light">
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Name:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.name")}:
+                      </strong>{" "}
                       {data.personalDetails?.name || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Surname:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.surname")}:
+                      </strong>{" "}
                       {data.personalDetails?.surname || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Email:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.email")}:
+                      </strong>{" "}
                       {data.personalDetails?.email || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Date of Birth:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.birthDate")}:
+                      </strong>{" "}
                       {data.personalDetails?.birthDate || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Mobile No:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.mobile")}:
+                      </strong>{" "}
                       {data.personalDetails?.phone || "-"}
                     </div>
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">Address:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.address")}:
+                      </strong>{" "}
                       {[
                         data.personalDetails?.street,
                         data.personalDetails?.houseNumber,
@@ -285,16 +314,18 @@ function ConfirmContent() {
                 {/* SEPA Payment Information */}
                 <div className="border border-[#FF9641] rounded-lg p-6 bg-black">
                   <h3 className="text-[#FF9641] mb-4 border-b border-gray-600 pb-2 text-base font-quando">
-                    💳 Payment Information
+                    💳 {t("confirm.paymentInfo")}
                   </h3>
                   <div className="space-y-2 text-sm font-poppins-light">
                     <div className="text-white">
-                      <strong className="text-[#FF9641]">IBAN:</strong>{" "}
+                      <strong className="text-[#FF9641]">
+                        {t("confirm.iban")}:
+                      </strong>{" "}
                       {data.sepaForm?.iban || "-"}
                     </div>
                     <div className="text-white">
                       <strong className="text-[#FF9641]">
-                        Account Holder:
+                        {t("confirm.accountHolder")}:
                       </strong>{" "}
                       {data.sepaForm?.accountHolder || "-"}
                     </div>
@@ -310,13 +341,12 @@ function ConfirmContent() {
               disabled={processing}
               className="bg-[#FF9641] text-white px-8 py-3 rounded-lg hover:bg-[#e88537] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
             >
-              {processing ? "Processing..." : "Confirm Application"}
+              {processing ? t("confirm.processing") : t("confirm.button")}
             </button>
           </div>
 
           <p className="text-center text-white mt-6 text-sm font-poppins-light">
-            Please review all information carefully before confirming your
-            application.
+            {t("confirm.reviewText")}
           </p>
         </div>
       </div>
@@ -325,13 +355,14 @@ function ConfirmContent() {
 }
 
 export default function ConfirmPage() {
+    const { t } = useLanguage();
   return (
     <div className="min-h-screen flex flex-col bg-black">
       <Header />
       <Suspense
         fallback={
           <div className="flex-1 flex items-center justify-center">
-            <div className="text-white text-xl">Loading...</div>
+            <div className="text-white text-xl">{t("confirm.loading")}</div>
           </div>
         }
       >
