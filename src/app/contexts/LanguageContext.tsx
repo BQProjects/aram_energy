@@ -231,7 +231,7 @@ const translations = {
     "stepper.selectOption": "Select Option",
     "stepper.personalDetails": "Personal Details",
     "stepper.addressDetails": "Address Details",
-    "stepper.paymentMethod": "Payment Method",
+    "stepper.paymentMethod": "Sepa Mandate",
 
     // SelectPower
     "selectPower.label": "Select your power consumption",
@@ -625,7 +625,7 @@ const translations = {
     "stepper.selectOption": "Option wählen",
     "stepper.personalDetails": "Persönliche Daten",
     "stepper.addressDetails": "Adressdaten",
-    "stepper.paymentMethod": "Zahlungsmethode",
+    "stepper.paymentMethod": "SEPA-Lastschrift",
 
     // SelectPower
     "selectPower.label": "Wählen Sie Ihren Stromverbrauch",

@@ -34,7 +34,7 @@ export default function SelectOptionPage() {
   return (
     <div className="min-h-screen flex flex-col bg-black">
       <Header />
-      <main className="flex-1 flex flex-col items-center w-full">
+      <main className="flex-1 flex flex-col items-center w-full mb-16">
         <div className="w-full flex justify-center">
           <Stepper currentStep={2} t={t} />
         </div>

@@ -178,7 +178,7 @@ export default function Addressdetails() {
           <AddressCard />
           {/* Right: Personal details form */}
           <form
-            className="rounded-xl shadow-lg p-8 w-full max-w-2xl flex flex-col"
+            className="rounded-xl shadow-lg pl-8 pb-8 w-full max-w-2xl flex flex-col"
             onSubmit={handleSubmit}
           >
             <div className="w-full grid grid-cols-2 gap-x-4 gap-y-6 items-center">
@@ -248,7 +248,7 @@ export default function Addressdetails() {
                   <input
                     type="radio"
                     name="moveInStatus"
-                    className="accent-[#FF9641] w-5 h-5"
+                    className="accent-[#FF9641]"
                     checked={moveInStatus === "already_live"}
                     onChange={() => setMoveInStatus("already_live")}
                   />
@@ -258,7 +258,7 @@ export default function Addressdetails() {
                   <input
                     type="radio"
                     name="moveInStatus"
-                    className="accent-[#FF9641] w-5 h-5"
+                    className="accent-[#FF9641]"
                     checked={moveInStatus === "moving_in"}
                     onChange={() => setMoveInStatus("moving_in")}
                   />

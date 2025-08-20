@@ -14,10 +14,10 @@ const stepsKeys = [
 ];
 
 const Stepper: React.FC<StepperProps> = ({ currentStep, t }) => (
-  <div className="stepper flex items-center gap-4 pt-7 pr-7 pb-7 pl-7 w-full max-w-[1191px] mx-auto justify-center">
+  <div className="stepper flex items-center gap-4 pt-10 pr-7 pb-10 pl-7 w-full max-w-[1191px] mx-auto justify-center">
     {stepsKeys.map((stepKey, idx) => (
       <React.Fragment key={idx}>
-        <div className="steps flex flex-shrink-0 items-center w-[8.125rem]">
+        <div className="steps flex flex-shrink-0 items-center w-[10rem]">
           <div
             className={`flex flex-col flex-shrink-0 justify-center items-center gap-2.5 py-2 px-3 w-[1.9375rem] h-[1.9375rem] rounded-lg border-[0.5px] ${
               idx + 1 <= currentStep
@@ -48,7 +48,7 @@ const Stepper: React.FC<StepperProps> = ({ currentStep, t }) => (
                 </svg>
               )
             ) : (
-              <span className="font-semibold">{idx + 1}</span>
+              <span className="font-quando">{idx + 1}</span>
             )}
           </div>
           <div
@@ -57,7 +57,7 @@ const Stepper: React.FC<StepperProps> = ({ currentStep, t }) => (
                 ? "text-[#ff9641]"
                 : idx + 1 < currentStep
                 ? "text-[#ff9641]"
-                : "text-[#a0a3bd]"
+                : "text-[#FFFFFF]"
             }`}
           >
             {t ? t(stepKey) : stepKey}

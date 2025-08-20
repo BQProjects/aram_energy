@@ -263,7 +263,7 @@ export default function PersonalDetailsPage() {
               )}
               <button
                 type="submit"
-                className="mt-4 w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
+                className="mt-8 w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
               >
                 {t("personaldetails.next")}
               </button>
