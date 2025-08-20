@@ -65,18 +65,22 @@ export default function OurMission() {
             onClick={() => {
               window.location.hash = "#Calculate";
             }}
-            className="flex items-center justify-between w-full sm:w-80 md:w-96 h-14 md:h-16 bg-white font-inter font-medium text-base md:text-lg text-[#FF9641] border-none outline-none cursor-pointer px-4 sm:px-6 hover:bg-gray-50 transition-transform duration-300 group-hover:translate-x-1"
+            className="flex items-center justify-between w-full sm:w-80 md:w-96 h-14 md:h-16 bg-white font-inter font-medium text-base md:text-lg text-[#FF9641] border-none outline-none cursor-pointer px-4 sm:px-6 relative overflow-hidden group transition-colors duration-300"
           >
-            <span className="font-inter-regular">{t("header.getQuote")}</span>
-            <span className="flex items-center gap-2">
+            <span className="font-inter-regular relative z-10 duration-300 group-hover:text-white transition-transform group-hover:translate-x-1">
+              {t("header.getQuote")}
+            </span>
+            <span className="flex items-center gap-2 relative z-10 duration-300 transition-transform group-hover:translate-x-1">
               <Image
                 src="/rightArrow.svg"
                 alt="Right Arrow"
                 width={24}
                 height={24}
                 quality={100}
+                className="group-hover:filter group-hover:brightness-0 group-hover:invert transition-all duration-300"
               />
             </span>
+            <span className="absolute left-0 top-0 w-full h-full bg-[#FF9641] -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
           </button>
         </div>
       </div>

@@ -27,7 +27,7 @@ export default function WideRange() {
   const [animating, setAnimating] = useState(false);
   const [direction, setDirection] = useState<"left" | "right">("right");
 
-  // Auto-scroll every 4 seconds
+  // Auto-scroll every 5 seconds with smoother timing
   useEffect(() => {
     const interval = setInterval(() => {
       if (!animating) {
@@ -40,7 +40,7 @@ export default function WideRange() {
           setAnimating(false);
         }, 600); // match animation duration
       }
-    }, 6000);
+    }, 5000);
     return () => clearInterval(interval);
   }, [animating]);
 
@@ -79,54 +79,66 @@ export default function WideRange() {
       </div>
 
       {/* Bottom content */}
-      <div className="w-full flex flex-col items-start px-4 sm:px-6 md:px-8 lg:px-20 pb-6 sm:pb-8 md:pb-16 gap-5 mt-80">
-        <h2 className="font-quando text-2xl sm:text-3xl md:text-4xl text-[#FF9641]">
+      <div className="w-full flex flex-col items-start px-4 sm:px-6 md:px-8 lg:px-20 pb-6 sm:pb-8 md:pb-16 gap-5 mt-72">
+        <h2 className="font-quando text-2xl sm:text-3xl md:text-3xl text-[#FF9641]">
           {t("wideRange.title")}
         </h2>
-        <div className="font-poppins-light text-lg sm:text-xl md:text-xl text-white">
+        <div className="font-poppins-light text-lg sm:text-xl md:text-lg text-white">
           {t("wideRange.subtitle")}
         </div>
         <button
           onClick={() => {
             window.location.hash = "#contact";
           }}
-          className="flex items-center justify-between w-full sm:w-80 md:w-96 lg:w-[550px] h-12 sm:h-14 md:h-[55px] bg-[#FF9641] font-poppins-light text-sm sm:text-base text-white border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200 mt-6 mb-6"
+          className="flex items-center justify-between w-full sm:w-80 md:w-96 lg:w-[550px] h-12 sm:h-14 md:h-[55px] bg-[#FF9641] font-poppins-light text-sm sm:text-base text-white border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 mt-6 mb-6 relative overflow-hidden group transition-colors duration-300"
         >
-          <span className="text-left">{t("wideRange.cta")}</span>
-          <Image
-            src="/whiteRightArrow.svg"
-            alt="Right Arrow"
-            width={32}
-            height={32}
-            quality={100}
-            className="w-6 h-6 sm:w-8 sm:h-8 md:w-6 md:h-6"
-          />
+          {/* Text */}
+          <span className="text-left relative z-10 duration-300 group-hover:text-[#FF9641] transition-transform group-hover:translate-x-1">
+            {t("wideRange.cta")}
+          </span>
+
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="w-6 h-6 sm:w-6 sm:h-6 relative z-10 duration-300 transition-all group-hover:translate-x-1 text-white group-hover:text-[#FF9641]"
+          >
+            <path d="M5 12h14M13 6l6 6-6 6" />
+          </svg>
+
+          {/* White background sweep effect */}
+          <span className="absolute left-0 top-0 w-full h-full bg-white -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
         </button>
-        <div className="font-poppins-light text-base sm:text-lg md:text-lg text-white text-justify max-w-6xl pb-4">
+
+        <div className="font-poppins-light text-base sm:text-lg md:text-base text-white text-justify max-w-6xl pb-4">
           {t("wideRange.description")}
         </div>
       </div>
-      <section className="w-full flex items-center justify-center">
+      <section className="w-full flex items-center justify-center mt-14">
         <div className="flex flex-col items-center justify-center w-[1024px] h-[375px] bg-[#0C0C0C] shadow-lg relative">
-          {/* Text Content with animation */}
+          {/* Text Content with smoother animation */}
           <div className="flex flex-col justify-evenly w-full h-full px-0">
             <div
-              className={`transition-all duration-700 ease-[cubic-bezier(0.77,0,0.175,1)] transform
+              className={`transition-all duration-[800ms] ease-[cubic-bezier(0.25,0.46,0.45,0.94)] transform
                 ${
                   animating
                     ? direction === "right"
-                      ? "translate-x-full opacity-0"
-                      : "-translate-x-full opacity-0"
-                    : "translate-x-0 opacity-100"
+                      ? "translate-x-8 opacity-0 scale-95"
+                      : "-translate-x-8 opacity-0 scale-95"
+                    : "translate-x-0 opacity-100 scale-100"
                 }
               `}
               key={current}
             >
-              <div className="pl-10">
-                <h2 className="font-quando text-4xl md:text-4xl font-bold text-[#FF9641] mb-8 text-left">
+              <div className="pl-10 transform transition-all duration-300">
+                <h2 className="font-quando text-4xl md:text-3xl font-bold text-[#FF9641] mb-8 text-left transform transition-all duration-500 delay-100">
                   {t(featureKeys[current].heading)}
                 </h2>
-                <p className="font-poppins-light text-2xl md:text-2xl text-white text-left ">
+                <p className="font-poppins-light text-2xl md:text-xl text-white text-left transform transition-all duration-500 delay-200">
                   {t(featureKeys[current].desc)}
                 </p>
               </div>
@@ -169,7 +181,7 @@ export default function WideRange() {
                       setTimeout(() => {
                         setCurrent(idx);
                         setAnimating(false);
-                      }, 600);
+                      }, 800);
                     }}
                     type="button"
                   ></button>

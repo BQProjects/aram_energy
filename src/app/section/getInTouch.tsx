@@ -313,18 +313,25 @@ export default function GetInTouch() {
             )}
             <button
               type="submit"
-              className="bg-[#FF9641] w-full text-white px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-poppins-regular text-base hover:bg-[#e88537] transition-colors duration-200"
+              className="bg-[#FF9641] w-full text-white px-6 py-3 rounded-xl flex items-center justify-center gap-2 font-poppins-regular text-base relative overflow-hidden group transition-colors duration-300"
               disabled={loading}
             >
-              <Image
-                src="/sendSvg.svg"
-                alt="Send"
-                width={16}
-                height={16}
-                quality={100}
-                className="w-4 h-4"
-              />
-              {loading ? t("getInTouch.sending") : t("getInTouch.send")}
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-4 h-4 relative z-10 duration-300 transition-all group-hover:translate-x-1 text-white group-hover:text-[#FF9641]"
+              >
+                <path d="M22 2L11 13M22 2l-7 20-4-9-9-4 20-7z" />
+              </svg>
+              <span className="relative z-10 duration-300 group-hover:text-[#FF9641] transition-transform group-hover:translate-x-1">
+                {loading ? t("getInTouch.sending") : t("getInTouch.send")}
+              </span>
+              <span className="absolute left-0 top-0 w-full h-full bg-white -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
             </button>
           </form>
         </div>

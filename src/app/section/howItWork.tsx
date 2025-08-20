@@ -1,9 +1,26 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import { useLanguage } from "../contexts/LanguageContext";
 
 export default function HowItWorkSection() {
   const { t } = useLanguage();
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    const section = document.getElementById("how-it-works-steps");
+    if (section) observer.observe(section);
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
     <div
@@ -26,60 +43,102 @@ export default function HowItWorkSection() {
         </div>
 
         {/* SVG Row - Centered column on mobile, row on larger screens */}
-        <div className="flex flex-col sm:flex-row mb-12 sm:mb-16 md:mb-20 lg:mb-[60px] w-full justify-center sm:justify-evenly items-center sm:items-start gap-8 sm:gap-6 md:gap-8">
-          <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
-            <Image
-              src="/GetInstantOffer.svg"
-              alt="Step 1"
-              width={100}
-              height={100}
-              quality={100}
-              className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
-              priority
-            />
-            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
+        <div
+          id="how-it-works-steps"
+          className="flex flex-col sm:flex-row mb-12 sm:mb-16 md:mb-20 lg:mb-[60px] w-full justify-center sm:justify-evenly items-center sm:items-start gap-8 sm:gap-6 md:gap-8"
+        >
+          <div
+            className={`flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none transition-all duration-700 hover:scale-105 hover:-translate-y-2 group ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+            style={{ transitionDelay: "200ms" }}
+          >
+            <div className="relative overflow-hidden rounded-full p-4 group-hover:bg-orange-500/10 transition-colors duration-300">
+              <Image
+                src="/GetInstantOffer.svg"
+                alt="Step 1"
+                width={100}
+                height={100}
+                quality={100}
+                className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto transform group-hover:rotate-12 transition-transform duration-300"
+                priority
+              />
+            </div>
+            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block group-hover:text-white transition-colors duration-300">
               {t("howItWorks.step1")}
             </span>
           </div>
-          <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
-            <Image
-              src="/GetInstantOffer-1.svg"
-              alt="Step 2"
-              width={100}
-              height={100}
-              quality={100}
-              className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
-              priority
-            />
-            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
+
+          <div
+            className={`flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none transition-all duration-700 hover:scale-105 hover:-translate-y-2 group ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+            style={{ transitionDelay: "200ms" }}
+          >
+            <div className="relative overflow-hidden rounded-full p-4 group-hover:bg-orange-500/10 transition-colors duration-300">
+              <Image
+                src="/GetInstantOffer-1.svg"
+                alt="Step 2"
+                width={100}
+                height={100}
+                quality={100}
+                className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto transform group-hover:rotate-12 transition-transform duration-300"
+                priority
+              />
+            </div>
+            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block group-hover:text-white transition-colors duration-300">
               {t("howItWorks.step2")}
             </span>
           </div>
-          <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
-            <Image
-              src="/GetInstantOffer-2.svg"
-              alt="Step 3"
-              width={100}
-              height={100}
-              quality={100}
-              className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
-              priority
-            />
-            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
+
+          <div
+            className={`flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none transition-all duration-700 hover:scale-105 hover:-translate-y-2 group ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+            style={{ transitionDelay: "200ms" }}
+          >
+            <div className="relative overflow-hidden rounded-full p-4 group-hover:bg-orange-500/10 transition-colors duration-300">
+              <Image
+                src="/GetInstantOffer-2.svg"
+                alt="Step 3"
+                width={100}
+                height={100}
+                quality={100}
+                className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto transform group-hover:rotate-12 transition-transform duration-300"
+                priority
+              />
+            </div>
+            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block group-hover:text-white transition-colors duration-300">
               {t("howItWorks.step3")}
             </span>
           </div>
-          <div className="flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none">
-            <Image
-              src="/GetInstantOffer-3.svg"
-              alt="Step 4"
-              width={100}
-              height={100}
-              quality={100}
-              className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto"
-              priority
-            />
-            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block">
+
+          <div
+            className={`flex flex-col items-center flex-1 min-w-0 max-w-[280px] sm:max-w-none transition-all duration-700 hover:scale-105 hover:-translate-y-2 group ${
+              isVisible
+                ? "opacity-100 translate-y-0"
+                : "opacity-0 translate-y-8"
+            }`}
+            style={{ transitionDelay: "200ms" }}
+          >
+            <div className="relative overflow-hidden rounded-full p-4 group-hover:bg-orange-500/10 transition-colors duration-300">
+              <Image
+                src="/GetInstantOffer-3.svg"
+                alt="Step 4"
+                width={100}
+                height={100}
+                quality={100}
+                className="w-20 sm:w-20 sm:h-20 md:w-24 md:h-24 lg:w-[100px] lg:h-[100px] max-w-full h-auto transform group-hover:rotate-12 transition-transform duration-300"
+                priority
+              />
+            </div>
+            <span className="text-gray-300 font-poppins-light text-sm sm:text-sm mt-3 sm:mt-2 text-center max-w-[280px] sm:max-w-[320px] block group-hover:text-white transition-colors duration-300">
               {t("howItWorks.step4")}
             </span>
           </div>

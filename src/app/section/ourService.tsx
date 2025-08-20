@@ -21,17 +21,24 @@ export default function OurService() {
               onClick={() => {
                 window.location.hash = "#contact";
               }}
-              className="flex items-center justify-center w-full h-12 sm:h-14 md:h-[55px] bg-[#FF9641] text-[#E5E7EB] font-poppins-light text-base sm:text-lg  border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 hover:bg-[#e88537] transition-colors duration-200"
+              className="flex items-center justify-center w-full h-12 sm:h-14 md:h-[55px] bg-[#FF9641] text-[#E5E7EB] font-poppins-light text-base sm:text-lg border-none outline-none cursor-pointer px-6 sm:px-8 md:px-8 relative overflow-hidden group transition-colors duration-300"
             >
-              <span className="text-center">{t("ourService.arrangeCall")}</span>
-              <Image
-                src="/whiteRightArrow.svg"
-                alt="Right Arrow"
-                width={28}
-                height={28}
-                quality={100}
-                className="w-6 h-6 sm:w-6 sm:h-6 items-center justify-center ml-4"
-              />
+              <span className="text-center relative z-10 duration-300 group-hover:text-[#FF9641] transition-transform group-hover:translate-x-1">
+                {t("ourService.arrangeCall")}
+              </span>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                className="w-6 h-6 sm:w-6 sm:h-6 ml-4 relative z-10 duration-300 transition-all group-hover:translate-x-1 text-white group-hover:text-[#FF9641]"
+              >
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg>
+              <span className="absolute left-0 top-0 w-full h-full bg-white -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
             </button>
           </div>
         </div>
@@ -64,14 +71,18 @@ export default function OurService() {
                 <span className="text-left flex-1 relative z-10 duration-300 group-hover:text-[#FF9641] transition-transform group-hover:translate-x-1">
                   {t("ourService.book")}
                 </span>
-                <Image
-                  src="/whiteRightArrow.svg"
-                  alt="Right Arrow"
-                  width={22}
-                  height={22}
-                  quality={100}
-                  className="w-5 h-5 sm:w-5 sm:h-5 relative z-10 duration-300 transition-transform group-hover:translate-x-1"
-                />
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  className="w-6 h-6 sm:w-6 sm:h-6 ml-4 relative z-10 duration-300 transition-all group-hover:translate-x-1 text-white group-hover:text-[#FF9641]"
+                >
+                  <path d="M5 12h14M13 6l6 6-6 6" />
+                </svg>
                 <span className="absolute left-0 top-0 w-full h-full bg-white -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
               </button>
             </div>

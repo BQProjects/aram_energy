@@ -305,7 +305,7 @@ export default function CalculationTarif() {
         {/* Calculate button */}
         <div className="col-span-1 sm:col-span-2 flex flex-col items-center justify-center w-full ">
           <button
-            className="w-full h-[48px] sm:w-[300px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-light text-base hover:bg-[#e88537] transition-colors duration-200 shadow-lg"
+            className="w-full h-[48px] sm:w-[300px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-light text-base shadow-lg relative overflow-hidden group transition-colors duration-300"
             onClick={() => {
               if (!annualConsumption.trim() || !postalCode.trim()) {
                 setError(t("calculation.validationError"));
@@ -330,7 +330,10 @@ export default function CalculationTarif() {
               router.push(`/calculator/selectoption?${params.toString()}`);
             }}
           >
-            {t("calculation.calculate")}
+            <span className="relative z-10 duration-300 group-hover:text-[#FF9641] transition-transform group-hover:translate-x-1">
+              {t("calculation.calculate")}
+            </span>
+            <span className="absolute left-0 top-0 w-full h-full bg-white -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
           </button>
           {error && <span className="text-red-400 text-xs mt-2">{error}</span>}
         </div>
