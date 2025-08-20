@@ -5,8 +5,8 @@ export default function Footer() {
   const { t } = useLanguage();
 
   return (
-    <footer className="w-full bg-black text-white py-6 sm:py-8 px-4 sm:px-6 md:px-8 h-60 border-t border-gray-600 flex items-center justify-center">
-      <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10 font-poppins-regular text-sm sm:text-base font-normal w-full">
+    <footer className="w-full bg-black text-white py-6 sm:py-8 px-4 sm:px-6 md:px-8 mb-10 border-t border-gray-600 flex items-center justify-center">
+      <div className="max-w-7xl mx-auto flex flex-col gap-8 md:gap-10 font-poppins-regular mt-10 text-sm sm:text-base font-normal w-full">
         {/* Content sections - All centered */}
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8 md:gap-8 items-center">
           {/* Logo - Centered */}
