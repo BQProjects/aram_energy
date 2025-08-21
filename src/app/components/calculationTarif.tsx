@@ -10,7 +10,7 @@ export default function CalculationTarif() {
   const [customerType, setCustomerType] = useState("private");
   const [postalCode, setPostalCode] = useState("");
   const [postalOptions, setPostalOptions] = useState<
-    { plz: string; city: string; district?: string }[]
+    { plz: string; district?: string; division: string; type: string }[]
   >([]);
   const [annualConsumption, setAnnualConsumption] = useState("");
   const [error, setError] = useState("");
@@ -250,18 +250,22 @@ export default function CalculationTarif() {
               >
                 {postalOptions.map((option) => (
                   <div
-                    key={option.plz + option.city + (option.district || "")}
+                    key={option.plz + option.division + (option.district || "")}
                     className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-black"
                     onClick={() => {
                       setPostalCode(option.plz);
                       setShowDropdown(false);
                     }}
                   >
-                    <span className="font-semibold">{option.plz}</span>
-                    {option.city && <span className="ml-2">{option.city}</span>}
+                    <span className="font-poppins-light">{option.plz}</span>
                     {option.district && (
-                      <span className="ml-2 text-gray-500 text-xs">
-                        ({option.district})
+                      <span className="ml-4 font-poppins-ligh">
+                        {option.district}
+                      </span>
+                    )}
+                    {option.division && (
+                      <span className="ml-2 font-poppins-ligh text-xs">
+                        {option.division}
                       </span>
                     )}
                   </div>
@@ -332,16 +336,6 @@ export default function CalculationTarif() {
                 return;
               }
               setError("");
-              // Find district for the selected postal code
-              const selectedOption = postalOptions.find(
-                (opt) => opt.plz === postalCode
-              );
-              const location = selectedOption?.district || "";
-              const division =
-                selected === "electricity" ? "Electricity" : "Gas";
-              const customerCategory =
-                customerType === "private" ? "Private" : "Company";
-
               // Generate sessionId if not present
               let sid = sessionId;
               if (!sid) {
@@ -369,15 +363,11 @@ export default function CalculationTarif() {
                     postalOptions,
                   }),
                 });
-              } catch (e) {
+              } catch {
                 // Optionally handle error
               }
 
               const params = new URLSearchParams({
-                postalCode,
-                location,
-                division,
-                customerCategory,
                 sessionId: sid,
               });
               router.push(`/calculator/selectoption?${params.toString()}`);

@@ -20,8 +20,9 @@ export async function GET(req: NextRequest) {
   return NextResponse.json(
     results.map((r) => ({
       plz: r.PLZ,
-      city: r.Ort || "",
+      division: r.Bundesland || "",
       district: r.Kreis || "",
+      type: r.Typ || "",
     }))
   );
 }

@@ -5,16 +5,24 @@ import Footer from "../../components/footer";
 import Stepper from "../../components/Stepper";
 import CalculatorCard from "../../components/calculatorCard";
 import SelectPower from "../../components/SelectPower";
-import { useSearchParams } from "next/navigation";
 import { useLanguage } from "../../contexts/LanguageContext";
 
 function SelectOptionContent() {
-  const searchParams = useSearchParams();
   const { t } = useLanguage();
-  const postalCode = searchParams.get("postalCode") || "";
-  const location = searchParams.get("location") || "";
-  const division = searchParams.get("division") || "";
-  const customerCategory = searchParams.get("customerCategory") || "";
+  // Load from localStorage
+  let postalCode = "";
+  let location = "";
+  let division = "";
+  let customerCategory = "";
+  if (typeof window !== "undefined") {
+    const calculationTarif =
+      JSON.parse(localStorage.getItem("calculationTarif") || "{}") || {};
+    const postalOptions = calculationTarif.postalOptions || [];
+    postalCode = postalOptions[0]?.plz || calculationTarif.postalCode || "";
+    location = postalOptions[0]?.district || "";
+    division = calculationTarif.division || postalOptions[0]?.division || "";
+    customerCategory = calculationTarif.customerType || "";
+  }
   return (
     <div className="flex items-start gap-8 w-full max-w-[1146px] mx-auto mt-8">
       <CalculatorCard

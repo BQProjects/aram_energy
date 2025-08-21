@@ -2,6 +2,17 @@ import React, { useEffect, useState } from "react";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 
 interface PersonalDetails {
+  salutation?: string;
+  name?: string;
+  surname?: string;
+  billing?: string;
+  birthDate?: string;
+  email?: string;
+  repeatEmail?: string;
+  phone?: string;
+}
+
+interface AddressDetails {
   postalCode?: string;
   location?: string;
   street?: string;
@@ -16,14 +27,19 @@ interface PersonalDetails {
 
 const SepaCard: React.FC = () => {
   const [personal, setPersonal] = useState<PersonalDetails>({});
+  const [address, setAddress] = useState<AddressDetails>({});
   const { t } = useLanguage();
 
   useEffect(() => {
     const load = () => {
       try {
-        const saved = localStorage.getItem("personalDetails");
-        if (saved) {
-          setPersonal(JSON.parse(saved));
+        const savedPersonal = localStorage.getItem("personalDetails");
+        if (savedPersonal) {
+          setPersonal(JSON.parse(savedPersonal));
+        }
+        const savedAddress = localStorage.getItem("addressDetails");
+        if (savedAddress) {
+          setAddress(JSON.parse(savedAddress));
         }
       } catch {}
     };
@@ -43,39 +59,39 @@ const SepaCard: React.FC = () => {
             {t("sepaCard.deliveryPointInfo")}
           </div>
           <div className="text-[#33475b] font-poppins-light leading-6 mb-1 mt-4">
-            {t("addressdetails.postalCode")}: {personal.postalCode || "-"}
+            {t("addressdetails.postalCode")}: {address.postalCode || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-light leading-6 mb-3 mt-2">
-            {t("addressdetails.location")}: {personal.location || "-"}
+            {t("addressdetails.location")}: {address.location || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-light leading-6 mb-1 mt-4">
-            {t("addressdetails.street")}: {personal.street || "-"}
+            {t("addressdetails.street")}: {address.street || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-light leading-6 mb-3 mt-2">
             {t("addressdetails.houseNumberAndSuffix")}:{" "}
-            {personal.houseNumber || "-"} / {personal.houseNumberSuffix || "-"}
+            {address.houseNumber || "-"} / {address.houseNumberSuffix || "-"}
           </div>
           <div className="w-full h-0.5 bg-green-500 mb-4" />
           <div className="text-[#33475b] font-quando text-base leading-6 mb-1 mt-5">
             {t("sepaCard.furtherInfo")}
           </div>
           <div className="text-[#33475b] font-poppins-light leading-6 mb-1 mt-4">
-            {t("addressdetails.desiredStart")}: {personal.desiredStart || "-"}
+            {t("addressdetails.desiredStart")}: {address.desiredStart || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-light leading-6 mb-3 mt-2">
             {t("addressdetails.previousSupplier")}:{" "}
-            {personal.previousSupplier || "-"}
+            {address.previousSupplier || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-light leading-6 mb-1 mt-4">
             {t("addressdetails.previousCustomerNo")}:{" "}
-            {personal.previousCustomerNo || "-"}
+            {address.previousCustomerNo || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-light leading-6 mb-3 mt-2">
-            {t("addressdetails.meterNo")}: {personal.meterNo || "-"}
+            {t("addressdetails.meterNo")}: {address.meterNo || "-"}
           </div>
           <div className="text-[#33475b] font-poppins-light leading-6 mb-3 mt-2">
             {t("addressdetails.meterLocationNo")}:{" "}
-            {personal.meterLocationNo || "-"}
+            {address.meterLocationNo || "-"}
           </div>
           <div className="w-full h-0.5 bg-green-500 mb-4" />
           <div className="text-[#33475b] font-quando text-base leading-6 mb-2">

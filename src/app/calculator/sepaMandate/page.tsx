@@ -1,14 +1,19 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
 import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Stepper from "../../components/Stepper";
 import SepaCard from "../../components/sepaCard";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-
 export default function SepaMandatePage() {
+  const searchParams = useSearchParams();
+  const sessionId =
+    searchParams.get("sessionId") ||
+    (typeof window !== "undefined"
+      ? localStorage.getItem("calculationTarifSessionId")
+      : null);
   const [iban, setIban] = useState("");
   const [accountHolder, setAccountHolder] = useState("");
   const [sepaAgreement, setSepaAgreement] = useState(false);
@@ -30,8 +35,15 @@ export default function SepaMandatePage() {
     emailConfirmed;
 
   // Initialize WebSocket connection for real-time email confirmation
+  // Store sessionId from URL in localStorage if present
   useEffect(() => {
-    const sessionId = localStorage.getItem("calculationTarifSessionId");
+    if (sessionId) {
+      localStorage.setItem("calculationTarifSessionId", sessionId);
+    }
+  }, [sessionId]);
+
+  useEffect(() => {
+    // sessionId is already defined above and kept in sync
     if (sessionId) {
       sessionIdRef.current = sessionId;
 
@@ -102,7 +114,7 @@ export default function SepaMandatePage() {
         wsRef.current.close();
       }
     };
-  }, [t]);
+  }, [sessionId, t]);
 
   // Save SEPA details to localStorage
   useEffect(() => {

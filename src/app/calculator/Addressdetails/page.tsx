@@ -9,6 +9,14 @@ import { useLanguage } from "@/app/contexts/LanguageContext";
 
 export default function Addressdetails() {
   const router = useRouter();
+  const searchParams =
+    typeof window !== "undefined"
+      ? new URLSearchParams(window.location.search)
+      : undefined;
+  const sessionId = searchParams
+    ? searchParams.get("sessionId") ||
+      localStorage.getItem("calculationTarifSessionId")
+    : null;
   const { t } = useLanguage();
   const [postalCode, setPostalCode] = useState("");
   const [location, setLocation] = useState("");
@@ -33,6 +41,13 @@ export default function Addressdetails() {
 
   // Restore from MongoDB session or localStorage on mount, only if data is valid
   const isRestoring = React.useRef(false);
+  // Store sessionId from URL in localStorage if present
+  useEffect(() => {
+    if (sessionId) {
+      localStorage.setItem("calculationTarifSessionId", sessionId);
+    }
+  }, [sessionId]);
+
   useEffect(() => {
     type AddressDetails = {
       postalCode?: string;
@@ -353,7 +368,12 @@ export default function Addressdetails() {
         });
       } catch {}
     }
-    router.push("/calculator/sepaMandate");
+    // Always pass sessionId in URL
+    if (sessionId) {
+      router.push(`/calculator/sepaMandate?sessionId=${sessionId}`);
+    } else {
+      router.push("/calculator/sepaMandate");
+    }
   };
 
   return (

@@ -1,6 +1,6 @@
 "use client";
-import React, { useState, useEffect, useRef } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import PhoneInput from "react-phone-input-2";
@@ -10,6 +10,12 @@ import { useLanguage } from "@/app/contexts/LanguageContext";
 
 export default function PersonalDetailsPage() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const sessionId =
+    searchParams.get("sessionId") ||
+    (typeof window !== "undefined"
+      ? localStorage.getItem("calculationTarifSessionId")
+      : null);
   const { t } = useLanguage();
   const [phone, setPhone] = useState("");
   const [salutation, setSalutation] = useState("");
@@ -20,6 +26,13 @@ export default function PersonalDetailsPage() {
   const [email, setEmail] = useState("");
   const [repeatEmail, setRepeatEmail] = useState("");
   const [error, setError] = useState("");
+
+  // Store sessionId from URL in localStorage if present
+  useEffect(() => {
+    if (sessionId) {
+      localStorage.setItem("calculationTarifSessionId", sessionId);
+    }
+  }, [sessionId]);
 
   // Restore from MongoDB session or localStorage on mount, only if data is valid
   useEffect(() => {
@@ -196,7 +209,12 @@ export default function PersonalDetailsPage() {
         });
       } catch {}
     }
-    router.push("/calculator/Addressdetails");
+    // Always pass sessionId in URL
+    if (sessionId) {
+      router.push(`/calculator/Addressdetails?sessionId=${sessionId}`);
+    } else {
+      router.push("/calculator/Addressdetails");
+    }
   };
 
   return (
