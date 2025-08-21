@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
@@ -8,7 +8,7 @@ import "react-phone-input-2/lib/style.css";
 import Stepper from "@/app/components/Stepper";
 import { useLanguage } from "@/app/contexts/LanguageContext";
 
-export default function PersonalDetailsPage() {
+function PersonalDetailsPageInner() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const sessionId =
@@ -403,5 +403,13 @@ export default function PersonalDetailsPage() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+export default function PersonalDetailsPage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <PersonalDetailsPageInner />
+    </Suspense>
   );
 }

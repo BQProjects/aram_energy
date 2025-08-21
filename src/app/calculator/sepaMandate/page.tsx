@@ -1,13 +1,14 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Stepper from "../../components/Stepper";
 import SepaCard from "../../components/sepaCard";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-export default function SepaMandatePage() {
+
+function SepaMandatePageInner() {
   const searchParams = useSearchParams();
   const sessionId =
     searchParams.get("sessionId") ||
@@ -407,5 +408,13 @@ export default function SepaMandatePage() {
       </main>
       <Footer />
     </div>
+  );
+}
+
+export default function SepaMandatePage() {
+  return (
+    <Suspense fallback={<div>Loading...</div>}>
+      <SepaMandatePageInner />
+    </Suspense>
   );
 }
