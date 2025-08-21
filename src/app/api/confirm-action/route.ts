@@ -19,8 +19,9 @@ async function notifyWebSocketClients(
 ) {
   try {
     // Directly notify the WebSocket server
-    const wsResponse = await fetch("http://localhost:3012/notify", {
-      method: "POST",
+    const wsNotifyUrl =
+      process.env.WS_NOTIFY_URL || "http://localhost:3012/notify";
+    const wsResponse = await fetch(wsNotifyUrl, {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         sessionId,
@@ -48,22 +49,22 @@ async function updateSessionEmailStatus(sessionId: string, confirmed: boolean) {
     const db = client.db();
 
     // Handle both ObjectId and string session IDs (like your 23-character string)
-let updateQuery: { _id: ObjectId } | { _id: string };
-if (ObjectId.isValid(sessionId)) {
-  updateQuery = { _id: new ObjectId(sessionId) };
-} else {
-  updateQuery = { _id: sessionId };
-}
+    let updateQuery: { _id: ObjectId } | { _id: string };
+    if (ObjectId.isValid(sessionId)) {
+      updateQuery = { _id: new ObjectId(sessionId) };
+    } else {
+      updateQuery = { _id: sessionId };
+    }
 
-const result = await db.collection("sessions").updateOne(
-  updateQuery as Filter<Document>, // Type assertion here
-  {
-    $set: {
-      emailConfirmed: confirmed,
-      emailConfirmedAt: new Date(),
-    },
-  }
-);
+    const result = await db.collection("sessions").updateOne(
+      updateQuery as Filter<Document>, // Type assertion here
+      {
+        $set: {
+          emailConfirmed: confirmed,
+          emailConfirmedAt: new Date(),
+        },
+      }
+    );
 
     console.log(
       "Update result:",

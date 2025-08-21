@@ -331,7 +331,9 @@ async function notifyWebSocketClients(
   action: string
 ) {
   try {
-    const wsResponse = await fetch("http://localhost:3012/notify", {
+    const wsNotifyUrl =
+      process.env.WS_NOTIFY_URL || "http://localhost:3012/notify";
+    const wsResponse = await fetch(wsNotifyUrl, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({

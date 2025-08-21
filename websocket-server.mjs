@@ -64,7 +64,8 @@ const connections = new Map();
 wss.on("connection", (ws, req) => {
   console.log("New WebSocket connection attempt");
 
-  const url = new URL(req.url, `http://${req.headers.host}`);
+  const wsBaseUrl = process.env.WS_BASE_URL || `http://${req.headers.host}`;
+  const url = new URL(req.url, wsBaseUrl);
   const sessionId = url.searchParams.get("sessionId");
 
   if (sessionId) {

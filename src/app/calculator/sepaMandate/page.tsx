@@ -65,8 +65,9 @@ export default function SepaMandatePage() {
 
       checkSessionStatus();
 
-      // Connect to WebSocket server
-      const ws = new WebSocket(`ws://localhost:3012?sessionId=${sessionId}`);
+      // Connect to WebSocket server using env variable
+      const wsBase = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:3012";
+      const ws = new WebSocket(`${wsBase}?sessionId=${sessionId}`);
       wsRef.current = ws;
 
       ws.onopen = () => {

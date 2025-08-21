@@ -93,7 +93,7 @@ export async function POST(request: NextRequest) {
     }
 
     // Create confirmation URL with ObjectId and sessionId for WebSocket notification
-    const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+    const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const sessionId =
       payload.calculationTarif?.sessionId || payload.sessionId || "unknown";
     const confirmUrl = `${baseUrl}/confirm?id=${insertedId}&sessionId=${sessionId}`;
