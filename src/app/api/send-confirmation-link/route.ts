@@ -11,10 +11,12 @@ function formatApplicationDetails({
   calculationTarif,
   selectedTariff,
   personalDetails,
+  addressDetails,
 }: {
   calculationTarif?: any;
   selectedTariff?: any;
   personalDetails?: any;
+  addressDetails?: any;
 }) {
   // Helper to format calculationTarif
   const calc = calculationTarif || {};
@@ -54,13 +56,13 @@ Date of Birth: ${personalDetails?.birthDate || "-"}<br/>
 Mobile No: ${personalDetails?.phone || "-"}<br/>
 Address: ${
     [
-      personalDetails?.street,
-      personalDetails?.houseNumber,
-      personalDetails?.houseNumberSuffix,
+      addressDetails?.street,
+      addressDetails?.houseNumber,
+      addressDetails?.houseNumberSuffix,
     ]
       .filter(Boolean)
       .join(" ") || "-"
-  }, ${personalDetails?.postalCode || "-"} ${personalDetails?.location || "-"}`;
+  }, ${addressDetails?.postalCode || "-"} ${addressDetails?.location || "-"}`;
 
   return { calcTarifStr, selectedTariffStr, personalDetailsStr };
 }
@@ -90,9 +92,11 @@ export async function POST(request: NextRequest) {
       );
     }
 
-    // Create confirmation URL with ObjectId
+    // Create confirmation URL with ObjectId and sessionId for WebSocket notification
     const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
-    const confirmUrl = `${baseUrl}/confirm?id=${insertedId}`;
+    const sessionId =
+      payload.calculationTarif?.sessionId || payload.sessionId || "unknown";
+    const confirmUrl = `${baseUrl}/confirm?id=${insertedId}&sessionId=${sessionId}`;
 
     // Get formatted application details
     const { calcTarifStr, selectedTariffStr, personalDetailsStr } =
@@ -100,6 +104,7 @@ export async function POST(request: NextRequest) {
         calculationTarif: payload.calculationTarif,
         selectedTariff: payload.selectedTariff,
         personalDetails: payload.personalDetails,
+        addressDetails: payload.addressDetails,
       });
 
     // Professional email template with detailed information

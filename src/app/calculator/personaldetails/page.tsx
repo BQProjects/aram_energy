@@ -1,5 +1,5 @@
 "use client";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
@@ -21,25 +21,106 @@ export default function PersonalDetailsPage() {
   const [repeatEmail, setRepeatEmail] = useState("");
   const [error, setError] = useState("");
 
-  // Restore from localStorage on mount
+  // Restore from MongoDB session or localStorage on mount, only if data is valid
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("personalDetails");
-      if (saved) {
-        const data = JSON.parse(saved);
-        if (data.salutation) setSalutation(data.salutation);
-        if (data.name) setName(data.name);
-        if (data.surname) setSurname(data.surname);
-        if (data.billing) setBilling(data.billing);
-        if (data.birthDate) setBirthDate(data.birthDate);
-        if (data.email) setEmail(data.email);
-        if (data.repeatEmail) setRepeatEmail(data.repeatEmail);
-        if (data.phone) setPhone(data.phone);
-      }
-    } catch {}
+    const sessionId =
+      typeof window !== "undefined"
+        ? localStorage.getItem("calculationTarifSessionId")
+        : null;
+    const didSet = { current: false };
+    type PersonalDetails = {
+      salutation?: string;
+      name?: string;
+      surname?: string;
+      billing?: string;
+      birthDate?: string;
+      email?: string;
+      repeatEmail?: string;
+      phone?: string;
+    };
+    function isValid(data: PersonalDetails) {
+      // At least one field must be non-empty
+      if (!data) return false;
+      return (
+        data.salutation ||
+        data.name ||
+        data.surname ||
+        data.billing ||
+        data.birthDate ||
+        data.email ||
+        data.repeatEmail ||
+        data.phone
+      );
+    }
+    if (sessionId) {
+      fetch(`/api/session?sessionId=${sessionId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (
+            data &&
+            data.session &&
+            data.session.personalDetails &&
+            isValid(data.session.personalDetails)
+          ) {
+            const pd = data.session.personalDetails;
+            setSalutation(pd.salutation || "");
+            setName(pd.name || "");
+            setSurname(pd.surname || "");
+            setBilling(pd.billing);
+            setBirthDate(pd.birthDate || "");
+            setEmail(pd.email || "");
+            setRepeatEmail(pd.repeatEmail || "");
+            setPhone(pd.phone || "");
+            didSet.current = true;
+            console.log("[Restore] Loaded from MongoDB session", pd);
+          }
+        })
+        .finally(() => {
+          if (!didSet.current) {
+            try {
+              const saved = localStorage.getItem("personalDetails");
+              if (saved) {
+                const data = JSON.parse(saved);
+                if (isValid(data)) {
+                  setSalutation(data.salutation || "");
+                  setName(data.name || "");
+                  setSurname(data.surname || "");
+                  setBilling(data.billing);
+                  setBirthDate(data.birthDate || "");
+                  setEmail(data.email || "");
+                  setRepeatEmail(data.repeatEmail || "");
+                  setPhone(data.phone || "");
+                  console.log("[Restore] Loaded from localStorage", data);
+                }
+              }
+            } catch {}
+          }
+        });
+    } else {
+      try {
+        const saved = localStorage.getItem("personalDetails");
+        if (saved) {
+          const data = JSON.parse(saved);
+          if (isValid(data)) {
+            setSalutation(data.salutation || "");
+            setName(data.name || "");
+            setSurname(data.surname || "");
+            setBilling(data.billing);
+            setBirthDate(data.birthDate || "");
+            setEmail(data.email || "");
+            setRepeatEmail(data.repeatEmail || "");
+            setPhone(data.phone || "");
+            console.log(
+              "[Restore] Loaded from localStorage (no session)",
+              data
+            );
+          }
+        }
+      } catch {}
+    }
   }, []);
 
-  // Store to localStorage on change
+  // Store to localStorage on change (do NOT update MongoDB session here)
   useEffect(() => {
     const data = {
       salutation,
@@ -51,9 +132,14 @@ export default function PersonalDetailsPage() {
       repeatEmail,
       phone,
     };
-    try {
-      localStorage.setItem("personalDetails", JSON.stringify(data));
-    } catch {}
+    // Only save if at least one field is non-empty
+    const isValid = Object.values(data).some((v) => v && v !== "");
+    if (isValid) {
+      try {
+        localStorage.setItem("personalDetails", JSON.stringify(data));
+        console.log("[Save] Saved to localStorage", data);
+      } catch {}
+    }
   }, [
     salutation,
     name,
@@ -65,7 +151,7 @@ export default function PersonalDetailsPage() {
     phone,
   ]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (
       !salutation ||
@@ -84,6 +170,32 @@ export default function PersonalDetailsPage() {
       return;
     }
     setError("");
+    // Save to MongoDB session if sessionId exists
+    const sessionId =
+      typeof window !== "undefined"
+        ? localStorage.getItem("calculationTarifSessionId")
+        : null;
+    if (sessionId) {
+      try {
+        await fetch("/api/session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sessionId,
+            personalDetails: {
+              salutation,
+              name,
+              surname,
+              billing,
+              birthDate,
+              email,
+              repeatEmail,
+              phone,
+            },
+          }),
+        });
+      } catch {}
+    }
     router.push("/calculator/Addressdetails");
   };
 

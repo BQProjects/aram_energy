@@ -15,9 +15,10 @@ export default function CalculationTarif() {
   const [annualConsumption, setAnnualConsumption] = useState("");
   const [error, setError] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
+  const [sessionId, setSessionId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Restore from localStorage on mount
+  // Restore from localStorage and MongoDB on mount
   useEffect(() => {
     try {
       const saved = localStorage.getItem("calculationTarif");
@@ -30,6 +31,25 @@ export default function CalculationTarif() {
           setAnnualConsumption(data.annualConsumption);
         if (Array.isArray(data.postalOptions))
           setPostalOptions(data.postalOptions);
+      }
+      const storedSessionId = localStorage.getItem("calculationTarifSessionId");
+      if (storedSessionId) {
+        setSessionId(storedSessionId);
+        // Fetch session data from backend
+        fetch(`/api/session?sessionId=${storedSessionId}`)
+          .then((res) => res.json())
+          .then((data) => {
+            if (data && data.session) {
+              const s = data.session;
+              if (s.selected) setSelected(s.selected);
+              if (s.customerType) setCustomerType(s.customerType);
+              if (s.postalCode) setPostalCode(s.postalCode);
+              if (s.annualConsumption)
+                setAnnualConsumption(s.annualConsumption);
+              if (Array.isArray(s.postalOptions))
+                setPostalOptions(s.postalOptions);
+            }
+          });
       }
     } catch {}
   }, []);
@@ -306,7 +326,7 @@ export default function CalculationTarif() {
         <div className="col-span-1 sm:col-span-2 flex flex-col items-center justify-center w-full ">
           <button
             className="w-full h-[48px] sm:w-[300px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-light text-base shadow-lg relative overflow-hidden group transition-colors duration-300"
-            onClick={() => {
+            onClick={async () => {
               if (!annualConsumption.trim() || !postalCode.trim()) {
                 setError(t("calculation.validationError"));
                 return;
@@ -321,11 +341,44 @@ export default function CalculationTarif() {
                 selected === "electricity" ? "Electricity" : "Gas";
               const customerCategory =
                 customerType === "private" ? "Private" : "Company";
+
+              // Generate sessionId if not present
+              let sid = sessionId;
+              if (!sid) {
+                // Generate a MongoDB ObjectId in JS (not cryptographically secure, but fine for session)
+                const hex = () =>
+                  Math.floor(Math.random() * 0xffffff)
+                    .toString(16)
+                    .padStart(6, "0");
+                sid = `${Date.now().toString(16)}${hex()}${hex()}`.slice(0, 24);
+                setSessionId(sid);
+                localStorage.setItem("calculationTarifSessionId", sid);
+              }
+
+              // Save session data to backend
+              try {
+                await fetch("/api/session", {
+                  method: "POST",
+                  headers: { "Content-Type": "application/json" },
+                  body: JSON.stringify({
+                    sessionId: sid,
+                    selected,
+                    customerType,
+                    postalCode,
+                    annualConsumption,
+                    postalOptions,
+                  }),
+                });
+              } catch (e) {
+                // Optionally handle error
+              }
+
               const params = new URLSearchParams({
                 postalCode,
                 location,
                 division,
                 customerCategory,
+                sessionId: sid,
               });
               router.push(`/calculator/selectoption?${params.toString()}`);
             }}

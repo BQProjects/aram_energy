@@ -350,8 +350,17 @@ const translations = {
     "sepaMandate.ibanInfo":
       "You can find the IBAN on your bank card, among other places. It consists of the country code DE, a two-digit individual security number from your bank, and a further 18 digits.",
     "sepaMandate.sepaInfo":
-      "By entering my bank details, I authorize Stadtwerke Duisburg AG to collect payments from my account via SEPA direct debit. At the same time, I instruct my bank to honor the direct debits drawn on my account by Stadtwerke Duisburg AG.",
+      "By entering my bank details, I authorize Aram Energy Solution to collect payments from my account via SEPA direct debit. At the same time, I instruct my bank to honor the direct debits drawn on my account by Aram Energy Solution.",
     "sepaMandate.confirmEmail": "Receive confirmation email",
+    "sepaMandate.confirmationEmailSent":
+      "Confirmation email sent! Please check your email and click the confirmation link.",
+    "sepaMandate.waitingConfirmation": "Waiting for email confirmation...",
+    "sepaMandate.emailConfirmed": "✓ Email confirmed",
+    "sepaMandate.error.fillRequiredFields":
+      "Please fill all required fields before requesting confirmation email",
+    "sepaMandate.error.emailSendFailed": "Failed to send confirmation email",
+    "sepaMandate.error.emailRejected":
+      "Email confirmation was rejected. Please try again.",
     "sepaMandate.paymentTerms": "Our payment terms",
     "sepaMandate.paymentTermsSub": "debited monthly from account",
     "sepaMandate.submit": "Submit",
@@ -789,8 +798,18 @@ const translations = {
     "sepaMandate.ibanInfo":
       "Die IBAN finden Sie unter anderem auf Ihrer Bankkarte. Sie besteht aus dem Ländercode DE, einer zweistelligen individuellen Sicherheitsnummer Ihrer Bank und weiteren 18 Ziffern.",
     "sepaMandate.sepaInfo":
-      "Mit der Eingabe meiner Bankdaten ermächtige ich die Stadtwerke Duisburg AG, Zahlungen von meinem Konto mittels SEPA-Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von den Stadtwerken Duisburg AG auf mein Konto gezogenen Lastschriften einzulösen.",
+      "Mit der Eingabe meiner Bankdaten ermächtige ich die Aram Energy Solution, Zahlungen von meinem Konto mittels SEPA-Lastschrift einzuziehen. Zugleich weise ich mein Kreditinstitut an, die von der Aram Energy Solution auf mein Konto gezogenen Lastschriften einzulösen.",
     "sepaMandate.confirmEmail": "Bestätigungs-E-Mail erhalten",
+    "sepaMandate.confirmationEmailSent":
+      "Bestätigungs-E-Mail gesendet! Bitte überprüfen Sie Ihre E-Mail und klicken Sie auf den Bestätigungslink.",
+    "sepaMandate.waitingConfirmation": "Warten auf E-Mail-Bestätigung...",
+    "sepaMandate.emailConfirmed": "✓ E-Mail bestätigt",
+    "sepaMandate.error.fillRequiredFields":
+      "Bitte füllen Sie alle erforderlichen Felder aus, bevor Sie eine Bestätigungs-E-Mail anfordern",
+    "sepaMandate.error.emailSendFailed":
+      "Fehler beim Senden der Bestätigungs-E-Mail",
+    "sepaMandate.error.emailRejected":
+      "E-Mail-Bestätigung wurde abgelehnt. Bitte versuchen Sie es erneut.",
     "sepaMandate.paymentTerms": "Unsere Zahlungsbedingungen",
     "sepaMandate.paymentTermsSub": "monatlich vom Konto abgebucht",
     "sepaMandate.submit": "Absenden",

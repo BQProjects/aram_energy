@@ -10,13 +10,6 @@ import { useLanguage } from "@/app/contexts/LanguageContext";
 export default function Addressdetails() {
   const router = useRouter();
   const { t } = useLanguage();
-  // Personal details state
-  const [phone, setPhone] = useState("");
-  const [salutation, setSalutation] = useState("");
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [email, setEmail] = useState("");
-  const [birthDate, setBirthDate] = useState("");
   const [postalCode, setPostalCode] = useState("");
   const [location, setLocation] = useState("");
   const [street, setStreet] = useState("");
@@ -38,49 +31,196 @@ export default function Addressdetails() {
   const [billingPostal, setBillingPostal] = useState("");
   const [billingCountry, setBillingCountry] = useState("");
 
-  // Restore from localStorage on mount
+  // Restore from MongoDB session or localStorage on mount, only if data is valid
+  const isRestoring = React.useRef(false);
   useEffect(() => {
+    type AddressDetails = {
+      postalCode?: string;
+      location?: string;
+      street?: string;
+      houseNumber?: string;
+      houseNumberSuffix?: string;
+      desiredStart?: string;
+      previousSupplier?: string;
+      previousCustomerNo?: string;
+      meterNo?: string;
+      meterLocationNo?: string;
+      moveInStatus?: string;
+      billing?: "same" | "different";
+      billingStreet?: string;
+      billingHouseNumber?: string;
+      billingHouseNumberSuffix?: string;
+      billingCity?: string;
+      billingPostal?: string;
+      billingCountry?: string;
+    };
+
+    function isValid(data: AddressDetails) {
+      if (!data) return false;
+      // At least one field must be non-empty
+      return (
+        data.postalCode ||
+        data.location ||
+        data.street ||
+        data.houseNumber ||
+        data.houseNumberSuffix ||
+        data.desiredStart ||
+        data.previousSupplier ||
+        data.previousCustomerNo ||
+        data.meterNo ||
+        data.meterLocationNo ||
+        data.moveInStatus ||
+        data.billing
+      );
+    }
+
+    const sessionId =
+      typeof window !== "undefined"
+        ? localStorage.getItem("calculationTarifSessionId")
+        : null;
+    let didSet = false;
+    isRestoring.current = true;
+    let billingFromPersonal: "same" | "different" | undefined;
+
+    // Always fetch billing from personalDetails in localStorage
     try {
-      const saved = localStorage.getItem("personalDetails");
-      if (saved) {
-        const data = JSON.parse(saved);
-        if (data.phone) setPhone(data.phone);
-        if (data.salutation) setSalutation(data.salutation);
-        if (data.name) setName(data.name);
-        if (data.birthDate) setBirthDate(data.birthDate);
-        if (data.surname) setSurname(data.surname);
-        if (data.email) setEmail(data.email);
-        if (data.billing) setBilling(data.billing);
-        if (data.billingStreet) setBillingStreet(data.billingStreet);
-        if (data.billingHouseNumber)
-          setBillingHouseNumber(data.billingHouseNumber);
-        if (data.billingHouseNumberSuffix)
-          setBillingHouseNumberSuffix(data.billingHouseNumberSuffix);
-        if (data.billingCity) setBillingCity(data.billingCity);
-        if (data.billingPostal) setBillingPostal(data.billingPostal);
-        if (data.billingCountry) setBillingCountry(data.billingCountry);
-        setHouseNumberSuffix(data.houseNumberSuffix);
-        if (data.desiredStart) setDesiredStart(data.desiredStart);
-        if (data.previousSupplier) setPreviousSupplier(data.previousSupplier);
-        if (data.previousCustomerNo)
-          setPreviousCustomerNo(data.previousCustomerNo);
-        if (data.meterNo) setMeterNo(data.meterNo);
-        if (data.meterLocationNo) setMeterLocationNo(data.meterLocationNo);
-        if (data.moveInStatus) setMoveInStatus(data.moveInStatus);
+      const personal = localStorage.getItem("personalDetails");
+      if (personal) {
+        const pdata = JSON.parse(personal);
+        if (pdata.billing === "same" || pdata.billing === "different") {
+          billingFromPersonal = pdata.billing;
+          setBilling(pdata.billing);
+          console.log(
+            "[AddressDetails] Set billing from personalDetails:",
+            pdata.billing
+          );
+        }
       }
     } catch {}
-  }, []);
 
-  // Store to localStorage on change
+    if (sessionId) {
+      fetch(`/api/session?sessionId=${sessionId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (
+            data &&
+            data.session &&
+            data.session.addressDetails &&
+            isValid(data.session.addressDetails)
+          ) {
+            const ad = data.session.addressDetails;
+            setPostalCode(ad.postalCode || "");
+            setLocation(ad.location || "");
+            setStreet(ad.street || "");
+            setHouseNumber(ad.houseNumber || "");
+            setHouseNumberSuffix(ad.houseNumberSuffix || "");
+            setDesiredStart(ad.desiredStart || "");
+            setPreviousSupplier(ad.previousSupplier || "");
+            setPreviousCustomerNo(ad.previousCustomerNo || "");
+            setMeterNo(ad.meterNo || "");
+            setMeterLocationNo(ad.meterLocationNo || "");
+            setMoveInStatus(ad.moveInStatus || "");
+            // Only set billing from addressDetails if personalDetails doesn't have it
+            if (!billingFromPersonal) {
+              setBilling(ad.billing);
+            }
+            setBillingStreet(ad.billingStreet || "");
+            setBillingHouseNumber(ad.billingHouseNumber || "");
+            setBillingHouseNumberSuffix(ad.billingHouseNumberSuffix || "");
+            setBillingCity(ad.billingCity || "");
+            setBillingPostal(ad.billingPostal || "");
+            setBillingCountry(ad.billingCountry || "");
+            didSet = true;
+            console.log(
+              "[AddressDetails Restore] Loaded from MongoDB session",
+              ad
+            );
+          }
+        })
+        .finally(() => {
+          if (!didSet) {
+            try {
+              const saved = localStorage.getItem("addressDetails");
+              if (saved) {
+                const data = JSON.parse(saved);
+                if (isValid(data)) {
+                  setPostalCode(data.postalCode || "");
+                  setLocation(data.location || "");
+                  setStreet(data.street || "");
+                  setHouseNumber(data.houseNumber || "");
+                  setHouseNumberSuffix(data.houseNumberSuffix || "");
+                  setDesiredStart(data.desiredStart || "");
+                  setPreviousSupplier(data.previousSupplier || "");
+                  setPreviousCustomerNo(data.previousCustomerNo || "");
+                  setMeterNo(data.meterNo || "");
+                  setMeterLocationNo(data.meterLocationNo || "");
+                  setMoveInStatus(data.moveInStatus || "");
+                  // Only set billing from addressDetails if personalDetails doesn't have it
+                  if (!billingFromPersonal) {
+                    setBilling(data.billing);
+                  }
+                  setBillingStreet(data.billingStreet || "");
+                  setBillingHouseNumber(data.billingHouseNumber || "");
+                  setBillingHouseNumberSuffix(
+                    data.billingHouseNumberSuffix || ""
+                  );
+                  setBillingCity(data.billingCity || "");
+                  setBillingPostal(data.billingPostal || "");
+                  setBillingCountry(data.billingCountry || "");
+                  console.log(
+                    "[AddressDetails Restore] Loaded from localStorage",
+                    data
+                  );
+                }
+              }
+            } catch {}
+          }
+          isRestoring.current = false;
+        });
+    } else {
+      try {
+        const saved = localStorage.getItem("addressDetails");
+        if (saved) {
+          const data = JSON.parse(saved);
+          if (isValid(data)) {
+            setPostalCode(data.postalCode || "");
+            setLocation(data.location || "");
+            setStreet(data.street || "");
+            setHouseNumber(data.houseNumber || "");
+            setHouseNumberSuffix(data.houseNumberSuffix || "");
+            setDesiredStart(data.desiredStart || "");
+            setPreviousSupplier(data.previousSupplier || "");
+            setPreviousCustomerNo(data.previousCustomerNo || "");
+            setMeterNo(data.meterNo || "");
+            setMeterLocationNo(data.meterLocationNo || "");
+            setMeterNo(data.meterNo || "");
+            setMeterLocationNo(data.meterLocationNo || "");
+            setMoveInStatus(data.moveInStatus || "");
+            // Only set billing from addressDetails if personalDetails doesn't have it
+            if (!billingFromPersonal) {
+              setBilling(data.billing);
+            }
+            setBillingStreet(data.billingStreet || "");
+            setBillingHouseNumber(data.billingHouseNumber || "");
+            setBillingHouseNumberSuffix(data.billingHouseNumberSuffix || "");
+            setBillingCity(data.billingCity || "");
+            setBillingPostal(data.billingPostal || "");
+            setBillingCountry(data.billingCountry || "");
+            console.log(
+              "[AddressDetails Restore] Loaded from localStorage (no session)",
+              data
+            );
+          }
+        }
+      } catch {}
+      isRestoring.current = false;
+    }
+  }, []);
+  // Save to localStorage on change, only if data is valid
   useEffect(() => {
+    if (isRestoring.current) return; // Don't save while restoring
+
     const data = {
-      phone,
-      salutation,
-      name,
-      surname,
-      birthDate,
-      email,
-      billing,
       billingStreet,
       billingHouseNumber,
       billingHouseNumberSuffix,
@@ -98,12 +238,18 @@ export default function Addressdetails() {
       meterNo,
       meterLocationNo,
       moveInStatus,
+      billing,
     };
-    try {
-      localStorage.setItem("personalDetails", JSON.stringify(data));
-    } catch {}
+
+    // Only save if at least one field is non-empty
+    const isValid = Object.values(data).some((v) => v && v !== "");
+    if (isValid) {
+      try {
+        localStorage.setItem("addressDetails", JSON.stringify(data));
+        console.log("[AddressDetails Save] Saved to localStorage", data);
+      } catch {}
+    }
   }, [
-    billing,
     billingStreet,
     billingHouseNumber,
     billingHouseNumberSuffix,
@@ -121,15 +267,10 @@ export default function Addressdetails() {
     meterNo,
     meterLocationNo,
     moveInStatus,
-    phone,
-    salutation,
-    name,
-    surname,
-    birthDate,
-    email,
+    billing,
   ]);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     // Required fields
     if (!billing) {
@@ -163,6 +304,55 @@ export default function Addressdetails() {
       return;
     }
     setError("");
+
+    // Ensure billing consistency with personalDetails
+    let finalBilling = billing;
+    try {
+      const personal = localStorage.getItem("personalDetails");
+      if (personal) {
+        const pdata = JSON.parse(personal);
+        if (pdata.billing === "same" || pdata.billing === "different") {
+          finalBilling = pdata.billing;
+        }
+      }
+    } catch {}
+
+    // Save to MongoDB session if sessionId exists
+    const sessionId =
+      typeof window !== "undefined"
+        ? localStorage.getItem("calculationTarifSessionId")
+        : null;
+    if (sessionId) {
+      try {
+        await fetch("/api/session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sessionId,
+            addressDetails: {
+              billingStreet,
+              billingHouseNumber,
+              billingHouseNumberSuffix,
+              billingCity,
+              billingPostal,
+              billingCountry,
+              postalCode,
+              location,
+              street,
+              houseNumber,
+              houseNumberSuffix,
+              desiredStart,
+              previousSupplier,
+              previousCustomerNo,
+              meterNo,
+              meterLocationNo,
+              moveInStatus,
+              billing: finalBilling,
+            },
+          }),
+        });
+      } catch {}
+    }
     router.push("/calculator/sepaMandate");
   };
 

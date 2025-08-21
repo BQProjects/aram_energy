@@ -10,12 +10,66 @@ const SelectPower: React.FC<SelectPowerProps> = ({ t }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
   // You can extract any needed params here if you want to pass them forward
-  const handleSelect = () => {
-    // Example: go to next step, pass along params if needed
+  const handleSelect = async () => {
+    // Save selected tariff to session in MongoDB if sessionId exists
+    const sessionId =
+      typeof window !== "undefined"
+        ? localStorage.getItem("calculationTarifSessionId")
+        : null;
+    if (sessionId && selectedTariff) {
+      try {
+        await fetch("/api/session", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            sessionId,
+            selectedTariff,
+            selectedTariffData: tariffs.find((t) => t.id === selectedTariff),
+          }),
+        });
+      } catch {}
+    }
+    // Go to next step, pass along params if needed
     router.push("/calculator/personaldetails?" + searchParams.toString());
   };
 
   const [selectedTariff, setSelectedTariff] = useState<number | null>(null);
+
+  // Restore selectedTariff from session/localStorage on mount
+  React.useEffect(() => {
+    // Try to restore from MongoDB session first
+    const sessionId =
+      typeof window !== "undefined"
+        ? localStorage.getItem("calculationTarifSessionId")
+        : null;
+    if (sessionId) {
+      fetch(`/api/session?sessionId=${sessionId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          if (data && data.session && data.session.selectedTariff) {
+            setSelectedTariff(data.session.selectedTariff);
+            return;
+          }
+          // fallback to localStorage
+          const stored = localStorage.getItem("selectedTariff");
+          if (stored) {
+            try {
+              const tariff = JSON.parse(stored);
+              if (tariff && tariff.id) setSelectedTariff(tariff.id);
+            } catch {}
+          }
+        });
+    } else {
+      // fallback to localStorage
+      const stored = localStorage.getItem("selectedTariff");
+      if (stored) {
+        try {
+          const tariff = JSON.parse(stored);
+          if (tariff && tariff.id) setSelectedTariff(tariff.id);
+        } catch {}
+      }
+    }
+  }, []);
 
   // Store selected tariff in localStorage
   const handleTariffSelect = (id: number) => {

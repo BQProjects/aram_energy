@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
-import { ObjectId } from "mongodb";
+import { ObjectId, Filter, Document } from "mongodb";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -11,10 +11,213 @@ const COMPANY_EMAILS = [
   process.env.COMPANY_EMAIL_2 || "company2@example.com",
 ];
 
+// Handle WebSocket notifications for email confirmation
+async function notifyWebSocketClients(
+  sessionId: string,
+  type: string,
+  action: string
+) {
+  try {
+    // Directly notify the WebSocket server
+    const wsResponse = await fetch("http://localhost:3012/notify", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        sessionId,
+        type,
+        action,
+        timestamp: new Date().toISOString(),
+      }),
+    });
+
+    if (!wsResponse.ok) {
+      console.error("Failed to notify WebSocket clients");
+    } else {
+      console.log(
+        `WebSocket notification sent: ${type} for session ${sessionId}`
+      );
+    }
+  } catch (wsError) {
+    console.error("WebSocket notification error:", wsError);
+  }
+}
+
+async function updateSessionEmailStatus(sessionId: string, confirmed: boolean) {
+  try {
+    const client = await clientPromise;
+    const db = client.db();
+
+    // Handle both ObjectId and string session IDs (like your 23-character string)
+let updateQuery: { _id: ObjectId } | { _id: string };
+if (ObjectId.isValid(sessionId)) {
+  updateQuery = { _id: new ObjectId(sessionId) };
+} else {
+  updateQuery = { _id: sessionId };
+}
+
+const result = await db.collection("sessions").updateOne(
+  updateQuery as Filter<Document>, // Type assertion here
+  {
+    $set: {
+      emailConfirmed: confirmed,
+      emailConfirmedAt: new Date(),
+    },
+  }
+);
+
+    console.log(
+      "Update result:",
+      result.matchedCount,
+      "matched,",
+      result.modifiedCount,
+      "modified"
+    );
+
+    if (result.matchedCount === 0) {
+      console.error("No session found with ID:", sessionId);
+    }
+  } catch (error) {
+    console.error("Error updating session email status:", error);
+  }
+}
+
+// Handle GET requests for email confirmation links
+export async function GET(request: NextRequest) {
+  try {
+    const { searchParams } = new URL(request.url);
+    const sessionId = searchParams.get("sessionId");
+    const action = searchParams.get("action");
+
+    console.log(
+      "GET confirm-action - sessionId:",
+      sessionId,
+      "action:",
+      action
+    );
+
+    if (!sessionId || !action) {
+      const htmlResponse = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Invalid Request</title>
+            <style>
+              body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+              .error { color: #f44336; }
+            </style>
+          </head>
+          <body>
+            <div class="error">
+              <h1>Invalid Request</h1>
+              <p>Missing session ID or action parameter.</p>
+            </div>
+          </body>
+        </html>
+      `;
+
+      return new NextResponse(htmlResponse, {
+        headers: { "Content-Type": "text/html" },
+      });
+    }
+
+    // Update session with email confirmation status
+    await updateSessionEmailStatus(sessionId, action === "confirm");
+
+    // Notify WebSocket clients about the confirmation
+    await notifyWebSocketClients(
+      sessionId,
+      action === "confirm" ? "email_confirmed" : "email_rejected",
+      action
+    );
+
+    // Return success page
+    const htmlResponse = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Email Confirmation</title>
+          <style>
+            body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+            .success { color: #4CAF50; }
+            .error { color: #f44336; }
+            .container { max-width: 600px; margin: 0 auto; }
+            .btn { 
+              display: inline-block; 
+              background: #FF9641; 
+              color: white; 
+              padding: 12px 24px; 
+              text-decoration: none; 
+              border-radius: 5px; 
+              margin-top: 20px;
+            }
+          </style>
+        </head>
+        <body>
+          <div class="container">
+            <div class="${action === "confirm" ? "success" : "error"}">
+              <h1>${
+                action === "confirm" ? "✓ Email Confirmed!" : "✗ Email Rejected"
+              }</h1>
+              <p>
+                ${
+                  action === "confirm"
+                    ? "Your email has been confirmed successfully! You can now proceed with the final submission on the form."
+                    : "Your email confirmation was rejected. Please go back to the form to make changes."
+                }
+              </p>
+              <a href="${
+                process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
+              }/calculator/sepaMandate" class="btn">← Back to Form</a>
+            </div>
+          </div>
+        </body>
+      </html>
+    `;
+
+    return new NextResponse(htmlResponse, {
+      headers: { "Content-Type": "text/html" },
+    });
+  } catch (error) {
+    console.error("Error in GET confirm-action:", error);
+
+    const htmlResponse = `
+      <!DOCTYPE html>
+      <html>
+        <head>
+          <title>Error</title>
+          <style>
+            body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+            .error { color: #f44336; }
+          </style>
+        </head>
+        <body>
+          <div class="error">
+            <h1>Error</h1>
+            <p>An error occurred while processing your request.</p>
+          </div>
+        </body>
+      </html>
+    `;
+
+    return new NextResponse(htmlResponse, {
+      headers: { "Content-Type": "text/html" },
+    });
+  }
+}
+
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const { id, action } = body;
+    const { id, action, sessionId } = body;
+
+    console.log(
+      "POST confirm-action - id:",
+      id,
+      "action:",
+      action,
+      "sessionId:",
+      sessionId
+    );
 
     if (!id || !action) {
       return NextResponse.json(
@@ -52,220 +255,36 @@ export async function POST(req: NextRequest) {
     }
 
     if (action === "confirm") {
-      // Move data from pending_confirmations to submissions with confirmed status
-      const submissionData: any = {
-        ...pendingConfirmation,
-        confirmation: "confirmed",
-        confirmationAt: new Date(),
-        originalPendingId: pendingConfirmation._id,
-      };
+      // Update the session email status if sessionId is provided
+      if (sessionId) {
+        await updateSessionEmailStatus(sessionId, true);
+      }
 
-      // Remove the original _id, expiresAt, and status fields to let MongoDB generate a new one for submissions
-      delete submissionData._id;
-      delete submissionData.expiresAt;
-      delete submissionData.status;
-
-      // Insert into submissions collection
-      const result = await db
-        .collection("submissions")
-        .insertOne(submissionData);
-
-      // Remove from pending confirmations
-      await db
-        .collection("pending_confirmations")
-        .deleteOne({ _id: new ObjectId(id) });
-
-      // Send notification emails
-      const emailList = [
-        pendingConfirmation.personalDetails?.email,
-        ADMIN_EMAIL,
-        ...COMPANY_EMAILS,
-      ].filter(Boolean);
-
-      // Compose professional email body
-      const calc = pendingConfirmation.calculationTarif || {};
-      const sel = pendingConfirmation.selectedTariff || {};
-      const pd = pendingConfirmation.personalDetails || {};
-      const sepa = pendingConfirmation.sepaForm || {};
-
-      const htmlEmailBody = `
-        <!DOCTYPE html>
-        <html>
-        <head>
-          <meta charset="utf-8">
-          <meta name="viewport" content="width=device-width, initial-scale=1.0">
-          <title>Energy Contract Application Confirmed</title>
-          <style>
-            body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-            .container { max-width: 600px; margin: 0 auto; background-color: white; }
-            .header { background: linear-gradient(135deg, #FF9641 0%, #e88537 100%); color: white; padding: 30px 20px; text-align: center; }
-            .content { padding: 30px 20px; }
-            .section { margin-bottom: 25px; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
-            .section-header { background-color: #f8f9fa; padding: 15px 20px; border-bottom: 1px solid #e0e0e0; font-weight: bold; color: #333; }
-            .section-content { padding: 20px; }
-            .field { margin-bottom: 10px; font-family: monospace; font-size: 14px; }
-            .field strong { color: #FF9641; }
-            .footer { background-color: #333; color: white; padding: 20px; text-align: center; font-size: 12px; }
-            .success-badge { background-color: #28a745; color: white; padding: 8px 16px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
-          </style>
-        </head>
-        <body>
-          <div class="container">
-            <div class="header">
-              <h1 style="margin: 0; font-size: 28px;">Energy Contract Application</h1>
-              <div class="success-badge">✅ CONFIRMED</div>
-            </div>
-            
-            <div class="content">
-              <p style="font-size: 16px; color: #333; margin-bottom: 25px;">
-                Dear ${pd.name || "Customer"},<br><br>
-                Your energy contract application has been successfully confirmed. Below are the details of your application:
-              </p>
-
-              <div class="section">
-                <div class="section-header">🏢 Calculation Tariff</div>
-                <div class="section-content">
-                  <div class="field"><strong>Selected:</strong> ${
-                    calc.selected || "-"
-                  }</div>
-                  <div class="field"><strong>Customer Type:</strong> ${
-                    calc.customerType || "-"
-                  }</div>
-                  <div class="field"><strong>Postal Code:</strong> ${
-                    calc.postalCode || "-"
-                  }</div>
-                  <div class="field"><strong>Annual Consumption:</strong> ${
-                    calc.annualConsumption || "-"
-                  }</div>
-                  <div class="field"><strong>Postal Options:</strong><br>
-                    ${
-                      calc.postalOptions &&
-                      Array.isArray(calc.postalOptions) &&
-                      calc.postalOptions.length > 0
-                        ? calc.postalOptions
-                            .map(
-                              (opt: { plz?: string; district?: string }) =>
-                                `&nbsp;&nbsp;• PLZ: ${
-                                  opt.plz || "-"
-                                }, District: ${opt.district || "-"}`
-                            )
-                            .join("<br>")
-                        : "&nbsp;&nbsp;-"
-                    }
-                  </div>
-                </div>
-              </div>
-
-              <div class="section">
-                <div class="section-header">💰 Selected Tariff</div>
-                <div class="section-content">
-                  <div class="field"><strong>Base Price:</strong> ${
-                    sel.basePrice || "-"
-                  }</div>
-                  <div class="field"><strong>Labor Price:</strong> ${
-                    sel.laborPrice || "-"
-                  }</div>
-                  <div class="field"><strong>Type of Current:</strong> ${
-                    sel.typeOfCurrent || "-"
-                  }</div>
-                  <div class="field"><strong>Contract Term:</strong> ${
-                    sel.contractTerm || "-"
-                  }</div>
-                  <div class="field"><strong>Price Guarantee:</strong> ${
-                    sel.priceGuarantee || "-"
-                  }</div>
-                  <div class="field"><strong>Down Payment:</strong> ${
-                    sel.downPayment || "-"
-                  }</div>
-                  <div class="field"><strong>Total:</strong> ${
-                    sel.total || "-"
-                  }</div>
-                </div>
-              </div>
-
-              <div class="section">
-                <div class="section-header">👤 Personal Details</div>
-                <div class="section-content">
-                  <div class="field"><strong>Name:</strong> ${
-                    pd.name || "-"
-                  }</div>
-                  <div class="field"><strong>Surname:</strong> ${
-                    pd.surname || "-"
-                  }</div>
-                  <div class="field"><strong>Email:</strong> ${
-                    pd.email || "-"
-                  }</div>
-                  <div class="field"><strong>Date of Birth:</strong> ${
-                    pd.birthDate || "-"
-                  }</div>
-                  <div class="field"><strong>Mobile No:</strong> ${
-                    pd.phone || "-"
-                  }</div>
-                  <div class="field"><strong>Address:</strong> ${
-                    [pd.street, pd.houseNumber, pd.houseNumberSuffix]
-                      .filter(Boolean)
-                      .join(" ") || "-"
-                  }, ${pd.postalCode || "-"} ${pd.location || "-"}</div>
-                </div>
-              </div>
-
-              <div class="section">
-                <div class="section-header">💳 Payment Information</div>
-                <div class="section-content">
-                  <div class="field"><strong>IBAN:</strong> ${
-                    sepa.iban || "-"
-                  }</div>
-                  <div class="field"><strong>Account Holder:</strong> ${
-                    sepa.accountHolder || "-"
-                  }</div>
-                </div>
-              </div>
-
-              <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; margin-top: 30px;">
-                <h3 style="margin: 0 0 10px 0; color: #333;">Application Details</h3>
-                <div class="field"><strong>Submission ID:</strong> ${
-                  result.insertedId
-                }</div>
-                <div class="field"><strong>Confirmed At:</strong> ${new Date().toLocaleString()}</div>
-                <div class="field"><strong>Original Application:</strong> ${
-                  pendingConfirmation.createdAt
-                    ? new Date(pendingConfirmation.createdAt).toLocaleString()
-                    : "-"
-                }</div>
-              </div>
-
-              <p style="margin-top: 30px; font-size: 14px; color: #666;">
-                We will process your request and contact you soon with further information about your energy contract.
-              </p>
-            </div>
-            
-            <div class="footer">
-              <p style="margin: 0;">© 2025 Aram Energy Solutions. All rights reserved.</p>
-              <p style="margin: 5px 0 0 0;">This is an automated message. Please do not reply to this email.</p>
-            </div>
-          </div>
-        </body>
-        </html>
-      `;
-
-      // Send emails
-      for (const to of emailList) {
-        try {
-          await resend.emails.send({
-            from: "noreply@updates.jashkumar.dev",
-            to,
-            subject: "✅ Energy Contract Application Confirmed",
-            html: htmlEmailBody,
-          });
-        } catch {
-          console.error("Email send error");
-        }
+      // Notify WebSocket clients
+      if (sessionId) {
+        await notifyWebSocketClients(sessionId, "email_confirmed", "confirm");
       }
 
       return NextResponse.json({
         success: true,
-        message: "Application confirmed successfully",
-        submissionId: result.insertedId,
+        message: "Email confirmation updated successfully",
+      });
+    }
+
+    if (action === "reject") {
+      // Update the session email status if sessionId is provided
+      if (sessionId) {
+        await updateSessionEmailStatus(sessionId, false);
+      }
+
+      // Notify WebSocket clients
+      if (sessionId) {
+        await notifyWebSocketClients(sessionId, "email_rejected", "reject");
+      }
+
+      return NextResponse.json({
+        success: true,
+        message: "Email rejection updated successfully",
       });
     }
 
@@ -273,128 +292,13 @@ export async function POST(req: NextRequest) {
       { success: false, message: "Invalid action" },
       { status: 400 }
     );
-  } catch {
-    console.error("Confirmation error occurred");
+  } catch (error) {
+    console.error("Confirmation error occurred:", error);
     return NextResponse.json(
       {
         success: false,
         message: "An error occurred while processing confirmation",
       },
-      { status: 500 }
-    );
-  }
-}
-
-export async function GET(req: NextRequest) {
-  const url = new URL(req.url);
-  const id = url.searchParams.get("id");
-  const action = url.searchParams.get("action");
-  if (!id || !action || !["accept", "decline"].includes(action)) {
-    return NextResponse.json(
-      { message: "Invalid confirmation link." },
-      { status: 400 }
-    );
-  }
-  try {
-    const client = await clientPromise;
-    const db = client.db();
-    const collection = db.collection("submissions");
-    const submission = await collection.findOne({ _id: new ObjectId(id) });
-    if (!submission) {
-      return NextResponse.json(
-        { message: "Submission not found." },
-        { status: 404 }
-      );
-    }
-    if (submission.confirmation !== "pending") {
-      return NextResponse.json(
-        {
-          error:
-            "This submission has already been processed. Please submit the form again if needed.",
-        },
-        { status: 400 }
-      );
-    }
-    const newStatus = action === "accept" ? "confirmed" : "declined";
-    await collection.updateOne(
-      { _id: new ObjectId(id) },
-      { $set: { confirmation: newStatus, confirmationAt: new Date() } }
-    );
-
-    // Prepare email details
-    const emailList = [
-      submission.personalDetails?.email,
-      ADMIN_EMAIL,
-      ...COMPANY_EMAILS,
-    ].filter(Boolean);
-
-    // Compose email body in a user-friendly format
-    const calc = submission.calculationTarif || {};
-    const sel = submission.selectedTariff || {};
-    const pd = submission.personalDetails || {};
-    const emailBody = `Submission Details (Status: ${newStatus})\n\n---\nCalculation Tarif:\nSelected: ${
-      calc.selected || "-"
-    }\nCustomer Type: ${calc.customerType || "-"}\nPostal Code: ${
-      calc.postalCode || "-"
-    }\nAnnual Consumption: ${calc.annualConsumption || "-"}\nPostal Options: ${
-      calc.postalOptions &&
-      Array.isArray(calc.postalOptions) &&
-      calc.postalOptions.length > 0
-        ? calc.postalOptions
-            .map(
-              (opt: { plz?: string; district?: string }) =>
-                `  - PLZ: ${opt.plz || "-"}, District: ${opt.district || "-"}`
-            )
-            .join("\n")
-        : "-"
-    }\n\nSelected Tariff:\nID: ${sel.id || "-"}\nName: ${
-      sel.name || "-"
-    }\nBase Price: ${sel.basePrice || "-"}\nLabor Price: ${
-      sel.laborPrice || "-"
-    }\nType of Current: ${sel.typeOfCurrent || "-"}\nContract Term: ${
-      sel.contractTerm || "-"
-    }\nPrice Guarantee: ${sel.priceGuarantee || "-"}\nDown Payment: ${
-      sel.downPayment || "-"
-    }\nTotal: ${sel.total || "-"}\n\nPersonal Details:\nName: ${
-      pd.name || "-"
-    }\nSurname: ${pd.surname || "-"}\nEmail: ${
-      pd.email || "-"
-    }\nDate of Birth: ${pd.birthDate || "-"}\nMobile No: ${
-      pd.phone || "-"
-    }\nAddress: ${
-      [pd.street, pd.houseNumber, pd.houseNumberSuffix]
-        .filter(Boolean)
-        .join(" ") || "-"
-    }, ${pd.postalCode || "-"} ${pd.location || "-"}\n---\n\nSubmission ID: ${
-      submission._id
-    }\nConfirmation: ${submission.confirmation}\nConfirmation At: ${
-      submission.confirmationAt
-        ? new Date(submission.confirmationAt).toLocaleString()
-        : "-"
-    }\nCreated At: ${
-      submission.createdAt
-        ? new Date(submission.createdAt).toLocaleString()
-        : "-"
-    }`;
-
-    // Send emails
-    for (const to of emailList) {
-      try {
-        await resend.emails.send({
-          from: "noreply@updates.jashkumar.dev",
-          to,
-          subject: `Submission ${newStatus}`,
-          text: emailBody,
-        });
-      } catch {
-        // Log or handle email error, but don't block the response
-      }
-    }
-
-    return NextResponse.json({ message: `Submission has been ${newStatus}.` });
-  } catch {
-    return NextResponse.json(
-      { message: "An error occurred." },
       { status: 500 }
     );
   }
