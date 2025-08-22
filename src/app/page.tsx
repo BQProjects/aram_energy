@@ -30,11 +30,11 @@ export default function Home() {
             width={1920}
             height={1080}
             quality={100}
-            className="object-contain w-full"
+            className="object-cover w-full h-full"
           />
         </div>
         <Header />
-        <div className="flex-1 flex flex-col justify-start items-center pt-4 sm:pt-6 md:pt-8 lg:pt-2 px-4 sm:px-6 md:px-8">
+        <div className="flex-1 flex flex-col justify-start items-center pt-4 sm:pt-6 md:pt-8 lg:pt-2 px-4 sm:px-6 md:px-8 pb-8">
           <h2 className="text-center mt-24 text-[#E5E7EB] font-quando text-2xl sm:text-3xl md:text-6xl lg:text-6xl font-medium leading-tight px-2">
             Welcome
           </h2>

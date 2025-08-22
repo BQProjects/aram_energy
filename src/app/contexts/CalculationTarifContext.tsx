@@ -72,7 +72,6 @@ interface SepaForm {
 interface CalculationTarifState {
   _id?: string;
   calculationTarif: {
-    postalOptions: never[];
     selected: string;
     customerType: string;
     postalCode: string;
@@ -100,7 +99,6 @@ const defaultState: CalculationTarifState = {
     customerType: "private",
     postalCode: "",
     annualConsumption: "",
-    postalOptions: [],
   },
   postalOptions: [],
   personalDetails: {
@@ -214,29 +212,17 @@ export const CalculationTarifProvider = ({
     []
   );
 
-  // Debounce function specifically for CalculationTarifState
-  const debounceStateUpdate = (
-    func: (data: CalculationTarifState) => void,
-    delay: number
-  ) => {
-    let timer: NodeJS.Timeout;
-    return (data: CalculationTarifState) => {
-      clearTimeout(timer);
-      timer = setTimeout(() => func(data), delay);
-    };
-  };
-
-  // Create debounced version of saveData
+  // Debounced saveData using useRef for timer
+  const debounceTimer = React.useRef<NodeJS.Timeout | null>(null);
   const debouncedSaveData = useCallback(
-    (() => {
-      const debounceFunc = debounceStateUpdate(
-        (data: CalculationTarifState) => {
-          saveData(data);
-        },
-        1000
-      );
-      return debounceFunc;
-    })(),
+    (data: CalculationTarifState) => {
+      if (debounceTimer.current) {
+        clearTimeout(debounceTimer.current);
+      }
+      debounceTimer.current = setTimeout(() => {
+        saveData(data);
+      }, 1000);
+    },
     [saveData]
   );
 
