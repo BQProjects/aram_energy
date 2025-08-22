@@ -1,5 +1,5 @@
 "use client";
-import React from "react";
+import React, { useEffect } from "react";
 import { useRouter } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
@@ -20,6 +20,14 @@ export default function Addressdetails() {
     useAddressDetailsSection();
   const { data: personalDetails } = usePersonalDetailsSection();
   const [error, setError] = React.useState("");
+
+
+  useEffect(() => {
+    // Ensure the `billing` field is synchronized on page load
+    if (personalDetails.billing !== addressDetails.billing) {
+      updateAddressDetails({ billing: personalDetails.billing });
+    }
+  }, [personalDetails.billing, addressDetails.billing, updateAddressDetails]);
 
   // Wait for initialization
   if (!isInitialized) {

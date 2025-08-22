@@ -67,11 +67,6 @@ interface SepaForm {
   iban: string;
   accountHolder: string;
   sepaAgreement: boolean;
-  emailConfirmed: boolean;
-  emailConfirmedAt?: Date;
-  submittedAt?: Date;
-  status: string;
-  originalSessionId: string;
 }
 
 interface CalculationTarifState {
@@ -105,7 +100,7 @@ const defaultState: CalculationTarifState = {
     customerType: "private",
     postalCode: "",
     annualConsumption: "",
-    postalOptions: []
+    postalOptions: [],
   },
   postalOptions: [],
   personalDetails: {
@@ -156,9 +151,6 @@ const defaultState: CalculationTarifState = {
     iban: "",
     accountHolder: "",
     sepaAgreement: false,
-    emailConfirmed: false,
-    status: "draft",
-    originalSessionId: "",
   },
   sessionId: null,
 };
@@ -248,6 +240,19 @@ export const CalculationTarifProvider = ({
     [saveData]
   );
 
+  const fetchPostalData = async (): Promise<PostalOption[]> => {
+    try {
+      const response = await fetch("/api/postal-data");
+      if (!response.ok) {
+        throw new Error("Failed to fetch postal data");
+      }
+      return await response.json();
+    } catch (error) {
+      console.error("Error fetching postal data:", error);
+      return [];
+    }
+  };
+
   // Fetch data from MongoDB
   const fetchSessionData = useCallback(
     async (objectId: string): Promise<void> => {
@@ -257,24 +262,27 @@ export const CalculationTarifProvider = ({
         const data = await response.json();
 
         if (data.session && data.session._id) {
-          setState(data.session);
+          const postalData = await fetchPostalData();
+          setState({ ...data.session, postalOptions: postalData });
         } else {
-          // If no session found, create new one with this ObjectId
+          const postalData = await fetchPostalData();
           const newState = {
             ...defaultState,
             _id: objectId,
             sessionId: objectId,
+            postalOptions: postalData,
           };
           setState(newState);
           await saveData(newState);
         }
       } catch (error) {
         console.error("Failed to fetch session data:", error);
-        // On error, create new session
+        const postalData = await fetchPostalData();
         const newState = {
           ...defaultState,
           _id: objectId,
           sessionId: objectId,
+          postalOptions: postalData,
         };
         setState(newState);
       } finally {

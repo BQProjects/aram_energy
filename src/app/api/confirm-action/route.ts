@@ -8,20 +8,36 @@ async function updateSessionEmailStatus(sessionId: string, confirmed: boolean) {
     const client = await clientPromise;
     const db = client.db();
 
-    // Handle both ObjectId and string session IDs
-    let updateQuery: { _id: ObjectId } | { _id: string };
+    // Always use ObjectId for _id field
+    let updateQuery: { _id: ObjectId };
     if (ObjectId.isValid(sessionId)) {
       updateQuery = { _id: new ObjectId(sessionId) };
     } else {
-      updateQuery = { _id: sessionId };
+      // If not a valid ObjectId, return error early
+      console.error("Invalid session ID format:", sessionId);
+      return { success: false, message: "Invalid session ID format." };
     }
 
+    // Check if the link has already been used
+    const session = await db.collection("sessions").findOne(updateQuery);
+    if (!session) {
+      console.error("No session found with ID:", sessionId);
+      return { success: false, message: "Session not found." };
+    }
+
+    if (session.linkUsed) {
+      console.error("Link has already been used for session ID:", sessionId);
+      return { success: false, message: "This link has already been used." };
+    }
+
+    // Update the session to mark the link as used and set the confirmation status
     const result = await db
       .collection("sessions")
       .updateOne(updateQuery as Filter<Document>, {
         $set: {
           emailConfirmed: confirmed,
           emailConfirmedAt: new Date(),
+          linkUsed: true, // Mark the link as used
         },
       });
 
@@ -35,12 +51,12 @@ async function updateSessionEmailStatus(sessionId: string, confirmed: boolean) {
 
     if (result.matchedCount === 0) {
       console.error("No session found with ID:", sessionId);
-      return false;
+      return { success: false, message: "Failed to update session." };
     }
-    return true;
+    return { success: true, message: "Session updated successfully." };
   } catch (error) {
     console.error("Error updating session email status:", error);
-    return false;
+    return { success: false, message: "An error occurred." };
   }
 }
 
@@ -48,9 +64,14 @@ async function updateSessionEmailStatus(sessionId: string, confirmed: boolean) {
 export async function POST(request: NextRequest) {
   try {
     const body = await request.json();
-    const { sessionId, action, id } = body;
+    const { sessionId, action } = body;
 
-    console.log("POST Email confirmation - sessionId:", sessionId, "action:", action, "id:", id);
+    console.log(
+      "POST Email confirmation - sessionId:",
+      sessionId,
+      "action:",
+      action
+    );
 
     if (!sessionId || !action) {
       return NextResponse.json(
@@ -60,24 +81,33 @@ export async function POST(request: NextRequest) {
     }
 
     // Update session with email confirmation status
-    const updateSuccess = await updateSessionEmailStatus(sessionId, action === "confirm");
+    const updateResult = await updateSessionEmailStatus(
+      sessionId,
+      action === "confirm"
+    );
 
-    if (updateSuccess) {
-      return NextResponse.json({
-        success: true,
-        message: action === "confirm" ? "Email confirmed successfully!" : "Email confirmation rejected",
-        confirmed: action === "confirm"
-      });
-    } else {
+    if (!updateResult.success) {
       return NextResponse.json(
-        { success: false, message: "Failed to update session status" },
-        { status: 500 }
+        { success: false, message: updateResult.message },
+        { status: 400 }
       );
     }
+
+    return NextResponse.json({
+      success: true,
+      message:
+        action === "confirm"
+          ? "Email confirmed successfully!"
+          : "Email confirmation rejected",
+      confirmed: action === "confirm",
+    });
   } catch (error) {
     console.error("Error in POST confirm-action:", error);
     return NextResponse.json(
-      { success: false, message: "An error occurred while processing your request." },
+      {
+        success: false,
+        message: "An error occurred while processing your request.",
+      },
       { status: 500 }
     );
   }
@@ -90,7 +120,12 @@ export async function GET(request: NextRequest) {
     const sessionId = searchParams.get("sessionId");
     const action = searchParams.get("action");
 
-    console.log("Email confirmation - sessionId:", sessionId, "action:", action);
+    console.log(
+      "GET Email confirmation - sessionId:",
+      sessionId,
+      "action:",
+      action
+    );
 
     if (!sessionId || !action) {
       const htmlResponse = `
@@ -118,9 +153,36 @@ export async function GET(request: NextRequest) {
     }
 
     // Update session with email confirmation status
-    const updateSuccess = await updateSessionEmailStatus(sessionId, action === "confirm");
+    const updateResult = await updateSessionEmailStatus(
+      sessionId,
+      action === "confirm"
+    );
 
-    // Return success page
+    if (!updateResult.success) {
+      const htmlResponse = `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <title>Link Already Used</title>
+            <style>
+              body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
+              .error { color: #f44336; }
+            </style>
+          </head>
+          <body>
+            <div class="error">
+              <h1>Link Already Used</h1>
+              <p>${updateResult.message}</p>
+            </div>
+          </body>
+        </html>
+      `;
+
+      return new NextResponse(htmlResponse, {
+        headers: { "Content-Type": "text/html" },
+      });
+    }
+
     const htmlResponse = `
       <!DOCTYPE html>
       <html>
@@ -130,37 +192,16 @@ export async function GET(request: NextRequest) {
             body { font-family: Arial, sans-serif; text-align: center; padding: 50px; }
             .success { color: #4CAF50; }
             .error { color: #f44336; }
-            .container { max-width: 600px; margin: 0 auto; }
-            .btn { 
-              display: inline-block; 
-              background: #FF9641; 
-              color: white; 
-              padding: 12px 24px; 
-              text-decoration: none; 
-              border-radius: 5px; 
-              margin-top: 20px;
-            }
           </style>
         </head>
         <body>
-          <div class="container">
-            <div class="${action === "confirm" ? "success" : "error"}">
-              <h1>${
-                action === "confirm" ? "✓ Email Confirmed!" : "✗ Email Rejected"
-              }</h1>
-              <p>
-                ${
-                  action === "confirm"
-                    ? updateSuccess 
-                      ? "Your email has been confirmed successfully! You can now go back to the form to complete your submission."
-                      : "Email confirmed, but there was an issue updating your session. Please try again."
-                    : "Your email confirmation was rejected. Please go back to the form to make changes."
-                }
-              </p>
-              <a href="${
-                process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
-              }/calculator/sepaMandate?id=${sessionId}" class="btn">← Back to Form</a>
-            </div>
+          <div class="success">
+            <h1>${
+              action === "confirm" ? "✓ Email Confirmed!" : "✗ Email Rejected"
+            }</h1>
+            <p>Your email has been ${
+              action === "confirm" ? "confirmed" : "rejected"
+            } successfully.</p>
           </div>
         </body>
       </html>

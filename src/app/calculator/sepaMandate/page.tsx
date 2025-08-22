@@ -40,7 +40,7 @@ function SepaMandatePageInner() {
 
   // Poll MongoDB to check for email confirmation
   useEffect(() => {
-    if (!sessionId || !sepaForm.emailConfirmedAt || emailConfirmedFromDB) {
+    if (!sessionId || emailConfirmedFromDB) {
       return; // Don't poll if no session, no email sent, or already confirmed
     }
 
@@ -56,9 +56,6 @@ function SepaMandatePageInner() {
           if (data.session?.emailConfirmed === true) {
             console.log("Email confirmed detected from polling!");
             setEmailConfirmedFromDB(true);
-
-            // Also update the sepaForm context for consistency
-            await updateSepaForm({ emailConfirmed: true });
           }
         }
       } catch (error) {
@@ -69,7 +66,6 @@ function SepaMandatePageInner() {
     return () => clearInterval(pollInterval);
   }, [
     sessionId,
-    sepaForm.emailConfirmedAt,
     emailConfirmedFromDB,
     updateSepaForm,
   ]);
@@ -89,7 +85,6 @@ function SepaMandatePageInner() {
           if (data.session?.emailConfirmed === true) {
             console.log("Email already confirmed on mount!");
             setEmailConfirmedFromDB(true);
-            await updateSepaForm({ emailConfirmed: true });
           }
         }
       } catch (error) {
@@ -227,10 +222,6 @@ function SepaMandatePageInner() {
         alert(t("sepaMandate.confirmationEmailSent"));
 
         // Update the context to indicate email was sent (but not confirmed yet)
-        await updateSepaForm({
-          emailConfirmedAt: new Date(),
-          emailConfirmed: false, // Will be updated when user clicks confirmation link
-        });
       } else {
         const errorText = await res.text();
         console.error("API Error:", res.status, errorText);
@@ -258,11 +249,6 @@ function SepaMandatePageInner() {
     }
 
     try {
-      // Update final submission status
-      await updateSepaForm({
-        submittedAt: new Date(),
-        status: "submitted",
-      });
 
       // Call final submission endpoint
       const res = await fetch("/api/final-submission", {
@@ -378,17 +364,13 @@ function SepaMandatePageInner() {
                 type="checkbox"
                 id="confirmationEmail"
                 className="w-5 h-5 accent-[#FF9641]"
-                checked={!!sepaForm.emailConfirmedAt}
+                checked={!!emailConfirmedFromDB}
                 onChange={async (e) => {
                   if (e.target.checked) {
                     handleSendConfirmationEmail();
                   } else {
                     setEmailSent(false);
                     setEmailConfirmedFromDB(false);
-                    await updateSepaForm({
-                      emailConfirmed: false,
-                      emailConfirmedAt: undefined,
-                    });
                   }
                 }}
                 disabled={

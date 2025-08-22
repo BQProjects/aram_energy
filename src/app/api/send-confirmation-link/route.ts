@@ -102,7 +102,7 @@ export async function POST(request: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const sessionId =
       payload.calculationTarif?.sessionId || payload.sessionId || "unknown";
-    const confirmUrl = `${baseUrl}/confirm?id=&sessionId=${sessionId}`;
+    const confirmUrl = `${baseUrl}/confirm?id=${insertedId}&sessionId=${sessionId}`;
 
     // Get formatted application details
     const { calcTarifStr, selectedTariffStr, personalDetailsStr } =

@@ -109,7 +109,12 @@ function PersonalDetailsPageInner() {
               className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
               placeholder={t("personaldetails.namePlaceholder")}
               value={data.name}
-              onChange={(e) => update({ name: e.target.value })}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z ]*$/.test(value) && value.length <= 30) {
+                  update({ name: value });
+                }
+              }}
             />
 
             {/* Surname */}
@@ -119,7 +124,12 @@ function PersonalDetailsPageInner() {
               className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
               placeholder={t("personaldetails.surnamePlaceholder")}
               value={data.surname}
-              onChange={(e) => update({ surname: e.target.value })}
+              onChange={(e) => {
+                const value = e.target.value;
+                if (/^[a-zA-Z ]*$/.test(value) && value.length <= 30) {
+                  update({ surname: value });
+                }
+              }}
             />
 
             {/* Billing address */}
