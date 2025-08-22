@@ -1,36 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useLanguage } from "@/app/contexts/LanguageContext";
-
-interface PersonalDetails {
-  salutation?: string;
-  name?: string;
-  surname?: string;
-  billing?: string;
-  birthDate?: string;
-  email?: string;
-  repeatEmail?: string;
-  phone?: string;
-}
+import { usePersonalDetailsSection } from "@/app/contexts/FormHelpers";
 
 const AddressCard: React.FC = () => {
-  const [personal, setPersonal] = useState<PersonalDetails>({});
+  const { data: personal } = usePersonalDetailsSection();
   const { t } = useLanguage();
-
-  useEffect(() => {
-    // Function to load from localStorage
-    const load = () => {
-      try {
-        const saved = localStorage.getItem("personalDetails");
-        if (saved) {
-          setPersonal(JSON.parse(saved));
-        }
-      } catch {}
-    };
-    load();
-    // Poll every 500ms for changes
-    const interval = setInterval(load, 500);
-    return () => clearInterval(interval);
-  }, []);
 
   return (
     <div className="card_2 flex-shrink-0 w-[21.8125rem] h-[611px] bg-white shadow-[0_1px_5px_0_rgba(45,62,80,0.12)] flex flex-col relative ml-0 p-0">

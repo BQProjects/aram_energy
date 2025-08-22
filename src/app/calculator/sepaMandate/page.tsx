@@ -1,152 +1,213 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 "use client";
-import React, { useState, useEffect, useRef, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState, useEffect, Suspense } from "react";
+import { useRouter } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import Stepper from "../../components/Stepper";
 import SepaCard from "../../components/sepaCard";
 import { useLanguage } from "@/app/contexts/LanguageContext";
+import {
+  useSepaFormSection,
+  useSessionInfo,
+  usePersonalDetailsSection,
+  useCalculationTarifSection,
+  useAddressDetailsSection,
+  useSelectedTariffSection,
+  usePostalOptionsSection,
+} from "@/app/contexts/FormHelpers";
 
 function SepaMandatePageInner() {
-  const searchParams = useSearchParams();
-  const sessionId =
-    searchParams.get("sessionId") ||
-    (typeof window !== "undefined"
-      ? localStorage.getItem("calculationTarifSessionId")
-      : null);
-  const [iban, setIban] = useState("");
-  const [accountHolder, setAccountHolder] = useState("");
-  const [sepaAgreement, setSepaAgreement] = useState(false);
-  const [confirmEmail, setConfirmEmail] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
-  const [emailConfirmed, setEmailConfirmed] = useState(false);
-  const [submitting, setSubmitting] = useState(false);
-  const [error, setError] = useState("");
   const { t } = useLanguage();
   const router = useRouter();
-  const wsRef = useRef<WebSocket | null>(null);
-  const sessionIdRef = useRef<string | null>(null);
+  const { sessionId, isInitialized } = useSessionInfo();
+  const { data: sepaForm, update: updateSepaForm } = useSepaFormSection();
+  const { data: personalDetails } = usePersonalDetailsSection();
+  const { data: calculationTarif } = useCalculationTarifSection();
+  const { data: addressDetails } = useAddressDetailsSection();
+  const { selectedTariff, selectedTariffData } = useSelectedTariffSection();
+  const { data: postalOptions } = usePostalOptionsSection();
+  const [emailSent, setEmailSent] = useState(false);
+  const [submitting, setSubmitting] = useState(false);
+  const [error, setError] = useState("");
+  const [emailConfirmedFromDB, setEmailConfirmedFromDB] = useState(false);
 
   const allValid =
-    iban.trim() &&
-    accountHolder.trim() &&
-    sepaAgreement &&
-    confirmEmail &&
-    emailConfirmed;
+    sepaForm.iban.trim() &&
+    sepaForm.accountHolder.trim() &&
+    sepaForm.sepaAgreement &&
+    emailConfirmedFromDB; // Use the state we manage from DB polling
 
-  // Initialize WebSocket connection for real-time email confirmation
-  // Store sessionId from URL in localStorage if present
+  // Poll MongoDB to check for email confirmation
   useEffect(() => {
-    if (sessionId) {
-      localStorage.setItem("calculationTarifSessionId", sessionId);
-    }
-  }, [sessionId]);
-
-  useEffect(() => {
-    // sessionId is already defined above and kept in sync
-    if (sessionId) {
-      sessionIdRef.current = sessionId;
-
-      // Check session status immediately (fallback for WebSocket)
-      const checkSessionStatus = async () => {
-        try {
-          const response = await fetch(`/api/session?sessionId=${sessionId}`);
-          if (response.ok) {
-            const data = await response.json();
-            if (data.session?.emailConfirmed) {
-              setEmailConfirmed(true);
-              console.log("Email already confirmed (from session check)");
-            }
-          }
-        } catch (error) {
-          console.error("Error checking session status:", error);
-        }
-      };
-
-      checkSessionStatus();
-
-      // Connect to WebSocket server using env variable
-      const wsBase = process.env.NEXT_PUBLIC_WS_URL || "ws://localhost:3012";
-      const ws = new WebSocket(`${wsBase}?sessionId=${sessionId}`);
-      wsRef.current = ws;
-
-      ws.onopen = () => {
-        console.log("WebSocket connected for session:", sessionId);
-      };
-
-      ws.onmessage = (event) => {
-        try {
-          const data = JSON.parse(event.data);
-          console.log("WebSocket message received:", data);
-
-          if (data.type === "email_confirmed" && data.sessionId === sessionId) {
-            setEmailConfirmed(true);
-            setError("");
-            console.log("Email confirmed via WebSocket");
-          } else if (
-            data.type === "email_rejected" &&
-            data.sessionId === sessionId
-          ) {
-            setEmailConfirmed(false);
-            setEmailSent(false);
-            setError(t("sepaMandate.error.emailRejected"));
-            console.log("Email rejected via WebSocket");
-          }
-        } catch (err) {
-          console.error("WebSocket message parse error:", err);
-        }
-      };
-
-      ws.onerror = (error) => {
-        console.error("WebSocket error:", error);
-        // Fallback: check session status if WebSocket fails
-        checkSessionStatus();
-      };
-
-      ws.onclose = () => {
-        console.log("WebSocket disconnected");
-        // Fallback: check session status when WebSocket closes
-        checkSessionStatus();
-      };
+    if (!sessionId || !sepaForm.emailConfirmedAt || emailConfirmedFromDB) {
+      return; // Don't poll if no session, no email sent, or already confirmed
     }
 
-    return () => {
-      if (wsRef.current) {
-        wsRef.current.close();
+    const pollInterval = setInterval(async () => {
+      try {
+        console.log("Checking for email confirmation...");
+        const response = await fetch(`/api/session?id=${sessionId}`);
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Session data from polling:", data.session);
+
+          // Check for email confirmation in the root level
+          if (data.session?.emailConfirmed === true) {
+            console.log("Email confirmed detected from polling!");
+            setEmailConfirmedFromDB(true);
+
+            // Also update the sepaForm context for consistency
+            await updateSepaForm({ emailConfirmed: true });
+          }
+        }
+      } catch (error) {
+        console.error("Error polling for email confirmation:", error);
+      }
+    }, 3000); // Poll every 3 seconds
+
+    return () => clearInterval(pollInterval);
+  }, [
+    sessionId,
+    sepaForm.emailConfirmedAt,
+    emailConfirmedFromDB,
+    updateSepaForm,
+  ]);
+
+  // Check email confirmation status on component mount
+  useEffect(() => {
+    const checkInitialEmailStatus = async () => {
+      if (!sessionId) return;
+
+      try {
+        const response = await fetch(`/api/session?id=${sessionId}`);
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Initial session data:", data.session);
+
+          // Check for email confirmation in the root level
+          if (data.session?.emailConfirmed === true) {
+            console.log("Email already confirmed on mount!");
+            setEmailConfirmedFromDB(true);
+            await updateSepaForm({ emailConfirmed: true });
+          }
+        }
+      } catch (error) {
+        console.error("Error checking initial email status:", error);
       }
     };
-  }, [sessionId, t]);
 
-  // Save SEPA details to localStorage
-  useEffect(() => {
-    const sepaDetails = { iban, accountHolder, sepaAgreement };
-    localStorage.setItem("sepaDetails", JSON.stringify(sepaDetails));
-  }, [iban, accountHolder, sepaAgreement]);
+    if (isInitialized) {
+      checkInitialEmailStatus();
+    }
+  }, [sessionId, isInitialized, updateSepaForm]);
+
+  // Wait for initialization
+  if (!isInitialized) {
+    return (
+      <div className="min-h-screen flex flex-col bg-black">
+        <Header />
+        <main className="flex-1 flex items-center justify-center">
+          <div className="text-white text-xl">Loading...</div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   // Handle sending confirmation email
   const handleSendConfirmationEmail = async () => {
-    if (!iban.trim() || !accountHolder.trim() || !sepaAgreement) {
+    if (
+      !sepaForm.iban.trim() ||
+      !sepaForm.accountHolder.trim() ||
+      !sepaForm.sepaAgreement
+    ) {
       setError(t("sepaMandate.error.fillRequiredFields"));
+      return;
+    }
+
+    // Check if we have email address
+    if (!personalDetails.email) {
+      setError("Email address is required to send confirmation");
       return;
     }
 
     setError("");
 
-    // Gather all data for email preview
-    const calculationTarif = localStorage.getItem("calculationTarif");
-    const personalDetails = localStorage.getItem("personalDetails");
-    const selectedTariff = localStorage.getItem("selectedTariff");
-    const addressDetails = localStorage.getItem("addressDetails");
-    const sessionId = localStorage.getItem("calculationTarifSessionId");
-
+    // Create the payload structure that matches what the API expects
     const payload = {
       sessionId,
-      calculationTarif: calculationTarif ? JSON.parse(calculationTarif) : null,
-      personalDetails: personalDetails ? JSON.parse(personalDetails) : null,
-      selectedTariff: selectedTariff ? JSON.parse(selectedTariff) : null,
-      addressDetails: addressDetails ? JSON.parse(addressDetails) : null,
-      sepaForm: { iban, accountHolder, confirmEmail },
+      calculationTarif: {
+        selected: calculationTarif.selected || "electricity",
+        customerType: calculationTarif.customerType || "private",
+        postalCode: calculationTarif.postalCode || "",
+        annualConsumption: calculationTarif.annualConsumption || "",
+        sessionId,
+      },
+      postalOptions: postalOptions || [],
+      selectedTariff: {
+        selectedTariffId: selectedTariff.selectedTariffId || null,
+        selectedTariffData: {
+          id: selectedTariffData?.id || null,
+          name: selectedTariffData?.name || "",
+          basePrice: selectedTariffData?.basePrice || "",
+          laborPrice: selectedTariffData?.laborPrice || "",
+          typeOfCurrent: selectedTariffData?.typeOfCurrent || "",
+          contractTerm: selectedTariffData?.contractTerm || "",
+          priceGuarantee: selectedTariffData?.priceGuarantee || "",
+          downPayment: selectedTariffData?.downPayment || "",
+          total: selectedTariffData?.total || "",
+        },
+      },
+      selectedTariffData: {
+        id: selectedTariffData?.id || null,
+        name: selectedTariffData?.name || "",
+        basePrice: selectedTariffData?.basePrice || "",
+        laborPrice: selectedTariffData?.laborPrice || "",
+        typeOfCurrent: selectedTariffData?.typeOfCurrent || "",
+        contractTerm: selectedTariffData?.contractTerm || "",
+        priceGuarantee: selectedTariffData?.priceGuarantee || "",
+        downPayment: selectedTariffData?.downPayment || "",
+        total: selectedTariffData?.total || "",
+      },
+      personalDetails: {
+        salutation: personalDetails.salutation || "",
+        name: personalDetails.name || "",
+        surname: personalDetails.surname || "",
+        email: personalDetails.email || "",
+        repeatEmail: personalDetails.repeatEmail || personalDetails.email || "",
+        phone: personalDetails.phone || "",
+        birthDate: personalDetails.birthDate || "",
+        billing: personalDetails.billing || "same",
+      },
+      addressDetails: {
+        postalCode:
+          addressDetails.postalCode || calculationTarif.postalCode || "",
+        location: addressDetails.location || "",
+        street: addressDetails.street || "",
+        houseNumber: addressDetails.houseNumber || "",
+        houseNumberSuffix: addressDetails.houseNumberSuffix || "",
+        desiredStart: addressDetails.desiredStart || "",
+        previousSupplier: addressDetails.previousSupplier || "",
+        previousCustomerNo: addressDetails.previousCustomerNo || "",
+        meterNo: addressDetails.meterNo || "",
+        meterLocationNo: addressDetails.meterLocationNo || "",
+        moveInStatus: addressDetails.moveInStatus || "",
+        billing: addressDetails.billing || personalDetails.billing || "same",
+        billingStreet: addressDetails.billingStreet || "",
+        billingHouseNumber: addressDetails.billingHouseNumber || "",
+        billingHouseNumberSuffix: addressDetails.billingHouseNumberSuffix || "",
+        billingCity: addressDetails.billingCity || "",
+        billingPostal: addressDetails.billingPostal || "",
+        billingCountry: addressDetails.billingCountry || "",
+      },
+      sepaForm: {
+        iban: sepaForm.iban || "",
+        accountHolder: sepaForm.accountHolder || "",
+        sepaAgreement: sepaForm.sepaAgreement || false,
+        emailConfirmed: false,
+        confirmEmail: true,
+      },
       status: "pending_confirmation",
       timestamp: new Date().toISOString(),
     };
@@ -160,56 +221,35 @@ function SepaMandatePageInner() {
 
       if (res.ok) {
         const data = await res.json();
+        console.log("Email sent successfully:", data);
+
         setEmailSent(true);
         alert(t("sepaMandate.confirmationEmailSent"));
 
-        // Store the confirmation ID for checking status
-        if (data.id) {
-          localStorage.setItem("confirmationId", data.id);
-        }
+        // Update the context to indicate email was sent (but not confirmed yet)
+        await updateSepaForm({
+          emailConfirmedAt: new Date(),
+          emailConfirmed: false, // Will be updated when user clicks confirmation link
+        });
       } else {
-        throw new Error(t("sepaMandate.error.emailSendFailed"));
+        const errorText = await res.text();
+        console.error("API Error:", res.status, errorText);
+        throw new Error(
+          `${t("sepaMandate.error.emailSendFailed")} (${res.status})`
+        );
       }
     } catch (err: any) {
+      console.error("Send confirmation error:", err);
       setError(err.message || t("sepaMandate.error.emailSendFailed"));
-    }
-  };
-
-  const handleSaveSepaDetails = async () => {
-    const sessionId = localStorage.getItem("calculationTarifSessionId");
-
-    if (!sessionId) {
-      console.error("Session ID not found in localStorage.");
-      return;
-    }
-
-    const sepaDetails = { iban, accountHolder, sepaAgreement };
-
-    try {
-      const res = await fetch("/api/session", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId, sepaDetails }),
-      });
-
-      if (!res.ok) {
-        throw new Error("Failed to save SEPA details to the session.");
-      }
-
-      console.log("SEPA details saved successfully.");
-    } catch (error) {
-      console.error("Error saving SEPA details:", error);
     }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!allValid) return;
+
     setSubmitting(true);
     setError("");
-
-    // Get sessionId
-    const sessionId = localStorage.getItem("calculationTarifSessionId");
 
     if (!sessionId) {
       setError("Session not found. Please restart the process.");
@@ -218,6 +258,12 @@ function SepaMandatePageInner() {
     }
 
     try {
+      // Update final submission status
+      await updateSepaForm({
+        submittedAt: new Date(),
+        status: "submitted",
+      });
+
       // Call final submission endpoint
       const res = await fetch("/api/final-submission", {
         method: "POST",
@@ -230,26 +276,7 @@ function SepaMandatePageInner() {
       const data = await res.json();
 
       if (data.success) {
-        // Clear localStorage only on successful submission
-        localStorage.removeItem("calculationTarif");
-        localStorage.removeItem("personalDetails");
-        localStorage.removeItem("selectedTariff");
-        localStorage.removeItem("addressDetails");
-        localStorage.removeItem("calculationTarifSessionId");
-        localStorage.removeItem("confirmationId");
-
-        // Clear form
-        setIban("");
-        setAccountHolder("");
-        setSepaAgreement(false);
-        setConfirmEmail(false);
-        setEmailSent(false);
-        setEmailConfirmed(false);
-
-        // Show success message
         alert(t("sepaMandate.success"));
-
-        // Redirect to home page
         router.push("/");
       } else {
         throw new Error(
@@ -283,6 +310,7 @@ function SepaMandatePageInner() {
                 </div>
               </div>
             </div>
+
             {/* IBAN field */}
             <div className="flex items-center gap-6 w-[650px]">
               <label className="w-48 text-left text-[#ABAFB1] font-poppins-regular text-xl">
@@ -290,13 +318,14 @@ function SepaMandatePageInner() {
               </label>
               <input
                 type="text"
-                className="flex-1 border-2 border-[#cfd3d4] rounded px-4 py-3  text-white font-poppins text-lg focus:outline-none focus:border-[#FF9641]"
+                className="flex-1 border-2 border-[#cfd3d4] rounded px-4 py-3 text-white font-poppins text-lg focus:outline-none focus:border-[#FF9641]"
                 placeholder={t("sepaMandate.ibanPlaceholder")}
-                value={iban}
-                onChange={(e) => setIban(e.target.value)}
+                value={sepaForm.iban}
+                onChange={(e) => updateSepaForm({ iban: e.target.value })}
                 required
               />
             </div>
+
             {/* Account holder field */}
             <div className="flex items-center gap-6 w-[650px]">
               <label className="w-48 text-left text-[#ABAFB1] font-poppins-regular text-xl">
@@ -306,25 +335,32 @@ function SepaMandatePageInner() {
                 type="text"
                 className="flex-1 border-2 border-[#cfd3d4] rounded px-4 py-3 text-white font-poppins text-lg focus:outline-none focus:border-[#FF9641]"
                 placeholder={t("sepaMandate.accountHolderPlaceholder")}
-                value={accountHolder}
-                onChange={(e) => setAccountHolder(e.target.value)}
+                value={sepaForm.accountHolder}
+                onChange={(e) =>
+                  updateSepaForm({ accountHolder: e.target.value })
+                }
                 required
               />
             </div>
-            {/* Info text */}
-            <div className="flex gap-3 ">
+
+            {/* SEPA Agreement checkbox */}
+            <div className="flex gap-3">
               <input
                 type="checkbox"
                 id="sepaAgreement"
                 className="w-5 h-5 accent-[#FF9641]"
-                checked={sepaAgreement}
-                onChange={(e) => setSepaAgreement(e.target.checked)}
-                disabled={!iban.trim() || !accountHolder.trim()}
+                checked={sepaForm.sepaAgreement}
+                onChange={(e) =>
+                  updateSepaForm({ sepaAgreement: e.target.checked })
+                }
+                disabled={
+                  !sepaForm.iban.trim() || !sepaForm.accountHolder.trim()
+                }
                 required
               />
               <div
                 className={`w-[650px] text-justify font-poppins-regular text-xl leading-relaxed ${
-                  iban.trim() && accountHolder.trim()
+                  sepaForm.iban.trim() && sepaForm.accountHolder.trim()
                     ? "text-[#abafb1]"
                     : "text-[#666]"
                 }`}
@@ -335,49 +371,59 @@ function SepaMandatePageInner() {
                 {t("sepaMandate.sepaInfo")}
               </div>
             </div>
+
             {/* Confirmation email checkbox */}
             <div className="flex items-center gap-3 w-[650px]">
               <input
                 type="checkbox"
                 id="confirmationEmail"
                 className="w-5 h-5 accent-[#FF9641]"
-                checked={confirmEmail}
+                checked={!!sepaForm.emailConfirmedAt}
                 onChange={async (e) => {
-                  setConfirmEmail(e.target.checked);
                   if (e.target.checked) {
-                    await handleSaveSepaDetails();
                     handleSendConfirmationEmail();
                   } else {
                     setEmailSent(false);
-                    setEmailConfirmed(false);
+                    setEmailConfirmedFromDB(false);
+                    await updateSepaForm({
+                      emailConfirmed: false,
+                      emailConfirmedAt: undefined,
+                    });
                   }
                 }}
                 disabled={
-                  !sepaAgreement || !iban.trim() || !accountHolder.trim()
+                  !sepaForm.sepaAgreement ||
+                  !sepaForm.iban.trim() ||
+                  !sepaForm.accountHolder.trim()
                 }
                 required
               />
               <label
                 htmlFor="confirmationEmail"
                 className={`font-poppins-regular text-xl capitalize select-none ${
-                  sepaAgreement && iban.trim() && accountHolder.trim()
+                  sepaForm.sepaAgreement &&
+                  sepaForm.iban.trim() &&
+                  sepaForm.accountHolder.trim()
                     ? "text-[#abafb1]"
                     : "text-[#666]"
                 }`}
               >
                 {t("sepaMandate.confirmEmail")}
               </label>
-              {emailSent && !emailConfirmed && (
+
+              {/* Status indicators - Use our state that polls from DB */}
+              {emailSent && !emailConfirmedFromDB && (
                 <span className="text-yellow-400 text-sm ml-2">
-                  {t("sepaMandate.waitingConfirmation")}
+                  📧 {t("sepaMandate.waitingConfirmation")} (Check your email)
                 </span>
               )}
-              {emailConfirmed && (
+              {emailConfirmedFromDB && (
                 <span className="text-green-400 text-sm ml-2">
-                  {t("sepaMandate.emailConfirmed")}
+                  ✅ {t("sepaMandate.emailConfirmed")}
                 </span>
               )}
             </div>
+
             {/* Payment terms + submit */}
             <div className="flex items-center justify-between gap-8 mt-4 w-[650px]">
               <div className="underline text-[#abafb1] font-['Poppins'] text-sm">

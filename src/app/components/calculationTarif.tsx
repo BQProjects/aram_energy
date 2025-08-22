@@ -2,85 +2,38 @@ import Image from "next/image";
 import { useState, useEffect, useRef } from "react";
 import { useRouter } from "next/navigation";
 import { useLanguage } from "../contexts/LanguageContext";
+import {
+  useCalculationTarifSection,
+  usePostalOptionsSection,
+  useSessionInfo,
+} from "../contexts/FormHelpers";
 
 export default function CalculationTarif() {
   const { t } = useLanguage();
   const router = useRouter();
-  const [selected, setSelected] = useState("electricity");
-  const [customerType, setCustomerType] = useState("private");
-  const [postalCode, setPostalCode] = useState("");
-  const [postalOptions, setPostalOptions] = useState<
-    { plz: string; district?: string; division: string; type: string }[]
-  >([]);
-  const [annualConsumption, setAnnualConsumption] = useState("");
+  const { data, update } = useCalculationTarifSection();
+  const { data: postalOptions, update: updatePostalOptions } =
+    usePostalOptionsSection();
+  const { sessionId, isInitialized } = useSessionInfo();
   const [error, setError] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
-  const [sessionId, setSessionId] = useState<string | null>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Restore from localStorage and MongoDB on mount
+  // Fetch postal codes when user types
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem("calculationTarif");
-      if (saved) {
-        const data = JSON.parse(saved);
-        if (data.selected) setSelected(data.selected);
-        if (data.customerType) setCustomerType(data.customerType);
-        if (data.postalCode) setPostalCode(data.postalCode);
-        if (data.annualConsumption)
-          setAnnualConsumption(data.annualConsumption);
-        if (Array.isArray(data.postalOptions))
-          setPostalOptions(data.postalOptions);
-      }
-      const storedSessionId = localStorage.getItem("calculationTarifSessionId");
-      if (storedSessionId) {
-        setSessionId(storedSessionId);
-        // Fetch session data from backend
-        fetch(`/api/session?sessionId=${storedSessionId}`)
-          .then((res) => res.json())
-          .then((data) => {
-            if (data && data.session) {
-              const s = data.session;
-              if (s.selected) setSelected(s.selected);
-              if (s.customerType) setCustomerType(s.customerType);
-              if (s.postalCode) setPostalCode(s.postalCode);
-              if (s.annualConsumption)
-                setAnnualConsumption(s.annualConsumption);
-              if (Array.isArray(s.postalOptions))
-                setPostalOptions(s.postalOptions);
-            }
-          });
-      }
-    } catch {}
-  }, []);
-
-  // Store to localStorage on change
-  useEffect(() => {
-    const data = {
-      selected,
-      customerType,
-      postalCode,
-      annualConsumption,
-      postalOptions,
-    };
-    try {
-      localStorage.setItem("calculationTarif", JSON.stringify(data));
-    } catch {}
-  }, [selected, customerType, postalCode, annualConsumption, postalOptions]);
-
-  useEffect(() => {
-    if (postalCode.length < 2) {
-      setPostalOptions([]);
+    if (data.postalCode.length < 2) {
+      updatePostalOptions([]);
       return;
     }
     const fetchPostalCodes = async () => {
-      const res = await fetch(`/api/postal-codes?q=${postalCode}`);
-      const data = await res.json();
-      setPostalOptions(data);
+      const res = await fetch(`/api/postal-codes?q=${data.postalCode}`);
+      const postalData = await res.json();
+      updatePostalOptions(postalData);
     };
     fetchPostalCodes();
-  }, [postalCode]);
+  }, [data.postalCode, updatePostalOptions]);
 
+  // Handle dropdown click outside
   useEffect(() => {
     function handleClick(e: MouseEvent) {
       if (
@@ -94,6 +47,15 @@ export default function CalculationTarif() {
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
+  // Wait for initialization
+  if (!isInitialized) {
+    return (
+      <div className="mt-4 sm:mt-6 md:mt-8 flex items-center justify-center w-full max-w-[1070px] pb-8 bg-black/50 text-white">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
+      </div>
+    );
+  }
+
   return (
     <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col items-center justify-start w-full max-w-[1070px] pb-8 sm:pb-10 px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 bg-black/50 text-white font-poppins text-sm sm:text-base font-normal">
       {/* Top selection box */}
@@ -101,12 +63,12 @@ export default function CalculationTarif() {
         {/* Electricity Button */}
         <button
           className={`flex items-center justify-center w-full h-12 sm:h-12 min-h-[48px] min-w-[120px] font-poppins-regular text-base  transition-colors duration-300 ease-in-out px-4 ${
-            selected === "electricity"
+            data.selected === "electricity"
               ? "bg-[#FF9641] text-white"
               : "bg-transparent text-white hover:bg-white/10"
           }`}
           style={{ minWidth: 0 }}
-          onClick={() => setSelected("electricity")}
+          onClick={() => update({ selected: "electricity" })}
         >
           <Image
             src="/zap.svg"
@@ -122,12 +84,12 @@ export default function CalculationTarif() {
         {/* Gas Button */}
         <button
           className={`flex items-center justify-center w-full h-12 sm:h-12 min-h-[48px] min-w-[120px] font-poppins-regular text-base transition-colors duration-300 ease-in-out px-4 ${
-            selected === "gas"
+            data.selected === "gas"
               ? "bg-[#FF9641] text-white"
               : "bg-transparent text-white hover:bg-white/10"
           }`}
           style={{ minWidth: 0 }}
-          onClick={() => setSelected("gas")}
+          onClick={() => update({ selected: "gas" })}
         >
           <Image
             src="/gas.svg"
@@ -175,7 +137,10 @@ export default function CalculationTarif() {
         <div
           className="flex items-center w-[50px] sm:w-[65px] h-[28px] sm:h-[30px] rounded-full cursor-pointer transition-colors duration-300 bg-[#FF9641]"
           onClick={() =>
-            setCustomerType(customerType === "private" ? "company" : "private")
+            update({
+              customerType:
+                data.customerType === "private" ? "company" : "private",
+            })
           }
         >
           <div className="relative w-full h-full px-1 flex items-center">
@@ -183,7 +148,7 @@ export default function CalculationTarif() {
               className={`absolute left-1 top-1 w-[18px] sm:w-[22px] h-[18px] sm:h-[22px] bg-white rounded-full shadow transition-transform duration-300 ease-in-out`}
               style={{
                 transform:
-                  customerType === "private"
+                  data.customerType === "private"
                     ? "translateX(0)"
                     : "translateX(32px)", // slightly less for mobile
                 boxShadow: "0 2px 8px 0 rgba(0,0,0,0.10)",
@@ -226,9 +191,9 @@ export default function CalculationTarif() {
             <input
               id="postalCode"
               type="text"
-              value={postalCode}
+              value={data.postalCode}
               onChange={(e) => {
-                setPostalCode(e.target.value);
+                update({ postalCode: e.target.value });
                 setShowDropdown(true);
               }}
               placeholder={t("calculation.zipCodePlaceholder")}
@@ -253,7 +218,7 @@ export default function CalculationTarif() {
                     key={option.plz + option.division + (option.district || "")}
                     className="px-4 py-2 cursor-pointer hover:bg-gray-100 text-black"
                     onClick={() => {
-                      setPostalCode(option.plz);
+                      update({ postalCode: option.plz });
                       setShowDropdown(false);
                     }}
                   >
@@ -286,8 +251,8 @@ export default function CalculationTarif() {
           <input
             id="annualConsumption"
             type="text"
-            value={annualConsumption}
-            onChange={(e) => setAnnualConsumption(e.target.value)}
+            value={data.annualConsumption}
+            onChange={(e) => update({ annualConsumption: e.target.value })}
             placeholder={t("calculation.consumptionPlaceholder")}
             className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
@@ -331,44 +296,15 @@ export default function CalculationTarif() {
           <button
             className="w-full h-[48px] sm:w-[300px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-light text-base shadow-lg relative overflow-hidden group transition-colors duration-300"
             onClick={async () => {
-              if (!annualConsumption.trim() || !postalCode.trim()) {
+              if (!data.annualConsumption.trim() || !data.postalCode.trim()) {
                 setError(t("calculation.validationError"));
                 return;
               }
               setError("");
-              // Generate sessionId if not present
-              let sid = sessionId;
-              if (!sid) {
-                // Generate a MongoDB ObjectId in JS (not cryptographically secure, but fine for session)
-                const hex = () =>
-                  Math.floor(Math.random() * 0xffffff)
-                    .toString(16)
-                    .padStart(6, "0");
-                sid = `${Date.now().toString(16)}${hex()}${hex()}`.slice(0, 24);
-                setSessionId(sid);
-                localStorage.setItem("calculationTarifSessionId", sid);
-              }
 
-              // Save session data to backend
-              try {
-                await fetch("/api/session", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    sessionId: sid,
-                    selected,
-                    customerType,
-                    postalCode,
-                    annualConsumption,
-                    postalOptions,
-                  }),
-                });
-              } catch {
-                // Optionally handle error
-              }
-
+              // Navigate to next step with session ID in URL
               const params = new URLSearchParams({
-                sessionId: sid,
+                id: sessionId || "",
               });
               router.push(`/calculator/selectoption?${params.toString()}`);
             }}

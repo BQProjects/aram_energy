@@ -1,6 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import {
+  useSelectedTariffSection,
+  useSessionInfo,
+} from "@/app/contexts/FormHelpers";
 
 interface SelectPowerProps {
   t?: (key: string) => string;
@@ -9,76 +13,25 @@ interface SelectPowerProps {
 const SelectPower: React.FC<SelectPowerProps> = ({ t }) => {
   const router = useRouter();
   const searchParams = useSearchParams();
-  // You can extract any needed params here if you want to pass them forward
+  const { selectedTariff, updateSelectedTariff, updateSelectedTariffData } =
+    useSelectedTariffSection();
+  const { sessionId } = useSessionInfo();
+
   const handleSelect = async () => {
-    // Save selected tariff to session in MongoDB if sessionId exists
-    const sessionId =
-      typeof window !== "undefined"
-        ? localStorage.getItem("calculationTarifSessionId")
-        : null;
-    if (sessionId && selectedTariff) {
-      try {
-        await fetch("/api/session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            sessionId,
-            selectedTariff,
-            selectedTariffData: tariffs.find((t) => t.id === selectedTariff),
-          }),
-        });
-      } catch {}
+    // Navigate to next step with session ID
+    const params = new URLSearchParams(searchParams);
+    if (sessionId) {
+      params.set("id", sessionId);
     }
-    // Go to next step, pass along params if needed
-    router.push("/calculator/personaldetails?" + searchParams.toString());
+    router.push(`/calculator/personaldetails?${params.toString()}`);
   };
 
-  const [selectedTariff, setSelectedTariff] = useState<number | null>(null);
-
-  // Restore selectedTariff from session/localStorage on mount
-  React.useEffect(() => {
-    // Try to restore from MongoDB session first
-    const sessionId =
-      typeof window !== "undefined"
-        ? localStorage.getItem("calculationTarifSessionId")
-        : null;
-    if (sessionId) {
-      fetch(`/api/session?sessionId=${sessionId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (data && data.session && data.session.selectedTariff) {
-            setSelectedTariff(data.session.selectedTariff);
-            return;
-          }
-          // fallback to localStorage
-          const stored = localStorage.getItem("selectedTariff");
-          if (stored) {
-            try {
-              const tariff = JSON.parse(stored);
-              if (tariff && tariff.id) setSelectedTariff(tariff.id);
-            } catch {}
-          }
-        });
-    } else {
-      // fallback to localStorage
-      const stored = localStorage.getItem("selectedTariff");
-      if (stored) {
-        try {
-          const tariff = JSON.parse(stored);
-          if (tariff && tariff.id) setSelectedTariff(tariff.id);
-        } catch {}
-      }
-    }
-  }, []);
-
-  // Store selected tariff in localStorage
+  // Handle tariff selection
   const handleTariffSelect = (id: number) => {
-    setSelectedTariff(id);
     const tariff = tariffs.find((t) => t.id === id);
     if (tariff) {
-      try {
-        localStorage.setItem("selectedTariff", JSON.stringify(tariff));
-      } catch {}
+      updateSelectedTariff({ selectedTariffId: id });
+      updateSelectedTariffData(tariff);
     }
   };
 
@@ -125,7 +78,11 @@ const SelectPower: React.FC<SelectPowerProps> = ({ t }) => {
           >
             <path
               d="M17 23.375C18.6908 23.375 20.3123 22.7034 21.5078 21.5078C22.7034 20.3123 23.375 18.6908 23.375 17C23.375 15.3092 22.7034 13.6877 21.5078 12.4922C20.3123 11.2966 18.6908 10.625 17 10.625C15.3092 10.625 13.6877 11.2966 12.4922 12.4922C11.2966 13.6877 10.625 15.3092 10.625 17C10.625 18.6908 11.2966 20.3123 12.4922 21.5078C13.6877 22.7034 15.3092 23.375 17 23.375ZM17 4.25C15.3256 4.25 13.6677 4.57979 12.1208 5.22054C10.5739 5.86128 9.16834 6.80044 7.98439 7.98439C6.80044 9.16834 5.86128 10.5739 5.22054 12.1208C4.57979 13.6677 4.25 15.3256 4.25 17C4.25 18.6744 4.57979 20.3323 5.22054 21.8792C5.86128 23.4261 6.80044 24.8317 7.98439 26.0156C9.16834 27.1996 10.5739 28.1387 12.1208 28.7795C13.6677 29.4202 15.3256 29.75 17 29.75C20.3815 29.75 23.6245 28.4067 26.0156 26.0156C28.4067 23.6245 29.75 20.3815 29.75 17C29.75 13.6185 28.4067 10.3755 26.0156 7.98439C23.6245 5.5933 20.3815 4.25 17 4.25ZM6.375 17C6.375 14.1821 7.49442 11.4796 9.48699 9.48699C11.4796 7.49442 14.1821 6.375 17 6.375C19.8179 6.375 22.5204 7.49442 24.513 9.48699C26.5056 11.4796 27.625 14.1821 27.625 17C27.625 19.8179 26.5056 22.5204 24.513 24.513C22.5204 26.5056 19.8179 27.625 17 27.625C14.1821 27.625 11.4796 26.5056 9.48699 24.513C7.49442 22.5204 6.375 19.8179 6.375 17Z"
-              fill={selectedTariff === tariff.id ? "#FF9641" : "#E5E7EB"}
+              fill={
+                selectedTariff.selectedTariffId === tariff.id
+                  ? "#FF9641"
+                  : "#E5E7EB"
+              }
             />
           </svg>
 

@@ -10,13 +10,17 @@ const resend = new Resend(process.env.RESEND_API_KEY);
 function formatApplicationDetails({
   calculationTarif,
   selectedTariff,
+  selectedTariffData,
   personalDetails,
   addressDetails,
+  postalOptions,
 }: {
   calculationTarif?: any;
   selectedTariff?: any;
+  selectedTariffData?: any;
   personalDetails?: any;
   addressDetails?: any;
+  postalOptions?: any;
 }) {
   // Helper to format calculationTarif
   const calc = calculationTarif || {};
@@ -25,29 +29,31 @@ Customer Type: ${calc.customerType || "-"}<br/>
 Postal Code: ${calc.postalCode || "-"}<br/>
 Annual Consumption: ${calc.annualConsumption || "-"}<br/>
 Postal Options: ${
-    calc.postalOptions &&
-    Array.isArray(calc.postalOptions) &&
-    calc.postalOptions.length > 0
-      ? calc.postalOptions
+    postalOptions && Array.isArray(postalOptions) && postalOptions.length > 0
+      ? postalOptions
           .map(
             (opt: any) =>
               `&nbsp;&nbsp;- PLZ: ${opt.plz || "-"}, District: ${
                 opt.district || "-"
-              }`
+              }, Division: ${opt.division || "-"}`
           )
           .join("<br/>")
       : "-"
   }`;
 
-  // Helper to format selectedTariff
-  const sel = selectedTariff || {};
-  const selectedTariffStr = `Base Price: ${sel.basePrice || "-"}<br/>
-Labor Price: ${sel.laborPrice || "-"}<br/>
-Type of Current: ${sel.typeOfCurrent || "-"}<br/>
-Contract Term: ${sel.contractTerm || "-"}<br/>
-Price Guarantee: ${sel.priceGuarantee || "-"}<br/>
-Down Payment: ${sel.downPayment || "-"}<br/>
-Total: ${sel.total || "-"}`;
+  // Helper to format selectedTariff - Look for data in both possible locations
+  const tariffData =
+    selectedTariffData ||
+    selectedTariff?.selectedTariffData ||
+    selectedTariff ||
+    {};
+  const selectedTariffStr = `Base Price: ${tariffData.basePrice || "-"}<br/>
+Labor Price: ${tariffData.laborPrice || "-"}<br/>
+Type of Current: ${tariffData.typeOfCurrent || "-"}<br/>
+Contract Term: ${tariffData.contractTerm || "-"}<br/>
+Price Guarantee: ${tariffData.priceGuarantee || "-"}<br/>
+Down Payment: ${tariffData.downPayment || "-"}<br/>
+Total: ${tariffData.total || "-"}`;
 
   const personalDetailsStr = `Name: ${personalDetails?.name || "-"}<br/>
 Surname: ${personalDetails?.surname || "-"}<br/>
@@ -96,15 +102,17 @@ export async function POST(request: NextRequest) {
     const baseUrl = process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000";
     const sessionId =
       payload.calculationTarif?.sessionId || payload.sessionId || "unknown";
-    const confirmUrl = `${baseUrl}/confirm?id=${insertedId}&sessionId=${sessionId}`;
+    const confirmUrl = `${baseUrl}/confirm?id=&sessionId=${sessionId}`;
 
     // Get formatted application details
     const { calcTarifStr, selectedTariffStr, personalDetailsStr } =
       formatApplicationDetails({
         calculationTarif: payload.calculationTarif,
         selectedTariff: payload.selectedTariff,
+        selectedTariffData: payload.selectedTariffData,
         personalDetails: payload.personalDetails,
         addressDetails: payload.addressDetails,
+        postalOptions: payload.postalOptions,
       });
 
     // Professional email template with detailed information

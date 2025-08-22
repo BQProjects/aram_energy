@@ -1,217 +1,64 @@
 "use client";
-import React, { useState, useEffect, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import React, { useState, Suspense } from "react";
+import { useRouter } from "next/navigation";
 import Header from "../../components/header";
 import Footer from "../../components/footer";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 import Stepper from "@/app/components/Stepper";
 import { useLanguage } from "@/app/contexts/LanguageContext";
+import {
+  usePersonalDetailsSection,
+  useSessionInfo,
+} from "@/app/contexts/FormHelpers";
 
 function PersonalDetailsPageInner() {
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const sessionId =
-    searchParams.get("sessionId") ||
-    (typeof window !== "undefined"
-      ? localStorage.getItem("calculationTarifSessionId")
-      : null);
   const { t } = useLanguage();
-  const [phone, setPhone] = useState("");
-  const [salutation, setSalutation] = useState("");
-  const [name, setName] = useState("");
-  const [surname, setSurname] = useState("");
-  const [billing, setBilling] = useState<"same" | "different">();
-  const [birthDate, setBirthDate] = useState("");
-  const [email, setEmail] = useState("");
-  const [repeatEmail, setRepeatEmail] = useState("");
+  const { data, update } = usePersonalDetailsSection();
+  const { sessionId, loading, isInitialized } = useSessionInfo();
   const [error, setError] = useState("");
 
-  // Store sessionId from URL in localStorage if present
-  useEffect(() => {
-    if (sessionId) {
-      localStorage.setItem("calculationTarifSessionId", sessionId);
-    }
-  }, [sessionId]);
-
-  // Restore from MongoDB session or localStorage on mount, only if data is valid
-  useEffect(() => {
-    const sessionId =
-      typeof window !== "undefined"
-        ? localStorage.getItem("calculationTarifSessionId")
-        : null;
-    const didSet = { current: false };
-    type PersonalDetails = {
-      salutation?: string;
-      name?: string;
-      surname?: string;
-      billing?: string;
-      birthDate?: string;
-      email?: string;
-      repeatEmail?: string;
-      phone?: string;
-    };
-    function isValid(data: PersonalDetails) {
-      // At least one field must be non-empty
-      if (!data) return false;
-      return (
-        data.salutation ||
-        data.name ||
-        data.surname ||
-        data.billing ||
-        data.birthDate ||
-        data.email ||
-        data.repeatEmail ||
-        data.phone
-      );
-    }
-    if (sessionId) {
-      fetch(`/api/session?sessionId=${sessionId}`)
-        .then((res) => res.json())
-        .then((data) => {
-          if (
-            data &&
-            data.session &&
-            data.session.personalDetails &&
-            isValid(data.session.personalDetails)
-          ) {
-            const pd = data.session.personalDetails;
-            setSalutation(pd.salutation || "");
-            setName(pd.name || "");
-            setSurname(pd.surname || "");
-            setBilling(pd.billing);
-            setBirthDate(pd.birthDate || "");
-            setEmail(pd.email || "");
-            setRepeatEmail(pd.repeatEmail || "");
-            setPhone(pd.phone || "");
-            didSet.current = true;
-            console.log("[Restore] Loaded from MongoDB session", pd);
-          }
-        })
-        .finally(() => {
-          if (!didSet.current) {
-            try {
-              const saved = localStorage.getItem("personalDetails");
-              if (saved) {
-                const data = JSON.parse(saved);
-                if (isValid(data)) {
-                  setSalutation(data.salutation || "");
-                  setName(data.name || "");
-                  setSurname(data.surname || "");
-                  setBilling(data.billing);
-                  setBirthDate(data.birthDate || "");
-                  setEmail(data.email || "");
-                  setRepeatEmail(data.repeatEmail || "");
-                  setPhone(data.phone || "");
-                  console.log("[Restore] Loaded from localStorage", data);
-                }
-              }
-            } catch {}
-          }
-        });
-    } else {
-      try {
-        const saved = localStorage.getItem("personalDetails");
-        if (saved) {
-          const data = JSON.parse(saved);
-          if (isValid(data)) {
-            setSalutation(data.salutation || "");
-            setName(data.name || "");
-            setSurname(data.surname || "");
-            setBilling(data.billing);
-            setBirthDate(data.birthDate || "");
-            setEmail(data.email || "");
-            setRepeatEmail(data.repeatEmail || "");
-            setPhone(data.phone || "");
-            console.log(
-              "[Restore] Loaded from localStorage (no session)",
-              data
-            );
-          }
-        }
-      } catch {}
-    }
-  }, []);
-
-  // Store to localStorage on change (do NOT update MongoDB session here)
-  useEffect(() => {
-    const data = {
-      salutation,
-      name,
-      surname,
-      billing,
-      birthDate,
-      email,
-      repeatEmail,
-      phone,
-    };
-    // Only save if at least one field is non-empty
-    const isValid = Object.values(data).some((v) => v && v !== "");
-    if (isValid) {
-      try {
-        localStorage.setItem("personalDetails", JSON.stringify(data));
-        console.log("[Save] Saved to localStorage", data);
-      } catch {}
-    }
-  }, [
-    salutation,
-    name,
-    surname,
-    billing,
-    birthDate,
-    email,
-    repeatEmail,
-    phone,
-  ]);
+  // Show loading state while initializing
+  if (!isInitialized || loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-black">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-500 mx-auto"></div>
+          <p className="mt-4 text-white">Loading session data...</p>
+        </div>
+      </div>
+    );
+  }
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    // Validation
     if (
-      !salutation ||
-      !name ||
-      !surname ||
-      !birthDate ||
-      !email ||
-      !repeatEmail ||
-      !phone
+      !data.salutation ||
+      !data.name ||
+      !data.surname ||
+      !data.birthDate ||
+      !data.email ||
+      !data.repeatEmail ||
+      !data.phone ||
+      !data.billing
     ) {
-      setError(t("personaldetails.error.required"));
+      setError(t("personaldetails.error.fillAllFields"));
       return;
     }
-    if (email !== repeatEmail) {
-      setError(t("personaldetails.error.emailMatch"));
+
+    if (data.email !== data.repeatEmail) {
+      setError(t("personaldetails.error.emailMismatch"));
       return;
     }
+
     setError("");
-    // Save to MongoDB session if sessionId exists
-    const sessionId =
-      typeof window !== "undefined"
-        ? localStorage.getItem("calculationTarifSessionId")
-        : null;
+
+    // Navigate to next step with session ID
     if (sessionId) {
-      try {
-        await fetch("/api/session", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            sessionId,
-            personalDetails: {
-              salutation,
-              name,
-              surname,
-              billing,
-              birthDate,
-              email,
-              repeatEmail,
-              phone,
-            },
-          }),
-        });
-      } catch {}
-    }
-    // Always pass sessionId in URL
-    if (sessionId) {
-      router.push(`/calculator/Addressdetails?sessionId=${sessionId}`);
+      router.push(`/calculator/Addressdetails?id=${sessionId}`);
     } else {
       router.push("/calculator/Addressdetails");
     }
@@ -241,8 +88,8 @@ function PersonalDetailsPageInner() {
                 MozAppearance: "none",
                 appearance: "none",
               }}
-              value={salutation}
-              onChange={(e) => setSalutation(e.target.value)}
+              value={data.salutation}
+              onChange={(e) => update({ salutation: e.target.value })}
             >
               <option value="">
                 {t("personaldetails.salutationPlaceholder")}
@@ -261,8 +108,8 @@ function PersonalDetailsPageInner() {
               type="text"
               className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
               placeholder={t("personaldetails.namePlaceholder")}
-              value={name}
-              onChange={(e) => setName(e.target.value)}
+              value={data.name}
+              onChange={(e) => update({ name: e.target.value })}
             />
 
             {/* Surname */}
@@ -271,8 +118,8 @@ function PersonalDetailsPageInner() {
               type="text"
               className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
               placeholder={t("personaldetails.surnamePlaceholder")}
-              value={surname}
-              onChange={(e) => setSurname(e.target.value)}
+              value={data.surname}
+              onChange={(e) => update({ surname: e.target.value })}
             />
 
             {/* Billing address */}
@@ -285,8 +132,8 @@ function PersonalDetailsPageInner() {
                   type="radio"
                   name="billing"
                   className="accent-[#FF9641] w-5 h-5"
-                  checked={billing === "same"}
-                  onChange={() => setBilling("same")}
+                  checked={data.billing === "same"}
+                  onChange={() => update({ billing: "same" })}
                 />
                 <span>{t("personaldetails.billingSame")}</span>
               </label>
@@ -295,8 +142,8 @@ function PersonalDetailsPageInner() {
                   type="radio"
                   name="billing"
                   className="accent-[#FF9641] w-5 h-5"
-                  checked={billing === "different"}
-                  onChange={() => setBilling("different")}
+                  checked={data.billing === "different"}
+                  onChange={() => update({ billing: "different" })}
                 />
                 <span>{t("personaldetails.billingDifferent")}</span>
               </label>
@@ -315,8 +162,8 @@ function PersonalDetailsPageInner() {
                   MozAppearance: "none",
                   appearance: "none",
                 }}
-                value={birthDate}
-                onChange={(e) => setBirthDate(e.target.value)}
+                value={data.birthDate}
+                onChange={(e) => update({ birthDate: e.target.value })}
               />
               <span className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
                 <svg
@@ -348,8 +195,8 @@ function PersonalDetailsPageInner() {
               type="email"
               className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
               placeholder={t("personaldetails.emailPlaceholder")}
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
+              value={data.email}
+              onChange={(e) => update({ email: e.target.value })}
             />
 
             {/* Repeat Email */}
@@ -360,8 +207,8 @@ function PersonalDetailsPageInner() {
               type="email"
               className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
               placeholder={t("personaldetails.repeatEmailPlaceholder")}
-              value={repeatEmail}
-              onChange={(e) => setRepeatEmail(e.target.value)}
+              value={data.repeatEmail}
+              onChange={(e) => update({ repeatEmail: e.target.value })}
             />
 
             {/* Phone */}
@@ -371,8 +218,8 @@ function PersonalDetailsPageInner() {
             <div className="max-w-[340px] col-span-1">
               <PhoneInput
                 country={"de"}
-                value={phone}
-                onChange={setPhone}
+                value={data.phone}
+                onChange={(phone) => update({ phone })}
                 inputClass="!w-full !bg-transparent text-lg font-poppins-regular !text-[#FF9641] !px-4 !py-3 !pl-14 focus:!border-[#FF9641] !transition-all !h-[52px]"
                 buttonClass="!bg-black !flex !items-center !justify-center transition-colors !h-[52px]"
                 dropdownClass="!bg-black !text-white !rounded-lg !mt-2 !shadow-lg !z-50"

@@ -2,53 +2,13 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId, Filter, Document } from "mongodb";
-import { Resend } from "resend";
-
-const resend = new Resend(process.env.RESEND_API_KEY);
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@example.com";
-const COMPANY_EMAILS = [
-  process.env.COMPANY_EMAIL_1 || "company1@example.com",
-  process.env.COMPANY_EMAIL_2 || "company2@example.com",
-];
-
-// Handle WebSocket notifications for email confirmation
-async function notifyWebSocketClients(
-  sessionId: string,
-  type: string,
-  action: string
-) {
-  try {
-    // Directly notify the WebSocket server
-    const wsNotifyUrl =
-      process.env.WS_NOTIFY_URL || "http://localhost:3012/notify";
-    const wsResponse = await fetch(wsNotifyUrl, {
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        sessionId,
-        type,
-        action,
-        timestamp: new Date().toISOString(),
-      }),
-    });
-
-    if (!wsResponse.ok) {
-      console.error("Failed to notify WebSocket clients");
-    } else {
-      console.log(
-        `WebSocket notification sent: ${type} for session ${sessionId}`
-      );
-    }
-  } catch (wsError) {
-    console.error("WebSocket notification error:", wsError);
-  }
-}
 
 async function updateSessionEmailStatus(sessionId: string, confirmed: boolean) {
   try {
     const client = await clientPromise;
     const db = client.db();
 
-    // Handle both ObjectId and string session IDs (like your 23-character string)
+    // Handle both ObjectId and string session IDs
     let updateQuery: { _id: ObjectId } | { _id: string };
     if (ObjectId.isValid(sessionId)) {
       updateQuery = { _id: new ObjectId(sessionId) };
@@ -56,18 +16,17 @@ async function updateSessionEmailStatus(sessionId: string, confirmed: boolean) {
       updateQuery = { _id: sessionId };
     }
 
-    const result = await db.collection("sessions").updateOne(
-      updateQuery as Filter<Document>, // Type assertion here
-      {
+    const result = await db
+      .collection("sessions")
+      .updateOne(updateQuery as Filter<Document>, {
         $set: {
           emailConfirmed: confirmed,
           emailConfirmedAt: new Date(),
         },
-      }
-    );
+      });
 
     console.log(
-      "Update result:",
+      "Email confirmation update result:",
       result.matchedCount,
       "matched,",
       result.modifiedCount,
@@ -76,9 +35,51 @@ async function updateSessionEmailStatus(sessionId: string, confirmed: boolean) {
 
     if (result.matchedCount === 0) {
       console.error("No session found with ID:", sessionId);
+      return false;
     }
+    return true;
   } catch (error) {
     console.error("Error updating session email status:", error);
+    return false;
+  }
+}
+
+// Handle POST requests from the confirm page
+export async function POST(request: NextRequest) {
+  try {
+    const body = await request.json();
+    const { sessionId, action, id } = body;
+
+    console.log("POST Email confirmation - sessionId:", sessionId, "action:", action, "id:", id);
+
+    if (!sessionId || !action) {
+      return NextResponse.json(
+        { success: false, message: "Missing session ID or action parameter." },
+        { status: 400 }
+      );
+    }
+
+    // Update session with email confirmation status
+    const updateSuccess = await updateSessionEmailStatus(sessionId, action === "confirm");
+
+    if (updateSuccess) {
+      return NextResponse.json({
+        success: true,
+        message: action === "confirm" ? "Email confirmed successfully!" : "Email confirmation rejected",
+        confirmed: action === "confirm"
+      });
+    } else {
+      return NextResponse.json(
+        { success: false, message: "Failed to update session status" },
+        { status: 500 }
+      );
+    }
+  } catch (error) {
+    console.error("Error in POST confirm-action:", error);
+    return NextResponse.json(
+      { success: false, message: "An error occurred while processing your request." },
+      { status: 500 }
+    );
   }
 }
 
@@ -89,12 +90,7 @@ export async function GET(request: NextRequest) {
     const sessionId = searchParams.get("sessionId");
     const action = searchParams.get("action");
 
-    console.log(
-      "GET confirm-action - sessionId:",
-      sessionId,
-      "action:",
-      action
-    );
+    console.log("Email confirmation - sessionId:", sessionId, "action:", action);
 
     if (!sessionId || !action) {
       const htmlResponse = `
@@ -122,14 +118,7 @@ export async function GET(request: NextRequest) {
     }
 
     // Update session with email confirmation status
-    await updateSessionEmailStatus(sessionId, action === "confirm");
-
-    // Notify WebSocket clients about the confirmation
-    await notifyWebSocketClients(
-      sessionId,
-      action === "confirm" ? "email_confirmed" : "email_rejected",
-      action
-    );
+    const updateSuccess = await updateSessionEmailStatus(sessionId, action === "confirm");
 
     // Return success page
     const htmlResponse = `
@@ -162,13 +151,15 @@ export async function GET(request: NextRequest) {
               <p>
                 ${
                   action === "confirm"
-                    ? "Your email has been confirmed successfully! You can now proceed with the final submission on the form."
+                    ? updateSuccess 
+                      ? "Your email has been confirmed successfully! You can now go back to the form to complete your submission."
+                      : "Email confirmed, but there was an issue updating your session. Please try again."
                     : "Your email confirmation was rejected. Please go back to the form to make changes."
                 }
               </p>
               <a href="${
                 process.env.NEXT_PUBLIC_APP_URL || "http://localhost:3000"
-              }/calculator/sepaMandate" class="btn">← Back to Form</a>
+              }/calculator/sepaMandate?id=${sessionId}" class="btn">← Back to Form</a>
             </div>
           </div>
         </body>
@@ -203,104 +194,5 @@ export async function GET(request: NextRequest) {
     return new NextResponse(htmlResponse, {
       headers: { "Content-Type": "text/html" },
     });
-  }
-}
-
-export async function POST(req: NextRequest) {
-  try {
-    const body = await req.json();
-    const { id, action, sessionId } = body;
-
-    console.log(
-      "POST confirm-action - id:",
-      id,
-      "action:",
-      action,
-      "sessionId:",
-      sessionId
-    );
-
-    if (!id || !action) {
-      return NextResponse.json(
-        { success: false, message: "ID and action are required" },
-        { status: 400 }
-      );
-    }
-
-    const client = await clientPromise;
-    const db = client.db();
-
-    // Find the pending confirmation
-    const pendingConfirmation = await db
-      .collection("pending_confirmations")
-      .findOne({ _id: new ObjectId(id) });
-
-    if (!pendingConfirmation) {
-      return NextResponse.json(
-        { success: false, message: "Invalid or expired confirmation" },
-        { status: 404 }
-      );
-    }
-
-    // Check if confirmation has expired
-    if (new Date() > pendingConfirmation.expiresAt) {
-      // Remove expired confirmation
-      await db
-        .collection("pending_confirmations")
-        .deleteOne({ _id: new ObjectId(id) });
-
-      return NextResponse.json(
-        { success: false, message: "Confirmation has expired" },
-        { status: 410 }
-      );
-    }
-
-    if (action === "confirm") {
-      // Update the session email status if sessionId is provided
-      if (sessionId) {
-        await updateSessionEmailStatus(sessionId, true);
-      }
-
-      // Notify WebSocket clients
-      if (sessionId) {
-        await notifyWebSocketClients(sessionId, "email_confirmed", "confirm");
-      }
-
-      return NextResponse.json({
-        success: true,
-        message: "Email confirmation updated successfully",
-      });
-    }
-
-    if (action === "reject") {
-      // Update the session email status if sessionId is provided
-      if (sessionId) {
-        await updateSessionEmailStatus(sessionId, false);
-      }
-
-      // Notify WebSocket clients
-      if (sessionId) {
-        await notifyWebSocketClients(sessionId, "email_rejected", "reject");
-      }
-
-      return NextResponse.json({
-        success: true,
-        message: "Email rejection updated successfully",
-      });
-    }
-
-    return NextResponse.json(
-      { success: false, message: "Invalid action" },
-      { status: 400 }
-    );
-  } catch (error) {
-    console.error("Confirmation error occurred:", error);
-    return NextResponse.json(
-      {
-        success: false,
-        message: "An error occurred while processing confirmation",
-      },
-      { status: 500 }
-    );
   }
 }
