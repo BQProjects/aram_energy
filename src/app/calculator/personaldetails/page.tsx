@@ -94,10 +94,10 @@ function PersonalDetailsPageInner() {
               <option value="">
                 {t("personaldetails.salutationPlaceholder")}
               </option>
-              <option value="mr">{t("personaldetails.mr")}</option>
-              <option value="ms">{t("personaldetails.ms")}</option>
-              <option value="mrs">{t("personaldetails.mrs")}</option>
-              <option value="dr">{t("personaldetails.dr")}</option>
+              <option value="Mr">{t("personaldetails.mr")}</option>
+              <option value="Ms">{t("personaldetails.ms")}</option>
+              <option value="Mrs">{t("personaldetails.mrs")}</option>
+              <option value="Dr">{t("personaldetails.dr")}</option>
             </select>
 
             {/* Name */}
@@ -165,36 +165,17 @@ function PersonalDetailsPageInner() {
             </label>
             <div className="relative max-w-[340px] col-span-1">
               <input
+                id="birthDateInput"
                 type="date"
                 className="w-full h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-[#ABAFB1] focus:outline-none focus:border-[#FF9641] transition-colors pr-12"
                 style={{
                   WebkitAppearance: "none",
                   MozAppearance: "none",
-                  appearance: "none",
+                  colorScheme: "dark",
                 }}
                 value={data.birthDate}
                 onChange={(e) => update({ birthDate: e.target.value })}
               />
-              <span className="absolute right-4 top-1/2 transform -translate-y-1/2 pointer-events-none">
-                <svg
-                  width="22"
-                  height="22"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                  className="text-[#abafb1]"
-                >
-                  <rect
-                    x="3"
-                    y="4"
-                    width="18"
-                    height="18"
-                    rx="4"
-                    strokeWidth="2"
-                  />
-                  <path d="M16 2v4M8 2v4M3 10h18" strokeWidth="2" />
-                </svg>
-              </span>
             </div>
 
             {/* Email */}

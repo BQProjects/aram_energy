@@ -142,6 +142,7 @@ const translations = {
     "calculation.helpText": "Do you need help calculating your consumption?",
     "calculation.validationError":
       "Please enter both annual consumption (kWh) and postal code.",
+    "calculation.invalidPostalCode": "The entered postal code is invalid.",
 
     // CalculatorCard fields
     "calculator.deliveryPointInfo": "Delivery Point Information",
@@ -451,9 +452,12 @@ const translations = {
     // Privacy Policy
     "privacy.title": "Privacy Policy",
     "privacy.introduction": "Introduction",
-    "privacy.intro.paragraph1": "We (\"we\", \"us\", \"our\") take the protection of the data of the users (\"users\" or \"you\") of our website and/or our mobile app (the \"website\" or \"mobile app\") very seriously and commit to protecting the information that users provide to us in connection with the use of our website and/or our mobile app (together: \"digital assets\"). Furthermore, we commit to protecting and using your data in accordance with applicable law.",
-    "privacy.intro.paragraph2": "This privacy policy explains our practices regarding the collection, use and disclosure of your data through the use of our digital assets (the \"services\") when you access the services through your devices.",
-    "privacy.intro.paragraph3": "Please read the privacy policy carefully and make sure you fully understand our practices regarding your data before using our services. If you have read and fully understood this policy and do not agree with our approach, you must stop using our digital assets and services. By using our services, you acknowledge the terms of this privacy policy. Continued use of the services constitutes your consent to this privacy policy and any changes to it.",
+    "privacy.intro.paragraph1":
+      'We ("we", "us", "our") take the protection of the data of the users ("users" or "you") of our website and/or our mobile app (the "website" or "mobile app") very seriously and commit to protecting the information that users provide to us in connection with the use of our website and/or our mobile app (together: "digital assets"). Furthermore, we commit to protecting and using your data in accordance with applicable law.',
+    "privacy.intro.paragraph2":
+      'This privacy policy explains our practices regarding the collection, use and disclosure of your data through the use of our digital assets (the "services") when you access the services through your devices.',
+    "privacy.intro.paragraph3":
+      "Please read the privacy policy carefully and make sure you fully understand our practices regarding your data before using our services. If you have read and fully understood this policy and do not agree with our approach, you must stop using our digital assets and services. By using our services, you acknowledge the terms of this privacy policy. Continued use of the services constitutes your consent to this privacy policy and any changes to it.",
     "privacy.overview.title": "In this privacy policy you will learn:",
     "privacy.overview.item1": "How we collect data",
     "privacy.overview.item2": "What data we collect",
@@ -465,46 +469,72 @@ const translations = {
     "privacy.overview.item8": "How we handle minors",
     "privacy.overview.item9": "Updates or changes to the privacy policy",
     "privacy.dataCollected.title": "What data do we collect?",
-    "privacy.dataCollected.paragraph1": "Unidentified and unidentifiable information that you provide during the registration process or that is collected through the use of our services (\"non-personal data\"). Non-personal data does not allow conclusions to be drawn about who it was collected from. Non-personal data we collect consists mainly of technical and aggregated usage information.",
-    "privacy.dataCollected.paragraph2": "Individually identifiable information, i.e. all those through which you can be identified or could be identified with reasonable effort (\"personal data\"). Personal data that we collect through our services may include information that is requested from time to time, such as names, email addresses, addresses, phone numbers, IP addresses and more. If we combine personal with non-personal data, these will be treated by us as personal data as long as they are in combination.",
+    "privacy.dataCollected.paragraph1":
+      'Unidentified and unidentifiable information that you provide during the registration process or that is collected through the use of our services ("non-personal data"). Non-personal data does not allow conclusions to be drawn about who it was collected from. Non-personal data we collect consists mainly of technical and aggregated usage information.',
+    "privacy.dataCollected.paragraph2":
+      'Individually identifiable information, i.e. all those through which you can be identified or could be identified with reasonable effort ("personal data"). Personal data that we collect through our services may include information that is requested from time to time, such as names, email addresses, addresses, phone numbers, IP addresses and more. If we combine personal with non-personal data, these will be treated by us as personal data as long as they are in combination.',
     "privacy.howCollect.title": "How do we collect data?",
-    "privacy.howCollect.paragraph1": "We collect data when using our services. So when you visit our digital assets and use services, we may collect, capture and store usage, sessions and related information.",
-    "privacy.howCollect.paragraph2": "We collect data that you provide to us yourself, for example, when you contact us directly through a communication channel (e.g. an email with a comment or feedback).",
-    "privacy.howCollect.paragraph3": "We may collect data from third-party sources as described below.",
-    "privacy.howCollect.paragraph4": "We collect data that you provide to us when you sign up for our services through a third party such as Facebook or Google.",
+    "privacy.howCollect.paragraph1":
+      "We collect data when using our services. So when you visit our digital assets and use services, we may collect, capture and store usage, sessions and related information.",
+    "privacy.howCollect.paragraph2":
+      "We collect data that you provide to us yourself, for example, when you contact us directly through a communication channel (e.g. an email with a comment or feedback).",
+    "privacy.howCollect.paragraph3":
+      "We may collect data from third-party sources as described below.",
+    "privacy.howCollect.paragraph4":
+      "We collect data that you provide to us when you sign up for our services through a third party such as Facebook or Google.",
     "privacy.whyCollect.title": "Why do we collect this data?",
-    "privacy.whyCollect.intro": "We may use your data for the following purposes:",
+    "privacy.whyCollect.intro":
+      "We may use your data for the following purposes:",
     "privacy.whyCollect.item1": "to provide and operate our services;",
-    "privacy.whyCollect.item2": "to develop, customize and improve our services;",
-    "privacy.whyCollect.item3": "to respond to your feedback, requests and wishes and to offer help;",
+    "privacy.whyCollect.item2":
+      "to develop, customize and improve our services;",
+    "privacy.whyCollect.item3":
+      "to respond to your feedback, requests and wishes and to offer help;",
     "privacy.whyCollect.item4": "to analyze request and usage patterns;",
-    "privacy.whyCollect.item5": "for other internal, statistical and research purposes;",
-    "privacy.whyCollect.item6": "to improve our data security and fraud prevention capabilities;",
-    "privacy.whyCollect.item7": "to investigate violations and enforce our terms and policies and to comply with applicable law, regulations or government orders;",
-    "privacy.whyCollect.item8": "to send you updates, messages, advertising material and other information related to our services. For advertising emails, you can decide whether you want to continue receiving them. If not, simply click the unsubscribe link in these emails.",
+    "privacy.whyCollect.item5":
+      "for other internal, statistical and research purposes;",
+    "privacy.whyCollect.item6":
+      "to improve our data security and fraud prevention capabilities;",
+    "privacy.whyCollect.item7":
+      "to investigate violations and enforce our terms and policies and to comply with applicable law, regulations or government orders;",
+    "privacy.whyCollect.item8":
+      "to send you updates, messages, advertising material and other information related to our services. For advertising emails, you can decide whether you want to continue receiving them. If not, simply click the unsubscribe link in these emails.",
     "privacy.sharing.title": "To whom do we share this data?",
-    "privacy.sharing.paragraph1": "We may share your data with our service providers to operate our services (e.g. storing data through third-party hosting services, providing technical support, etc.).",
-    "privacy.sharing.paragraph2": "We may also disclose your data under the following circumstances: (i) to investigate, detect, prevent or take action against unlawful activities or other misconduct; (ii) to establish or exercise our rights of defense; (iii) to protect our rights, our property or our personal safety as well as the safety of our users or the public; (iv) in the event of a change of control of us or one of our affiliated companies (by way of a merger, acquisition or purchase of (substantially) all assets, etc.); (v) to collect, retain and/or manage your data through authorized third parties (e.g. cloud service providers) as appropriate for business purposes; (vi) to work together with third parties to improve your user experience. To avoid misunderstandings, we would like to point out that we may transmit or share non-personal data to third parties or otherwise use it at our discretion.",
+    "privacy.sharing.paragraph1":
+      "We may share your data with our service providers to operate our services (e.g. storing data through third-party hosting services, providing technical support, etc.).",
+    "privacy.sharing.paragraph2":
+      "We may also disclose your data under the following circumstances: (i) to investigate, detect, prevent or take action against unlawful activities or other misconduct; (ii) to establish or exercise our rights of defense; (iii) to protect our rights, our property or our personal safety as well as the safety of our users or the public; (iv) in the event of a change of control of us or one of our affiliated companies (by way of a merger, acquisition or purchase of (substantially) all assets, etc.); (v) to collect, retain and/or manage your data through authorized third parties (e.g. cloud service providers) as appropriate for business purposes; (vi) to work together with third parties to improve your user experience. To avoid misunderstandings, we would like to point out that we may transmit or share non-personal data to third parties or otherwise use it at our discretion.",
     "privacy.retention.title": "How long is the data retained?",
-    "privacy.retention.paragraph": "Please note that we retain the collected data as long as necessary for the provision of our services, to comply with our legal and contractual obligations to you, to resolve disputes and to enforce our agreements. We may correct, supplement or delete incorrect or incomplete data at any time at our discretion.",
+    "privacy.retention.paragraph":
+      "Please note that we retain the collected data as long as necessary for the provision of our services, to comply with our legal and contractual obligations to you, to resolve disputes and to enforce our agreements. We may correct, supplement or delete incorrect or incomplete data at any time at our discretion.",
     "privacy.protection.title": "How do we protect the data?",
-    "privacy.protection.paragraph": "The hosting service for our digital assets provides us with the online platform through which we can offer you our services. Your data may be stored through the data storage, databases and general applications of our hosting provider. It stores your data on secure servers behind a firewall and provides secure HTTPS access to most areas of its services.",
+    "privacy.protection.paragraph":
+      "The hosting service for our digital assets provides us with the online platform through which we can offer you our services. Your data may be stored through the data storage, databases and general applications of our hosting provider. It stores your data on secure servers behind a firewall and provides secure HTTPS access to most areas of its services.",
     "privacy.minors.title": "How do we handle minors?",
-    "privacy.minors.paragraph1": "The services are not intended for users who have not yet reached the legal age of majority. We will not knowingly collect data from children. If you are not yet of legal age, you should not download or use the services and should not provide us with any information.",
-    "privacy.minors.paragraph2": "We reserve the right to request proof of age at any time so that we can verify whether minors are using our services. In the event that we become aware that a minor is using our services, we may deny these users access to our services and block them, and we may delete all data about this user stored with us. If you have reason to believe that a minor has shared data with us, please contact us as explained below.",
+    "privacy.minors.paragraph1":
+      "The services are not intended for users who have not yet reached the legal age of majority. We will not knowingly collect data from children. If you are not yet of legal age, you should not download or use the services and should not provide us with any information.",
+    "privacy.minors.paragraph2":
+      "We reserve the right to request proof of age at any time so that we can verify whether minors are using our services. In the event that we become aware that a minor is using our services, we may deny these users access to our services and block them, and we may delete all data about this user stored with us. If you have reason to believe that a minor has shared data with us, please contact us as explained below.",
     "privacy.updates.title": "Updates or changes to the privacy policy",
-    "privacy.updates.paragraph": "We may revise this privacy policy from time to time at our discretion, the version published on the website is always current (see \"Last updated\" date). We ask you to regularly review this privacy policy for changes. In case of significant changes, we will post a notice on our website. If you continue to use the services after notification of changes to our website, this will be deemed your confirmation and consent to the changes to the privacy policy and your agreement to be bound by the terms of these changes.",
-    "privacy.california.title": "Rights under California Consumer Protection Act",
-    "privacy.california.paragraph1": "If you use the services as a California resident, you may be entitled to request access to and deletion of your data under the California Consumer Privacy Act (\"CCPA\").",
-    "privacy.california.paragraph2": "To exercise your right to access and deletion of your data, please read below how to contact us.",
+    "privacy.updates.paragraph":
+      'We may revise this privacy policy from time to time at our discretion, the version published on the website is always current (see "Last updated" date). We ask you to regularly review this privacy policy for changes. In case of significant changes, we will post a notice on our website. If you continue to use the services after notification of changes to our website, this will be deemed your confirmation and consent to the changes to the privacy policy and your agreement to be bound by the terms of these changes.',
+    "privacy.california.title":
+      "Rights under California Consumer Protection Act",
+    "privacy.california.paragraph1":
+      'If you use the services as a California resident, you may be entitled to request access to and deletion of your data under the California Consumer Privacy Act ("CCPA").',
+    "privacy.california.paragraph2":
+      "To exercise your right to access and deletion of your data, please read below how to contact us.",
     "privacy.contact.title": "Contact",
-    "privacy.contact.paragraph": "If you have general questions about the services or the data we collect about you and their use, please contact us at:",
+    "privacy.contact.paragraph":
+      "If you have general questions about the services or the data we collect about you and their use, please contact us at:",
     "privacy.contact.name": "Name:",
     "privacy.contact.address": "Address:",
     "privacy.contact.email": "Email address:",
     "privacy.disclaimer.title": "DISCLAIMER",
-    "privacy.disclaimer.paragraph1": "The information contained herein is not a substitute for legal advice and you should not rely solely on it. Specific requirements regarding legal terms and policies may vary from state to state and/or from legal system to legal system. As set forth in our terms of use, you are responsible for ensuring that your services are lawful under the law applicable to you and that you comply with it.",
-    "privacy.disclaimer.paragraph2": "To ensure that you fully comply with your legal obligations, we expressly recommend that you seek professional advice to better understand what requirements apply specifically to you.",
+    "privacy.disclaimer.paragraph1":
+      "The information contained herein is not a substitute for legal advice and you should not rely solely on it. Specific requirements regarding legal terms and policies may vary from state to state and/or from legal system to legal system. As set forth in our terms of use, you are responsible for ensuring that your services are lawful under the law applicable to you and that you comply with it.",
+    "privacy.disclaimer.paragraph2":
+      "To ensure that you fully comply with your legal obligations, we expressly recommend that you seek professional advice to better understand what requirements apply specifically to you.",
   },
   de: {
     // Header
@@ -639,6 +669,8 @@ const translations = {
       "Brauchen Sie Hilfe bei der Berechnung Ihres Verbrauchs?",
     "calculation.validationError":
       "Bitte geben Sie sowohl den Jahresverbrauch (kWh) als auch die Postleitzahl ein.",
+    "calculation.invalidPostalCode":
+      "Bitte geben Sie eine gültige Postleitzahl ein.",
 
     // CalculatorCard fields
     "calculator.deliveryPointInfo": "Lieferstelleninformation",
@@ -958,9 +990,12 @@ const translations = {
     // Privacy Policy (Datenschutzrichtlinie)
     "privacy.title": "Datenschutzrichtlinie",
     "privacy.introduction": "Einleitung",
-    "privacy.intro.paragraph1": "Wir (\"wir\", \"uns\", \"unser/e\") nehmen den Schutz der Daten der Nutzer (\"Nutzer\" oder \"Sie\") unserer Website und/oder unseres Mobile-App (die \"Website\" bzw. der \"Mobile-App\") sehr ernst und verpflichten uns, die Informationen, die Nutzer uns in Verbindung mit der Nutzung unserer Website und/oder unseres Mobile-App (zusammen: \"digitale Assets\") zur Verfügung stellen, zu schützen. Des Weiteren verpflichten wir uns, Ihre Daten gemäß anwendbarem Recht zu schützen und zu verwenden.",
-    "privacy.intro.paragraph2": "Diese Datenschutzrichtlinie erläutert unsere Praktiken in Bezug auf die Erfassung, Verwendung und Offenlegung Ihrer Daten durch die Nutzung unserer digitalen Assets (die \"Dienste\"), wenn Sie über Ihre Geräte auf die Dienste zugreifen.",
-    "privacy.intro.paragraph3": "Lesen Sie die Datenschutzrichtlinie bitte sorgfältig durch und stellen Sie sicher, dass Sie unsere Praktiken in Bezug auf Ihre Daten vollumfänglich verstehen, bevor Sie unsere Dienste verwenden. Wenn Sie diese Richtlinie gelesen, vollumfänglich verstanden haben und nicht mit unserer Vorgehensweise einverstanden sind, müssen Sie die Nutzung unserer digitalen Assets und Dienste einstellen. Mit der Nutzung unserer Dienste erkennen Sie die Bedingungen dieser Datenschutzrichtlinie an. Die weitere Nutzung der Dienste stellt Ihre Zustimmung zu dieser Datenschutzrichtlinie und allen Änderungen daran dar.",
+    "privacy.intro.paragraph1":
+      'Wir ("wir", "uns", "unser/e") nehmen den Schutz der Daten der Nutzer ("Nutzer" oder "Sie") unserer Website und/oder unseres Mobile-App (die "Website" bzw. der "Mobile-App") sehr ernst und verpflichten uns, die Informationen, die Nutzer uns in Verbindung mit der Nutzung unserer Website und/oder unseres Mobile-App (zusammen: "digitale Assets") zur Verfügung stellen, zu schützen. Des Weiteren verpflichten wir uns, Ihre Daten gemäß anwendbarem Recht zu schützen und zu verwenden.',
+    "privacy.intro.paragraph2":
+      'Diese Datenschutzrichtlinie erläutert unsere Praktiken in Bezug auf die Erfassung, Verwendung und Offenlegung Ihrer Daten durch die Nutzung unserer digitalen Assets (die "Dienste"), wenn Sie über Ihre Geräte auf die Dienste zugreifen.',
+    "privacy.intro.paragraph3":
+      "Lesen Sie die Datenschutzrichtlinie bitte sorgfältig durch und stellen Sie sicher, dass Sie unsere Praktiken in Bezug auf Ihre Daten vollumfänglich verstehen, bevor Sie unsere Dienste verwenden. Wenn Sie diese Richtlinie gelesen, vollumfänglich verstanden haben und nicht mit unserer Vorgehensweise einverstanden sind, müssen Sie die Nutzung unserer digitalen Assets und Dienste einstellen. Mit der Nutzung unserer Dienste erkennen Sie die Bedingungen dieser Datenschutzrichtlinie an. Die weitere Nutzung der Dienste stellt Ihre Zustimmung zu dieser Datenschutzrichtlinie und allen Änderungen daran dar.",
     "privacy.overview.title": "In dieser Datenschutzrichtlinie erfahren Sie:",
     "privacy.overview.item1": "Wie wir Daten sammeln",
     "privacy.overview.item2": "Welche Daten wir erfassen",
@@ -970,48 +1005,78 @@ const translations = {
     "privacy.overview.item6": "Wie lange die Daten vorgehalten werden",
     "privacy.overview.item7": "Wie wir die Daten schützen",
     "privacy.overview.item8": "Wie wir mit Minderjährigen umgehen",
-    "privacy.overview.item9": "Aktualisierungen oder Änderungen der Datenschutzrichtlinie",
+    "privacy.overview.item9":
+      "Aktualisierungen oder Änderungen der Datenschutzrichtlinie",
     "privacy.dataCollected.title": "Welche Daten erfassen wir?",
-    "privacy.dataCollected.paragraph1": "Nicht identifizierte und nicht identifizierbare Informationen, die Sie während des Registrierungsprozesses bereitstellen oder die über die Nutzung unserer Dienste gesammelt werden (\"nicht personenbezogene Daten\"). Nicht personenbezogene Daten lassen keine Rückschlüsse darauf zu, von wem sie erfasst wurden. Nicht personenbezogene Daten, die wir erfassen, bestehen hauptsächlich aus technischen und zusammengefassten Nutzungsinformationen.",
-    "privacy.dataCollected.paragraph2": "Individuell identifizierbare Informationen, d. h. all jene, über die man Sie identifizieren kann oder mit vertretbarem Aufwand identifizieren könnte (\"personenbezogene Daten\"). Zu den personenbezogenen Daten, die wir über unsere Dienste erfassen, können Informationen gehören, die von Zeit zu Zeit angefordert werden, wie Namen, E-Mail-Adressen, Adressen, Telefonnummern, IP-Adressen und mehr. Wenn wir personenbezogene mit nicht personenbezogenen Daten kombinieren, werden diese, solange sie in Kombination vorliegen, von uns als personenbezogene Daten behandelt.",
+    "privacy.dataCollected.paragraph1":
+      'Nicht identifizierte und nicht identifizierbare Informationen, die Sie während des Registrierungsprozesses bereitstellen oder die über die Nutzung unserer Dienste gesammelt werden ("nicht personenbezogene Daten"). Nicht personenbezogene Daten lassen keine Rückschlüsse darauf zu, von wem sie erfasst wurden. Nicht personenbezogene Daten, die wir erfassen, bestehen hauptsächlich aus technischen und zusammengefassten Nutzungsinformationen.',
+    "privacy.dataCollected.paragraph2":
+      'Individuell identifizierbare Informationen, d. h. all jene, über die man Sie identifizieren kann oder mit vertretbarem Aufwand identifizieren könnte ("personenbezogene Daten"). Zu den personenbezogenen Daten, die wir über unsere Dienste erfassen, können Informationen gehören, die von Zeit zu Zeit angefordert werden, wie Namen, E-Mail-Adressen, Adressen, Telefonnummern, IP-Adressen und mehr. Wenn wir personenbezogene mit nicht personenbezogenen Daten kombinieren, werden diese, solange sie in Kombination vorliegen, von uns als personenbezogene Daten behandelt.',
     "privacy.howCollect.title": "Wie sammeln wir Daten?",
-    "privacy.howCollect.paragraph1": "Wir erfassen Daten bei der Nutzung unserer Dienste. Wenn Sie also unsere digitalen Assets besuchen und Dienste nutzen, können wir die Nutzung, Sitzungen und die dazugehörigen Informationen sammeln, erfassen und speichern.",
-    "privacy.howCollect.paragraph2": "Wir erfassen Daten, die Sie uns selbst zur Verfügung stellen, beispielsweise, wenn Sie über einen Kommunikationskanal direkt mit uns Kontakt aufnehmen (z. B. eine E-Mail mit einem Kommentar oder Feedback).",
-    "privacy.howCollect.paragraph3": "Wir können, wie unten beschrieben, Daten aus Drittquellen erfassen.",
-    "privacy.howCollect.paragraph4": "Wir erfassen Daten, die Sie uns zur Verfügung stellen, wenn Sie sich über einen Drittanbieter wie Facebook oder Google bei unseren Diensten anmelden.",
+    "privacy.howCollect.paragraph1":
+      "Wir erfassen Daten bei der Nutzung unserer Dienste. Wenn Sie also unsere digitalen Assets besuchen und Dienste nutzen, können wir die Nutzung, Sitzungen und die dazugehörigen Informationen sammeln, erfassen und speichern.",
+    "privacy.howCollect.paragraph2":
+      "Wir erfassen Daten, die Sie uns selbst zur Verfügung stellen, beispielsweise, wenn Sie über einen Kommunikationskanal direkt mit uns Kontakt aufnehmen (z. B. eine E-Mail mit einem Kommentar oder Feedback).",
+    "privacy.howCollect.paragraph3":
+      "Wir können, wie unten beschrieben, Daten aus Drittquellen erfassen.",
+    "privacy.howCollect.paragraph4":
+      "Wir erfassen Daten, die Sie uns zur Verfügung stellen, wenn Sie sich über einen Drittanbieter wie Facebook oder Google bei unseren Diensten anmelden.",
     "privacy.whyCollect.title": "Warum erfassen wir diese Daten?",
-    "privacy.whyCollect.intro": "Wir können Ihre Daten für folgende Zwecke verwenden:",
-    "privacy.whyCollect.item1": "um unsere Dienste zur Verfügung zu stellen und zu betreiben;",
-    "privacy.whyCollect.item2": "um unsere Dienste zu entwickeln, anzupassen und zu verbessern;",
-    "privacy.whyCollect.item3": "um auf Ihr Feedback, Ihre Anfragen und Wünsche zu reagieren und Hilfe anzubieten;",
-    "privacy.whyCollect.item4": "um Anforderungs- und Nutzungsmuster zu analysieren;",
-    "privacy.whyCollect.item5": "für sonstige interne, statistische und Recherchezwecke;",
-    "privacy.whyCollect.item6": "um unsere Möglichkeiten zur Datensicherheit und Betrugsprävention verbessern zu können;",
-    "privacy.whyCollect.item7": "um Verstöße zu untersuchen und unsere Bedingungen und Richtlinien durchzusetzen sowie um dem anwendbaren Recht, den Vorschriften bzw. behördlichen Anordnungen zu entsprechen;",
-    "privacy.whyCollect.item8": "um Ihnen Aktualisierungen, Nachrichten, Werbematerial und sonstige Informationen im Zusammenhang mit unseren Diensten zu übermitteln. Bei Werbe-E-Mails können Sie selbst entscheiden, ob Sie diese weiterhin erhalten möchten. Wenn nicht, klicken Sie einfach auf den Abmeldelink in diesen E-Mails.",
+    "privacy.whyCollect.intro":
+      "Wir können Ihre Daten für folgende Zwecke verwenden:",
+    "privacy.whyCollect.item1":
+      "um unsere Dienste zur Verfügung zu stellen und zu betreiben;",
+    "privacy.whyCollect.item2":
+      "um unsere Dienste zu entwickeln, anzupassen und zu verbessern;",
+    "privacy.whyCollect.item3":
+      "um auf Ihr Feedback, Ihre Anfragen und Wünsche zu reagieren und Hilfe anzubieten;",
+    "privacy.whyCollect.item4":
+      "um Anforderungs- und Nutzungsmuster zu analysieren;",
+    "privacy.whyCollect.item5":
+      "für sonstige interne, statistische und Recherchezwecke;",
+    "privacy.whyCollect.item6":
+      "um unsere Möglichkeiten zur Datensicherheit und Betrugsprävention verbessern zu können;",
+    "privacy.whyCollect.item7":
+      "um Verstöße zu untersuchen und unsere Bedingungen und Richtlinien durchzusetzen sowie um dem anwendbaren Recht, den Vorschriften bzw. behördlichen Anordnungen zu entsprechen;",
+    "privacy.whyCollect.item8":
+      "um Ihnen Aktualisierungen, Nachrichten, Werbematerial und sonstige Informationen im Zusammenhang mit unseren Diensten zu übermitteln. Bei Werbe-E-Mails können Sie selbst entscheiden, ob Sie diese weiterhin erhalten möchten. Wenn nicht, klicken Sie einfach auf den Abmeldelink in diesen E-Mails.",
     "privacy.sharing.title": "An wen geben wir diese Daten weiter?",
-    "privacy.sharing.paragraph1": "Wir können Ihre Daten an unsere Dienstleister weitergeben, um unsere Dienste zu betreiben (z. B. Speicherung von Daten über Hosting-Dienste Dritter, Bereitstellung technischer Unterstützung usw.).",
-    "privacy.sharing.paragraph2": "Wir können Ihre Daten auch unter folgenden Umständen offenlegen: (i) um rechtswidrige Aktivitäten oder sonstiges Fehlverhalten zu untersuchen, aufzudecken, zu verhindern oder dagegen vorzugehen; (ii) um unsere Rechte auf Verteidigung zu begründen oder auszuüben; (iii) um unsere Rechte, unser Eigentum oder unsere persönliche Sicherheit sowie die Sicherheit unserer Nutzer oder der Öffentlichkeit zu schützen; (iv) im Falle eines Kontrollwechsels bei uns oder bei einem unserer verbundenen Unternehmen (im Wege einer Verschmelzung, des Erwerbs oder Kaufs (im Wesentlichen) aller Vermögenswerte u. a.); (v) um Ihre Daten mittels befugter Drittanbieter zu erfassen, vorzuhalten und/oder zu verwalten (z. B. Cloud-Service-Anbieter), soweit dies für geschäftliche Zwecke angemessen ist; (vi) um mit Drittanbietern gemeinsam an der Verbesserung Ihres Nutzererlebnisses zu arbeiten. Zur Vermeidung von Missverständnissen möchten wir darauf hinweisen, dass wir nicht personenbezogene Daten nach eigenem Ermessen an Dritte übermitteln bzw. weitergeben oder anderweitig verwenden können.",
+    "privacy.sharing.paragraph1":
+      "Wir können Ihre Daten an unsere Dienstleister weitergeben, um unsere Dienste zu betreiben (z. B. Speicherung von Daten über Hosting-Dienste Dritter, Bereitstellung technischer Unterstützung usw.).",
+    "privacy.sharing.paragraph2":
+      "Wir können Ihre Daten auch unter folgenden Umständen offenlegen: (i) um rechtswidrige Aktivitäten oder sonstiges Fehlverhalten zu untersuchen, aufzudecken, zu verhindern oder dagegen vorzugehen; (ii) um unsere Rechte auf Verteidigung zu begründen oder auszuüben; (iii) um unsere Rechte, unser Eigentum oder unsere persönliche Sicherheit sowie die Sicherheit unserer Nutzer oder der Öffentlichkeit zu schützen; (iv) im Falle eines Kontrollwechsels bei uns oder bei einem unserer verbundenen Unternehmen (im Wege einer Verschmelzung, des Erwerbs oder Kaufs (im Wesentlichen) aller Vermögenswerte u. a.); (v) um Ihre Daten mittels befugter Drittanbieter zu erfassen, vorzuhalten und/oder zu verwalten (z. B. Cloud-Service-Anbieter), soweit dies für geschäftliche Zwecke angemessen ist; (vi) um mit Drittanbietern gemeinsam an der Verbesserung Ihres Nutzererlebnisses zu arbeiten. Zur Vermeidung von Missverständnissen möchten wir darauf hinweisen, dass wir nicht personenbezogene Daten nach eigenem Ermessen an Dritte übermitteln bzw. weitergeben oder anderweitig verwenden können.",
     "privacy.retention.title": "Wie lange werden die Daten vorgehalten?",
-    "privacy.retention.paragraph": "Bitte beachten Sie, dass wir die erfassten Daten so lange aufbewahren, wie es für die Bereitstellung unserer Dienste, zur Einhaltung unserer gesetzlichen und vertraglichen Verpflichtungen gegenüber Ihnen, zur Beilegung von Streitigkeiten und zur Durchsetzung unserer Vereinbarungen erforderlich ist. Wir können unrichtige oder unvollständige Daten jederzeit nach eigenem Ermessen berichtigen, ergänzen oder löschen.",
+    "privacy.retention.paragraph":
+      "Bitte beachten Sie, dass wir die erfassten Daten so lange aufbewahren, wie es für die Bereitstellung unserer Dienste, zur Einhaltung unserer gesetzlichen und vertraglichen Verpflichtungen gegenüber Ihnen, zur Beilegung von Streitigkeiten und zur Durchsetzung unserer Vereinbarungen erforderlich ist. Wir können unrichtige oder unvollständige Daten jederzeit nach eigenem Ermessen berichtigen, ergänzen oder löschen.",
     "privacy.protection.title": "Wie schützen wir die Daten?",
-    "privacy.protection.paragraph": "Der Hosting-Dienst für unserer digitalen Assets stellt uns die Online-Plattform zu Verfügung, über die wir Ihnen unsere Dienste anbieten können. Ihre Daten können über die Datenspeicherung, Datenbanken und allgemeine Anwendungen unseres Hosting-Anbieters gespeichert werden. Er speichert Ihre Daten auf sicheren Servern hinter einer Firewall und er bietet sicheren HTTPS-Zugriff auf die meisten Bereiche seiner Dienste.",
+    "privacy.protection.paragraph":
+      "Der Hosting-Dienst für unserer digitalen Assets stellt uns die Online-Plattform zu Verfügung, über die wir Ihnen unsere Dienste anbieten können. Ihre Daten können über die Datenspeicherung, Datenbanken und allgemeine Anwendungen unseres Hosting-Anbieters gespeichert werden. Er speichert Ihre Daten auf sicheren Servern hinter einer Firewall und er bietet sicheren HTTPS-Zugriff auf die meisten Bereiche seiner Dienste.",
     "privacy.minors.title": "Wie gehen wir mit Minderjährigen um?",
-    "privacy.minors.paragraph1": "Die Dienste sind nicht für Nutzer bestimmt, die noch nicht die gesetzliche Volljährigkeit erreicht haben. Wir werden wissentlich keine Daten von Kindern erfassen. Wenn Sie noch nicht volljährig sind, sollten Sie die Dienste nicht herunterladen oder nutzen und uns keine Informationen zur Verfügung stellen.",
-    "privacy.minors.paragraph2": "Wir behalten uns das Recht vor, jederzeit einen Altersnachweis zu verlangen, damit wir überprüfen können, ob Minderjährige unsere Dienste nutzen. Für den Fall, dass wir Kenntnis davon erlangen, dass ein Minderjähriger unsere Dienste nutzt, können wir diesen Nutzern den Zugang zu unseren Diensten untersagen und ihn sperren, und wir können alle bei uns gespeicherten Daten über diesen Nutzer löschen. Sollten Sie Grund zu der Annahme haben, dass ein Minderjähriger Daten an uns weitergegeben hat, nehmen Sie bitte, wie unten erläutert, Kontakt zu uns auf.",
-    "privacy.updates.title": "Aktualisierungen oder Änderungen der Datenschutzrichtlinie",
-    "privacy.updates.paragraph": "Wir können diese Datenschutzrichtlinie nach eigenem Ermessen von Zeit zu Zeit überarbeiten, die auf der Website veröffentlichte Version ist immer aktuell (siehe Angabe zum \"Stand\"). Wir bitten Sie, diese Datenschutzrichtlinie regelmäßig auf Änderungen zu überprüfen. Bei wesentlichen Änderungen werden wir einen Hinweis dazu auf unserer Website veröffentlichen. Wenn Sie die Dienste nach erfolgter Benachrichtigung über Änderungen auf unsere Website weiter nutzen, gilt dies als Ihre Bestätigung und Zustimmung zu den Änderungen der Datenschutzrichtlinie und Ihr Einverständnis an die Bedingungen dieser Änderungen gebunden zu sein.",
-    "privacy.california.title": "Rechte gemäß kalifornischem Verbraucherschutzgesetz",
-    "privacy.california.paragraph1": "Wenn Sie die Dienste als Einwohner Kaliforniens nutzen, dann sind Sie möglicherweise nach dem kalifornischen Verbraucherschutzgesetz (California Consumer Privacy Act; \"CCPA\") berechtigt, Zugriff auf und Löschung Ihrer Daten zu verlangen.",
-    "privacy.california.paragraph2": "Um Ihr Recht auf den Zugriff und die Löschung Ihrer Daten geltend zu machen, lesen Sie bitte nachstehend, wie Sie Kontakt zu uns aufnehmen können.",
+    "privacy.minors.paragraph1":
+      "Die Dienste sind nicht für Nutzer bestimmt, die noch nicht die gesetzliche Volljährigkeit erreicht haben. Wir werden wissentlich keine Daten von Kindern erfassen. Wenn Sie noch nicht volljährig sind, sollten Sie die Dienste nicht herunterladen oder nutzen und uns keine Informationen zur Verfügung stellen.",
+    "privacy.minors.paragraph2":
+      "Wir behalten uns das Recht vor, jederzeit einen Altersnachweis zu verlangen, damit wir überprüfen können, ob Minderjährige unsere Dienste nutzen. Für den Fall, dass wir Kenntnis davon erlangen, dass ein Minderjähriger unsere Dienste nutzt, können wir diesen Nutzern den Zugang zu unseren Diensten untersagen und ihn sperren, und wir können alle bei uns gespeicherten Daten über diesen Nutzer löschen. Sollten Sie Grund zu der Annahme haben, dass ein Minderjähriger Daten an uns weitergegeben hat, nehmen Sie bitte, wie unten erläutert, Kontakt zu uns auf.",
+    "privacy.updates.title":
+      "Aktualisierungen oder Änderungen der Datenschutzrichtlinie",
+    "privacy.updates.paragraph":
+      'Wir können diese Datenschutzrichtlinie nach eigenem Ermessen von Zeit zu Zeit überarbeiten, die auf der Website veröffentlichte Version ist immer aktuell (siehe Angabe zum "Stand"). Wir bitten Sie, diese Datenschutzrichtlinie regelmäßig auf Änderungen zu überprüfen. Bei wesentlichen Änderungen werden wir einen Hinweis dazu auf unserer Website veröffentlichen. Wenn Sie die Dienste nach erfolgter Benachrichtigung über Änderungen auf unsere Website weiter nutzen, gilt dies als Ihre Bestätigung und Zustimmung zu den Änderungen der Datenschutzrichtlinie und Ihr Einverständnis an die Bedingungen dieser Änderungen gebunden zu sein.',
+    "privacy.california.title":
+      "Rechte gemäß kalifornischem Verbraucherschutzgesetz",
+    "privacy.california.paragraph1":
+      'Wenn Sie die Dienste als Einwohner Kaliforniens nutzen, dann sind Sie möglicherweise nach dem kalifornischen Verbraucherschutzgesetz (California Consumer Privacy Act; "CCPA") berechtigt, Zugriff auf und Löschung Ihrer Daten zu verlangen.',
+    "privacy.california.paragraph2":
+      "Um Ihr Recht auf den Zugriff und die Löschung Ihrer Daten geltend zu machen, lesen Sie bitte nachstehend, wie Sie Kontakt zu uns aufnehmen können.",
     "privacy.contact.title": "Kontakt",
-    "privacy.contact.paragraph": "Wenn Sie allgemeine Fragen zu den Diensten oder den von uns über Sie erfassten Daten und deren Verwendung haben, kontaktieren Sie uns bitte unter:",
+    "privacy.contact.paragraph":
+      "Wenn Sie allgemeine Fragen zu den Diensten oder den von uns über Sie erfassten Daten und deren Verwendung haben, kontaktieren Sie uns bitte unter:",
     "privacy.contact.name": "Name:",
     "privacy.contact.address": "Anschrift:",
     "privacy.contact.email": "E-Mail-Adresse:",
     "privacy.disclaimer.title": "AUSSCHLUSSKLAUSEL",
-    "privacy.disclaimer.paragraph1": "Die hier enthaltenen Informationen ersetzen keine Rechtsberatung und Sie sollten sich nicht allein darauf stützen. Spezifische Anforderungen in Bezug auf Rechtsbegriffe und Richtlinien können sich von Bundesstaat zu Bundesstaat und/oder von Rechtssystem zu Rechtssystem unterscheiden. Wie in unseren Nutzungsbedingungen dargelegt, sind Sie dafür verantwortlich sicherzustellen, dass Ihre Dienste nach dem für Sie maßgeblichen Recht zulässig sind und Sie sich daranhalten.",
-    "privacy.disclaimer.paragraph2": "Um sicherzustellen, dass Sie Ihren gesetzlichen Verpflichtungen vollumfänglich entsprechen, empfehlen wir Ihnen ausdrücklich, sich professionell beraten zu lassen, um besser nachvollziehen zu können, welche Anforderungen für Sie speziell gelten.",
+    "privacy.disclaimer.paragraph1":
+      "Die hier enthaltenen Informationen ersetzen keine Rechtsberatung und Sie sollten sich nicht allein darauf stützen. Spezifische Anforderungen in Bezug auf Rechtsbegriffe und Richtlinien können sich von Bundesstaat zu Bundesstaat und/oder von Rechtssystem zu Rechtssystem unterscheiden. Wie in unseren Nutzungsbedingungen dargelegt, sind Sie dafür verantwortlich sicherzustellen, dass Ihre Dienste nach dem für Sie maßgeblichen Recht zulässig sind und Sie sich daranhalten.",
+    "privacy.disclaimer.paragraph2":
+      "Um sicherzustellen, dass Sie Ihren gesetzlichen Verpflichtungen vollumfänglich entsprechen, empfehlen wir Ihnen ausdrücklich, sich professionell beraten zu lassen, um besser nachvollziehen zu können, welche Anforderungen für Sie speziell gelten.",
   },
 };
 

@@ -296,10 +296,21 @@ export default function CalculationTarif() {
           <button
             className="w-full h-[48px] sm:w-[300px] sm:h-[47px] bg-[#FF9641] text-white font-poppins-light text-base shadow-lg relative overflow-hidden group transition-colors duration-300"
             onClick={async () => {
+              // Validate postal code
+              const isPostalCodeValid = postalOptions.some(
+                (option) => option.plz === data.postalCode
+              );
+
               if (!data.annualConsumption.trim() || !data.postalCode.trim()) {
                 setError(t("calculation.validationError"));
                 return;
               }
+
+              if (!isPostalCodeValid) {
+                setError(t("calculation.invalidPostalCode"));
+                return;
+              }
+
               setError("");
 
               // Navigate to next step with session ID in URL
