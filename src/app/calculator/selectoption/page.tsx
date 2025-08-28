@@ -17,7 +17,7 @@ function SelectOptionContent() {
   const division = postalOptions[0]?.division || "";
 
   return (
-    <div className="flex items-start gap-8 w-full max-w-[1146px] mx-auto mt-8">
+    <div className="flex flex-col md:flex-row items-center md:items-start gap-4 md:gap-8 w-full max-w-[1146px] mx-auto mt-8 px-4 md:px-0">
       <CalculatorCard
         postalCode={calculationTarif.postalCode}
         location={location}
@@ -36,7 +36,7 @@ export default function SelectOptionPage() {
     <div className="min-h-screen flex flex-col bg-black">
       <Header />
       <main className="flex-1 flex flex-col items-center w-full mb-16">
-        <div className="w-full flex justify-center">
+        <div className="w-full flex justify-center px-4 md:px-0">
           <Stepper currentStep={2} t={t} />
         </div>
         <Suspense fallback={<div className="text-white">Loading...</div>}>

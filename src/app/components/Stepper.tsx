@@ -14,7 +14,7 @@ const stepsKeys = [
 ];
 
 const Stepper: React.FC<StepperProps> = ({ currentStep, t }) => (
-  <div className="stepper flex items-center gap-4 pt-10 pr-7 pb-10 pl-7 w-full max-w-[1191px] mx-auto justify-center">
+  <div className="stepper hidden md:flex items-center gap-4 pt-10 pr-7 pb-10 pl-7 w-full max-w-[1191px] mx-auto justify-center">
     {stepsKeys.map((stepKey, idx) => (
       <React.Fragment key={idx}>
         <div className="steps flex flex-shrink-0 items-center w-[10rem]">

@@ -45,12 +45,12 @@ function PersonalDetailsPageInner() {
       !data.phone ||
       !data.billing
     ) {
-      setError(t("personaldetails.error.fillAllFields"));
+      setError(t("personaldetails.error.required"));
       return;
     }
 
     if (data.email !== data.repeatEmail) {
-      setError(t("personaldetails.error.emailMismatch"));
+      setError(t("personaldetails.error.emailMatch"));
       return;
     }
 
@@ -76,13 +76,13 @@ function PersonalDetailsPageInner() {
           onSubmit={handleSubmit}
         >
           {/* Two-card grid: align labels and inputs by row */}
-          <div className="w-full grid grid-cols-2 gap-x-4 gap-y-6 items-center">
+          <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 items-center">
             {/* Salutation */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.salutation")} *
             </label>
             <select
-              className="w-full max-w-[340px] h-[52px] border border-[#cfd3d4] text-lg font-poppins-regular px-4 py-3 bg-black text-[#abafb1] focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+              className="w-full max-w-[340px] h-[52px] border border-[#cfd3d4] text-lg font-poppins-regular px-4 py-3 bg-black text-[#abafb1] focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
               style={{
                 WebkitAppearance: "none",
                 MozAppearance: "none",
@@ -101,12 +101,12 @@ function PersonalDetailsPageInner() {
             </select>
 
             {/* Name */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.name")} *
             </label>
             <input
               type="text"
-              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
               placeholder={t("personaldetails.namePlaceholder")}
               value={data.name}
               onChange={(e) => {
@@ -121,7 +121,7 @@ function PersonalDetailsPageInner() {
             <div></div>
             <input
               type="text"
-              className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+              className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
               placeholder={t("personaldetails.surnamePlaceholder")}
               value={data.surname}
               onChange={(e) => {
@@ -133,10 +133,10 @@ function PersonalDetailsPageInner() {
             />
 
             {/* Billing address */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-start pt-2">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-start pt-2 block md:inline md:text-left md:pr-4 md:self-start md:pt-2 mb-3 md:mb-0">
               {t("personaldetails.billingAddress")}
             </label>
-            <div className="flex flex-col gap-2 max-w-[340px] col-span-1">
+            <div className="flex flex-col gap-2 max-w-[340px] col-span-1 md:col-span-1">
               <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] text-base cursor-pointer">
                 <input
                   type="radio"
@@ -160,10 +160,10 @@ function PersonalDetailsPageInner() {
             </div>
 
             {/* Birth date with calendar icon */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.birthDate")} *
             </label>
-            <div className="relative max-w-[340px] col-span-1">
+            <div className="relative max-w-[340px] col-span-1 md:col-span-1">
               <input
                 id="birthDateInput"
                 type="date"
@@ -179,34 +179,34 @@ function PersonalDetailsPageInner() {
             </div>
 
             {/* Email */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.email")} *
             </label>
             <input
               type="email"
-              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
               placeholder={t("personaldetails.emailPlaceholder")}
               value={data.email}
               onChange={(e) => update({ email: e.target.value })}
             />
 
             {/* Repeat Email */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.repeatEmail")} *
             </label>
             <input
               type="email"
-              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
               placeholder={t("personaldetails.repeatEmailPlaceholder")}
               value={data.repeatEmail}
               onChange={(e) => update({ repeatEmail: e.target.value })}
             />
 
             {/* Phone */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.phone")} *
             </label>
-            <div className="max-w-[340px] col-span-1">
+            <div className="max-w-[340px] col-span-1 md:col-span-1">
               <PhoneInput
                 country={"de"}
                 value={data.phone}
@@ -225,13 +225,13 @@ function PersonalDetailsPageInner() {
 
             {/* Submit (empty label for alignment) */}
             <div></div>
-            <div className="flex flex-col items-end justify-end w-full col-span-1">
+            <div className="flex flex-col items-end justify-end w-full col-span-1 md:col-span-1">
               {error && (
                 <span className="text-red-400 text-xs mb-2">{error}</span>
               )}
               <button
                 type="submit"
-                className="mt-8 w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
+                className="mt-8 w-full md:w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
               >
                 {t("personaldetails.next")}
               </button>
