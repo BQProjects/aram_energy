@@ -64,11 +64,7 @@ function SepaMandatePageInner() {
     }, 3000); // Poll every 3 seconds
 
     return () => clearInterval(pollInterval);
-  }, [
-    sessionId,
-    emailConfirmedFromDB,
-    updateSepaForm,
-  ]);
+  }, [sessionId, emailConfirmedFromDB, updateSepaForm]);
 
   // Check email confirmation status on component mount
   useEffect(() => {
@@ -249,7 +245,6 @@ function SepaMandatePageInner() {
     }
 
     try {
-
       // Call final submission endpoint
       const res = await fetch("/api/final-submission", {
         method: "POST",
@@ -283,14 +278,17 @@ function SepaMandatePageInner() {
         <div className="w-full flex justify-center pb-10">
           <Stepper currentStep={5} t={t} />
         </div>
-        <div className="flex items-start gap-32 w-full max-w-[1146px] mx-auto mt-8">
+        <div className="flex flex-col md:flex-row items-start gap-8 md:gap-32 w-full max-w-[1146px] mx-auto mt-8 px-4 md:px-0">
           {/* Left: SepaCard */}
           <SepaCard />
           {/* Right: SEPA Mandate UI */}
-          <form className="flex flex-col gap-8 flex-1" onSubmit={handleSubmit}>
+          <form
+            className="flex flex-col gap-6 md:gap-8 flex-1 w-full md:w-auto"
+            onSubmit={handleSubmit}
+          >
             {/* SEPA title */}
-            <div className="flex flex-col flex-shrink-0 items-start gap-3 pt-4 pb-2 px-6 w-[650px] h-[3.625rem] border-2 border-[#cfd3d4] bg-white/[.74]">
-              <div className="flex items-center gap-4 self-stretch h-[2.5625rem]">
+            <div className="flex flex-col flex-shrink-0 items-start gap-3 pt-4 pb-2 px-4 md:px-6 w-full md:w-[650px] h-auto md:h-[3.625rem] border-2 border-[#cfd3d4] bg-white/[.74]">
+              <div className="flex items-center gap-4 self-stretch h-auto md:h-[2.5625rem]">
                 <div className="input_content-1 flex flex-col justify-between items-start self-stretch text-black font-inter text-base leading-[normal]">
                   {t("sepaMandate.title")}
                 </div>
@@ -298,8 +296,8 @@ function SepaMandatePageInner() {
             </div>
 
             {/* IBAN field */}
-            <div className="flex items-center gap-6 w-[650px]">
-              <label className="w-48 text-left text-[#ABAFB1] font-poppins-regular text-xl">
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 w-full md:w-[650px]">
+              <label className="w-full md:w-48 text-left text-[#ABAFB1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0">
                 {t("sepaMandate.iban")}
               </label>
               <input
@@ -313,8 +311,8 @@ function SepaMandatePageInner() {
             </div>
 
             {/* Account holder field */}
-            <div className="flex items-center gap-6 w-[650px]">
-              <label className="w-48 text-left text-[#ABAFB1] font-poppins-regular text-xl">
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 w-full md:w-[650px]">
+              <label className="w-full md:w-48 text-left text-[#ABAFB1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0">
                 {t("sepaMandate.accountHolder")}
               </label>
               <input
@@ -330,11 +328,11 @@ function SepaMandatePageInner() {
             </div>
 
             {/* SEPA Agreement checkbox */}
-            <div className="flex gap-3">
+            <div className="flex gap-3 w-full md:w-[650px]">
               <input
                 type="checkbox"
                 id="sepaAgreement"
-                className="w-5 h-5 accent-[#FF9641]"
+                className="w-5 h-5 accent-[#FF9641] mt-1 md:mt-0"
                 checked={sepaForm.sepaAgreement}
                 onChange={(e) =>
                   updateSepaForm({ sepaAgreement: e.target.checked })
@@ -345,7 +343,7 @@ function SepaMandatePageInner() {
                 required
               />
               <div
-                className={`w-[650px] text-justify font-poppins-regular text-xl leading-relaxed ${
+                className={`flex-1 text-justify font-poppins-regular text-lg md:text-xl leading-relaxed ${
                   sepaForm.iban.trim() && sepaForm.accountHolder.trim()
                     ? "text-[#abafb1]"
                     : "text-[#666]"
@@ -359,55 +357,59 @@ function SepaMandatePageInner() {
             </div>
 
             {/* Confirmation email checkbox */}
-            <div className="flex items-center gap-3 w-[650px]">
-              <input
-                type="checkbox"
-                id="confirmationEmail"
-                className="w-5 h-5 accent-[#FF9641]"
-                checked={!!emailConfirmedFromDB}
-                onChange={async (e) => {
-                  if (e.target.checked) {
-                    handleSendConfirmationEmail();
-                  } else {
-                    setEmailSent(false);
-                    setEmailConfirmedFromDB(false);
+            <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-3 w-full md:w-[650px]">
+              <div className="flex items-center gap-3">
+                <input
+                  type="checkbox"
+                  id="confirmationEmail"
+                  className="w-5 h-5 accent-[#FF9641]"
+                  checked={!!emailConfirmedFromDB}
+                  onChange={async (e) => {
+                    if (e.target.checked) {
+                      handleSendConfirmationEmail();
+                    } else {
+                      setEmailSent(false);
+                      setEmailConfirmedFromDB(false);
+                    }
+                  }}
+                  disabled={
+                    !sepaForm.sepaAgreement ||
+                    !sepaForm.iban.trim() ||
+                    !sepaForm.accountHolder.trim()
                   }
-                }}
-                disabled={
-                  !sepaForm.sepaAgreement ||
-                  !sepaForm.iban.trim() ||
-                  !sepaForm.accountHolder.trim()
-                }
-                required
-              />
-              <label
-                htmlFor="confirmationEmail"
-                className={`font-poppins-regular text-xl capitalize select-none ${
-                  sepaForm.sepaAgreement &&
-                  sepaForm.iban.trim() &&
-                  sepaForm.accountHolder.trim()
-                    ? "text-[#abafb1]"
-                    : "text-[#666]"
-                }`}
-              >
-                {t("sepaMandate.confirmEmail")}
-              </label>
+                  required
+                />
+                <label
+                  htmlFor="confirmationEmail"
+                  className={`font-poppins-regular text-lg md:text-xl capitalize select-none ${
+                    sepaForm.sepaAgreement &&
+                    sepaForm.iban.trim() &&
+                    sepaForm.accountHolder.trim()
+                      ? "text-[#abafb1]"
+                      : "text-[#666]"
+                  }`}
+                >
+                  {t("sepaMandate.confirmEmail")}
+                </label>
+              </div>
 
               {/* Status indicators - Use our state that polls from DB */}
-              {emailSent && !emailConfirmedFromDB && (
-                <span className="text-yellow-400 text-sm ml-2">
-                  📧 {t("sepaMandate.waitingConfirmation")} (Check your email)
-                </span>
-              )}
-              {emailConfirmedFromDB && (
-                <span className="text-green-400 text-sm ml-2">
-                  ✅ {t("sepaMandate.emailConfirmed")}
-                </span>
-              )}
+              <div className="flex flex-col md:flex-row md:ml-auto gap-2">
+                {emailSent && !emailConfirmedFromDB && (
+                  <span className="text-yellow-400 text-sm">
+                    📧 {t("sepaMandate.waitingConfirmation")} (Check your email)
+                  </span>
+                )}
+                {emailConfirmedFromDB && (
+                  <span className="text-green-400 text-sm">
+                    ✅ {t("sepaMandate.emailConfirmed")}
+                  </span>
+                )}
+              </div>
             </div>
 
             {/* Payment terms + submit */}
-            <div className="flex items-center justify-between gap-8 mt-4 w-[650px]">
+            <div className="flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-8 mt-4 w-full md:w-[650px]">
               <div className="underline text-[#abafb1] font-['Poppins'] text-sm">
                 {t("sepaMandate.paymentTerms")}
                 <br />
@@ -418,7 +420,7 @@ function SepaMandatePageInner() {
               <button
                 type="submit"
                 disabled={!allValid || submitting}
-                className={`flex justify-center items-center gap-2.5 w-[12.25rem] h-14 rounded shadow transition-colors font-['Inter'] text-lg font-medium
+                className={`flex justify-center items-center gap-2.5 w-full md:w-[12.25rem] h-14 rounded shadow transition-colors font-['Inter'] text-lg font-medium
                   ${
                     allValid
                       ? "bg-[#ff9641] text-white hover:bg-[#e88537] cursor-pointer"

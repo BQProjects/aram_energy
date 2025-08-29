@@ -21,7 +21,6 @@ export default function Addressdetails() {
   const { data: personalDetails } = usePersonalDetailsSection();
   const [error, setError] = React.useState("");
 
-
   useEffect(() => {
     // Ensure the `billing` field is synchronized on page load
     if (personalDetails.billing !== addressDetails.billing) {
@@ -99,22 +98,22 @@ export default function Addressdetails() {
         <div className="w-full flex justify-center">
           <Stepper currentStep={4} t={t} />
         </div>
-        <div className="flex items-start gap-8 w-full max-w-[1146px] mx-auto mt-8">
+        <div className="flex flex-col md:flex-row items-start gap-4 md:gap-8 w-full max-w-[1146px] mx-auto mt-8 px-4 md:px-0">
           {/* Left: AddressCard */}
           <AddressCard />
           {/* Right: Address details form */}
           <form
-            className="rounded-xl shadow-lg pl-8 pb-8 w-full max-w-2xl flex flex-col"
+            className="rounded-xl shadow-lg p-4 md:pl-8 pb-8 w-full max-w-2xl flex flex-col"
             onSubmit={handleSubmit}
           >
-            <div className="w-full grid grid-cols-2 gap-x-4 gap-y-6 items-center">
+            <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 items-start">
               {/* Postal Code */}
-              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.postalCode")} *
               </label>
               <input
                 type="text"
-                className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                 placeholder={t("addressdetails.postalCodePlaceholder")}
                 value={addressDetails.postalCode}
                 onChange={(e) =>
@@ -123,12 +122,12 @@ export default function Addressdetails() {
               />
 
               {/* Location */}
-              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.location")} *
               </label>
               <input
                 type="text"
-                className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                 placeholder={t("addressdetails.locationPlaceholder")}
                 value={addressDetails.location}
                 onChange={(e) =>
@@ -137,12 +136,12 @@ export default function Addressdetails() {
               />
 
               {/* Street */}
-              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.street")} *
               </label>
               <input
                 type="text"
-                className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                 placeholder={t("addressdetails.streetPlaceholder")}
                 value={addressDetails.street}
                 onChange={(e) =>
@@ -151,10 +150,10 @@ export default function Addressdetails() {
               />
 
               {/* House Number and Suffix side by side */}
-              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.houseNumberAndSuffix")}
               </label>
-              <div className="flex gap-4 col-span-1">
+              <div className="flex gap-4 w-full">
                 <input
                   type="text"
                   className="w-1/2 max-w-[160px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
@@ -176,10 +175,10 @@ export default function Addressdetails() {
               </div>
 
               {/* Move-in Status */}
-              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-3 md:mb-0 md:text-left md:pr-4 md:self-start md:pt-2">
                 {t("addressdetails.moveInStatus")}
               </label>
-              <div className="flex gap-4 flex-col">
+              <div className="flex gap-4 flex-col w-full">
                 <label className="flex items-center gap-2 text-[#abafb1] font-poppins-regular text-sm cursor-pointer w-full">
                   <input
                     type="radio"
@@ -207,12 +206,12 @@ export default function Addressdetails() {
               </div>
 
               {/* Desired Start of Delivery */}
-              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.desiredStart")}
               </label>
               <input
                 type="date"
-                className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-[#ABAFB1] focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-[#ABAFB1] focus:outline-none focus:border-[#FF9641] transition-colors"
                 value={addressDetails.desiredStart}
                 onChange={(e) =>
                   updateAddressDetails({ desiredStart: e.target.value })
@@ -220,12 +219,12 @@ export default function Addressdetails() {
               />
 
               {/* Previous Supplier */}
-              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.previousSupplier")}
               </label>
               <input
                 type="text"
-                className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                 placeholder={t("addressdetails.previousSupplierPlaceholder")}
                 value={addressDetails.previousSupplier}
                 onChange={(e) =>
@@ -234,12 +233,12 @@ export default function Addressdetails() {
               />
 
               {/* Previous Customer No. */}
-              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.previousCustomerNo")}
               </label>
               <input
                 type="text"
-                className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                 placeholder={t("addressdetails.previousCustomerNoPlaceholder")}
                 value={addressDetails.previousCustomerNo}
                 onChange={(e) =>
@@ -248,12 +247,12 @@ export default function Addressdetails() {
               />
 
               {/* Meter No. */}
-              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.meterNo")}
               </label>
               <input
                 type="text"
-                className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                 placeholder={t("addressdetails.meterNoPlaceholder")}
                 value={addressDetails.meterNo}
                 onChange={(e) =>
@@ -261,19 +260,19 @@ export default function Addressdetails() {
                 }
               />
 
-              <div className="w-full col-span-2 text-[#abafb1] font-poppins-regular text-sm">
+              <div className="w-full col-span-1 md:col-span-2 text-[#abafb1] font-poppins-regular text-sm">
                 {t("addressdetails.supplierSwitchInfo")}
               </div>
               <div></div>
               <div></div>
 
               {/* Meter Location No. */}
-              <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.meterLocationNo")}
               </label>
               <input
                 type="text"
-                className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                 placeholder={t("addressdetails.meterLocationNoPlaceholder")}
                 value={addressDetails.meterLocationNo}
                 onChange={(e) =>
@@ -284,16 +283,16 @@ export default function Addressdetails() {
               {/* Extra billing address fields if billing is different */}
               {addressDetails.billing === "different" && (
                 <>
-                  <div className="w-full col-span-2 text-[#abafb1] font-poppins-medium text-4xl mt-10">
+                  <div className="w-full col-span-1 md:col-span-2 text-[#abafb1] font-poppins-medium text-3xl md:text-4xl mt-10">
                     {t("addressdetails.billingAddress")}
                   </div>
                   <div></div>
                   <div></div>
 
-                  <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+                  <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                     {t("addressdetails.billingHouseNumberAndSuffix")}
                   </label>
-                  <div className="flex gap-4 col-span-1">
+                  <div className="flex gap-4 w-full">
                     <input
                       type="text"
                       className="w-1/2 max-w-[160px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
@@ -322,12 +321,12 @@ export default function Addressdetails() {
                     />
                   </div>
 
-                  <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+                  <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                     {t("addressdetails.billingStreet")}
                   </label>
                   <input
                     type="text"
-                    className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                    className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                     placeholder={t("addressdetails.billingStreetPlaceholder")}
                     value={addressDetails.billingStreet}
                     onChange={(e) =>
@@ -335,12 +334,12 @@ export default function Addressdetails() {
                     }
                   />
 
-                  <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+                  <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                     {t("addressdetails.billingCity")}
                   </label>
                   <input
                     type="text"
-                    className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                    className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                     placeholder={t("addressdetails.billingCityPlaceholder")}
                     value={addressDetails.billingCity}
                     onChange={(e) =>
@@ -348,12 +347,12 @@ export default function Addressdetails() {
                     }
                   />
 
-                  <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+                  <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                     {t("addressdetails.billingPostal")}
                   </label>
                   <input
                     type="text"
-                    className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                    className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                     placeholder={t("addressdetails.billingPostalPlaceholder")}
                     value={addressDetails.billingPostal}
                     onChange={(e) =>
@@ -361,12 +360,12 @@ export default function Addressdetails() {
                     }
                   />
 
-                  <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center">
+                  <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                     {t("addressdetails.billingCountry")}
                   </label>
                   <input
                     type="text"
-                    className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1"
+                    className="w-full md:max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors"
                     placeholder={t("addressdetails.billingCountryPlaceholder")}
                     value={addressDetails.billingCountry}
                     onChange={(e) =>
@@ -378,13 +377,13 @@ export default function Addressdetails() {
 
               {/* Submit (empty label for alignment) */}
               <div></div>
-              <div className="flex flex-col items-end justify-end w-full col-span-1">
+              <div className="flex flex-col items-end justify-end w-full">
                 {error && (
                   <span className="text-red-400 text-xs mb-2">{error}</span>
                 )}
                 <button
                   type="submit"
-                  className="mt-4 w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
+                  className="mt-4 w-full md:w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
                 >
                   {t("addressdetails.next")}
                 </button>

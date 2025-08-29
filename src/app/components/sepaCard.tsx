@@ -7,7 +7,7 @@ const SepaCard: React.FC = () => {
   const { t } = useLanguage();
 
   return (
-    <div className="card_2 flex-shrink-0 w-[21.8125rem] h-[750px] bg-white shadow-[0_1px_5px_0_rgba(45,62,80,0.12)] flex flex-col relative ml-0 p-0">
+    <div className="card_2 flex-shrink-0 w-full md:w-[21.8125rem] h-[750px] bg-white shadow-[0_1px_5px_0_rgba(45,62,80,0.12)] flex flex-col relative ml-0 p-0">
       {/* Orange vertical bar */}
       <div className="absolute left-0 top-0 w-1.5 h-full bg-[#ff9641]" />
       {/* Content */}
