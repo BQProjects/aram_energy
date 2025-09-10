@@ -7,7 +7,7 @@ export async function GET(req: NextRequest) {
 
   const client = await clientPromise;
   const db = client.db("germany_data");
-  const collection = db.collection("postal_codes");
+  const collection = db.collection("energy_tariffs");
 
   // Find postal codes that start with the search string (case-insensitive)
   const results = await collection

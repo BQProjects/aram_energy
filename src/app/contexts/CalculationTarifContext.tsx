@@ -27,11 +27,11 @@ interface PersonalDetails {
 }
 
 interface SelectedTariff {
-  selectedTariffId: number;
+  selectedTariffId: string;
 }
 
 interface SelectedTariffData {
-  id: number;
+  id: string;
   name: string;
   basePrice: string;
   laborPrice: string;
@@ -112,10 +112,10 @@ const defaultState: CalculationTarifState = {
     phone: "",
   },
   selectedTariff: {
-    selectedTariffId: 0,
+    selectedTariffId: "",
   },
   selectedTariffData: {
-    id: 0,
+    id: "",
     name: "",
     basePrice: "",
     laborPrice: "",
@@ -227,16 +227,8 @@ export const CalculationTarifProvider = ({
   );
 
   const fetchPostalData = async (): Promise<PostalOption[]> => {
-    try {
-      const response = await fetch("/api/postal-data");
-      if (!response.ok) {
-        throw new Error("Failed to fetch postal data");
-      }
-      return await response.json();
-    } catch (error) {
-      console.error("Error fetching postal data:", error);
-      return [];
-    }
+    // Return empty array since postal options are fetched dynamically in the component
+    return [];
   };
 
   // Fetch data from MongoDB
