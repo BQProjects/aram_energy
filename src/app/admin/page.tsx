@@ -24,13 +24,9 @@ export default function AdminLogin() {
       });
 
       if (response.ok) {
-        const data = await response.json();
-        // Store the token in a cookie (accessible by middleware)
-        document.cookie = `adminToken=${data.token}; path=/; max-age=86400; samesite=strict`;
         router.push("/admin/dashboard");
       } else {
-        const errorData = await response.json();
-        setError(errorData.error || "Invalid credentials");
+        setError("Invalid credentials");
       }
     } catch {
       setError("Login failed. Please try again.");

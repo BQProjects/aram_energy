@@ -1,35 +1,15 @@
 import { NextRequest, NextResponse } from "next/server";
-import jwt from "jsonwebtoken";
 import clientPromise from "@/lib/mongodb";
-
-const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-this";
+import { verifyAdminAccess } from "@/lib/adminAuth";
 
 export async function POST(request: NextRequest) {
+  // Verify admin access
+  const authResult = await verifyAdminAccess(request);
+  if (!authResult.authorized) {
+    return authResult.response!;
+  }
+
   try {
-    // Verify admin token
-    const authHeader = request.headers.get("authorization");
-    if (!authHeader || !authHeader.startsWith("Bearer ")) {
-      return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
-    }
-
-    const token = authHeader.split(" ")[1];
-    let decoded;
-    try {
-      decoded = jwt.verify(token, JWT_SECRET) as {
-        username: string;
-        role: string;
-      };
-    } catch {
-      return NextResponse.json({ error: "Invalid token" }, { status: 401 });
-    }
-
-    if (decoded.role !== "admin") {
-      return NextResponse.json(
-        { error: "Admin access required" },
-        { status: 403 }
-      );
-    }
-
     // Connect to MongoDB
     const client = await clientPromise;
     const db = client.db();
@@ -40,7 +20,6 @@ export async function POST(request: NextRequest) {
     for (const collectionName of collections) {
       try {
         await db.collection(collectionName).deleteMany({});
-        console.log(`Cleared collection: ${collectionName}`);
       } catch (error) {
         console.error(`Error clearing collection ${collectionName}:`, error);
       }

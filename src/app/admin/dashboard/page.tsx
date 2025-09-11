@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import LogoutButton from "../../components/LogoutButton";
 
 interface Submission {
   _id: string;
@@ -72,42 +73,15 @@ export default function AdminDashboard() {
   const router = useRouter();
 
   const fetchDashboardStats = useCallback(async () => {
-    console.log("Dashboard: Fetching dashboard stats...");
     try {
-      // Get token from cookie
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("adminToken="))
-        ?.split("=")[1];
-
-      console.log(
-        "Dashboard: Using token:",
-        token ? "Token present" : "No token"
-      );
-
-      if (!token) {
-        console.log("Dashboard: No token found, redirecting to login");
-        router.push("/admin");
-        return;
-      }
-
+      // Use credentials: 'include' to send httpOnly cookies
       const response = await fetch("/api/admin/dashboard", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials: "include", // This sends httpOnly cookies
       });
-
-      console.log("Dashboard: API response status:", response.status);
       if (response.ok) {
         const data = await response.json();
-        console.log("Dashboard: Received data:", data);
         setStats(data);
       } else {
-        const errorData = await response.json();
-        console.log("Dashboard: API error:", errorData);
-        // Token might be invalid - clear cookie
-        document.cookie =
-          "adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
         router.push("/admin");
       }
     } catch (error) {
@@ -118,31 +92,9 @@ export default function AdminDashboard() {
   }, [router]);
 
   useEffect(() => {
-    // Check if user is authenticated
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("adminToken="))
-      ?.split("=")[1];
-
-    console.log(
-      "Dashboard: Checking token:",
-      token ? "Token exists" : "No token"
-    );
-    if (!token) {
-      console.log("Dashboard: No token found, redirecting to login");
-      router.push("/admin");
-      return;
-    }
-
-    // Fetch dashboard stats
+    // Fetch dashboard stats immediately (authentication will be checked server-side)
     fetchDashboardStats();
-  }, [router, fetchDashboardStats]);
-
-  const handleLogout = () => {
-    document.cookie =
-      "adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    router.push("/admin");
-  };
+  }, [fetchDashboardStats]);
 
   const handleClearData = async () => {
     if (clearDataConfirm !== "CLEAR ALL DATA") {
@@ -152,15 +104,10 @@ export default function AdminDashboard() {
 
     setModalLoading(true);
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("adminToken="))
-        ?.split("=")[1];
-
       const response = await fetch("/api/admin/clear-data", {
         method: "POST",
+        credentials: "include", // Send httpOnly cookies
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
       });
@@ -200,15 +147,10 @@ export default function AdminDashboard() {
 
     setModalLoading(true);
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("adminToken="))
-        ?.split("=")[1];
-
       const response = await fetch("/api/admin/update-credentials", {
         method: "POST",
+        credentials: "include", // Send httpOnly cookies
         headers: {
-          Authorization: `Bearer ${token}`,
           "Content-Type": "application/json",
         },
         body: JSON.stringify({
@@ -219,9 +161,7 @@ export default function AdminDashboard() {
 
       if (response.ok) {
         alert("Credentials updated successfully! Please login again.");
-        // Clear token and redirect to login
-        document.cookie =
-          "adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
+        // Redirect to login (server will clear the cookie)
         router.push("/admin");
       } else {
         const error = await response.json();
@@ -252,12 +192,7 @@ export default function AdminDashboard() {
             <div className="flex items-center">
               <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
             </div>
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium"
-            >
-              Logout
-            </button>
+            <LogoutButton />
           </div>
         </div>
       </header>
@@ -365,7 +300,7 @@ export default function AdminDashboard() {
               Clear Sessions Data
             </h3>
             <p className="text-gray-300 mb-4">
-              This action will permanently delete all session data. This cannot
+              This action will permanently delete all the pending session data. Advice you to do this once a week. This cannot
               be undone.
             </p>
             <div className="mb-4">

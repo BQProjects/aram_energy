@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
+import LogoutButton from "../../components/LogoutButton";
 
 interface Submission {
   _id: string;
@@ -59,32 +60,16 @@ export default function AdminSubmissions() {
 
   const fetchSubmissions = useCallback(async () => {
     try {
-      // Get token from cookie
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("adminToken="))
-        ?.split("=")[1];
-
-      if (!token) {
-        router.push("/admin");
-        return;
-      }
-
+      // Use credentials: 'include' to send httpOnly cookies
       const response = await fetch("/api/admin/submissions", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials: "include", // This sends httpOnly cookies
       });
 
       if (response.ok) {
         const data = await response.json();
         setSubmissions(data);
       } else {
-        if (response.status === 401) {
-          document.cookie =
-            "adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-          router.push("/admin");
-        }
+        router.push("/admin");
       }
     } catch (error) {
       console.error("Failed to fetch submissions:", error);
@@ -94,19 +79,9 @@ export default function AdminSubmissions() {
   }, [router]);
 
   useEffect(() => {
-    // Check if user is authenticated
-    const token = document.cookie
-      .split("; ")
-      .find((row) => row.startsWith("adminToken="))
-      ?.split("=")[1];
-
-    if (!token) {
-      router.push("/admin");
-      return;
-    }
-
+    // Fetch submissions immediately (authentication will be checked server-side)
     fetchSubmissions();
-  }, [router, fetchSubmissions]);
+  }, [fetchSubmissions]);
 
   const filteredSubmissions = submissions.filter(
     (submission) =>
@@ -121,12 +96,6 @@ export default function AdminSubmissions() {
         ?.toLowerCase()
         .includes(searchTerm.toLowerCase())
   );
-
-  const handleLogout = () => {
-    document.cookie =
-      "adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    router.push("/admin");
-  };
 
   if (loading) {
     return (
@@ -153,12 +122,7 @@ export default function AdminSubmissions() {
                 Manage Submissions
               </h1>
             </div>
-            <button
-              onClick={handleLogout}
-              className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium"
-            >
-              Logout
-            </button>
+            <LogoutButton />
           </div>
         </div>
       </header>

@@ -74,20 +74,9 @@ export default function ManageTariff() {
 
   const fetchTariffs = useCallback(async () => {
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("adminToken="))
-        ?.split("=")[1];
-
-      if (!token) {
-        router.push("/admin");
-        return;
-      }
-
+      // Use credentials: 'include' to send httpOnly cookies
       const response = await fetch("/api/admin/tariffs", {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        credentials: "include", // This sends httpOnly cookies
       });
 
       if (response.ok) {
@@ -95,13 +84,8 @@ export default function ManageTariff() {
         setTariffs(data);
         setFilteredTariffs(data);
       } else {
-        if (response.status === 401) {
-          document.cookie =
-            "adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-          router.push("/admin");
-        } else {
-          console.error("Failed to fetch tariffs");
-        }
+        console.error("Failed to fetch tariffs - redirecting to login");
+        router.push("/admin");
       }
     } catch (error) {
       console.error("Error fetching tariffs:", error);
@@ -141,10 +125,17 @@ export default function ManageTariff() {
     setExpandedLocations(newExpanded);
   };
 
-  const handleLogout = () => {
-    document.cookie =
-      "adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    router.push("/admin");
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      router.push("/admin");
+    }
   };
 
   const handleAddTariff = () => {
@@ -240,11 +231,6 @@ export default function ManageTariff() {
     setSaving(true);
 
     try {
-      const token = document.cookie
-        .split("; ")
-        .find((row) => row.startsWith("adminToken="))
-        ?.split("=")[1];
-
       const url = editingTariff ? "/api/admin/tariffs" : "/api/admin/tariffs";
       const method = editingTariff ? "PUT" : "POST";
 
@@ -254,9 +240,9 @@ export default function ManageTariff() {
 
       const response = await fetch(url, {
         method,
+        credentials: "include", // Send httpOnly cookies
         headers: {
           "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify(body),
       });

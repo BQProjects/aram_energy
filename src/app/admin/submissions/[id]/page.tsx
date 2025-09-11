@@ -66,33 +66,17 @@ function ViewSubmissionContent() {
 
     const fetchSubmission = async () => {
       try {
-        const token = document.cookie
-          .split("; ")
-          .find((row) => row.startsWith("adminToken="))
-          ?.split("=")[1];
-
-        if (!token) {
-          router.push("/admin");
-          return;
-        }
-
+        // Use credentials: 'include' to send httpOnly cookies
         const response = await fetch(`/api/admin/submissions/${id}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          credentials: "include", // This sends httpOnly cookies
         });
 
         if (response.ok) {
           const data = await response.json();
           setSubmission(data);
         } else {
-          if (response.status === 401) {
-            document.cookie =
-              "adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-            router.push("/admin");
-          } else {
-            console.error("Failed to fetch submission");
-          }
+          console.error("Failed to fetch submission - redirecting to login");
+          router.push("/admin");
         }
       } catch (error) {
         console.error("Error fetching submission:", error);
@@ -104,10 +88,17 @@ function ViewSubmissionContent() {
     fetchSubmission();
   }, [id, router]);
 
-  const handleLogout = () => {
-    document.cookie =
-      "adminToken=; path=/; expires=Thu, 01 Jan 1970 00:00:00 GMT";
-    router.push("/admin");
+  const handleLogout = async () => {
+    try {
+      await fetch("/api/admin/logout", {
+        method: "POST",
+        credentials: "include",
+      });
+    } catch (error) {
+      console.error("Logout error:", error);
+    } finally {
+      router.push("/admin");
+    }
   };
 
   const renderValue = (
