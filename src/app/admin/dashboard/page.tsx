@@ -313,9 +313,7 @@ export default function AdminDashboard() {
                       key={index}
                       className="border border-gray-700 rounded-md p-4 cursor-pointer hover:bg-gray-700 transition-colors"
                       onClick={() =>
-                        router.push(
-                          `/admin/ViewSubmission?id=${submission._id}`
-                        )
+                        router.push(`/admin/submissions/${submission._id}`)
                       }
                     >
                       <div className="flex justify-between items-start">

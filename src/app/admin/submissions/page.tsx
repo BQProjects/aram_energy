@@ -199,7 +199,7 @@ export default function AdminSubmissions() {
                   key={submission._id}
                   className="px-6 py-4 cursor-pointer hover:bg-gray-700 transition-colors"
                   onClick={() =>
-                    router.push(`/admin/ViewSubmission?id=${submission._id}`)
+                    router.push(`/admin/submissions/${submission._id}`)
                   }
                 >
                   <div className="flex items-center justify-between">

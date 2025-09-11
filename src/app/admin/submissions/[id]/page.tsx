@@ -1,6 +1,6 @@
 "use client";
 import React, { useEffect, useState, Suspense } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter, useSearchParams } from "next/navigation";
 
 interface Submission {
   _id: string;
@@ -55,8 +55,8 @@ function ViewSubmissionContent() {
   const [submission, setSubmission] = useState<Submission | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
-  const searchParams = useSearchParams();
-  const id = searchParams.get("id");
+  const params = useParams();
+  const id = params.id as string;
 
   useEffect(() => {
     if (!id) {
