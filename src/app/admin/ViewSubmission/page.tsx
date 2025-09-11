@@ -1,5 +1,5 @@
 "use client";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 
 interface Submission {
@@ -51,7 +51,7 @@ interface Submission {
   [key: string]: string | number | boolean | object | undefined;
 }
 
-export default function ViewSubmission() {
+function ViewSubmissionContent() {
   const [submission, setSubmission] = useState<Submission | null>(null);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
@@ -182,32 +182,40 @@ export default function ViewSubmission() {
 
     const getStatusColor = (status: string) => {
       switch (status.toLowerCase()) {
-        case 'pending':
-          return 'bg-yellow-500';
-        case 'approved':
-          return 'bg-green-500';
-        case 'rejected':
-          return 'bg-red-500';
-        case 'completed':
-          return 'bg-blue-500';
+        case "pending":
+          return "bg-yellow-500";
+        case "approved":
+          return "bg-green-500";
+        case "rejected":
+          return "bg-red-500";
+        case "completed":
+          return "bg-blue-500";
         default:
-          return 'bg-gray-500';
+          return "bg-gray-500";
       }
     };
 
-    const formatDate = (dateValue: string | { $date: { $numberLong: string } }) => {
+    const formatDate = (
+      dateValue: string | { $date: { $numberLong: string } }
+    ) => {
       try {
         let dateString: string;
-        if (typeof dateValue === 'string') {
+        if (typeof dateValue === "string") {
           dateString = dateValue;
-        } else if (dateValue && dateValue.$date && dateValue.$date.$numberLong) {
-          dateString = new Date(parseInt(dateValue.$date.$numberLong)).toISOString();
+        } else if (
+          dateValue &&
+          dateValue.$date &&
+          dateValue.$date.$numberLong
+        ) {
+          dateString = new Date(
+            parseInt(dateValue.$date.$numberLong)
+          ).toISOString();
         } else {
-          return 'Invalid Date';
+          return "Invalid Date";
         }
         return new Date(dateString).toLocaleDateString();
       } catch {
-        return 'Invalid Date';
+        return "Invalid Date";
       }
     };
 
@@ -224,7 +232,11 @@ export default function ViewSubmission() {
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${getStatusColor(submission.status)} text-white font-bold text-lg mb-2`}>
+                <div
+                  className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${getStatusColor(
+                    submission.status
+                  )} text-white font-bold text-lg mb-2`}
+                >
                   {submission.status.charAt(0).toUpperCase()}
                 </div>
                 <h3 className="text-lg font-semibold text-white">Status</h3>
@@ -240,11 +252,21 @@ export default function ViewSubmission() {
                 </p>
               </div>
               <div className="text-center">
-                <div className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${submission.emailConfirmed ? 'bg-green-500' : 'bg-red-500'} text-white mb-2`}>
-                  <span className="text-2xl">{submission.emailConfirmed ? '✓' : '✗'}</span>
+                <div
+                  className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${
+                    submission.emailConfirmed ? "bg-green-500" : "bg-red-500"
+                  } text-white mb-2`}
+                >
+                  <span className="text-2xl">
+                    {submission.emailConfirmed ? "✓" : "✗"}
+                  </span>
                 </div>
-                <h3 className="text-lg font-semibold text-white">Email Confirmed</h3>
-                <p className="text-gray-400">{submission.emailConfirmed ? 'Yes' : 'No'}</p>
+                <h3 className="text-lg font-semibold text-white">
+                  Email Confirmed
+                </h3>
+                <p className="text-gray-400">
+                  {submission.emailConfirmed ? "Yes" : "No"}
+                </p>
               </div>
             </div>
           </div>
@@ -260,14 +282,21 @@ export default function ViewSubmission() {
           </div>
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {Object.entries(submission.calculationTarif).map(([key, value]) => (
-                <div key={key} className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
-                  <label className="block text-sm font-medium text-gray-400 mb-2 capitalize">
-                    {key.replace(/([A-Z])/g, ' $1').trim()}
-                  </label>
-                  <div className="text-white font-medium">{renderValue(value, key)}</div>
-                </div>
-              ))}
+              {Object.entries(submission.calculationTarif).map(
+                ([key, value]) => (
+                  <div
+                    key={key}
+                    className="bg-gray-800/50 rounded-lg p-4 border border-gray-600"
+                  >
+                    <label className="block text-sm font-medium text-gray-400 mb-2 capitalize">
+                      {key.replace(/([A-Z])/g, " $1").trim()}
+                    </label>
+                    <div className="text-white font-medium">
+                      {renderValue(value, key)}
+                    </div>
+                  </div>
+                )
+              )}
             </div>
           </div>
         </div>
@@ -282,14 +311,21 @@ export default function ViewSubmission() {
           </div>
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {Object.entries(submission.personalDetails).map(([key, value]) => (
-                <div key={key} className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
-                  <label className="block text-sm font-medium text-gray-400 mb-2 capitalize">
-                    {key.replace(/([A-Z])/g, ' $1').trim()}
-                  </label>
-                  <div className="text-white font-medium">{renderValue(value, key)}</div>
-                </div>
-              ))}
+              {Object.entries(submission.personalDetails).map(
+                ([key, value]) => (
+                  <div
+                    key={key}
+                    className="bg-gray-800/50 rounded-lg p-4 border border-gray-600"
+                  >
+                    <label className="block text-sm font-medium text-gray-400 mb-2 capitalize">
+                      {key.replace(/([A-Z])/g, " $1").trim()}
+                    </label>
+                    <div className="text-white font-medium">
+                      {renderValue(value, key)}
+                    </div>
+                  </div>
+                )
+              )}
             </div>
           </div>
         </div>
@@ -305,14 +341,20 @@ export default function ViewSubmission() {
           <div className="p-6">
             <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-600">
               <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {Object.entries(submission.selectedTariff.selectedTariffData).map(([key, value]) => (
+                {Object.entries(
+                  submission.selectedTariff.selectedTariffData
+                ).map(([key, value]) => (
                   <div key={key} className="text-center">
                     <div className="text-2xl font-bold text-orange-400 mb-1">
-                      {key === 'total' ? '€' : key === 'basePrice' || key === 'laborPrice' ? '€' : ''}
+                      {key === "total"
+                        ? "€"
+                        : key === "basePrice" || key === "laborPrice"
+                        ? "€"
+                        : ""}
                       {renderValue(value, key)}
                     </div>
                     <div className="text-sm text-gray-400 capitalize">
-                      {key.replace(/([A-Z])/g, ' $1').trim()}
+                      {key.replace(/([A-Z])/g, " $1").trim()}
                     </div>
                   </div>
                 ))}
@@ -332,11 +374,16 @@ export default function ViewSubmission() {
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {Object.entries(submission.addressDetails).map(([key, value]) => (
-                <div key={key} className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
+                <div
+                  key={key}
+                  className="bg-gray-800/50 rounded-lg p-4 border border-gray-600"
+                >
                   <label className="block text-sm font-medium text-gray-400 mb-2 capitalize">
-                    {key.replace(/([A-Z])/g, ' $1').trim()}
+                    {key.replace(/([A-Z])/g, " $1").trim()}
                   </label>
-                  <div className="text-white font-medium">{renderValue(value, key)}</div>
+                  <div className="text-white font-medium">
+                    {renderValue(value, key)}
+                  </div>
                 </div>
               ))}
             </div>
@@ -354,13 +401,18 @@ export default function ViewSubmission() {
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {Object.entries(submission.sepaForm).map(([key, value]) => (
-                <div key={key} className="bg-gray-800/50 rounded-lg p-4 border border-gray-600">
+                <div
+                  key={key}
+                  className="bg-gray-800/50 rounded-lg p-4 border border-gray-600"
+                >
                   <label className="block text-sm font-medium text-gray-400 mb-2 capitalize">
-                    {key.replace(/([A-Z])/g, ' $1').trim()}
+                    {key.replace(/([A-Z])/g, " $1").trim()}
                   </label>
                   <div className="text-white font-medium">
-                    {key === 'iban' ? (
-                      <span className="font-mono">{renderValue(value, key)}</span>
+                    {key === "iban" ? (
+                      <span className="font-mono">
+                        {renderValue(value, key)}
+                      </span>
                     ) : (
                       renderValue(value, key)
                     )}
@@ -432,5 +484,19 @@ export default function ViewSubmission() {
         {renderSubmissionDetails()}
       </main>
     </div>
+  );
+}
+
+export default function ViewSubmission() {
+  return (
+    <Suspense
+      fallback={
+        <div className="min-h-screen bg-gray-900 flex items-center justify-center">
+          <div className="animate-spin rounded-full h-32 w-32 border-b-2 border-orange-500"></div>
+        </div>
+      }
+    >
+      <ViewSubmissionContent />
+    </Suspense>
   );
 }

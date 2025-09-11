@@ -18,12 +18,12 @@ interface TariffData {
   Tariffs: Tariff[];
 }
 
-// MongoDB connection
-const client = await clientPromise;
-const db = client.db("germany_data");
-
 export async function GET(request: NextRequest) {
   try {
+    // MongoDB connection
+    const client = await clientPromise;
+    const db = client.db("germany_data");
+
     const { searchParams } = new URL(request.url);
     const plz = searchParams.get("plz");
     const type = searchParams.get("type"); // 'electricity' or 'gas'

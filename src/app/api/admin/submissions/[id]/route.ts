@@ -7,7 +7,7 @@ const JWT_SECRET = process.env.JWT_SECRET || "your-secret-key-change-this";
 
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     // Verify authentication
@@ -29,10 +29,12 @@ export async function GET(
     const client = await clientPromise;
     const db = client.db();
 
+    const { id } = await params;
+
     // Fetch the specific submission
     const submission = await db
       .collection("submissions")
-      .findOne({ _id: new ObjectId(params.id) });
+      .findOne({ _id: new ObjectId(id) });
 
     if (!submission) {
       return NextResponse.json(
