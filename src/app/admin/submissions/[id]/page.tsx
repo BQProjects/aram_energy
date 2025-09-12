@@ -188,8 +188,8 @@ function ViewSubmissionContent() {
       <div className="space-y-8">
         {/* Status Overview Card */}
         <div className="bg-gradient-to-r from-gray-800 to-gray-900 shadow-xl border border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gray-700">
-            <h2 className="text-xl font-poppins-regular text-gray-400 flex items-center">
+          <div className="px-6 py-2 bg-gray-700">
+            <h2 className="text-xl font-poppins-regular text-gray-300 flex items-center">
               <span className="mr-3">📊</span>
               Submission Overview
             </h2>
@@ -244,8 +244,8 @@ function ViewSubmissionContent() {
 
         {/* Calculation Details */}
         <div className=" shadow-xl bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gray-700">
-            <h3 className="text-lg font-poppins-regular text-gray-400 flex items-center">
+          <div className="px-6 py-2 bg-gray-700">
+            <h3 className="text-lg font-poppins-regular text-gray-300 flex items-center">
               <span className="mr-3">🧮</span>
               Calculation Details
             </h3>
@@ -256,7 +256,7 @@ function ViewSubmissionContent() {
                 ([key, value]) => (
                   <div
                     key={key}
-                    className="bg-gray-800/50 p-4 border border-gray-600"
+                    className="bg-gray-800/50 p-3 border border-gray-600"
                   >
                     <div className="flex justify-between space-x-2">
                       <label className="text-md font-poppins-regular text-gray-400 capitalize">
@@ -275,8 +275,8 @@ function ViewSubmissionContent() {
 
         {/* Personal Details */}
         <div className="bg-gradient-to-r from-gray-800 to-gray-900 border shadow-xl border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gray-700">
-            <h3 className="text-lg font-poppins-regular text-gray-400 flex items-center">
+          <div className="px-6 py-2 bg-gray-700">
+            <h3 className="text-lg font-poppins-regular text-gray-300 flex items-center">
               <span className="mr-3">👤</span>
               Personal Information
             </h3>
@@ -287,7 +287,7 @@ function ViewSubmissionContent() {
                 ([key, value]) => (
                   <div
                     key={key}
-                    className="bg-gray-800/50 p-4 border border-gray-600"
+                    className="bg-gray-800/50 pl-3 pr-3 pt-2 pb-2 border border-gray-600"
                   >
                     <div className="flex justify-between space-x-2">
                       <label className="block text-md font-poppins-regular text-gray-400 mb-2 capitalize">
@@ -306,8 +306,8 @@ function ViewSubmissionContent() {
 
         {/* Selected Tariff */}
         <div className="bg-gradient-to-r from-gray-800 to-gray-900 shadow-xl border border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gray-700">
-            <h3 className="text-lg font-poppins-regular text-gray-400 flex items-center">
+          <div className="px-6 py-2 bg-gray-700">
+            <h3 className="text-lg font-poppins-regular text-gray-300 flex items-center">
               <span className="mr-3">⚡</span>
               Selected Tariff
             </h3>
@@ -320,7 +320,7 @@ function ViewSubmissionContent() {
                   .map(([key, value]) => (
                     <div
                       key={key}
-                      className="bg-gray-800/50 p-4 border border-gray-600"
+                      className="bg-gray-800/50 pl-3 pr-3 pt-2 pb-2 border border-gray-600"
                     >
                       <div className="flex justify-between space-x-2">
                         <label className="block text-md font-poppins-regular text-gray-400 mb-2 capitalize">
@@ -339,8 +339,8 @@ function ViewSubmissionContent() {
 
         {/* Address Details */}
         <div className="bg-gradient-to-r from-gray-800 to-gray-900 shadow-xl border border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gray-700">
-            <h3 className="text-lg font-poppins-regular text-gray-400 flex items-center">
+          <div className="px-6 py-2 bg-gray-700">
+            <h3 className="text-lg font-poppins-regular text-gray-300 flex items-center">
               <span className="mr-3">🏠</span>
               Address Information
             </h3>
@@ -362,7 +362,7 @@ function ViewSubmissionContent() {
                 .map(([key, value]) => (
                   <div
                     key={key}
-                    className="bg-gray-800/50 p-4 border border-gray-600"
+                    className="bg-gray-800/50 pl-3 pr-3 pt-2 pb-2 border border-gray-600"
                   >
                     <div className="flex justify-between space-x-2">
                       <label className="block text-md font-poppins-regular text-gray-400 mb-2 capitalize">
@@ -380,8 +380,8 @@ function ViewSubmissionContent() {
 
         {/* Payment Information */}
         <div className="bg-gradient-to-r from-gray-800 to-gray-900 border shadow-xl border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gray-700">
-            <h3 className="text-lg font-poppins-regular text-gray-400 flex items-center">
+          <div className="px-6 py-2 bg-gray-700">
+            <h3 className="text-lg font-poppins-regular text-gray-300 flex items-center">
               <span className="mr-3">💳</span>
               Payment Information
             </h3>
@@ -391,7 +391,7 @@ function ViewSubmissionContent() {
               {Object.entries(submission.sepaForm).map(([key, value]) => (
                 <div
                   key={key}
-                  className="bg-gray-800/50 p-4 border border-gray-600"
+                  className="bg-gray-800/50 pl-3 pr-3 pt-2 pb-2 border border-gray-600"
                 >
                   <div className="flex justify-between space-x-2">
                     <label className="block text-md font-poppins-regular text-gray-400 mb-2 capitalize">
@@ -447,7 +447,7 @@ function ViewSubmissionContent() {
               </button>
               <div className="flex flex-col space-y-1 ml-4">
                 <h1 className="text-lg font-poppins-regular text-gray-400">
-                  Submissions
+                  {submission.personalDetails?.name}{" "}
                 </h1>
                 <div className="flex items-center space-x-2 text-xs text-gray-400">
                   <span>ID: {id}</span>

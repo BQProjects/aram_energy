@@ -42,9 +42,9 @@ return (
   <button
     onClick={handleLogout}
     disabled={isLoggingOut}
-    className={`px-4 py-2 h-10 w-26 flex items-center justify-center text-gray-400 border-2 border-red-500 hover:bg-red-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${className}`}
+    className={`px-4 py-2 h-10 w-26 flex font-poppins-regular items-center justify-center text-gray-400 border-2 border-red-500 hover:bg-red-700 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed transition-colors ${className}`}
   >
-    {isLoggingOut ? "Logging out..." : "Logout"}
+   Logout
   </button>
 );
 }

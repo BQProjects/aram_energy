@@ -382,7 +382,7 @@ export default function ManageTariff() {
             <div className="flex items-center space-x-4">
               <button
                 onClick={handleAddTariff}
-                className="border border-orange-400 hover:bg-orange-700 text-gray-400 hover:text-white px-4 py-2 text-sm font-medium"
+                className="border border-orange-400 hover:bg-orange-700 text-gray-400 hover:text-white px-4 py-2 text-sm font-poppins-regular"
               >
                 + Add New Tariff
               </button>
@@ -399,7 +399,7 @@ export default function ManageTariff() {
             <div className="bg-gray-800 shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="px-6 py-4 border-b border-gray-700">
                 <div className="flex justify-between items-center">
-                  <h3 className="text-xl font-semibold text-white">
+                  <h3 className="text-xl font-poppins-regular text-gray-400">
                     {editingTariff ? "Edit Tariff" : "Add New Tariff"}
                   </h3>
                   <button
@@ -429,7 +429,7 @@ export default function ManageTariff() {
                           setFormData({ ...formData, PLZ: e.target.value })
                         }
                         required
-                        className="mt-1 block w-full border border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-700 text-white px-3 py-2"
+                        className="mt-1 block w-full border font-poppins-regular text-sm border-gray-600 shadow-sm placeholder-gray-400 hover:bg-gray-700 bg-gray-800 focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-white px-3 py-2"
                       />
                     </div>
                     <div>
@@ -450,7 +450,7 @@ export default function ManageTariff() {
                           })
                         }
                         required
-                        className="mt-1 block w-full border border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-700 text-white px-3 py-2"
+                        className="mt-1 block w-full border font-poppins-regular text-sm border-gray-600 shadow-sm placeholder-gray-400 hover:bg-gray-700 bg-gray-800 focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-white px-3 py-2"
                       />
                     </div>
                     <div>
@@ -468,7 +468,7 @@ export default function ManageTariff() {
                           setFormData({ ...formData, Kreis: e.target.value })
                         }
                         required
-                        className="mt-1 block w-full border border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-700 text-white px-3 py-2"
+                        className="mt-1 block w-full border font-poppins-regular text-sm border-gray-600 shadow-sm placeholder-gray-400 hover:bg-gray-700 bg-gray-800 focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-white px-3 py-2"
                       />
                     </div>
                     <div>
@@ -486,14 +486,14 @@ export default function ManageTariff() {
                           setFormData({ ...formData, Typ: e.target.value })
                         }
                         required
-                        className="mt-1 block w-full border border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-700 text-white px-3 py-2"
+                        className="mt-1 block w-full border font-poppins-regular text-sm border-gray-600 shadow-sm placeholder-gray-400 hover:bg-gray-700 bg-gray-800 focus:outline-none focus:ring-orange-500 focus:border-orange-500 text-white px-3 py-2"
                       />
                     </div>
                   </div>
 
                   {/* Tariffs/Services */}
                   <div>
-                    <div className="flex justify-between items-center mb-4">
+                    {/* <div className="flex justify-between items-center mb-4">
                       <div>
                         <h4 className="text-md font-poppins-regular text-white">
                           Services
@@ -503,88 +503,71 @@ export default function ManageTariff() {
                           prices can be modified)
                         </p>
                       </div>
-                      <button
-                        type="button"
-                        onClick={handleAddTariffService}
-                        className="bg-orange-600 hover:bg-orange-700 text-white px-3 py-1 rounded-md text-sm"
-                      >
-                        + Add Service
-                      </button>
-                    </div>
-                    <div className="space-y-4 max-h-96 overflow-y-auto">
-                      {formData.Tariffs.map((tariff, index) => (
-                        <div
-                          key={index}
-                          className="bg-gray-700 p-4 rounded-lg border border-gray-600"
-                        >
-                          <div className="flex justify-between items-center mb-3">
-                            <h5 className="text-sm font-poppins-regular text-white">
-                              Service {index + 1}
-                            </h5>
-                            {formData.Tariffs.length > 1 && (
-                              <button
-                                type="button"
-                                onClick={() => handleRemoveTariffService(index)}
-                                className="text-red-400 hover:text-red-300 text-sm"
-                                title="Remove this service"
-                              >
-                                Remove
-                              </button>
-                            )}
-                          </div>
-                          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-                            <div>
-                              <label className="block text-sm font-poppins-regular text-gray-400 mb-1">
-                                Service Name
-                              </label>
-                              <input
-                                type="text"
-                                value={tariff.Service}
-                                readOnly
-                                className="block w-full border border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-600 text-white px-3 py-2 cursor-not-allowed opacity-75"
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-sm font-poppins-regular text-gray-400 mb-1">
-                                Grundpreis (€)
-                              </label>
-                              <input
-                                type="number"
-                                step="0.01"
-                                value={tariff.Grundpreis}
-                                onChange={(e) =>
-                                  handleTariffServiceChange(
-                                    index,
-                                    "Grundpreis",
-                                    e.target.value
-                                  )
-                                }
-                                required
-                                className="block w-full border border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-600 text-white px-3 py-2"
-                              />
-                            </div>
-                            <div>
-                              <label className="block text-sm font-poppins-regular text-gray-400 mb-1">
-                                Arbeitspreis (€)
-                              </label>
-                              <input
-                                type="number"
-                                step="0.01"
-                                value={tariff.Arbeitspreis}
-                                onChange={(e) =>
-                                  handleTariffServiceChange(
-                                    index,
-                                    "Arbeitspreis",
-                                    e.target.value
-                                  )
-                                }
-                                required
-                                className="block w-full border border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-600 text-white px-3 py-2"
-                              />
-                            </div>
-                          </div>
-                        </div>
-                      ))}
+                    </div> */}
+                    <div className="mt-6">
+                      <table className="w-full table-auto border-collapse border border-gray-600">
+                        <thead>
+                          <tr className="bg-gray-700">
+                            <th className="border border-gray-600 px-4 py-2 text-left text-sm font-poppins-regular text-gray-300">
+                              Service Name
+                            </th>
+                            <th className="border border-gray-600 px-4 py-2 text-left text-sm font-poppins-regular text-gray-300">
+                              Grundpreis (€)
+                            </th>
+                            <th className="border border-gray-600 px-4 py-2 text-left text-sm font-poppins-regular text-gray-300">
+                              Arbeitspreis (€)
+                            </th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {formData.Tariffs.map((tariff, index) => (
+                            <tr key={index} className="hover:bg-gray-750">
+                              <td className="border border-gray-600 px-4 py-2 text-sm font-poppins-regular text-white">
+                                <input
+                                  type="text"
+                                  value={tariff.Service}
+                                  readOnly
+                                  className="w-full bg-transparent border-none text-white cursor-not-allowed opacity-75"
+                                />
+                              </td>
+                              <td className="border border-gray-600 px-4 py-2 text-sm font-poppins-regular text-orange-400">
+                                <input
+                                  type="number"
+                                  step="0.01"
+                                  value={tariff.Grundpreis}
+                                  onChange={(e) =>
+                                    handleTariffServiceChange(
+                                      index,
+                                      "Grundpreis",
+                                      e.target.value
+                                    )
+                                  }
+                                  required
+                                  placeholder="Enter Grundpreis (e.g. 12.34)"
+                                  className="w-full bg-transparent border-none text-orange-400 focus:outline-none placeholder-gray-500"
+                                />
+                              </td>
+                              <td className="border border-gray-600 px-4 py-2 text-sm font-poppins-regular text-green-400">
+                                <input
+                                  type="number"
+                                  step="0.01"
+                                  value={tariff.Arbeitspreis}
+                                  onChange={(e) =>
+                                    handleTariffServiceChange(
+                                      index,
+                                      "Arbeitspreis",
+                                      e.target.value
+                                    )
+                                  }
+                                  required
+                                  placeholder="Enter Arbeitspreis (e.g. 25.50)"
+                                  className="w-full bg-transparent border-none text-green-400 focus:outline-none placeholder-gray-500"
+                                />
+                              </td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
                     </div>
                   </div>
 
@@ -592,14 +575,14 @@ export default function ManageTariff() {
                     <button
                       type="button"
                       onClick={handleCancelForm}
-                      className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                      className="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 text-sm font-poppins-regular"
                     >
                       Cancel
                     </button>
                     <button
                       type="submit"
                       disabled={saving}
-                      className="bg-orange-600 hover:bg-orange-700 disabled:bg-orange-800 text-white px-4 py-2 rounded-md text-sm font-medium"
+                      className="bg-orange-600 hover:bg-orange-700 disabled:bg-orange-800 text-white px-4 py-2 text-sm font-poppins-regular"
                     >
                       {saving
                         ? "Saving..."
@@ -615,49 +598,47 @@ export default function ManageTariff() {
         )}
 
         {/* Stats and Search */}
-        <div className="mb-8 space-y-4">
-          <div className="bg-gray-800 shadow">
-            <div className="px-4 py-5 sm:p-6">
-              <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <h3 className="text-lg font-poppins-regular text-white">
-                  Total Tariff Locations: {tariffs.length}
-                </h3>
-                <div className="text-sm font-poppins-regular text-gray-400">
-                  Showing: {filteredTariffs.length}{" "}
-                  {searchTerm && `filtered from ${tariffs.length}`}
+        <div>
+          <div className="mb-8 space-y-4">
+            <div>
+              <div>
+                <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
+                  <h1 className="text-lg font-poppins-regular text-gray-400 ">
+                    Total Tariff Locations: {tariffs.length}
+                  </h1>
+                  {/* <div className="text-sm font-poppins-regular text-gray-400">
+                    Showing: {filteredTariffs.length}{" "}
+                    {searchTerm && `filtered from ${tariffs.length}`}
+                  </div> */}
                 </div>
               </div>
             </div>
-          </div>
 
-          {/* Search Bar */}
-          <div className="bg-gray-800 shadow">
-            <div className="px-4 py-5 sm:p-6">
-              <div className="w-full">
-                <label
-                  htmlFor="search"
-                  className="block text-sm font-poppins-regular text-gray-400 mb-2"
-                >
-                  Search by Postal Code, State, or District
-                </label>
-                <div className="relative">
-                  <input
-                    type="text"
-                    id="search"
-                    value={searchTerm}
-                    onChange={(e) => setSearchTerm(e.target.value)}
-                    placeholder="Enter PLZ, Bundesland, or Kreis..."
-                    className="w-full px-4 py-2 border border-gray-600 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-700 text-white"
-                  />
-                  {searchTerm && (
-                    <button
-                      onClick={() => setSearchTerm("")}
-                      className="absolute right-3 top-2.5 text-gray-400 hover:text-white"
-                    >
-                      ✕
-                    </button>
-                  )}
-                </div>
+            {/* Search Bar */}
+            <div className="w-full">
+              {/* <label
+                htmlFor="search"
+                className="block text-sm font-poppins-regular text-gray-400 mb-2"
+              >
+                Search by Postal Code, State, or District
+              </label> */}
+              <div className="relative">
+                <input
+                  type="text"
+                  id="search"
+                  value={searchTerm}
+                  onChange={(e) => setSearchTerm(e.target.value)}
+                  placeholder="Search by Postal Code, State, or District"
+                  className="w-full px-4 py-2 border font-poppins-regular border-gray-600 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-700 text-white"
+                />
+                {searchTerm && (
+                  <button
+                    onClick={() => setSearchTerm("")}
+                    className="absolute right-3 top-2.5 text-gray-400 hover:text-white"
+                  >
+                    ✕
+                  </button>
+                )}
               </div>
             </div>
           </div>
@@ -690,42 +671,65 @@ export default function ManageTariff() {
                     className="px-4 py-4 cursor-pointer hover:bg-gray-750 transition-colors"
                     onClick={() => toggleLocation(locationId)}
                   >
-                    <div className="flex items-center justify-between">
+                    <div className="flex items-start justify-between">
                       <div className="flex-1">
-                        <h3 className="text-xl font-poppins-regular text-white">
-                          {tariffData.PLZ} - {tariffData.Bundesland}
-                        </h3>
+                        <div className="flex items-center justify-start">
+                          <h3 className="text-md font-poppins-regular text-white">
+                            {tariffData.PLZ} - {tariffData.Bundesland}
+                          </h3>
+                          <button
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleEditTariff(tariffData);
+                            }}
+                            className="group flex items-center justify-center w-8 h-8 rounded-full hover:bg-orange-400 transition-colors ml-4"
+                            title="Edit"
+                          >
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              fill="none"
+                              viewBox="0 0 24 24"
+                              strokeWidth={1.5}
+                              stroke="currentColor"
+                              className="w-4 h-4 text-gray-400 group-hover:text-white"
+                            >
+                              <path
+                                strokeLinecap="round"
+                                strokeLinejoin="round"
+                                d="m16.862 4.487 1.687-1.688a1.875 1.875 0 1 1 2.652 2.652L10.582 16.07a4.5 4.5 0 0 1-1.897 1.13L6 18l.8-2.685a4.5 4.5 0 0 1 1.13-1.897l8.932-8.931Zm0 0L19.5 7.125M18 14v4.75A2.25 2.25 0 0 1 15.75 21H5.25A2.25 2.25 0 0 1 3 18.75V8.25A2.25 2.25 0 0 1 5.25 6H10"
+                              />
+                            </svg>
+                          </button>
+                        </div>
+
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mt-2">
                           <div>
-                            <span className="text-gray-400">Kreis: </span>
-                            <span className="text-white">
+                            <span className="text-gray-400 font-poppins-regular">
+                              Kreis:{" "}
+                            </span>
+                            <span className="text-gray-400 font-poppins-regular">
                               {tariffData.Kreis}
                             </span>
                           </div>
                           <div>
-                            <span className="text-gray-400">Typ: </span>
-                            <span className="text-white">{tariffData.Typ}</span>
+                            <span className="text-gray-400 font-poppins-regular">
+                              Typ:{" "}
+                            </span>
+                            <span className="text-gray-400 font-poppins-regular">
+                              {tariffData.Typ}
+                            </span>
                           </div>
                           <div>
-                            <span className="text-gray-400">
+                            <span className="text-gray-400 font-poppins-regular ">
                               Available Services:{" "}
                             </span>
-                            <span className="text-orange-400 font-medium">
+                            <span className="text-gray-400 font-poppins-regular">
                               {tariffData.Tariffs.length}
                             </span>
                           </div>
                         </div>
                       </div>
-                      <div className="ml-4 flex items-center space-x-2">
-                        <button
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleEditTariff(tariffData);
-                          }}
-                          className="text-orange-400 hover:text-orange-300 transition-colors px-2 py-1 text-sm"
-                        >
-                          Edit
-                        </button>
+                      <div className="flex justify-end items-start space-x-2">
                         <button className="text-orange-400 hover:text-orange-300 transition-colors">
                           {isExpanded ? "▼" : "▶"}
                         </button>
@@ -738,41 +742,39 @@ export default function ManageTariff() {
                     <div className="px-4 pb-6 border-t border-gray-700">
                       {/* Tariffs for this location */}
                       <div className="mt-6">
-                        <h4 className="text-lg font-poppins-regular text-white mb-4">
-                          Available Services
-                        </h4>
-                        <div className="grid gap-4 md:grid-cols-2">
-                          {tariffData.Tariffs.map((tariff, index) => (
-                            <div key={index} className="bg-gray-700 p-4">
-                              <div className="mb-3">
-                                <h5 className="text-lg font-poppins-regular text-white">
+                        <table className="w-full table-auto border-collapse border border-gray-600">
+                          <thead>
+                            <tr className="bg-gray-700">
+                              <th className="border border-gray-600 px-4 py-2 text-left text-sm font-poppins-light text-gray-400">
+                                Service Name
+                              </th>
+                              <th className="border border-gray-600 px-4 py-2 text-left text-sm font-poppins-light text-gray-400">
+                                Grundpreis
+                              </th>
+                              <th className="border border-gray-600 px-4 py-2 text-left text-sm font-poppins-light text-gray-400">
+                                Arbeitspreis
+                              </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {tariffData.Tariffs.map((tariff, index) => (
+                              <tr key={index} className="hover:bg-gray-750">
+                                <td className="border border-gray-600 px-4 py-2 text-sm font-poppins-regular text-gray-300">
                                   {tariff.Service}
-                                </h5>
-                              </div>
-                              <div className="space-y-2">
-                                <div className="flex justify-between">
-                                  <span className="text-gray-400">
-                                    Grundpreis:
-                                  </span>
-                                  <span className="text-green-400 font-medium">
-                                    €{tariff.Grundpreis}
-                                  </span>
-                                </div>
-                                <div className="flex justify-between">
-                                  <span className="text-gray-400">
-                                    Arbeitspreis:
-                                  </span>
-                                  <span className="text-green-400 font-medium">
-                                    €
-                                    {(
-                                      parseFloat(tariff.Arbeitspreis) / 100
-                                    ).toFixed(2)}
-                                  </span>
-                                </div>
-                              </div>
-                            </div>
-                          ))}
-                        </div>
+                                </td>
+                                <td className="border border-gray-600 px-4 py-2 text-sm font-poppins-regular text-orange-400">
+                                  €{tariff.Grundpreis}
+                                </td>
+                                <td className="border border-gray-600 px-4 py-2 text-sm font-poppins-regular text-green-400">
+                                  €
+                                  {(
+                                    parseFloat(tariff.Arbeitspreis) / 100
+                                  ).toFixed(2)}
+                                </td>
+                              </tr>
+                            ))}
+                          </tbody>
+                        </table>
                       </div>
 
                       {/* Additional Details */}
