@@ -1,6 +1,7 @@
 "use client";
 import React, { useEffect, useState, Suspense } from "react";
-import { useParams, useRouter, useSearchParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
+import LogoutButton from "@/app/components/LogoutButton";
 
 interface Submission {
   _id: string;
@@ -33,6 +34,7 @@ interface Submission {
     };
   };
   addressDetails: {
+    billing: string;
     billingStreet?: string;
     billingCity?: string;
     postalCode?: string;
@@ -87,19 +89,6 @@ function ViewSubmissionContent() {
 
     fetchSubmission();
   }, [id, router]);
-
-  const handleLogout = async () => {
-    try {
-      await fetch("/api/admin/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-    } catch (error) {
-      console.error("Logout error:", error);
-    } finally {
-      router.push("/admin");
-    }
-  };
 
   const renderValue = (
     value: unknown,
@@ -171,21 +160,6 @@ function ViewSubmissionContent() {
   const renderSubmissionDetails = () => {
     if (!submission) return null;
 
-    const getStatusColor = (status: string) => {
-      switch (status.toLowerCase()) {
-        case "pending":
-          return "bg-yellow-500";
-        case "approved":
-          return "bg-green-500";
-        case "rejected":
-          return "bg-red-500";
-        case "completed":
-          return "bg-blue-500";
-        default:
-          return "bg-gray-500";
-      }
-    };
-
     const formatDate = (
       dateValue: string | { $date: { $numberLong: string } }
     ) => {
@@ -213,9 +187,9 @@ function ViewSubmissionContent() {
     return (
       <div className="space-y-8">
         {/* Status Overview Card */}
-        <div className="bg-gradient-to-r from-gray-800 to-gray-900 shadow-xl rounded-xl border border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-orange-600 to-orange-700">
-            <h2 className="text-xl font-bold text-white flex items-center">
+        <div className="bg-gradient-to-r from-gray-800 to-gray-900 shadow-xl border border-gray-700 overflow-hidden">
+          <div className="px-6 py-4 bg-gray-700">
+            <h2 className="text-xl font-poppins-regular text-gray-400 flex items-center">
               <span className="mr-3">📊</span>
               Submission Overview
             </h2>
@@ -223,22 +197,13 @@ function ViewSubmissionContent() {
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
               <div className="text-center">
-                <div
-                  className={`inline-flex items-center justify-center w-16 h-16 rounded-full ${getStatusColor(
-                    submission.status
-                  )} text-white font-bold text-lg mb-2`}
-                >
-                  {submission.status.charAt(0).toUpperCase()}
-                </div>
-                <h3 className="text-lg font-semibold text-white">Status</h3>
-                <p className="text-gray-400 capitalize">{submission.status}</p>
-              </div>
-              <div className="text-center">
                 <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-blue-500 text-white mb-2">
                   <span className="text-2xl">📅</span>
                 </div>
-                <h3 className="text-lg font-semibold text-white">Submitted</h3>
-                <p className="text-gray-400">
+                <h3 className="text-md font-poppins-regular text-gray-400">
+                  Submitted
+                </h3>
+                <p className="text-gray-400 font-poppins-regular">
                   {formatDate(submission.submittedAt)}
                 </p>
               </div>
@@ -248,15 +213,29 @@ function ViewSubmissionContent() {
                     submission.emailConfirmed ? "bg-green-500" : "bg-red-500"
                   } text-white mb-2`}
                 >
-                  <span className="text-2xl">
+                  <span className="text-2xl font-poppins-regular">
                     {submission.emailConfirmed ? "✓" : "✗"}
                   </span>
                 </div>
-                <h3 className="text-lg font-semibold text-white">
+                <h3 className="text-md font-poppins-regular text-gray-400">
                   Email Confirmed
                 </h3>
-                <p className="text-gray-400">
+                <p className="text-gray-400 font-poppins-regular">
                   {submission.emailConfirmed ? "Yes" : "No"}
+                </p>
+              </div>
+              <div className="text-center">
+                <div
+                  className={`inline-flex items-center justify-center w-16 h-16 rounded-full bg-violet-700
+                  text-white font-bold text-lg mb-2`}
+                >
+                  👍
+                </div>
+                <h3 className="text-md font-poppins-regular text-gray-400">
+                  Status
+                </h3>
+                <p className="text-gray-400 capitalize font-poppins-regular">
+                  {submission.status}
                 </p>
               </div>
             </div>
@@ -264,9 +243,9 @@ function ViewSubmissionContent() {
         </div>
 
         {/* Calculation Details */}
-        <div className="bg-gradient-to-br from-blue-900/20 to-purple-900/20 shadow-xl rounded-xl border border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-blue-600 to-purple-600">
-            <h3 className="text-lg font-semibold text-white flex items-center">
+        <div className=" shadow-xl bg-gradient-to-r from-gray-800 to-gray-900 border border-gray-700 overflow-hidden">
+          <div className="px-6 py-4 bg-gray-700">
+            <h3 className="text-lg font-poppins-regular text-gray-400 flex items-center">
               <span className="mr-3">🧮</span>
               Calculation Details
             </h3>
@@ -277,13 +256,15 @@ function ViewSubmissionContent() {
                 ([key, value]) => (
                   <div
                     key={key}
-                    className="bg-gray-800/50 rounded-lg p-4 border border-gray-600"
+                    className="bg-gray-800/50 p-4 border border-gray-600"
                   >
-                    <label className="block text-sm font-medium text-gray-400 mb-2 capitalize">
-                      {key.replace(/([A-Z])/g, " $1").trim()}
-                    </label>
-                    <div className="text-white font-medium">
-                      {renderValue(value, key)}
+                    <div className="flex justify-between space-x-2">
+                      <label className="text-md font-poppins-regular text-gray-400 capitalize">
+                        {key.replace(/([A-Z])/g, " $1").trim()}
+                      </label>
+                      <div className="text-white text-md font-poppins-regular">
+                        {renderValue(value, key)}
+                      </div>
                     </div>
                   </div>
                 )
@@ -293,9 +274,9 @@ function ViewSubmissionContent() {
         </div>
 
         {/* Personal Details */}
-        <div className="bg-gradient-to-br from-green-900/20 to-teal-900/20 shadow-xl rounded-xl border border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-green-600 to-teal-600">
-            <h3 className="text-lg font-semibold text-white flex items-center">
+        <div className="bg-gradient-to-r from-gray-800 to-gray-900 border shadow-xl border-gray-700 overflow-hidden">
+          <div className="px-6 py-4 bg-gray-700">
+            <h3 className="text-lg font-poppins-regular text-gray-400 flex items-center">
               <span className="mr-3">👤</span>
               Personal Information
             </h3>
@@ -306,13 +287,15 @@ function ViewSubmissionContent() {
                 ([key, value]) => (
                   <div
                     key={key}
-                    className="bg-gray-800/50 rounded-lg p-4 border border-gray-600"
+                    className="bg-gray-800/50 p-4 border border-gray-600"
                   >
-                    <label className="block text-sm font-medium text-gray-400 mb-2 capitalize">
-                      {key.replace(/([A-Z])/g, " $1").trim()}
-                    </label>
-                    <div className="text-white font-medium">
-                      {renderValue(value, key)}
+                    <div className="flex justify-between space-x-2">
+                      <label className="block text-md font-poppins-regular text-gray-400 mb-2 capitalize">
+                        {key.replace(/([A-Z])/g, " $1").trim()}
+                      </label>
+                      <div className="text-white text-md font-poppins-regular">
+                        {renderValue(value, key)}
+                      </div>
                     </div>
                   </div>
                 )
@@ -322,69 +305,83 @@ function ViewSubmissionContent() {
         </div>
 
         {/* Selected Tariff */}
-        <div className="bg-gradient-to-br from-yellow-900/20 to-orange-900/20 shadow-xl rounded-xl border border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-yellow-600 to-orange-600">
-            <h3 className="text-lg font-semibold text-white flex items-center">
+        <div className="bg-gradient-to-r from-gray-800 to-gray-900 shadow-xl border border-gray-700 overflow-hidden">
+          <div className="px-6 py-4 bg-gray-700">
+            <h3 className="text-lg font-poppins-regular text-gray-400 flex items-center">
               <span className="mr-3">⚡</span>
               Selected Tariff
             </h3>
           </div>
           <div className="p-6">
-            <div className="bg-gray-800/50 rounded-lg p-6 border border-gray-600">
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                {Object.entries(
-                  submission.selectedTariff.selectedTariffData
-                ).map(([key, value]) => (
-                  <div key={key} className="text-center">
-                    <div className="text-2xl font-bold text-orange-400 mb-1">
-                      {key === "total"
-                        ? "€"
-                        : key === "basePrice" || key === "laborPrice"
-                        ? "€"
-                        : ""}
-                      {renderValue(value, key)}
+            <div>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                {Object.entries(submission.selectedTariff.selectedTariffData)
+                  .filter(([key]) => !key.endsWith("Value")) // Filter out basePriceValue, laborPriceValue, totalValue
+                  .map(([key, value]) => (
+                    <div
+                      key={key}
+                      className="bg-gray-800/50 p-4 border border-gray-600"
+                    >
+                      <div className="flex justify-between space-x-2">
+                        <label className="block text-md font-poppins-regular text-gray-400 mb-2 capitalize">
+                          {key.replace(/([A-Z])/g, " $1").trim()}
+                        </label>
+                        <div className="text-white font-poppins-regular text-md">
+                          {renderValue(value, key)}
+                        </div>
+                      </div>
                     </div>
-                    <div className="text-sm text-gray-400 capitalize">
-                      {key.replace(/([A-Z])/g, " $1").trim()}
-                    </div>
-                  </div>
-                ))}
+                  ))}
               </div>
             </div>
           </div>
         </div>
 
         {/* Address Details */}
-        <div className="bg-gradient-to-br from-indigo-900/20 to-blue-900/20 shadow-xl rounded-xl border border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-indigo-600 to-blue-600">
-            <h3 className="text-lg font-semibold text-white flex items-center">
+        <div className="bg-gradient-to-r from-gray-800 to-gray-900 shadow-xl border border-gray-700 overflow-hidden">
+          <div className="px-6 py-4 bg-gray-700">
+            <h3 className="text-lg font-poppins-regular text-gray-400 flex items-center">
               <span className="mr-3">🏠</span>
               Address Information
             </h3>
           </div>
           <div className="p-6">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {Object.entries(submission.addressDetails).map(([key, value]) => (
-                <div
-                  key={key}
-                  className="bg-gray-800/50 rounded-lg p-4 border border-gray-600"
-                >
-                  <label className="block text-sm font-medium text-gray-400 mb-2 capitalize">
-                    {key.replace(/([A-Z])/g, " $1").trim()}
-                  </label>
-                  <div className="text-white font-medium">
-                    {renderValue(value, key)}
+              {Object.entries(submission.addressDetails)
+                .filter(([key]) => {
+                  // Hide billing details if billing is same as main address, but keep the billing field itself
+                  if (
+                    submission.addressDetails.billing === "same" &&
+                    key.startsWith("billing") &&
+                    key !== "billing"
+                  ) {
+                    return false;
+                  }
+                  return true;
+                })
+                .map(([key, value]) => (
+                  <div
+                    key={key}
+                    className="bg-gray-800/50 p-4 border border-gray-600"
+                  >
+                    <div className="flex justify-between space-x-2">
+                      <label className="block text-md font-poppins-regular text-gray-400 mb-2 capitalize">
+                        {key.replace(/([A-Z])/g, " $1").trim()}
+                      </label>
+                      <div className="text-white font-poppins-regular text-md">
+                        {renderValue(value, key)}
+                      </div>
+                    </div>
                   </div>
-                </div>
-              ))}
+                ))}
             </div>
           </div>
         </div>
 
         {/* Payment Information */}
-        <div className="bg-gradient-to-br from-purple-900/20 to-pink-900/20 shadow-xl rounded-xl border border-gray-700 overflow-hidden">
-          <div className="px-6 py-4 bg-gradient-to-r from-purple-600 to-pink-600">
-            <h3 className="text-lg font-semibold text-white flex items-center">
+        <div className="bg-gradient-to-r from-gray-800 to-gray-900 border shadow-xl border-gray-700 overflow-hidden">
+          <div className="px-6 py-4 bg-gray-700">
+            <h3 className="text-lg font-poppins-regular text-gray-400 flex items-center">
               <span className="mr-3">💳</span>
               Payment Information
             </h3>
@@ -394,19 +391,21 @@ function ViewSubmissionContent() {
               {Object.entries(submission.sepaForm).map(([key, value]) => (
                 <div
                   key={key}
-                  className="bg-gray-800/50 rounded-lg p-4 border border-gray-600"
+                  className="bg-gray-800/50 p-4 border border-gray-600"
                 >
-                  <label className="block text-sm font-medium text-gray-400 mb-2 capitalize">
-                    {key.replace(/([A-Z])/g, " $1").trim()}
-                  </label>
-                  <div className="text-white font-medium">
-                    {key === "iban" ? (
-                      <span className="font-mono">
-                        {renderValue(value, key)}
-                      </span>
-                    ) : (
-                      renderValue(value, key)
-                    )}
+                  <div className="flex justify-between space-x-2">
+                    <label className="block text-md font-poppins-regular text-gray-400 mb-2 capitalize">
+                      {key.replace(/([A-Z])/g, " $1").trim()}
+                    </label>
+                    <div className="text-white font-poppins-regular text-md">
+                      {key === "iban" ? (
+                        <span className="font-poppins-regular text-md">
+                          {renderValue(value, key)}
+                        </span>
+                      ) : (
+                        renderValue(value, key)
+                      )}
+                    </div>
                   </div>
                 </div>
               ))}
@@ -436,37 +435,26 @@ function ViewSubmissionContent() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900">
       {/* Header */}
-      <header className="bg-gradient-to-r from-gray-900 via-gray-800 to-gray-900 shadow-2xl border-b border-gray-700">
+      <header className="bg-gray-800 shadow">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center">
               <button
                 onClick={() => router.back()}
                 className="flex items-center justify-center w-10 h-10 bg-gray-700 hover:bg-gray-600 text-orange-400 hover:text-orange-300 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
               >
                 <span className="text-xl">←</span>
               </button>
-              <div>
-                <h1 className="text-3xl font-bold bg-gradient-to-r from-white to-gray-300 bg-clip-text text-transparent">
-                  Submission Details
+              <div className="flex flex-col space-y-1 ml-4">
+                <h1 className="text-lg font-poppins-regular text-gray-400">
+                  Submissions
                 </h1>
-                <p className="text-gray-400 text-sm mt-1">
-                  View and manage customer submission information
-                </p>
+                <div className="flex items-center space-x-2 text-xs text-gray-400">
+                  <span>ID: {id}</span>
+                </div>
               </div>
             </div>
-            <div className="flex items-center space-x-3">
-              <div className="hidden md:flex items-center space-x-2 text-sm text-gray-400">
-                <span>📋</span>
-                <span>ID: {id}</span>
-              </div>
-              <button
-                onClick={handleLogout}
-                className="bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white px-6 py-2 rounded-lg text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5"
-              >
-                Logout
-              </button>
-            </div>
+            <LogoutButton />
           </div>
         </div>
       </header>

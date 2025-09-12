@@ -2,6 +2,7 @@
 import { useEffect, useState, useCallback } from "react";
 import { useRouter } from "next/navigation";
 import { ObjectId } from "mongodb";
+import LogoutButton from "@/app/components/LogoutButton";
 
 interface Tariff {
   Service: string;
@@ -123,19 +124,6 @@ export default function ManageTariff() {
       newExpanded.add(locationId);
     }
     setExpandedLocations(newExpanded);
-  };
-
-  const handleLogout = async () => {
-    try {
-      await fetch("/api/admin/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-    } catch (error) {
-      console.error("Logout error:", error);
-    } finally {
-      router.push("/admin");
-    }
   };
 
   const handleAddTariff = () => {
@@ -381,25 +369,24 @@ export default function ManageTariff() {
             <div className="flex items-center">
               <button
                 onClick={() => router.back()}
-                className="mr-4 text-orange-500 hover:text-orange-400"
+                className="flex items-center justify-center w-10 h-10 bg-gray-700 hover:bg-gray-600 text-orange-400 hover:text-orange-300 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
               >
-                ← Back
+                <span className="text-xl">←</span>
               </button>
-              <h1 className="text-2xl font-bold text-white">Manage Tariffs</h1>
+              <div className="flex flex-col space-y-1 ml-4">
+                <h1 className="text-xl font-poppins-regular text-gray-400">
+                  Manage Tariffs
+                </h1>
+              </div>
             </div>
             <div className="flex items-center space-x-4">
               <button
                 onClick={handleAddTariff}
-                className="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-md text-sm font-medium"
+                className="border border-orange-400 hover:bg-orange-700 text-gray-400 hover:text-white px-4 py-2 text-sm font-medium"
               >
                 + Add New Tariff
               </button>
-              <button
-                onClick={handleLogout}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium"
-              >
-                Logout
-              </button>
+              <LogoutButton />
             </div>
           </div>
         </div>
@@ -409,7 +396,7 @@ export default function ManageTariff() {
         {/* Modal Overlay */}
         {showAddForm && (
           <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-            <div className="bg-gray-800 rounded-lg shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
+            <div className="bg-gray-800 shadow-xl max-w-4xl w-full max-h-[90vh] overflow-y-auto">
               <div className="px-6 py-4 border-b border-gray-700">
                 <div className="flex justify-between items-center">
                   <h3 className="text-xl font-semibold text-white">
@@ -430,7 +417,7 @@ export default function ManageTariff() {
                     <div>
                       <label
                         htmlFor="PLZ"
-                        className="block text-sm font-medium text-gray-400"
+                        className="block text-sm font-poppins-regular text-gray-400"
                       >
                         Postal Code (PLZ)
                       </label>
@@ -448,7 +435,7 @@ export default function ManageTariff() {
                     <div>
                       <label
                         htmlFor="Bundesland"
-                        className="block text-sm font-medium text-gray-400"
+                        className="block text-sm font-poppins-regular text-gray-400"
                       >
                         State (Bundesland)
                       </label>
@@ -469,7 +456,7 @@ export default function ManageTariff() {
                     <div>
                       <label
                         htmlFor="Kreis"
-                        className="block text-sm font-medium text-gray-400"
+                        className="block text-sm font-poppins-regular text-gray-400"
                       >
                         District (Kreis)
                       </label>
@@ -487,7 +474,7 @@ export default function ManageTariff() {
                     <div>
                       <label
                         htmlFor="Typ"
-                        className="block text-sm font-medium text-gray-400"
+                        className="block text-sm font-poppins-regular text-gray-400"
                       >
                         Type (Typ)
                       </label>
@@ -508,10 +495,10 @@ export default function ManageTariff() {
                   <div>
                     <div className="flex justify-between items-center mb-4">
                       <div>
-                        <h4 className="text-md font-medium text-white">
+                        <h4 className="text-md font-poppins-regular text-white">
                           Services
                         </h4>
-                        <p className="text-sm text-gray-400">
+                        <p className="text-sm font-poppins-regular text-gray-400">
                           Standard energy services (service names are fixed,
                           prices can be modified)
                         </p>
@@ -531,7 +518,7 @@ export default function ManageTariff() {
                           className="bg-gray-700 p-4 rounded-lg border border-gray-600"
                         >
                           <div className="flex justify-between items-center mb-3">
-                            <h5 className="text-sm font-medium text-white">
+                            <h5 className="text-sm font-poppins-regular text-white">
                               Service {index + 1}
                             </h5>
                             {formData.Tariffs.length > 1 && (
@@ -547,7 +534,7 @@ export default function ManageTariff() {
                           </div>
                           <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
                             <div>
-                              <label className="block text-sm font-medium text-gray-400 mb-1">
+                              <label className="block text-sm font-poppins-regular text-gray-400 mb-1">
                                 Service Name
                               </label>
                               <input
@@ -558,7 +545,7 @@ export default function ManageTariff() {
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium text-gray-400 mb-1">
+                              <label className="block text-sm font-poppins-regular text-gray-400 mb-1">
                                 Grundpreis (€)
                               </label>
                               <input
@@ -577,7 +564,7 @@ export default function ManageTariff() {
                               />
                             </div>
                             <div>
-                              <label className="block text-sm font-medium text-gray-400 mb-1">
+                              <label className="block text-sm font-poppins-regular text-gray-400 mb-1">
                                 Arbeitspreis (€)
                               </label>
                               <input
@@ -629,13 +616,13 @@ export default function ManageTariff() {
 
         {/* Stats and Search */}
         <div className="mb-8 space-y-4">
-          <div className="bg-gray-800 shadow rounded-lg">
+          <div className="bg-gray-800 shadow">
             <div className="px-4 py-5 sm:p-6">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-                <h3 className="text-lg leading-6 font-medium text-white">
+                <h3 className="text-lg font-poppins-regular text-white">
                   Total Tariff Locations: {tariffs.length}
                 </h3>
-                <div className="text-sm text-gray-400">
+                <div className="text-sm font-poppins-regular text-gray-400">
                   Showing: {filteredTariffs.length}{" "}
                   {searchTerm && `filtered from ${tariffs.length}`}
                 </div>
@@ -644,12 +631,12 @@ export default function ManageTariff() {
           </div>
 
           {/* Search Bar */}
-          <div className="bg-gray-800 shadow rounded-lg">
+          <div className="bg-gray-800 shadow">
             <div className="px-4 py-5 sm:p-6">
-              <div className="max-w-md">
+              <div className="w-full">
                 <label
                   htmlFor="search"
-                  className="block text-sm font-medium text-gray-400 mb-2"
+                  className="block text-sm font-poppins-regular text-gray-400 mb-2"
                 >
                   Search by Postal Code, State, or District
                 </label>
@@ -660,7 +647,7 @@ export default function ManageTariff() {
                     value={searchTerm}
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Enter PLZ, Bundesland, or Kreis..."
-                    className="w-full px-4 py-2 border border-gray-600 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-700 text-white"
+                    className="w-full px-4 py-2 border border-gray-600 shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-700 text-white"
                   />
                   {searchTerm && (
                     <button
@@ -679,7 +666,7 @@ export default function ManageTariff() {
         {/* Tariffs List */}
         <div className="space-y-4">
           {filteredTariffs.length === 0 ? (
-            <div className="bg-gray-800 shadow rounded-lg">
+            <div className="bg-gray-800 shadow">
               <div className="px-4 py-5 sm:p-6 text-center">
                 <p className="text-gray-400">
                   {searchTerm
@@ -696,7 +683,7 @@ export default function ManageTariff() {
               return (
                 <div
                   key={locationId}
-                  className="bg-gray-800 shadow rounded-lg overflow-hidden"
+                  className="bg-gray-800 shadow overflow-hidden"
                 >
                   {/* Collapsible Header */}
                   <div
@@ -705,7 +692,7 @@ export default function ManageTariff() {
                   >
                     <div className="flex items-center justify-between">
                       <div className="flex-1">
-                        <h3 className="text-xl font-semibold text-white">
+                        <h3 className="text-xl font-poppins-regular text-white">
                           {tariffData.PLZ} - {tariffData.Bundesland}
                         </h3>
                         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm mt-2">
@@ -751,17 +738,14 @@ export default function ManageTariff() {
                     <div className="px-4 pb-6 border-t border-gray-700">
                       {/* Tariffs for this location */}
                       <div className="mt-6">
-                        <h4 className="text-lg font-medium text-white mb-4">
+                        <h4 className="text-lg font-poppins-regular text-white mb-4">
                           Available Services
                         </h4>
                         <div className="grid gap-4 md:grid-cols-2">
                           {tariffData.Tariffs.map((tariff, index) => (
-                            <div
-                              key={index}
-                              className="bg-gray-700 rounded-lg p-4"
-                            >
+                            <div key={index} className="bg-gray-700 p-4">
                               <div className="mb-3">
-                                <h5 className="text-lg font-semibold text-white">
+                                <h5 className="text-lg font-poppins-regular text-white">
                                   {tariff.Service}
                                 </h5>
                               </div>
@@ -804,7 +788,7 @@ export default function ManageTariff() {
                           ].includes(key)
                       ).length > 0 && (
                         <div className="border-t border-gray-700 pt-4 mt-6">
-                          <h4 className="text-lg font-medium text-white mb-3">
+                          <h4 className="text-lg font-poppins-regular text-white mb-3">
                             Additional Details
                           </h4>
                           <div className="text-sm space-y-2">

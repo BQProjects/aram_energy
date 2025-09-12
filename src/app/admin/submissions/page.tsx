@@ -113,12 +113,12 @@ export default function AdminSubmissions() {
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
               <button
-                onClick={() => router.push("/admin/dashboard")}
-                className="mr-4 text-orange-500 hover:text-orange-400"
+                onClick={() => router.back()}
+                className="flex items-center justify-center w-10 h-10 bg-gray-700 hover:bg-gray-600 text-orange-400 hover:text-orange-300 rounded-lg transition-all duration-200 shadow-lg hover:shadow-xl"
               >
-                ← Back to Dashboard
+                <span className="text-xl">←</span>
               </button>
-              <h1 className="text-2xl font-bold text-white">
+              <h1 className="px-4 text-xl font-poppins-regular text-gray-400 ">
                 Manage Submissions
               </h1>
             </div>
@@ -129,27 +129,27 @@ export default function AdminSubmissions() {
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         {/* Search and Stats */}
-        <div className="mb-8">
-          <div className="flex justify-between items-center mb-4">
-            <div className="text-white">
-              <h2 className="text-xl font-semibold">
+        <div className="mb-4 flex flex-col w-full">
+          <div className="mb-4">
+            <div className="text-white flex-1 mb-4">
+              <h2 className="text-md font-poppins-regular text-gray-300">
                 Total Submissions: {submissions.length}
               </h2>
             </div>
-            <div className="w-64">
+            <div className="flex w-full">
               <input
                 type="text"
                 placeholder="Search by name, email, or phone..."
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                className="w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm placeholder-gray-400 focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-700 text-white"
+                className="w-full px-3 py-2 border border-gray-600 shadow-sm placeholder-gray-400 font-poppins-regular focus:outline-none focus:ring-orange-500 focus:border-orange-500 bg-gray-700 text-white"
               />
             </div>
           </div>
         </div>
 
         {/* Submissions List */}
-        <div className="bg-gray-800 shadow overflow-hidden sm:rounded-md">
+        <div className="bg-gray-800 shadow overflow-hidden">
           <ul className="divide-y divide-gray-700">
             {filteredSubmissions.length === 0 ? (
               <li className="px-6 py-8 text-center text-gray-400">
@@ -170,48 +170,57 @@ export default function AdminSubmissions() {
                     <div className="flex-1">
                       <div className="flex items-center justify-between">
                         <div>
-                          <h3 className="text-lg font-medium text-white">
+                          <h3 className="text-md font-poppins-regular text-white">
                             {submission.personalDetails?.name &&
                             submission.personalDetails?.surname
                               ? `${submission.personalDetails.name} ${submission.personalDetails.surname}`
                               : submission.personalDetails?.name || "Anonymous"}
                           </h3>
-                          <p className="text-sm text-gray-400">
-                            {submission.personalDetails?.email} •{" "}
+                          <p className="text-sm font-poppins-regular text-gray-400">
+                            {submission.personalDetails?.email} |{" "}
                             {submission.personalDetails?.phone}
                           </p>
-                          <p className="text-sm text-gray-400">
+                          <p className="text-sm font-poppins-regular text-gray-400">
                             {submission.addressDetails?.billingCity ||
                               submission.addressDetails?.street}
                           </p>
                         </div>
                         <div className="text-right">
-                          <p className="text-sm text-orange-400 font-medium">
+                          <p className="text-sm text-orange-400 font-poppins-regular">
                             {submission.selectedTariff?.selectedTariffData
                               ?.name || submission.calculationTarif?.selected}
                           </p>
-                          <p className="text-sm text-gray-400">
+                          <p className="text-sm font-poppins-regular text-gray-400">
                             Consumption:{" "}
                             {submission.calculationTarif?.annualConsumption} kWh
                           </p>
-                          <p className="text-xs text-gray-500">
-                            {typeof submission.submittedAt === "object" &&
-                            submission.submittedAt?.$date?.$numberLong
-                              ? new Date(
-                                  parseInt(
-                                    submission.submittedAt.$date.$numberLong
-                                  )
-                                ).toLocaleDateString()
-                              : new Date().toLocaleDateString()}{" "}
-                            {typeof submission.submittedAt === "object" &&
-                            submission.submittedAt?.$date?.$numberLong
-                              ? new Date(
-                                  parseInt(
-                                    submission.submittedAt.$date.$numberLong
-                                  )
-                                ).toLocaleTimeString()
-                              : new Date().toLocaleTimeString()}
-                          </p>
+                          <span className="text-xs text-gray-500">
+                            {(() => {
+                              const date = submission.submittedAt;
+                              if (typeof date === "string") {
+                                const d = new Date(date);
+                                return (
+                                  d.toLocaleDateString() +
+                                  " " +
+                                  d.toLocaleTimeString()
+                                );
+                              } else if (
+                                date &&
+                                typeof date === "object" &&
+                                "$date" in date
+                              ) {
+                                const d = new Date(
+                                  parseInt(date.$date.$numberLong)
+                                );
+                                return (
+                                  d.toLocaleDateString() +
+                                  " " +
+                                  d.toLocaleTimeString()
+                                );
+                              }
+                              return "N/A";
+                            })()}
+                          </span>
                         </div>
                       </div>
                     </div>

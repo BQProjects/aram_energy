@@ -190,7 +190,9 @@ export default function AdminDashboard() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="flex justify-between items-center py-6">
             <div className="flex items-center">
-              <h1 className="text-2xl font-bold text-white">Admin Dashboard</h1>
+              <h1 className="text-2xl font-poppins-medium text-white">
+                Admin Dashboard
+              </h1>
             </div>
             <LogoutButton />
           </div>
@@ -199,33 +201,33 @@ export default function AdminDashboard() {
 
       <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         {/* Quick Actions */}
-        <div className="bg-gray-800 shadow rounded-lg">
+        <div className="bg-gray-800 shadow">
           <div className="px-4 py-5 sm:p-6">
-            <h3 className="text-lg leading-6 font-medium text-white mb-4">
+            <h3 className="text-lg leading-6 font-poppins-medium text-white mb-4">
               Quick Actions
             </h3>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
               <button
                 onClick={() => router.push("/admin/submissions")}
-                className="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                className=" text-white border-green-500 border-2 hover:bg-green-700 px-4 py-2 text-sm font-medium transition-colors font-poppins-regular"
               >
                 Manage Submissions
               </button>
               <button
                 onClick={() => router.push("/admin/ManageTarrif")}
-                className="bg-purple-600 hover:bg-purple-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                className=" text-white border-purple-500 border-2 hover:bg-purple-700 px-4 py-2 font-poppins-regular text-sm font-medium transition-colors"
               >
                 Manage Tariffs
               </button>
               <button
                 onClick={() => setShowClearDataModal(true)}
-                className="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                className=" text-white border-red-500 border-2 hover:bg-red-700 px-4 py-2 font-poppins-regular text-sm font-medium transition-colors"
               >
                 Clear Mongo Data
               </button>
               <button
                 onClick={() => setShowUpdateCredentialsModal(true)}
-                className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md text-sm font-medium transition-colors"
+                className=" text-white border-blue-500 border-2 hover:bg-blue-700 px-4 py-2 font-poppins-regular text-sm font-medium transition-colors"
               >
                 Update Credentials
               </button>
@@ -235,9 +237,9 @@ export default function AdminDashboard() {
 
         {/* Recent Submissions */}
         {stats?.recentSubmissions && stats.recentSubmissions.length > 0 && (
-          <div className="mt-8 bg-gray-800 shadow rounded-lg">
+          <div className="mt-8 bg-gray-800 shadow">
             <div className="px-4 py-5 sm:p-6">
-              <h3 className="text-lg leading-6 font-medium text-white mb-4">
+              <h3 className="text-lg leading-6 font-poppins-medium text-white mb-4">
                 Recent Submission
               </h3>
               <div className="space-y-4">
@@ -246,25 +248,25 @@ export default function AdminDashboard() {
                   .map((submission: Submission, index: number) => (
                     <div
                       key={index}
-                      className="border border-gray-700 rounded-md p-4 cursor-pointer hover:bg-gray-700 transition-colors"
+                      className="border border-gray-700 p-4 cursor-pointer hover:bg-gray-700 transition-colors"
                       onClick={() =>
                         router.push(`/admin/submissions/${submission._id}`)
                       }
                     >
                       <div className="flex justify-between items-start">
                         <div>
-                          <p className="text-sm font-medium text-white">
+                          <p className="text-sm font-poppins-regular text-white">
                             {submission.personalDetails.name || "Anonymous"}
                           </p>
-                          <p className="text-sm text-gray-400">
+                          <p className="text-sm font-poppins-regular text-gray-400">
                             {submission.personalDetails.email ||
                               submission.personalDetails.phone}
                           </p>
-                          <p className="text-sm text-gray-300 mt-1">
+                          {/* <p className="text-sm font-poppins-regular text-gray-400 mt-1">
                             Tariff:{" "}
                             {submission.selectedTariff?.selectedTariffData
                               ?.name || "N/A"}
-                          </p>
+                          </p> */}
                         </div>
                         <span className="text-xs text-gray-500">
                           {(() => {
@@ -296,22 +298,22 @@ export default function AdminDashboard() {
       {showClearDataModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-medium text-white mb-4">
+            <h3 className="text-lg text-white mb-4 font-poppins-regular">
               Clear Sessions Data
             </h3>
-            <p className="text-gray-300 mb-4">
-              This action will permanently delete all the pending session data. Advice you to do this once a week. This cannot
-              be undone.
+            <p className="text-gray-300 mb-4 font-poppins-regular">
+              This action will permanently delete all the pending session data.
+              Advice you to do this once a week. This cannot be undone.
             </p>
             <div className="mb-4">
-              <label className="block text-sm font-medium text-gray-300 mb-2">
+              <label className="block text-sm text-gray-300 mb-2 font-poppins-regular">
                 Type &quot;CLEAR ALL DATA&quot; to confirm:
               </label>
               <input
                 type="text"
                 value={clearDataConfirm}
                 onChange={(e) => setClearDataConfirm(e.target.value)}
-                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500"
+                className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-red-500 font-poppins-regular"
                 placeholder="CLEAR ALL DATA"
               />
             </div>
@@ -321,7 +323,7 @@ export default function AdminDashboard() {
                   setShowClearDataModal(false);
                   setClearDataConfirm("");
                 }}
-                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors"
+                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors font-poppins-regular"
                 disabled={modalLoading}
               >
                 Cancel
@@ -329,7 +331,7 @@ export default function AdminDashboard() {
               <button
                 onClick={handleClearData}
                 disabled={modalLoading || clearDataConfirm !== "CLEAR ALL DATA"}
-                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-poppins-regular"
               >
                 {modalLoading ? "Clearing..." : "Clear All Data"}
               </button>
@@ -342,43 +344,43 @@ export default function AdminDashboard() {
       {showUpdateCredentialsModal && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-gray-800 rounded-lg p-6 max-w-md w-full mx-4">
-            <h3 className="text-lg font-medium text-white mb-4">
+            <h3 className="text-lg text-white mb-4 font-poppins-regular">
               Update Admin Credentials
             </h3>
             <div className="space-y-4">
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm text-gray-300 mb-2 font-poppins-regular">
                   New Username
                 </label>
                 <input
                   type="text"
                   value={newUsername}
                   onChange={(e) => setNewUsername(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins-regular"
                   placeholder="Enter new username"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm text-gray-300 mb-2 font-poppins-regular">
                   New Password
                 </label>
                 <input
                   type="password"
                   value={newPassword}
                   onChange={(e) => setNewPassword(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins-regular"
                   placeholder="Enter new password"
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-300 mb-2">
+                <label className="block text-sm text-gray-300 mb-2 font-poppins-regular">
                   Confirm New Password
                 </label>
                 <input
                   type="password"
                   value={confirmPassword}
                   onChange={(e) => setConfirmPassword(e.target.value)}
-                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
+                  className="w-full px-3 py-2 bg-gray-700 border border-gray-600 rounded-md text-white focus:outline-none focus:ring-2 focus:ring-blue-500 font-poppins-regular"
                   placeholder="Confirm new password"
                 />
               </div>
@@ -391,7 +393,7 @@ export default function AdminDashboard() {
                   setNewPassword("");
                   setConfirmPassword("");
                 }}
-                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors"
+                className="px-4 py-2 bg-gray-600 hover:bg-gray-700 text-white rounded-md transition-colors font-poppins-regular"
                 disabled={modalLoading}
               >
                 Cancel
@@ -399,7 +401,7 @@ export default function AdminDashboard() {
               <button
                 onClick={handleUpdateCredentials}
                 disabled={modalLoading}
-                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-md transition-colors disabled:opacity-50 disabled:cursor-not-allowed font-poppins-regular"
               >
                 {modalLoading ? "Updating..." : "Update Credentials"}
               </button>
