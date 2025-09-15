@@ -108,7 +108,7 @@ export default function Addressdetails() {
           >
             <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 items-start">
               {/* Postal Code */}
-              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+              <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.postalCode")} *
               </label>
               <input
@@ -122,7 +122,7 @@ export default function Addressdetails() {
               />
 
               {/* Location */}
-              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+              <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.location")} *
               </label>
               <input
@@ -136,7 +136,7 @@ export default function Addressdetails() {
               />
 
               {/* Street */}
-              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+              <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.street")} *
               </label>
               <input
@@ -150,7 +150,7 @@ export default function Addressdetails() {
               />
 
               {/* House Number and Suffix side by side */}
-              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+              <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.houseNumberAndSuffix")}
               </label>
               <div className="flex gap-4 w-full">
@@ -175,11 +175,11 @@ export default function Addressdetails() {
               </div>
 
               {/* Move-in Status */}
-              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-3 md:mb-0 md:text-left md:pr-4 md:self-start md:pt-2">
+              <label className="block text-[#abafb1] font-poppins-regular mb-3 md:mb-0 md:text-left md:pr-4 md:self-start md:pt-2">
                 {t("addressdetails.moveInStatus")}
               </label>
               <div className="flex gap-4 flex-col w-full">
-                <label className="flex items-center gap-2 text-[#abafb1] font-poppins-regular text-sm cursor-pointer w-full">
+                <label className="flex items-center gap-2 text-[#abafb1] font-poppins-regular text-xs cursor-pointer w-full">
                   <input
                     type="radio"
                     name="moveInStatus"
@@ -191,7 +191,7 @@ export default function Addressdetails() {
                   />
                   {t("addressdetails.alreadyLive")}
                 </label>
-                <label className="flex items-center gap-2 text-[#abafb1] font-poppins-regular text-sm cursor-pointer w-full">
+                <label className="flex items-center gap-2 text-[#abafb1] font-poppins-regular text-xs cursor-pointer w-full">
                   <input
                     type="radio"
                     name="moveInStatus"
@@ -206,7 +206,7 @@ export default function Addressdetails() {
               </div>
 
               {/* Desired Start of Delivery */}
-              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+              <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.desiredStart")}
               </label>
               <input
@@ -219,7 +219,7 @@ export default function Addressdetails() {
               />
 
               {/* Previous Supplier */}
-              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+              <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.previousSupplier")}
               </label>
               <input
@@ -233,7 +233,7 @@ export default function Addressdetails() {
               />
 
               {/* Previous Customer No. */}
-              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+              <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.previousCustomerNo")}
               </label>
               <input
@@ -247,7 +247,7 @@ export default function Addressdetails() {
               />
 
               {/* Meter No. */}
-              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+              <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.meterNo")}
               </label>
               <input
@@ -267,7 +267,7 @@ export default function Addressdetails() {
               <div></div>
 
               {/* Meter Location No. */}
-              <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+              <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                 {t("addressdetails.meterLocationNo")}
               </label>
               <input
@@ -283,13 +283,13 @@ export default function Addressdetails() {
               {/* Extra billing address fields if billing is different */}
               {addressDetails.billing === "different" && (
                 <>
-                  <div className="w-full col-span-1 md:col-span-2 text-[#abafb1] font-poppins-medium text-3xl md:text-4xl mt-10">
+                  <div className="w-full col-span-1 md:col-span-2 text-[#abafb1] font-poppins-medium text-xl md:text-2xl mt-10">
                     {t("addressdetails.billingAddress")}
                   </div>
                   <div></div>
                   <div></div>
 
-                  <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+                  <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                     {t("addressdetails.billingHouseNumberAndSuffix")}
                   </label>
                   <div className="flex gap-4 w-full">
@@ -321,7 +321,7 @@ export default function Addressdetails() {
                     />
                   </div>
 
-                  <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+                  <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                     {t("addressdetails.billingStreet")}
                   </label>
                   <input
@@ -334,7 +334,7 @@ export default function Addressdetails() {
                     }
                   />
 
-                  <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+                  <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                     {t("addressdetails.billingCity")}
                   </label>
                   <input
@@ -347,7 +347,7 @@ export default function Addressdetails() {
                     }
                   />
 
-                  <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+                  <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                     {t("addressdetails.billingPostal")}
                   </label>
                   <input
@@ -360,7 +360,7 @@ export default function Addressdetails() {
                     }
                   />
 
-                  <label className="block text-[#abafb1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
+                  <label className="block text-[#abafb1] font-poppins-regular mb-2 md:mb-0 md:text-left md:pr-4 md:self-center">
                     {t("addressdetails.billingCountry")}
                   </label>
                   <input
@@ -383,7 +383,7 @@ export default function Addressdetails() {
                 )}
                 <button
                   type="submit"
-                  className="mt-4 w-full md:w-[205px] bg-[#FF9641] hover:bg-[#e88537] text-lg font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
+                  className="mt-4 w-full md:w-[205px] bg-[#FF9641] hover:bg-[#e88537] font-poppins-regular text-white py-3 px-8 rounded shadow transition-colors"
                 >
                   {t("addressdetails.next")}
                 </button>

@@ -297,12 +297,12 @@ function SepaMandatePageInner() {
 
             {/* IBAN field */}
             <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 w-full md:w-[650px]">
-              <label className="w-full md:w-48 text-left text-[#ABAFB1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0">
+              <label className="w-full md:w-48 text-left text-[#ABAFB1] font-poppins-regular mb-2 md:mb-0">
                 {t("sepaMandate.iban")}
               </label>
               <input
                 type="text"
-                className="flex-1 border-2 border-[#cfd3d4] rounded px-4 py-3 text-white font-poppins text-lg focus:outline-none focus:border-[#FF9641]"
+                className="flex-1 border-2 border-[#cfd3d4] rounded px-4 py-3 text-white font-poppins focus:outline-none focus:border-[#FF9641]"
                 placeholder={t("sepaMandate.ibanPlaceholder")}
                 value={sepaForm.iban}
                 onChange={(e) => updateSepaForm({ iban: e.target.value })}
@@ -312,12 +312,12 @@ function SepaMandatePageInner() {
 
             {/* Account holder field */}
             <div className="flex flex-col md:flex-row md:items-center gap-2 md:gap-6 w-full md:w-[650px]">
-              <label className="w-full md:w-48 text-left text-[#ABAFB1] font-poppins-regular text-lg md:text-xl mb-2 md:mb-0">
+              <label className="w-full md:w-48 text-left text-[#ABAFB1] font-poppins-regular mb-2 md:mb-0">
                 {t("sepaMandate.accountHolder")}
               </label>
               <input
                 type="text"
-                className="flex-1 border-2 border-[#cfd3d4] rounded px-4 py-3 text-white font-poppins text-lg focus:outline-none focus:border-[#FF9641]"
+                className="flex-1 border-2 border-[#cfd3d4] rounded px-4 py-3 text-white font-poppins focus:outline-none focus:border-[#FF9641]"
                 placeholder={t("sepaMandate.accountHolderPlaceholder")}
                 value={sepaForm.accountHolder}
                 onChange={(e) =>
@@ -343,7 +343,7 @@ function SepaMandatePageInner() {
                 required
               />
               <div
-                className={`flex-1 text-justify font-poppins-regular text-lg md:text-xl leading-relaxed ${
+                className={`flex-1 text-justify font-poppins-regular text-sm leading-relaxed ${
                   sepaForm.iban.trim() && sepaForm.accountHolder.trim()
                     ? "text-[#abafb1]"
                     : "text-[#666]"
@@ -381,7 +381,7 @@ function SepaMandatePageInner() {
                 />
                 <label
                   htmlFor="confirmationEmail"
-                  className={`font-poppins-regular text-lg md:text-xl capitalize select-none ${
+                  className={`font-poppins-regular capitalize select-none ${
                     sepaForm.sepaAgreement &&
                     sepaForm.iban.trim() &&
                     sepaForm.accountHolder.trim()

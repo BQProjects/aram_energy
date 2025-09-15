@@ -78,11 +78,11 @@ function PersonalDetailsPageInner() {
           {/* Two-card grid: align labels and inputs by row */}
           <div className="w-full grid grid-cols-1 md:grid-cols-2 gap-x-4 gap-y-6 items-center">
             {/* Salutation */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
+            <label className="text-[#abafb1] font-poppins-regular text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.salutation")} *
             </label>
             <select
-              className="w-full max-w-[340px] h-[52px] border border-[#cfd3d4] text-lg font-poppins-regular px-4 py-3 bg-black text-[#abafb1] focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
+              className="w-full max-w-[340px] h-[52px] border border-[#cfd3d4] font-poppins-regular px-4 py-3 bg-black text-[#abafb1] focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
               style={{
                 WebkitAppearance: "none",
                 MozAppearance: "none",
@@ -101,12 +101,12 @@ function PersonalDetailsPageInner() {
             </select>
 
             {/* Name */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
+            <label className="text-[#abafb1] font-poppins-regular text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.name")} *
             </label>
             <input
               type="text"
-              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
+              className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
               placeholder={t("personaldetails.namePlaceholder")}
               value={data.name}
               onChange={(e) => {
@@ -133,11 +133,11 @@ function PersonalDetailsPageInner() {
             />
 
             {/* Billing address */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-start pt-2 block md:inline md:text-left md:pr-4 md:self-start md:pt-2 mb-3 md:mb-0">
+            <label className="text-[#abafb1] font-poppins-regular text-left pr-4 col-span-1 self-start pt-2 block md:inline md:text-left md:pr-4 md:self-start md:pt-2 mb-3 md:mb-0">
               {t("personaldetails.billingAddress")}
             </label>
             <div className="flex flex-col gap-2 max-w-[340px] col-span-1 md:col-span-1">
-              <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] text-base cursor-pointer">
+              <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] cursor-pointer">
                 <input
                   type="radio"
                   name="billing"
@@ -147,7 +147,7 @@ function PersonalDetailsPageInner() {
                 />
                 <span>{t("personaldetails.billingSame")}</span>
               </label>
-              <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] text-base cursor-pointer">
+              <label className="flex items-start gap-3 font-poppins-regular text-[#abafb1] cursor-pointer">
                 <input
                   type="radio"
                   name="billing"
@@ -160,14 +160,14 @@ function PersonalDetailsPageInner() {
             </div>
 
             {/* Birth date with calendar icon */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
+            <label className="text-[#abafb1] font-poppins-regular text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.birthDate")} *
             </label>
             <div className="relative max-w-[340px] col-span-1 md:col-span-1">
               <input
                 id="birthDateInput"
                 type="date"
-                className="w-full h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-[#ABAFB1] focus:outline-none focus:border-[#FF9641] transition-colors pr-12"
+                className="w-full h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-[#ABAFB1] focus:outline-none focus:border-[#FF9641] transition-colors pr-12"
                 style={{
                   WebkitAppearance: "none",
                   MozAppearance: "none",
@@ -179,31 +179,31 @@ function PersonalDetailsPageInner() {
             </div>
 
             {/* Email */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
+            <label className="text-[#abafb1] font-poppins-regular text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.email")} *
             </label>
             <input
               type="email"
-              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
+              className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
               placeholder={t("personaldetails.emailPlaceholder")}
               value={data.email}
               onChange={(e) => update({ email: e.target.value })}
             />
 
             {/* Repeat Email */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
+            <label className="text-[#abafb1] font-poppins-regular text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.repeatEmail")} *
             </label>
             <input
               type="email"
-              className="w-full max-w-[340px] h-[52px] text-lg font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
+              className="w-full max-w-[340px] h-[52px] font-poppins-regular border border-[#cfd3d4] px-4 py-3 bg-transparent text-white focus:outline-none focus:border-[#FF9641] transition-colors col-span-1 md:col-span-1"
               placeholder={t("personaldetails.repeatEmailPlaceholder")}
               value={data.repeatEmail}
               onChange={(e) => update({ repeatEmail: e.target.value })}
             />
 
             {/* Phone */}
-            <label className="text-[#abafb1] font-poppins-regular text-xl text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
+            <label className="text-[#abafb1] font-poppins-regular text-left pr-4 col-span-1 self-center block md:inline md:text-left md:pr-4 md:self-center mb-2 md:mb-0">
               {t("personaldetails.phone")} *
             </label>
             <div className="max-w-[340px] col-span-1 md:col-span-1">
@@ -211,7 +211,7 @@ function PersonalDetailsPageInner() {
                 country={"de"}
                 value={data.phone}
                 onChange={(phone) => update({ phone })}
-                inputClass="!w-full !bg-transparent text-lg font-poppins-regular !text-[#FF9641] !px-4 !py-3 !pl-14 focus:!border-[#FF9641] !transition-all !h-[52px]"
+                inputClass="!w-full !bg-transparent font-poppins-regular !text-[#FF9641] !px-4 !py-3 !pl-14 focus:!border-[#FF9641] !transition-all !h-[52px]"
                 buttonClass="!bg-black !flex !items-center !justify-center transition-colors !h-[52px]"
                 dropdownClass="!bg-black !text-white !rounded-lg !mt-2 !shadow-lg !z-50"
                 containerClass="!w-full flex"

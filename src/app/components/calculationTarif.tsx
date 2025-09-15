@@ -263,7 +263,7 @@ export default function CalculationTarif() {
             type="text"
             value="77509"
             readOnly
-            className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+            className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-gray-300 placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>
 
@@ -278,6 +278,8 @@ export default function CalculationTarif() {
           <input
             id="transactionKey"
             type="text"
+            value={data.transactionKey || ""}
+            onChange={(e) => update({ transactionKey: e.target.value })}
             placeholder={t("calculation.transactionKeyPlaceholder")}
             className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />

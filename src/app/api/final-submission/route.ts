@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
@@ -6,8 +5,10 @@ import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
 const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@example.com";
-const COMPANY_EMAILS = [
+const COMPANY_EMAILS_1 = [
   process.env.COMPANY_EMAIL_1 || "company1@example.com",
+];
+const COMPANY_EMAILS_2 = [
   process.env.COMPANY_EMAIL_2 || "company2@example.com",
 ];
 
@@ -125,7 +126,8 @@ export async function POST(request: NextRequest) {
     const emailList = [
       session.personalDetails?.email,
       ADMIN_EMAIL,
-      ...COMPANY_EMAILS,
+      COMPANY_EMAILS_1,
+      COMPANY_EMAILS_2,
     ].filter(Boolean);
 
     // Compose professional email body

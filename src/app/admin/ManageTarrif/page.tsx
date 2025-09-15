@@ -72,6 +72,21 @@ export default function ManageTariff() {
   });
   const [saving, setSaving] = useState(false);
   const router = useRouter();
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(10); // Default to 10
+  // Reset to page 1 when search term or items per page changes
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [searchTerm, itemsPerPage]);
+  // Calculate pagination
+  const totalPages = Math.ceil(filteredTariffs.length / itemsPerPage);
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const currentTariffs = filteredTariffs.slice(startIndex, endIndex);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   const fetchTariffs = useCallback(async () => {
     try {
@@ -249,24 +264,24 @@ export default function ManageTariff() {
     }
   };
 
-  const handleAddTariffService = () => {
-    setFormData({
-      ...formData,
-      Tariffs: [
-        ...formData.Tariffs,
-        { Service: "", Grundpreis: "", Arbeitspreis: "" },
-      ],
-    });
-  };
+  // const handleAddTariffService = () => {
+  //   setFormData({
+  //     ...formData,
+  //     Tariffs: [
+  //       ...formData.Tariffs,
+  //       { Service: "", Grundpreis: "", Arbeitspreis: "" },
+  //     ],
+  //   });
+  // };
 
-  const handleRemoveTariffService = (index: number) => {
-    if (formData.Tariffs.length > 1) {
-      setFormData({
-        ...formData,
-        Tariffs: formData.Tariffs.filter((_, i) => i !== index),
-      });
-    }
-  };
+  // const handleRemoveTariffService = (index: number) => {
+  //   if (formData.Tariffs.length > 1) {
+  //     setFormData({
+  //       ...formData,
+  //       Tariffs: formData.Tariffs.filter((_, i) => i !== index),
+  //     });
+  //   }
+  // };
 
   const handleTariffServiceChange = (
     index: number,
@@ -604,7 +619,8 @@ export default function ManageTariff() {
               <div>
                 <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
                   <h1 className="text-lg font-poppins-regular text-gray-400 ">
-                    Total Tariff Locations: {tariffs.length}
+                    Showing {currentTariffs.length} of {filteredTariffs.length}{" "}
+                    tariff locations
                   </h1>
                   {/* <div className="text-sm font-poppins-regular text-gray-400">
                     Showing: {filteredTariffs.length}{" "}
@@ -657,7 +673,7 @@ export default function ManageTariff() {
               </div>
             </div>
           ) : (
-            filteredTariffs.map((tariffData) => {
+            currentTariffs.map((tariffData) => {
               const locationId = tariffData._id.toString();
               const isExpanded = expandedLocations.has(locationId);
 
@@ -826,6 +842,101 @@ export default function ManageTariff() {
             })
           )}
         </div>
+
+        {/* Pagination */}
+        {totalPages > 1 && (
+          <div className="flex justify-between items-center mt-8">
+            {/* Items per page selector */}
+            <div className="flex items-center space-x-2">
+              <label
+                htmlFor="itemsPerPage"
+                className="text-sm font-poppins-regular text-gray-400"
+              >
+                Show:
+              </label>
+              <select
+                id="itemsPerPage"
+                value={itemsPerPage}
+                onChange={(e) => setItemsPerPage(Number(e.target.value))}
+                className="bg-gray-700 text-white border border-gray-600 rounded px-2 py-1 text-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500"
+              >
+                <option value={5}>5</option>
+                <option value={10}>10</option>
+                <option value={20}>20</option>
+                <option value={50}>50</option>
+              </select>
+              <span className="text-sm font-poppins-regular text-gray-400">
+                per page
+              </span>
+            </div>
+
+            {/* Pagination controls */}
+            <div className="flex items-center justify-center space-x-2 mt-4">
+              {/* Previous button */}
+              <button
+                onClick={() => handlePageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="px-3 py-2 rounded-lg bg-gray-700 text-white 
+               disabled:opacity-50 disabled:cursor-not-allowed
+               hover:bg-gray-600 transition-colors"
+              >
+                Previous
+              </button>
+
+              {/* Page numbers */}
+              {(() => {
+                const pages = [];
+                const maxVisible = 7;
+
+                if (totalPages <= maxVisible) {
+                  for (let i = 1; i <= totalPages; i++) {
+                    pages.push(i);
+                  }
+                } else {
+                  const start = Math.max(2, currentPage - 2);
+                  const end = Math.min(totalPages - 1, currentPage + 2);
+
+                  pages.push(1);
+                  if (start > 2) pages.push("...");
+                  for (let i = start; i <= end; i++) pages.push(i);
+                  if (end < totalPages - 1) pages.push("...");
+                  pages.push(totalPages);
+                }
+
+                return pages.map((page, idx) =>
+                  page === "..." ? (
+                    <span key={idx} className="px-2 py-2 text-gray-400">
+                      ...
+                    </span>
+                  ) : (
+                    <button
+                      key={idx}
+                      onClick={() => handlePageChange(page as number)}
+                      className={`px-3 py-2 rounded-lg transition-colors ${
+                        page === currentPage
+                          ? "bg-orange-500 text-white"
+                          : "bg-gray-700 text-white hover:bg-gray-600"
+                      }`}
+                    >
+                      {page}
+                    </button>
+                  )
+                );
+              })()}
+
+              {/* Next button */}
+              <button
+                onClick={() => handlePageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="px-3 py-2 rounded-lg bg-gray-700 text-white 
+               disabled:opacity-50 disabled:cursor-not-allowed
+               hover:bg-gray-600 transition-colors"
+              >
+                Next
+              </button>
+            </div>
+          </div>
+        )}
       </main>
     </div>
   );

@@ -76,6 +76,7 @@ interface CalculationTarifState {
     customerType: string;
     postalCode: string;
     annualConsumption: string;
+    transactionKey: string;
   };
   postalOptions: PostalOption[];
   personalDetails: PersonalDetails;
@@ -99,6 +100,7 @@ const defaultState: CalculationTarifState = {
     customerType: "private",
     postalCode: "",
     annualConsumption: "",
+    transactionKey: "",
   },
   postalOptions: [],
   personalDetails: {
