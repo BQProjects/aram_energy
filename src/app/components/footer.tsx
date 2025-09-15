@@ -25,9 +25,12 @@ export default function Footer() {
             <span className="font-medium text-lg sm:text-sm font-poppins-regular">
               +49 5251 4032589
             </span>
-            <span className="text-sm font-normal font-poppins-regular text-gray-300">
+            <a
+              href="mailto:support@aram-energy-solution.com"
+              className="text-sm font-normal font-poppins-regular text-gray-300 hover:text-[#FF9641] transition-colors duration-200"
+            >
               support@aram-energy-solution.com
-            </span>
+            </a>
           </div>
 
           {/* Address Section */}
