@@ -1,9 +1,32 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import Image from "next/image";
 import { useLanguage } from "../contexts/LanguageContext";
+import { motion } from "framer-motion";
 
 export default function OurMission() {
   const { t } = useLanguage();
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+      },
+    },
+  };
 
   const features = [
     {
@@ -26,16 +49,26 @@ export default function OurMission() {
 
   return (
     <section className="w-full bg-black flex flex-col lg:flex-row items-stretch justify-evenly px-4 sm:px-4 md:px-8 pt-10 pb-10 sm:pt-20 sm:pb-20 gap-10 sm:gap-0">
-      <div className="flex flex-col justify-evenly bg-black px-2 sm:px-6 lg:px-16 py-4 sm:py-6 gap-10 sm:gap-7 w-full lg:w-1/2 ">
+      <motion.div
+        className="flex flex-col justify-evenly bg-black px-2 sm:px-6 lg:px-16 py-4 sm:py-6 gap-10 sm:gap-7 w-full lg:w-1/2"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         <div>
-          <h2 className="font-quando text-2xl sm:text-3xl md:text-3xl text-white mb-6 sm:mb-8">
+          <motion.h2
+            className="font-quando text-2xl sm:text-3xl md:text-3xl text-white mb-6 sm:mb-8"
+            variants={itemVariants}
+          >
             {t("mission.title")}
-          </h2>
+          </motion.h2>
           <div className="flex flex-col gap-8 sm:gap-8">
             {features.map((f, i) => (
-              <div
+              <motion.div
                 key={f.title}
                 className="flex items-start gap-4 sm:gap-5 py-2 sm:py-0"
+                variants={itemVariants}
               >
                 <div>
                   <Image
@@ -54,13 +87,16 @@ export default function OurMission() {
                     {f.desc}
                   </div>
                 </div>
-              </div>
+              </motion.div>
             ))}
           </div>
         </div>
 
         {/* Button at bottom */}
-        <div className="mt-10 sm:mt-10 flex items-center">
+        <motion.div
+          className="mt-10 sm:mt-10 flex items-center"
+          variants={itemVariants}
+        >
           <button
             onClick={() => {
               window.location.hash = "#Calculate";
@@ -82,8 +118,8 @@ export default function OurMission() {
             </span>
             <span className="absolute left-0 top-0 w-full h-full bg-[#FF9641] -translate-x-full group-hover:translate-x-0 transition-transform duration-300 z-0"></span>
           </button>
-        </div>
-      </div>
+        </motion.div>
+      </motion.div>
 
       {/* Right: image */}
       <div className="w-full lg:w-1/2 flex items-center justify-center mt-8 lg:mt-0">

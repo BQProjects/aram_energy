@@ -1,9 +1,32 @@
 import Image from "next/image";
 import { useLanguage } from "../contexts/LanguageContext";
 import React from "react";
+import { motion } from "framer-motion";
 
 export default function AboutSection() {
   const { t } = useLanguage();
+
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+      },
+    },
+  };
 
   return (
     <section
@@ -31,9 +54,18 @@ export default function AboutSection() {
           />
         </div>
         {/* Right: 3 paragraphs with icon circles */}
-        <div className="flex flex-col gap-12 max-w-xl w-full py-8 pl-24">
+        <motion.div
+          className="flex flex-col gap-12 max-w-xl w-full py-8 pl-24"
+          variants={containerVariants}
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.3 }}
+        >
           {/* 1st para */}
-          <div className="flex items-start gap-4">
+          <motion.div
+            className="flex items-start gap-4"
+            variants={itemVariants}
+          >
             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-[#F2F2F2] flex-shrink-0 mt-1">
               <Image
                 src="/ribbon.svg"
@@ -63,9 +95,12 @@ export default function AboutSection() {
                 </span>
               </span>
             </div>
-          </div>
+          </motion.div>
           {/* 2nd para */}
-          <div className="flex items-start gap-4">
+          <motion.div
+            className="flex items-start gap-4"
+            variants={itemVariants}
+          >
             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-[#F2F2F2] flex-shrink-0 mt-1">
               <Image
                 src="/personcheck.svg"
@@ -95,9 +130,12 @@ export default function AboutSection() {
                 </span>
               </span>
             </div>
-          </div>
+          </motion.div>
           {/* 3rd para */}
-          <div className="flex items-start gap-4">
+          <motion.div
+            className="flex items-start gap-4"
+            variants={itemVariants}
+          >
             <div className="flex items-center justify-center w-14 h-14 rounded-full bg-[#F2F2F2] flex-shrink-0 mt-1">
               <Image
                 src="/clock.svg"
@@ -127,8 +165,8 @@ export default function AboutSection() {
                 </span>
               </span>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </div>
     </section>
   );

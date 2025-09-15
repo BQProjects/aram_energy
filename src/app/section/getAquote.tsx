@@ -1,12 +1,41 @@
 import Image from "next/image";
 import { useLanguage } from "../contexts/LanguageContext";
+import { motion } from "framer-motion";
 
 export default function GetAquote() {
   const { t } = useLanguage();
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+      },
+    },
+  };
+
   return (
     <>
-      <section className="relative w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center">
+      <motion.section
+        className="relative w-full min-h-[400px] sm:min-h-[500px] md:min-h-[600px] flex items-center justify-center"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         {/* Background image */}
         <div className="absolute inset-0 w-full h-full -z-10">
           <Image
@@ -22,7 +51,10 @@ export default function GetAquote() {
           {/* Left empty space (40%) */}
           <div className="w-[40%] hidden md:block" />
           {/* Right content box (60%) */}
-          <div className="w-full md:w-[60%] flex items-center min-h-[280px] sm:min-h-[320px] mr-1">
+          <motion.div
+            className="w-full md:w-[60%] flex items-center min-h-[280px] sm:min-h-[320px] mr-1"
+            variants={itemVariants}
+          >
             <div className="w-full px-6 sm:px-8 md:px-10 py-8 sm:py-10 md:py-12 bg-black/70 shadow-2xl mx-4 md:mx-0">
               <h2 className="font-quando text-2xl sm:text-3xl md:text-3xl text-[#FF9641] mb-4 sm:mb-6 text-left">
                 {t("getQuote.title")}
@@ -31,12 +63,21 @@ export default function GetAquote() {
                 {t("getQuote.description")}
               </p>
             </div>
-          </div>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
       {/* New text section below image */}
-      <section className="w-full flex bg-white items-start py-8 sm:py-10 md:py-12 pb-8 sm:pb-12 md:pb-16 lg:pb-20">
-        <div className="w-full max-w-6xl mx-14 text-justify px-4 sm:px-6 mt-14 mb-14">
+      <motion.section
+        className="w-full flex bg-white items-start py-8 sm:py-10 md:py-12 pb-8 sm:pb-12 md:pb-16 lg:pb-20"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
+        <motion.div
+          className="w-full max-w-6xl mx-14 text-justify px-4 sm:px-6 mt-14 mb-14"
+          variants={itemVariants}
+        >
           <h2 className="font-quando text-2xl sm:text-3xl md:text-3xl text-[#FF9641] text-left mb-3 sm:mb-4">
             <span className="font-semibold">
               {t("getQuote.referral.title")}
@@ -49,10 +90,16 @@ export default function GetAquote() {
           <p className="font-poppins-light text-lg sm:text-xl md:text-lg text-gray-700 text-left mb-0 leading-relaxed mt-4">
             {t("getQuote.referral.description")}
           </p>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
       {/* World image section with centered transparent container - Centered on image */}
-      <section className="relative w-full h-[300px] sm:h-[400px] md:h-[650px] flex items-center justify-center mt-0  ">
+      <motion.section
+        className="relative w-full h-[300px] sm:h-[400px] md:h-[650px] flex items-center justify-center mt-0"
+        variants={containerVariants}
+        initial="hidden"
+        whileInView="visible"
+        viewport={{ once: true, amount: 0.3 }}
+      >
         {/* Background world image */}
         <div className="absolute inset-0 w-full h-full -z-10">
           <Image
@@ -64,7 +111,10 @@ export default function GetAquote() {
           />
         </div>
         {/* Cards half on image, half above */}
-        <div className="absolute top-0 left-2/5 -translate-x-1/2 -translate-y-5/12 w-full max-w-4xl sm:max-w-5xl px-3 sm:px-4 md:px-6 lg:px-8 z-10 hidden sm:block">
+        <motion.div
+          className="absolute top-0 left-2/5 -translate-x-1/2 -translate-y-5/12 w-full max-w-4xl sm:max-w-5xl px-3 sm:px-4 md:px-6 lg:px-8 z-10 hidden sm:block"
+          variants={itemVariants}
+        >
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 sm:gap-4 md:gap-6 lg:gap-80">
             {/* Card 1 */}
             <div className="relative bg-black rounded-xl sm:rounded-2xl h-[140px] sm:h-[160px] md:h-[180px] lg:h-[200px] xl:h-[200px] xl:w-[400px] flex flex-col justify-between p-3 sm:p-4 md:p-6 lg:p-8 shadow-lg">
@@ -129,8 +179,8 @@ export default function GetAquote() {
               </div>
             </div>
           </div>
-        </div>
-      </section>
+        </motion.div>
+      </motion.section>
     </>
   );
 }

@@ -1,6 +1,7 @@
 import Image from "next/image";
 import { useLanguage } from "../contexts/LanguageContext";
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 
 const featureKeys = [
   {
@@ -64,8 +65,36 @@ export default function WideRange() {
     }, 600);
   };
 
+  const containerVariants = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.3,
+        delayChildren: 0.2,
+      },
+    },
+  };
+
+  const itemVariants = {
+    hidden: { y: 50, opacity: 0 },
+    visible: {
+      y: 0,
+      opacity: 1,
+      transition: {
+        duration: 0.4,
+      },
+    },
+  };
+
   return (
-    <section className="relative w-full min-h-screen flex flex-col justify-center md:justify-end">
+    <motion.section
+      className="relative w-full min-h-screen flex flex-col justify-center md:justify-end"
+      variants={containerVariants}
+      initial="hidden"
+      whileInView="visible"
+      viewport={{ once: true, amount: 0.3 }}
+    >
       {/* Background Image */}
       <div className="absolute inset-0 -z-10">
         <Image
@@ -79,7 +108,10 @@ export default function WideRange() {
       </div>
 
       {/* Bottom content */}
-      <div className="w-full flex flex-col items-start px-4 sm:px-6 md:px-8 lg:px-20 pb-6 sm:pb-8 md:pb-16 gap-5 mt-72">
+      <motion.div
+        className="w-full flex flex-col items-start px-4 sm:px-6 md:px-8 lg:px-20 pb-6 sm:pb-8 md:pb-16 gap-5 mt-72"
+        variants={itemVariants}
+      >
         <h2 className="font-quando text-2xl sm:text-3xl md:text-3xl text-[#FF9641]">
           {t("wideRange.title")}
         </h2>
@@ -117,7 +149,7 @@ export default function WideRange() {
         <div className="font-poppins-light text-base sm:text-lg md:text-base text-white text-justify max-w-6xl pb-4">
           {t("wideRange.description")}
         </div>
-      </div>
+      </motion.div>
       <section className="w-full flex items-center justify-center mt-14">
         <div className="flex flex-col items-center justify-center w-[1024px] h-[375px] bg-[#0C0C0C] shadow-lg relative">
           {/* Text Content with smoother animation */}
@@ -206,6 +238,6 @@ export default function WideRange() {
           </div>
         </div>
       </section>
-    </section>
+    </motion.section>
   );
 }

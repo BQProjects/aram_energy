@@ -14,6 +14,7 @@ export default function CalculationTarif() {
   const { data, update } = useCalculationTarifSection();
   const { data: postalOptions, update: updatePostalOptions } =
     usePostalOptionsSection();
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const { sessionId, isInitialized } = useSessionInfo();
   const [error, setError] = useState("");
   const [showDropdown, setShowDropdown] = useState(false);
@@ -46,15 +47,6 @@ export default function CalculationTarif() {
     document.addEventListener("mousedown", handleClick);
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
-
-  // Wait for initialization
-  if (!isInitialized) {
-    return (
-      <div className="mt-4 sm:mt-6 md:mt-8 flex items-center justify-center w-full max-w-[1070px] pb-8 bg-black/50 text-white">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-orange-500"></div>
-      </div>
-    );
-  }
 
   return (
     <div className="mt-4 sm:mt-6 md:mt-8 flex flex-col items-center justify-start w-full max-w-[1070px] pb-8 sm:pb-10 px-2 sm:px-4 md:px-6 lg:px-8 xl:px-12 bg-black/50 text-white font-poppins text-sm sm:text-base font-normal">
