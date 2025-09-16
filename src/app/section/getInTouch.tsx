@@ -241,7 +241,7 @@ export default function GetInTouch() {
               </label>
               <input
                 id="phone"
-                type="tel"
+                type="number"
                 placeholder={t("getInTouch.phonePlaceholder")}
                 className="w-full border border-[#ADAEBC] rounded-xl px-3 py-2 bg-[#F9FAFB] text-black placeholder-[#ADAEBC] font-poppins-light text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
                 value={form.phone}

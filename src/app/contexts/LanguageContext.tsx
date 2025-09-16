@@ -201,8 +201,8 @@ const translations = {
     "getInTouch.phonePlaceholder": "Enter your phone number",
     "getInTouch.serviceType": "Service Type",
     "getInTouch.selectService": "Select a service",
-    "getInTouch.service1": "Service 1",
-    "getInTouch.service2": "Service 2",
+    "getInTouch.service1": "Private Customer",
+    "getInTouch.service2": "Business Customer",
     "getInTouch.message": "Message",
     "getInTouch.messagePlaceholder": "Tell us your energy needs...",
     "getInTouch.agree":
@@ -729,8 +729,8 @@ const translations = {
     "getInTouch.phonePlaceholder": "Geben Sie Ihre Telefonnummer ein",
     "getInTouch.serviceType": "Dienstleistungsart",
     "getInTouch.selectService": "Dienstleistung auswählen",
-    "getInTouch.service1": "Dienstleistung 1",
-    "getInTouch.service2": "Dienstleistung 2",
+    "getInTouch.service1": "Privatkunden",
+    "getInTouch.service2": "Geschäftskunden",
     "getInTouch.message": "Nachricht",
     "getInTouch.messagePlaceholder":
       "Teilen Sie uns Ihren Energiebedarf mit...",

@@ -206,12 +206,18 @@ export default function AdminDashboard() {
             <h3 className="text-lg leading-6 font-poppins-medium text-white mb-4">
               Quick Actions
             </h3>
-            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 lg:grid-cols-5">
               <button
                 onClick={() => router.push("/admin/submissions")}
                 className=" text-white border-green-500 border-2 hover:bg-green-700 px-4 py-2 text-sm font-medium transition-colors font-poppins-regular"
               >
                 Manage Submissions
+              </button>
+              <button
+                onClick={() => router.push("/admin/inquiry")}
+                className=" text-white border-yellow-500 border-2 hover:bg-yellow-700 px-4 py-2 text-sm font-medium transition-colors font-poppins-regular"
+              >
+                Manage Inquiries
               </button>
               <button
                 onClick={() => router.push("/admin/ManageTarrif")}
