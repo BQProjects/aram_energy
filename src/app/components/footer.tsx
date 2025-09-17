@@ -44,7 +44,7 @@ export default function Footer() {
             <div className="flex gap-4 mt-6 justify-center">
               {/* SVG social icons horizontally */}
               {/* Twitter */}
-              <span className="hover:opacity-80 transition-opacity cursor-pointer">
+              {/* <span className="hover:opacity-80 transition-opacity cursor-pointer">
                 <svg
                   width="20"
                   height="17"
@@ -58,16 +58,21 @@ export default function Footer() {
                     fill="#9CA3AF"
                   />
                 </svg>
-              </span>
+              </span> */}
               {/* Facebook */}
-              <span className="hover:opacity-80 transition-opacity cursor-pointer">
+              <a
+                href="https://www.facebook.com/people/Aram-Energy-Solution"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity cursor-pointer"
+              >
                 <svg
-                  width="20"
-                  height="21"
-                  viewBox="0 0 20 21"
+                  width="24"
+                  height="24"
+                  viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-5 h-5"
+                  className="w-8 h-8"
                 >
                   <g clipPath="url(#clip0_1006_565)">
                     <g clipPath="url(#clip1_1006_565)">
@@ -80,8 +85,8 @@ export default function Footer() {
                   <defs>
                     <clipPath id="clip0_1006_565">
                       <rect
-                        width="20"
-                        height="20"
+                        width="26"
+                        height="26"
                         fill="white"
                         transform="translate(0 0.5)"
                       />
@@ -91,9 +96,9 @@ export default function Footer() {
                     </clipPath>
                   </defs>
                 </svg>
-              </span>
+              </a>
               {/* LinkedIn */}
-              <span className="hover:opacity-80 transition-opacity cursor-pointer">
+              {/*<span className="hover:opacity-80 transition-opacity cursor-pointer">
                 <svg
                   width="18"
                   height="21"
@@ -124,24 +129,29 @@ export default function Footer() {
                     </clipPath>
                   </defs>
                 </svg>
-              </span>
-              {/* TikTok */}
-              <span className="hover:opacity-80 transition-opacity cursor-pointer">
+              </span> */}
+              {/* Instagram */}
+              <a
+                href="https://www.instagram.com/aramenergysolution"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hover:opacity-80 transition-opacity cursor-pointer"
+              >
                 <svg
                   width="24"
                   height="24"
                   viewBox="0 0 24 24"
                   fill="none"
                   xmlns="http://www.w3.org/2000/svg"
-                  className="w-6 h-6"
+                  className="w-7 h-7"
                 >
                   <path
-                    d="M16.6002 5.82C15.9167 5.03953 15.5401 4.0374 15.5402 3H12.4502V15.4C12.4268 16.0712 12.1437 16.7071 11.6605 17.1735C11.1773 17.6399 10.5318 17.9004 9.86016 17.9C8.44016 17.9 7.26016 16.74 7.26016 15.3C7.26016 13.58 8.92016 12.29 10.6302 12.82V9.66C7.18016 9.2 4.16016 11.88 4.16016 15.3C4.16016 18.63 6.92016 21 9.85016 21C12.9902 21 15.5402 18.45 15.5402 15.3V9.01C16.7932 9.90985 18.2975 10.3926 19.8402 10.39V7.3C19.8402 7.3 17.9602 7.39 16.6002 5.82Z"
+                    d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"
                     fill="white"
                     fillOpacity="0.75"
                   />
                 </svg>
-              </span>
+              </a>
             </div>
           </div>
 

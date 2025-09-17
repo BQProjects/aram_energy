@@ -4,13 +4,14 @@ import { ObjectId } from "mongodb";
 import { Resend } from "resend";
 
 const resend = new Resend(process.env.RESEND_API_KEY);
-const ADMIN_EMAIL = process.env.ADMIN_EMAIL || "admin@example.com";
-const COMPANY_EMAILS_1 = [
-  process.env.COMPANY_EMAIL_1 || "company1@example.com",
-];
-const COMPANY_EMAILS_2 = [
-  process.env.COMPANY_EMAIL_2 || "company2@example.com",
-];
+const ADMIN_EMAIL =
+  process.env.ADMIN_EMAIL || "support@aram-energy-solution.com";
+// const COMPANY_EMAILS_1 = [
+//   process.env.COMPANY_EMAIL_1 || "company1@example.com",
+// ];
+// const COMPANY_EMAILS_2 = [
+//   process.env.COMPANY_EMAIL_2 || "company2@example.com",
+// ];
 
 export async function POST(request: NextRequest) {
   try {
@@ -122,12 +123,12 @@ export async function POST(request: NextRequest) {
     // Notify WebSocket clients about submission
     await notifyWebSocketClients(sessionId, "submission_completed", "submit");
 
-    // Send notification emails to admin and company
+    // Send notification emails to admin
     const emailList = [
       session.personalDetails?.email,
       ADMIN_EMAIL,
-      COMPANY_EMAILS_1,
-      COMPANY_EMAILS_2,
+      // COMPANY_EMAILS_1,
+      // COMPANY_EMAILS_2,
     ].filter(Boolean);
 
     // Compose professional email body
