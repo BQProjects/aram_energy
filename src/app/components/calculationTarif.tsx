@@ -250,24 +250,7 @@ export default function CalculationTarif() {
           />
         </div>
 
-        {/* Tariff key */}
-        <div className="flex flex-col w-full max-w-full sm:max-w-[380px]">
-          <label
-            htmlFor="tariffKey"
-            className="text-xs sm:text-sm font-poppins-light text-[#F9FAFB] mb-1 sm:mb-2"
-          >
-            {t("calculation.tariffKey")}
-          </label>
-          <input
-            id="tariffKey"
-            type="text"
-            value="77509"
-            readOnly
-            className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-gray-300 placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
-          />
-        </div>
-
-        {/* Transaction key */}
+        {/* transactionKey key */}
         <div className="flex flex-col w-full max-w-full sm:max-w-[380px]">
           <label
             htmlFor="transactionKey"
@@ -278,9 +261,26 @@ export default function CalculationTarif() {
           <input
             id="transactionKey"
             type="text"
-            value={data.transactionKey || ""}
-            onChange={(e) => update({ transactionKey: e.target.value })}
-            placeholder={t("calculation.transactionKeyPlaceholder")}
+            value="77509"
+            readOnly
+            className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-gray-300 placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
+          />
+        </div>
+
+        {/* tariffKey key */}
+        <div className="flex flex-col w-full max-w-full sm:max-w-[380px]">
+          <label
+            htmlFor="tariffKey"
+            className="text-xs sm:text-sm font-poppins-light text-[#F9FAFB] mb-1 sm:mb-2"
+          >
+            {t("calculation.tariffKey")}
+          </label>
+          <input
+            id="tariffKey"
+            type="text"
+            value={data.tariffKey || ""}
+            onChange={(e) => update({ tariffKey: e.target.value })}
+            placeholder={t("calculation.tariffKeyPlaceholder")}
             className="w-full h-[48px] sm:h-[50px] border border-[#E0E0E0] bg-[#F9FAFB] placeholder-text-[#ADAEBC] placeholder-font-poppins-light font-poppins-light px-3 sm:px-4 text-[#171717] text-base sm:text-sm focus:outline-none focus:ring-2 focus:ring-[#FF9641] focus:border-transparent"
           />
         </div>

@@ -72,6 +72,7 @@ interface SepaForm {
 interface CalculationTarifState {
   _id?: string;
   calculationTarif: {
+    tariffKey: string;
     selected: string;
     customerType: string;
     postalCode: string;
@@ -100,7 +101,8 @@ const defaultState: CalculationTarifState = {
     customerType: "private",
     postalCode: "",
     annualConsumption: "",
-    transactionKey: "",
+    transactionKey: "77509",
+    tariffKey: "",
   },
   postalOptions: [],
   personalDetails: {
