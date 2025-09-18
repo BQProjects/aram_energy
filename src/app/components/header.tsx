@@ -8,7 +8,7 @@ const navLinks = [
   { nameKey: "nav.home", href: "/" },
   { nameKey: "nav.services", href: "/#services" },
   { nameKey: "nav.about", href: "/#about" },
-  { nameKey: "nav.schedule", href: "/#schedule" },
+  { nameKey: "nav.schedule", href: "/#contact" },
   { nameKey: "nav.contact", href: "/#contact" },
 ];
 
