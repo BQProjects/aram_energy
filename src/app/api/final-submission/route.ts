@@ -1,9 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
-import { Resend } from "resend";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
 const ADMIN_EMAIL =
   process.env.ADMIN_EMAIL || "support@aram-energy-solution.com";
 // const COMPANY_EMAILS_1 = [
@@ -190,6 +188,12 @@ export async function POST(request: NextRequest) {
                 <div class="field"><strong>Annual Consumption:</strong> ${
                   calc.annualConsumption || "-"
                 }</div>
+                <div class="field"><strong>Tariff Key:</strong> ${
+                  calc.tariffKey || "-"
+                }</div>
+                <div class="field"><strong>Transaction Key:</strong> ${
+                  calc.transactionKey || 77509
+                }</div>
               </div>
             </div>
 
@@ -268,7 +272,7 @@ export async function POST(request: NextRequest) {
           <div class="footer">
             <p style="margin: 0; font-size: 14px;">
               <strong>Aram Energy Solution</strong><br>
-              Energy Service Pool GmbH
+              Energy Services
             </p>
           </div>
         </div>
@@ -276,15 +280,38 @@ export async function POST(request: NextRequest) {
       </html>
     `;
 
-    // Send emails to all recipients
+    // Send emails to all recipients using EmailJS
     for (const to of emailList) {
       try {
-        await resend.emails.send({
-          from: "noreply@aram-energy-solution.com",
-          to,
-          subject: "Energy Contract Application Submitted - Confirmation",
-          html: htmlEmailBody,
-        });
+        const response = await fetch(
+          "https://api.emailjs.com/api/v1.0/email/send",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              service_id: process.env.EMAILJS_SERVICE_ID,
+              template_id: process.env.EMAILJS_TEMPLATE_ID_Final, // Use a separate template for submissions
+              user_id: process.env.EMAILJS_PUBLIC_KEY,
+              template_params: {
+                to_email: to,
+                customer_name: pd.name || "Customer",
+                html_body: htmlEmailBody, // Pass the full HTML body as a parameter
+                submission_id: result.insertedId,
+              },
+            }),
+          }
+        );
+
+        if (!response.ok) {
+          const errorText = await response.text();
+          console.error("EmailJS response status:", response.status);
+          console.error("EmailJS response text:", errorText);
+          throw new Error(
+            `EmailJS error: ${response.status} - ${response.statusText} - ${errorText}`
+          );
+        }
       } catch (emailError) {
         console.error(`Failed to send email to ${to}:`, emailError);
       }

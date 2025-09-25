@@ -1,10 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
-import { Resend } from "resend";
+// Remove Resend import
+// import { Resend } from "resend";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
 
-const resend = new Resend(process.env.RESEND_API_KEY);
+// Remove Resend initialization
+// const resend = new Resend(process.env.RESEND_API_KEY);
 
 // Helper function to format detailed application information
 function formatApplicationDetails({
@@ -13,33 +15,22 @@ function formatApplicationDetails({
   selectedTariffData,
   personalDetails,
   addressDetails,
-  postalOptions,
 }: {
   calculationTarif?: any;
   selectedTariff?: any;
   selectedTariffData?: any;
   personalDetails?: any;
   addressDetails?: any;
-  postalOptions?: any;
 }) {
   // Helper to format calculationTarif
   const calc = calculationTarif || {};
   const calcTarifStr = `Selected: ${calc.selected || "-"}<br/>
 Customer Type: ${calc.customerType || "-"}<br/>
 Postal Code: ${calc.postalCode || "-"}<br/>
+Tariff Key: ${calc.tariffKey || "-"}<br/>
 Annual Consumption: ${calc.annualConsumption || "-"}<br/>
-Postal Options: ${
-    postalOptions && Array.isArray(postalOptions) && postalOptions.length > 0
-      ? postalOptions
-          .map(
-            (opt: any) =>
-              `&nbsp;&nbsp;- PLZ: ${opt.plz || "-"}, District: ${
-                opt.district || "-"
-              }, Division: ${opt.division || "-"}`
-          )
-          .join("<br/>")
-      : "-"
-  }`;
+Transaction Key: ${"77509"}<br/>
+`;
 
   // Helper to format selectedTariff - Look for data in both possible locations
   const tariffData =
@@ -112,7 +103,6 @@ export async function POST(request: NextRequest) {
         selectedTariffData: payload.selectedTariffData,
         personalDetails: payload.personalDetails,
         addressDetails: payload.addressDetails,
-        postalOptions: payload.postalOptions,
       });
 
     // Professional email template with detailed information
@@ -247,13 +237,45 @@ export async function POST(request: NextRequest) {
       </html>
     `;
 
-    // Send confirmation email
-    await resend.emails.send({
-      from: "noreply@aram-energy-solution.com",
-      to: userEmail,
-      subject: "Confirm Your Energy Contract Application - Complete Details",
-      html: emailHtml,
-    });
+    // Send confirmation email using EmailJS
+    try {
+      const response = await fetch(
+        "https://api.emailjs.com/api/v1.0/email/send",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            service_id: process.env.EMAILJS_SERVICE_ID,
+            template_id: process.env.EMAILJS_TEMPLATE_ID,
+            user_id: process.env.EMAILJS_PUBLIC_KEY,
+            template_params: {
+              to_email: userEmail,
+              customer_name: payload.personalDetails?.name || "Customer",
+              confirm_url: confirmUrl,
+              calc_tarif_str: calcTarifStr,
+              selected_tariff_str: selectedTariffStr,
+              personal_details_str: personalDetailsStr,
+              order_id: insertedId,
+            },
+          }),
+        }
+      );
+
+      if (!response.ok) {
+        const errorText = await response.text();  // Add this
+        console.error("EmailJS response status:", response.status);
+        console.error("EmailJS response text:", errorText);
+        throw new Error(`EmailJS error: ${response.status} - ${response.statusText} - ${errorText}`);
+      }
+    } catch (emailError) {
+      console.error("Error sending confirmation email:", emailError);
+      return NextResponse.json(
+        { success: false, message: "Failed to send confirmation email" },
+        { status: 500 }
+      );
+    }
 
     return NextResponse.json({
       success: true,
