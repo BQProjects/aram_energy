@@ -280,7 +280,7 @@ export async function POST(request: NextRequest) {
     for (const to of emailList) {
       try {
         await resend.emails.send({
-          from: "noreply@updates.jashkumar.dev",
+          from: "noreply@aram-energy-solution.com",
           to,
           subject: "Energy Contract Application Submitted - Confirmation",
           html: htmlEmailBody,

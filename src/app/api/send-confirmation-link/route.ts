@@ -249,7 +249,7 @@ export async function POST(request: NextRequest) {
 
     // Send confirmation email
     await resend.emails.send({
-      from: "noreply@updates.jashkumar.dev",
+      from: "noreply@aram-energy-solution.com",
       to: userEmail,
       subject: "Confirm Your Energy Contract Application - Complete Details",
       html: emailHtml,
