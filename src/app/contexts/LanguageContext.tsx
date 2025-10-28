@@ -29,6 +29,7 @@ const translations = {
     "hero.subtitle": "Your trusted partner for energy solutions",
     "hero.learnMore": "Learn more",
     "hero.description": "Discover our energy consulting services",
+    "hero.welcome": "Welcome",
 
     // About section
     "about.title": "About Aram Energy Solution",
@@ -550,6 +551,7 @@ const translations = {
     "hero.subtitle": "Ihr vertrauensvoller Partner für Energielösungen",
     "hero.learnMore": "Mehr erfahren",
     "hero.description": "Entdecken Sie unsere Energieberatungsdienste",
+    "hero.welcome": "Willkommen",
 
     // About section
     "about.title": "Über Aram Energy Solution",
@@ -578,7 +580,7 @@ const translations = {
       "Schnelle und einfache Umstellung auf unsere Dienste mit minimalem Aufwand.",
     "mission.customerSatisfaction": "Kundenzufriedenheit",
     "mission.customerSatisfactionDesc":
-      "Verpflichtet, hervorragende Unterstützung und zuverlässige Service zu bieten.",
+      "Verpflichtet, hervorragende Unterstützung und zuverlässigen Service zu bieten.",
 
     // Wide Range section
     "wideRange.title": "Energie clever bündeln – mit Aram Energy Solution",

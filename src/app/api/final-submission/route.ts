@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { NextRequest, NextResponse } from "next/server";
 import clientPromise from "@/lib/mongodb";
 import { ObjectId } from "mongodb";
@@ -11,9 +12,214 @@ const ADMIN_EMAIL =
 //   process.env.COMPANY_EMAIL_2 || "company2@example.com",
 // ];
 
+function generateEmailBody(
+  calc: any,
+  sel: any,
+  pd: any,
+  ad: any,
+  sepa: any,
+  submissionId: string,
+  language: string = "en"
+) {
+  const isGerman = language === "de";
+
+  const title = isGerman
+    ? "Energievertragsantrag"
+    : "Energy Contract Application";
+  const submittedBadge = isGerman ? "✅ EINGEREICHT" : "✅ SUBMITTED";
+  const greeting = isGerman
+    ? `Sehr geehrte/r ${
+        pd.name || "Kunde"
+      },<br><br>Ihr Energievertragsantrag wurde erfolgreich eingereicht. Nachfolgend finden Sie die Details Ihres Antrags:`
+    : `Dear ${
+        pd.name || "Customer"
+      },<br><br>Your energy contract application has been successfully submitted. Below are the details of your application:`;
+
+  const sections = {
+    calculationTariff: isGerman
+      ? "🏢 Berechnungstarif"
+      : "🏢 Calculation Tariff",
+    selectedTariff: isGerman ? "💰 Ausgewählter Tarif" : "💰 Selected Tariff",
+    personalDetails: isGerman ? "👤 Persönliche Daten" : "👤 Personal Details",
+    addressDetails: isGerman ? "🏠 Adressdaten" : "🏠 Address Details",
+    paymentInfo: isGerman
+      ? "💳 Zahlungsinformationen"
+      : "💳 Payment Information",
+  };
+
+  const fields = {
+    selected: isGerman ? "Ausgewählt" : "Selected",
+    customerType: isGerman ? "Kundentyp" : "Customer Type",
+    postalCode: isGerman ? "Postleitzahl" : "Postal Code",
+    annualConsumption: isGerman ? "Jahresverbrauch" : "Annual Consumption",
+    tariffKey: isGerman ? "Tarifschlüssel" : "Tariff Key",
+    transactionKey: isGerman ? "Transaktionsschlüssel" : "Transaction Key",
+    basePrice: isGerman ? "Grundpreis" : "Base Price",
+    laborPrice: isGerman ? "Arbeitspreis" : "Labor Price",
+    typeOfCurrent: isGerman ? "Stromart" : "Type of Current",
+    contractTerm: isGerman ? "Vertragslaufzeit" : "Contract Term",
+    total: isGerman ? "Gesamt" : "Total",
+    name: isGerman ? "Name" : "Name",
+    email: isGerman ? "E-Mail" : "Email",
+    phone: isGerman ? "Telefon" : "Phone",
+    birthDate: isGerman ? "Geburtsdatum" : "Birth Date",
+    street: isGerman ? "Straße" : "Street",
+    location: isGerman ? "Ort" : "Location",
+    iban: isGerman ? "IBAN" : "IBAN",
+    accountHolder: isGerman ? "Kontoinhaber" : "Account Holder",
+    submissionId: isGerman ? "Antrags-ID" : "Submission ID",
+    submitted: isGerman ? "Eingereicht" : "Submitted",
+  };
+
+  const footer = isGerman
+    ? `<strong>Aram Energy Solution</strong><br>Energie Dienstleistungen`
+    : `<strong>Aram Energy Solution</strong><br>Energy Services`;
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <title>${title}</title>
+      <style>
+        body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
+        .container { max-width: 600px; margin: 0 auto; background-color: white; }
+        .header { background: linear-gradient(135deg, #FF9641 0%, #e88537 100%); color: white; padding: 30px 20px; text-align: center; }
+        .content { padding: 30px 20px; }
+        .section { margin-bottom: 25px; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
+        .section-header { background-color: #f8f9fa; padding: 15px 20px; border-bottom: 1px solid #e0e0e0; font-weight: bold; color: #333; }
+        .section-content { padding: 20px; }
+        .field { margin-bottom: 10px; font-family: monospace; font-size: 14px; }
+        .field strong { color: #FF9641; }
+        .footer { background-color: #333; color: white; padding: 20px; text-align: center; font-size: 12px; }
+        .success-badge { background-color: #28a745; color: white; padding: 8px 16px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
+      </style>
+    </head>
+    <body>
+      <div class="container">
+        <div class="header">
+          <h1 style="margin: 0; font-size: 28px;">${title}</h1>
+          <div class="success-badge">${submittedBadge}</div>
+        </div>
+        
+        <div class="content">
+          <p style="font-size: 16px; color: #333; margin-bottom: 25px;">
+            ${greeting}
+          </p>
+
+          <div class="section">
+            <div class="section-header">${sections.calculationTariff}</div>
+            <div class="section-content">
+              <div class="field"><strong>${fields.selected}:</strong> ${
+    calc.selected || "-"
+  }</div>
+              <div class="field"><strong>${fields.customerType}:</strong> ${
+    calc.customerType || "-"
+  }</div>
+              <div class="field"><strong>${fields.postalCode}:</strong> ${
+    calc.postalCode || "-"
+  }</div>
+              <div class="field"><strong>${
+                fields.annualConsumption
+              }:</strong> ${calc.annualConsumption || "-"}</div>
+              <div class="field"><strong>${fields.tariffKey}:</strong> ${
+    calc.tariffKey || "-"
+  }</div>
+              <div class="field"><strong>${fields.transactionKey}:</strong> ${
+    calc.transactionKey || 77509
+  }</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">${sections.selectedTariff}</div>
+            <div class="section-content">
+              <div class="field"><strong>${fields.basePrice}:</strong> ${
+    sel.basePrice || "-"
+  }</div>
+              <div class="field"><strong>${fields.laborPrice}:</strong> ${
+    sel.laborPrice || "-"
+  }</div>
+              <div class="field"><strong>${fields.typeOfCurrent}:</strong> ${
+    sel.typeOfCurrent || "-"
+  }</div>
+              <div class="field"><strong>${fields.contractTerm}:</strong> ${
+    sel.contractTerm || "-"
+  }</div>
+              <div class="field"><strong>${fields.total}:</strong> ${
+    sel.total || "-"
+  }</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">${sections.personalDetails}</div>
+            <div class="section-content">
+              <div class="field"><strong>${fields.name}:</strong> ${
+    pd.name || "-"
+  } ${pd.surname || ""}</div>
+              <div class="field"><strong>${fields.email}:</strong> ${
+    pd.email || "-"
+  }</div>
+              <div class="field"><strong>${fields.phone}:</strong> ${
+    pd.phone || "-"
+  }</div>
+              <div class="field"><strong>${fields.birthDate}:</strong> ${
+    pd.birthDate || "-"
+  }</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">${sections.addressDetails}</div>
+            <div class="section-content">
+              <div class="field"><strong>${fields.street}:</strong> ${
+    ad.street || "-"
+  } ${ad.houseNumber || ""}</div>
+              <div class="field"><strong>${fields.postalCode}:</strong> ${
+    ad.postalCode || "-"
+  }</div>
+              <div class="field"><strong>${fields.location}:</strong> ${
+    ad.location || "-"
+  }</div>
+            </div>
+          </div>
+
+          <div class="section">
+            <div class="section-header">${sections.paymentInfo}</div>
+            <div class="section-content">
+              <div class="field"><strong>${fields.iban}:</strong> ${
+    sepa.iban || "-"
+  }</div>
+              <div class="field"><strong>${fields.accountHolder}:</strong> ${
+    sepa.accountHolder || "-"
+  }</div>
+            </div>
+          </div>
+
+          <p style="font-size: 14px; color: #666; text-align: center; margin-top: 30px;">
+            <strong>${fields.submissionId}:</strong> ${submissionId}<br>
+            <strong>${fields.submitted}:</strong> ${new Date().toLocaleString(
+    isGerman ? "de-DE" : "en-US"
+  )}
+          </p>
+        </div>
+        
+        <div class="footer">
+          <p style="margin: 0; font-size: 14px;">
+            ${footer}
+          </p>
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+}
+
 export async function POST(request: NextRequest) {
   try {
-    const { sessionId } = await request.json();
+    const { sessionId, language } = await request.json();
 
     // Debug logging to see what we're receiving
     console.log("Received sessionId:", sessionId);
@@ -139,146 +345,15 @@ export async function POST(request: NextRequest) {
     const ad = submissionData.addressDetails || {};
     const sepa = submissionData.sepaForm || {};
 
-    const htmlEmailBody = `
-      <!DOCTYPE html>
-      <html>
-      <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Energy Contract Application Submitted</title>
-        <style>
-          body { font-family: Arial, sans-serif; margin: 0; padding: 0; background-color: #f4f4f4; }
-          .container { max-width: 600px; margin: 0 auto; background-color: white; }
-          .header { background: linear-gradient(135deg, #FF9641 0%, #e88537 100%); color: white; padding: 30px 20px; text-align: center; }
-          .content { padding: 30px 20px; }
-          .section { margin-bottom: 25px; border: 1px solid #e0e0e0; border-radius: 8px; overflow: hidden; }
-          .section-header { background-color: #f8f9fa; padding: 15px 20px; border-bottom: 1px solid #e0e0e0; font-weight: bold; color: #333; }
-          .section-content { padding: 20px; }
-          .field { margin-bottom: 10px; font-family: monospace; font-size: 14px; }
-          .field strong { color: #FF9641; }
-          .footer { background-color: #333; color: white; padding: 20px; text-align: center; font-size: 12px; }
-          .success-badge { background-color: #28a745; color: white; padding: 8px 16px; border-radius: 20px; display: inline-block; margin-bottom: 20px; }
-        </style>
-      </head>
-      <body>
-        <div class="container">
-          <div class="header">
-            <h1 style="margin: 0; font-size: 28px;">Energy Contract Application</h1>
-            <div class="success-badge">✅ SUBMITTED</div>
-          </div>
-          
-          <div class="content">
-            <p style="font-size: 16px; color: #333; margin-bottom: 25px;">
-              Dear ${pd.name || "Customer"},<br><br>
-              Your energy contract application has been successfully submitted. Below are the details of your application:
-            </p>
-
-            <div class="section">
-              <div class="section-header">🏢 Calculation Tariff</div>
-              <div class="section-content">
-                <div class="field"><strong>Selected:</strong> ${
-                  calc.selected || "-"
-                }</div>
-                <div class="field"><strong>Customer Type:</strong> ${
-                  calc.customerType || "-"
-                }</div>
-                <div class="field"><strong>Postal Code:</strong> ${
-                  calc.postalCode || "-"
-                }</div>
-                <div class="field"><strong>Annual Consumption:</strong> ${
-                  calc.annualConsumption || "-"
-                }</div>
-                <div class="field"><strong>Tariff Key:</strong> ${
-                  calc.tariffKey || "-"
-                }</div>
-                <div class="field"><strong>Transaction Key:</strong> ${
-                  calc.transactionKey || 77509
-                }</div>
-              </div>
-            </div>
-
-            <div class="section">
-              <div class="section-header">💰 Selected Tariff</div>
-              <div class="section-content">
-                <div class="field"><strong>Base Price:</strong> ${
-                  sel.basePrice || "-"
-                }</div>
-                <div class="field"><strong>Labor Price:</strong> ${
-                  sel.laborPrice || "-"
-                }</div>
-                <div class="field"><strong>Type of Current:</strong> ${
-                  sel.typeOfCurrent || "-"
-                }</div>
-                <div class="field"><strong>Contract Term:</strong> ${
-                  sel.contractTerm || "-"
-                }</div>
-                <div class="field"><strong>Total:</strong> ${
-                  sel.total || "-"
-                }</div>
-              </div>
-            </div>
-
-            <div class="section">
-              <div class="section-header">👤 Personal Details</div>
-              <div class="section-content">
-                <div class="field"><strong>Name:</strong> ${pd.name || "-"} ${
-      pd.surname || ""
-    }</div>
-                <div class="field"><strong>Email:</strong> ${
-                  pd.email || "-"
-                }</div>
-                <div class="field"><strong>Phone:</strong> ${
-                  pd.phone || "-"
-                }</div>
-                <div class="field"><strong>Birth Date:</strong> ${
-                  pd.birthDate || "-"
-                }</div>
-              </div>
-            </div>
-
-            <div class="section">
-              <div class="section-header">🏠 Address Details</div>
-              <div class="section-content">
-                <div class="field"><strong>Street:</strong> ${
-                  ad.street || "-"
-                } ${ad.houseNumber || ""}</div>
-                <div class="field"><strong>Postal Code:</strong> ${
-                  ad.postalCode || "-"
-                }</div>
-                <div class="field"><strong>Location:</strong> ${
-                  ad.location || "-"
-                }</div>
-              </div>
-            </div>
-
-            <div class="section">
-              <div class="section-header">💳 Payment Information</div>
-              <div class="section-content">
-                <div class="field"><strong>IBAN:</strong> ${
-                  sepa.iban || "-"
-                }</div>
-                <div class="field"><strong>Account Holder:</strong> ${
-                  sepa.accountHolder || "-"
-                }</div>
-              </div>
-            </div>
-
-            <p style="font-size: 14px; color: #666; text-align: center; margin-top: 30px;">
-              <strong>Submission ID:</strong> ${result.insertedId}<br>
-              <strong>Submitted:</strong> ${new Date().toLocaleString()}
-            </p>
-          </div>
-          
-          <div class="footer">
-            <p style="margin: 0; font-size: 14px;">
-              <strong>Aram Energy Solution</strong><br>
-              Energy Services
-            </p>
-          </div>
-        </div>
-      </body>
-      </html>
-    `;
+    const htmlEmailBody = generateEmailBody(
+      calc,
+      sel,
+      pd,
+      ad,
+      sepa,
+      result.insertedId.toString(),
+      language
+    );
 
     // Send emails to all recipients using EmailJS
     for (const to of emailList) {
