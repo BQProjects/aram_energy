@@ -18,7 +18,7 @@ import {
 } from "@/app/contexts/FormHelpers";
 
 function SepaMandatePageInner() {
-  const { t } = useLanguage();
+  const { t, language } = useLanguage();
   const router = useRouter();
   const { sessionId, isInitialized } = useSessionInfo();
   const { data: sepaForm, update: updateSepaForm } = useSepaFormSection();
@@ -128,6 +128,7 @@ function SepaMandatePageInner() {
     // Create the payload structure that matches what the API expects
     const payload = {
       sessionId,
+      language,
       calculationTarif: {
         selected: calculationTarif.selected || "electricity",
         customerType: calculationTarif.customerType || "private",
@@ -249,7 +250,7 @@ function SepaMandatePageInner() {
       const res = await fetch("/api/final-submission", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ sessionId }),
+        body: JSON.stringify({ sessionId, language }),
       });
 
       if (!res.ok) throw new Error(t("sepaMandate.error.submissionFailed"));

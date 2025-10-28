@@ -67,7 +67,7 @@ export default function Home() {
             className="text-center mt-24 text-[#E5E7EB] font-quando text-2xl sm:text-3xl md:text-6xl lg:text-6xl font-medium leading-tight px-2"
             variants={itemVariants}
           >
-            Welcome
+            {t("hero.welcome")}
           </motion.h2>
           <motion.h1
             className="text-center font-quando text-2xl sm:text-3xl md:text-6xl lg:text-6xl font-medium leading-tight text-[#FF9641] mt-2 sm:mt-3 md:mt-4 px-2"

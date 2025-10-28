@@ -15,21 +15,29 @@ function formatApplicationDetails({
   selectedTariffData,
   personalDetails,
   addressDetails,
+  language = "en",
 }: {
   calculationTarif?: any;
   selectedTariff?: any;
   selectedTariffData?: any;
   personalDetails?: any;
   addressDetails?: any;
+  language?: string;
 }) {
+  const isGerman = language === "de";
+
   // Helper to format calculationTarif
   const calc = calculationTarif || {};
-  const calcTarifStr = `Selected: ${calc.selected || "-"}<br/>
-Customer Type: ${calc.customerType || "-"}<br/>
-Postal Code: ${calc.postalCode || "-"}<br/>
-Tariff Key: ${calc.tariffKey || "-"}<br/>
-Annual Consumption: ${calc.annualConsumption || "-"}<br/>
-Transaction Key: ${"77509"}<br/>
+  const calcTarifStr = `${isGerman ? "Ausgewählt" : "Selected"}: ${
+    calc.selected || "-"
+  }<br/>
+${isGerman ? "Kundentyp" : "Customer Type"}: ${calc.customerType || "-"}<br/>
+${isGerman ? "Postleitzahl" : "Postal Code"}: ${calc.postalCode || "-"}<br/>
+${isGerman ? "Tarifschlüssel" : "Tariff Key"}: ${calc.tariffKey || "-"}<br/>
+${isGerman ? "Jahresverbrauch" : "Annual Consumption"}: ${
+    calc.annualConsumption || "-"
+  }<br/>
+${isGerman ? "Transaktionsschlüssel" : "Transaction Key"}: ${"77509"}<br/>
 `;
 
   // Helper to format selectedTariff - Look for data in both possible locations
@@ -38,20 +46,36 @@ Transaction Key: ${"77509"}<br/>
     selectedTariff?.selectedTariffData ||
     selectedTariff ||
     {};
-  const selectedTariffStr = `Base Price: ${tariffData.basePrice || "-"}<br/>
-Labor Price: ${tariffData.laborPrice || "-"}<br/>
-Type of Current: ${tariffData.typeOfCurrent || "-"}<br/>
-Contract Term: ${tariffData.contractTerm || "-"}<br/>
-Price Guarantee: ${tariffData.priceGuarantee || "-"}<br/>
-Down Payment: ${tariffData.downPayment || "-"}<br/>
-Total: ${tariffData.total || "-"}`;
+  const selectedTariffStr = `${isGerman ? "Grundpreis" : "Base Price"}: ${
+    tariffData.basePrice || "-"
+  }<br/>
+${isGerman ? "Arbeitspreis" : "Labor Price"}: ${
+    tariffData.laborPrice || "-"
+  }<br/>
+${isGerman ? "Stromart" : "Type of Current"}: ${
+    tariffData.typeOfCurrent || "-"
+  }<br/>
+${isGerman ? "Vertragslaufzeit" : "Contract Term"}: ${
+    tariffData.contractTerm || "-"
+  }<br/>
+${isGerman ? "Preisgarantie" : "Price Guarantee"}: ${
+    tariffData.priceGuarantee || "-"
+  }<br/>
+${isGerman ? "Anzahlung" : "Down Payment"}: ${
+    tariffData.downPayment || "-"
+  }<br/>
+${isGerman ? "Gesamt" : "Total"}: ${tariffData.total || "-"}`;
 
-  const personalDetailsStr = `Name: ${personalDetails?.name || "-"}<br/>
-Surname: ${personalDetails?.surname || "-"}<br/>
-Email: ${personalDetails?.email || "-"}<br/>
-Date of Birth: ${personalDetails?.birthDate || "-"}<br/>
-Mobile No: ${personalDetails?.phone || "-"}<br/>
-Address: ${
+  const personalDetailsStr = `${isGerman ? "Name" : "Name"}: ${
+    personalDetails?.name || "-"
+  }<br/>
+${isGerman ? "Nachname" : "Surname"}: ${personalDetails?.surname || "-"}<br/>
+${isGerman ? "E-Mail" : "Email"}: ${personalDetails?.email || "-"}<br/>
+${isGerman ? "Geburtsdatum" : "Date of Birth"}: ${
+    personalDetails?.birthDate || "-"
+  }<br/>
+${isGerman ? "Mobilnummer" : "Mobile No"}: ${personalDetails?.phone || "-"}<br/>
+${isGerman ? "Adresse" : "Address"}: ${
     [
       addressDetails?.street,
       addressDetails?.houseNumber,
@@ -67,6 +91,8 @@ Address: ${
 export async function POST(request: NextRequest) {
   try {
     const payload = await request.json();
+    const language = payload.language || 'en';
+    const isGerman = language === 'de';
 
     // Store the payload in MongoDB
     const client = await clientPromise;
@@ -103,6 +129,7 @@ export async function POST(request: NextRequest) {
         selectedTariffData: payload.selectedTariffData,
         personalDetails: payload.personalDetails,
         addressDetails: payload.addressDetails,
+        language,
       });
 
     // Professional email template with detailed information
@@ -112,7 +139,11 @@ export async function POST(request: NextRequest) {
       <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <title>Confirm Your Energy Contract Application</title>
+        <title>${
+          isGerman
+            ? "Bestätigen Sie Ihren Energievertragsantrag"
+            : "Confirm Your Energy Contract Application"
+        }</title>
         <style>
           /* Prevent Gmail from collapsing sections */
           .gmail-fix { 
@@ -146,28 +177,42 @@ export async function POST(request: NextRequest) {
                 <!-- Content -->
                 <div style="padding: 40px 30px; width: 100%; box-sizing: border-box;">
                   <h2 style="color: #333333; font-size: 24px; margin: 0 0 20px 0; text-align: center;">
-                    Confirm Your Energy Contract Application
+                    ${
+                      isGerman
+                        ? "Bestätigen Sie Ihren Energievertragsantrag"
+                        : "Confirm Your Energy Contract Application"
+                    }
                   </h2>
                   
                   <p style="color: #555555; font-size: 16px; line-height: 1.6; margin: 0 0 25px 0;">
-                    Dear <strong>${
-                      payload.personalDetails?.name || "Customer"
-                    }</strong>,
+                    ${isGerman ? "Sehr geehrte/r" : "Dear"} <strong>${
+      payload.personalDetails?.name || (isGerman ? "Kunde" : "Customer")
+    }</strong>${isGerman ? "," : ","}
                   </p>
                   
                   <p style="color: #555555; font-size: 16px; line-height: 1.6; margin: 0 0 30px 0;">
-                    Thank you for your energy contract application with Aram Energy Solution. Please review your application details below and confirm to proceed with processing.
+                    ${
+                      isGerman
+                        ? "Vielen Dank für Ihren Energievertragsantrag bei Aram Energy Solution. Bitte überprüfen Sie Ihre Antragsdetails unten und bestätigen Sie, um mit der Bearbeitung fortzufahren."
+                        : "Thank you for your energy contract application with Aram Energy Solution. Please review your application details below and confirm to proceed with processing."
+                    }
                   </p>
                   
                   <!-- Detailed Application Information -->
                   <div class="gmail-fix">
                     <div style="background-color: #f8f9fa; border-left: 4px solid #FF9641; padding: 25px; margin: 30px 0; border-radius: 0 8px 8px 0; width: 100%; box-sizing: border-box;">
-                      <h3 style="color: #333333; font-size: 18px; margin: 0 0 20px 0;">📋 Complete Application Details</h3>
+                      <h3 style="color: #333333; font-size: 18px; margin: 0 0 20px 0;">📋 ${
+                        isGerman
+                          ? "Vollständige Antragsdetails"
+                          : "Complete Application Details"
+                      }</h3>
                       
                       <!-- Calculation Tarif Section -->
                       <div style="margin-bottom: 25px; width: 100%;">
                         <h4 style="color: #FF9641; font-size: 16px; margin: 0 0 10px 0; border-bottom: 1px solid #e9ecef; padding-bottom: 5px;">
-                          🏢 Calculation Tariff
+                          🏢 ${
+                            isGerman ? "Berechnungstarif" : "Calculation Tariff"
+                          }
                         </h4>
                         <div style="background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #e9ecef; width: 100%; box-sizing: border-box;">
                           <div style="font-family: 'Courier New', monospace; font-size: 13px; color: #333333; line-height: 1.6; padding: 0;">${calcTarifStr}</div>
@@ -177,7 +222,9 @@ export async function POST(request: NextRequest) {
                       <!-- Selected Tariff Section -->
                       <div style="margin-bottom: 25px; width: 100%;">
                         <h4 style="color: #FF9641; font-size: 16px; margin: 0 0 10px 0; border-bottom: 1px solid #e9ecef; padding-bottom: 5px;">
-                          💰 Selected Tariff
+                          💰 ${
+                            isGerman ? "Ausgewählter Tarif" : "Selected Tariff"
+                          }
                         </h4>
                         <div style="background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #e9ecef; width: 100%; box-sizing: border-box;">
                           <div style="font-family: 'Courier New', monospace; font-size: 13px; color: #333333; line-height: 1.6; padding: 0;">${selectedTariffStr}</div>
@@ -187,7 +234,9 @@ export async function POST(request: NextRequest) {
                       <!-- Personal Details Section -->
                       <div style="margin-bottom: 0; width: 100%;">
                         <h4 style="color: #FF9641; font-size: 16px; margin: 0 0 10px 0; border-bottom: 1px solid #e9ecef; padding-bottom: 5px;">
-                          👤 Personal Details
+                          👤 ${
+                            isGerman ? "Persönliche Daten" : "Personal Details"
+                          }
                         </h4>
                         <div style="background-color: #ffffff; padding: 15px; border-radius: 6px; border: 1px solid #e9ecef; width: 100%; box-sizing: border-box;">
                           <div style="font-family: 'Courier New', monospace; font-size: 13px; color: #333333; line-height: 1.6; padding: 0;">${personalDetailsStr}</div>
@@ -199,13 +248,19 @@ export async function POST(request: NextRequest) {
                   <!-- Action Buttons -->
                   <div style="text-align: center; margin: 40px 0; width: 100%;">
                     <p style="color: #555555; font-size: 16px; margin: 0 0 25px 0; font-weight: bold;">
-                      Please click the button below to confirm your application:
+                      ${
+                        isGerman
+                          ? "Bitte klicken Sie auf die Schaltfläche unten, um Ihren Antrag zu bestätigen:"
+                          : "Please click the button below to confirm your application:"
+                      }
                     </p>
                     
                     <div style="margin: 0 auto;">
                       <a href="${confirmUrl}" 
                          style="display: inline-block; background: linear-gradient(135deg, #FF9641 0%, #FF8533 100%); color: #ffffff; padding: 18px 40px; text-decoration: none; border-radius: 8px; font-weight: bold; font-size: 18px; text-align: center; min-width: 200px; box-shadow: 0 4px 12px rgba(255, 150, 65, 0.4);">
-                        ✅ Confirm Application
+                        ✅ ${
+                          isGerman ? "Antrag bestätigen" : "Confirm Application"
+                        }
                       </a>
                     </div>
                   </div>
@@ -213,7 +268,13 @@ export async function POST(request: NextRequest) {
                   <!-- Important Note -->
                   <div style="background-color: #fff3cd; border: 1px solid #ffeaa7; border-radius: 8px; padding: 20px; margin: 30px 0; width: 100%; box-sizing: border-box;">
                     <p style="color: #856404; font-size: 14px; margin: 0; line-height: 1.5;">
-                      <strong>⚠️ Important:</strong> This confirmation will expire in 24 hours. Please review all details carefully before making your decision. If you have any questions or notice any errors, please contact our customer service team immediately.
+                      <strong>⚠️ ${
+                        isGerman ? "Wichtig" : "Important"
+                      }:</strong> ${
+      isGerman
+        ? "Diese Bestätigung läuft in 24 Stunden ab. Bitte überprüfen Sie alle Details sorgfältig, bevor Sie Ihre Entscheidung treffen. Wenn Sie Fragen haben oder Fehler bemerken, kontaktieren Sie bitte sofort unser Kundenservice-Team."
+        : "This confirmation will expire in 24 hours. Please review all details carefully before making your decision. If you have any questions or notice any errors, please contact our customer service team immediately."
+    }
                     </p>
                   </div>
                 </div>
@@ -223,10 +284,18 @@ export async function POST(request: NextRequest) {
                   <p style="color: #bdc3c7; font-size: 14px; margin: 0 0 10px 0; line-height: 1.5;">
                     <strong>Aram Energy Solution</strong><br>
                     Energy Service Pool GmbH<br>
-                    Your trusted energy partner
+                    ${
+                      isGerman
+                        ? "Ihr vertrauensvoller Energiepartner"
+                        : "Your trusted energy partner"
+                    }
                   </p>
                   <p style="color: #95a5a6; font-size: 12px; margin: 0;">
-                    This is an automated message. Please do not reply to this email.
+                    ${
+                      isGerman
+                        ? "Dies ist eine automatisierte Nachricht. Bitte antworten Sie nicht auf diese E-Mail."
+                        : "This is an automated message. Please do not reply to this email."
+                    }
                   </p>
                 </div>
               </div>
@@ -252,22 +321,19 @@ export async function POST(request: NextRequest) {
             user_id: process.env.EMAILJS_PUBLIC_KEY,
             template_params: {
               to_email: userEmail,
-              customer_name: payload.personalDetails?.name || "Customer",
-              confirm_url: confirmUrl,
-              calc_tarif_str: calcTarifStr,
-              selected_tariff_str: selectedTariffStr,
-              personal_details_str: personalDetailsStr,
-              order_id: insertedId,
+              html_body: emailHtml,
             },
           }),
         }
       );
 
       if (!response.ok) {
-        const errorText = await response.text();  // Add this
+        const errorText = await response.text(); // Add this
         console.error("EmailJS response status:", response.status);
         console.error("EmailJS response text:", errorText);
-        throw new Error(`EmailJS error: ${response.status} - ${response.statusText} - ${errorText}`);
+        throw new Error(
+          `EmailJS error: ${response.status} - ${response.statusText} - ${errorText}`
+        );
       }
     } catch (emailError) {
       console.error("Error sending confirmation email:", emailError);
