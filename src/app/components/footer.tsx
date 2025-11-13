@@ -164,10 +164,10 @@ export default function Footer() {
               {t("footer.privacy")}
             </a>
             <a
-              href="#"
+              href="/legal-notice"
               className="hover:underline transition-colors duration-200 text-sm sm:text-sm hover:text-[#FF9641] font-poppins-regular"
             >
-              {t("footer.accessibility")}
+              {t("footer.imprint")}
             </a>
             <a
               href="/term-condition"
